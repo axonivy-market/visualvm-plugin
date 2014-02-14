@@ -46,8 +46,8 @@ public class DataUtilsTest {
                 "jdbc:mysql://localhost:5432/XpertIvySystemDatabase"));
         assertEquals("localhost", DataUtils.getHostFromConnectionUrl(
                 "jdbc:oracle:thin:tam/thai@localhost:1521:XpertIvySystemDatabase"));
-        assertEquals("localhost", DataUtils.getHostFromConnectionUrl("jdbc:oracle:oci:@XpertIvySystemDatabase"));
-        assertEquals("localhost", DataUtils.getHostFromConnectionUrl("jdbc:db2:XpertIvySystemDatabase"));
+        assertEquals(null, DataUtils.getHostFromConnectionUrl("jdbc:oracle:oci:@XpertIvySystemDatabase"));
+        assertEquals(null, DataUtils.getHostFromConnectionUrl("jdbc:db2:XpertIvySystemDatabase"));
         assertEquals("localhost", DataUtils.getHostFromConnectionUrl(
                 "jdbc:microsoft:sqlserver://localhost:1443;databaseName= XpertIvySystemDatabase;"
                 + "SelectMethod=cursor"));
@@ -84,12 +84,4 @@ public class DataUtilsTest {
         assertEquals("XpertIvySystemDatabase", DataUtils.getSchemaFromConnectionUrl(
                 "jdbc:hsqldb:mem:XpertIvySystemDatabase"));
     }
-
 }
-//@Test
-//public void testToDateString() {
-//DataUtils.toDateString(new java.util.Date());
-//}
-//Dec 23, 2013 12:00:00 AM
-//#6303
-//Dec 23, 2013 12:00:00 AM
