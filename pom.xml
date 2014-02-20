@@ -13,6 +13,7 @@
         <netbean.version>RELEASE72</netbean.version>
         <netbeans.run.params.ide/>
         <netbeans.run.params>${netbeans.run.params.ide}</netbeans.run.params>
+        <netbeans.installation>D:\teamup\ws_visualvm\visualvm_136</netbeans.installation>
     </properties>
 
     <repositories>
@@ -132,7 +133,8 @@
                 <version>3.11</version>
                 <extensions>true</extensions>
                 <configuration>
-                    <netbeansInstallation>D:\teamup\ws_visualvm\visualvm_136</netbeansInstallation>
+                    <netbeansInstallation>${netbeans.installation}</netbeansInstallation>
+                    <author>ivyTeam AG</author>
                     <homePageUrl>http://www.xpertivy.ch</homePageUrl>
                     <licenseFile>license.txt</licenseFile>
                     <licenseName>Xpert.ivy Server Monitor</licenseName>
@@ -158,6 +160,47 @@
                 <configuration>
                     <!-- to have the jar plugin pickup the nbm generated manifest -->
                     <useDefaultManifestFile>true</useDefaultManifestFile>
+                </configuration>
+            </plugin>
+            
+            <plugin>
+                <groupId>com.keyboardsamurais.maven</groupId>
+                <artifactId>maven-timestamp-plugin</artifactId>
+                <version>1.0</version>
+                <configuration>
+                    <propertyName>currentYear</propertyName>
+                    <timestampPattern>yyyy</timestampPattern>
+                </configuration>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>create</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            
+            <plugin>
+                <groupId>com.google.code.maven-replacer-plugin</groupId>
+                <artifactId>replacer</artifactId>
+                <version>1.5.2</version>
+                <executions>
+                    <execution>
+                        <phase>prepare-package</phase>
+                        <goals>
+                            <goal>replace</goal>
+                        </goals>                   
+                    </execution>
+                </executions>
+                <configuration>
+                    <file>${basedir}/licenseFormat</file>
+                    <outputFile>${basedir}/license.txt</outputFile>
+                    <replacements>
+                        <replacement>
+                            <token>CURRENT_YEAR</token>
+                            <value>${currentYear}</value>
+                        </replacement>         
+                    </replacements>
                 </configuration>
             </plugin>
         </plugins>
