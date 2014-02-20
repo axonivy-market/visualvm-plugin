@@ -11,8 +11,8 @@ import javax.swing.tree.DefaultMutableTreeNode;
  * @author rwei
  */
 class MBeanNode extends DefaultMutableTreeNode {
-  private ObjectName objectName;
-  private String attribute;
+  private ObjectName fObjectName;
+  private String fAttribute;
 
   MBeanNode() {
     this(null);
@@ -24,21 +24,21 @@ class MBeanNode extends DefaultMutableTreeNode {
 
   MBeanNode(String name, ObjectName objectName) {
     super(name == null ? null : name.trim());
-    this.objectName = objectName;
+    this.fObjectName = objectName;
   }
 
   MBeanNode(ObjectName objectName, String attribute) {
     super(attribute);
-    this.objectName = objectName;
-    this.attribute = attribute;
+    fObjectName = objectName;
+    fAttribute = attribute;
   }
 
   boolean isMBean() {
-    return objectName != null && attribute == null;
+    return fObjectName != null && fAttribute == null;
   }
 
   boolean isAttribute() {
-    return attribute != null;
+    return fAttribute != null;
   }
 
   boolean hasName(String name) {
@@ -46,19 +46,19 @@ class MBeanNode extends DefaultMutableTreeNode {
   }
 
   void setObjectName(ObjectName objectName) {
-    this.objectName = objectName;
+    fObjectName = objectName;
   }
 
   String getMBeanName() {
-    return objectName == null ? null : objectName.toString();
+    return fObjectName == null ? null : fObjectName.toString();
   }
 
   ObjectName getObjectName() {
-    return objectName;
+    return fObjectName;
   }
 
   String getAttribute() {
-    return attribute;
+    return fAttribute;
   }
 
 }

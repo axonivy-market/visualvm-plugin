@@ -28,15 +28,15 @@ import org.openide.windows.TopComponent;
  */
 @ConvertAsProperties(dtd = "-//ch.ivyteam.ivy.visualvm//InformationPanel//EN", autostore = false)
 @TopComponent.Description(preferredID = "InformationPanelTopComponent",
-                          // iconBase="SET/PATH/TO/ICON/HERE",
-                          persistenceType = TopComponent.PERSISTENCE_ALWAYS)
+        // iconBase="SET/PATH/TO/ICON/HERE",
+        persistenceType = TopComponent.PERSISTENCE_ALWAYS)
 @TopComponent.Registration(mode = "bottomSlidingSide", openAtStartup = false)
 @ActionID(category = "Window", id = "ch.ivyteam.ivy.visualvm.InformationPanelTopComponent")
 @ActionReference(path = "Menu/Window" /*
  * , position = 333
  */)
 @TopComponent.OpenActionRegistration(displayName = "#CTL_InformationPanelAction",
-                                     preferredID = "InformationPanelTopComponent")
+        preferredID = "InformationPanelTopComponent")
 @Messages({"CTL_InformationPanelAction=InformationPanel",
   "CTL_InformationPanelTopComponent=InformationPanel Window",
   "HINT_InformationPanelTopComponent=This is a InformationPanel window"})
@@ -693,13 +693,10 @@ public final class InformationPanelTopComponent extends TopComponent {
     BasicIvyJmxDataCollector collector = new BasicIvyJmxDataCollector();
 
     try {
-      IvyApplicationInfo basicInfo = collector
-              .getApplicationInfo(connection);
+      IvyApplicationInfo basicInfo = collector.getApplicationInfo(connection);
       setLabelText(versionLabel, version, basicInfo.getVersion());
-      setLabelText(buildDateLabel, buildDate,
-                   DataUtils.toDateString(basicInfo.getBuildDate()));
-      setLabelText(installDirLabel, installationDirectory,
-                   basicInfo.getInstallationDirectory());
+      setLabelText(buildDateLabel, buildDate, DataUtils.toDateString(basicInfo.getBuildDate()));
+      setLabelText(installDirLabel, installationDirectory, basicInfo.getInstallationDirectory());
     } catch (IvyJmxDataCollectException ex) {
       hideInfoLabels(versionLabel, version);
       hideInfoLabels(buildDateLabel, buildDate);
@@ -709,32 +706,22 @@ public final class InformationPanelTopComponent extends TopComponent {
 
     try {
       OSInfo osInfo = collector.getOSInfo(connection);
-      setLabelText(operatingSystemLabel, operatingSystem,
-                   osInfo.getName());
+      setLabelText(operatingSystemLabel, operatingSystem, osInfo.getName());
     } catch (IvyJmxDataCollectException ex) {
       hideInfoLabels(operatingSystemLabel, operatingSystem);
       Exceptions.printStackTrace(ex);
     }
 
     try {
-      SystemDatabaseInfo sysDbInfo = collector
-              .getSystemDatabaseInfo(connection);
-      setLabelText(dbIvySysDbVersionLabel, dbIvySysDbVersion,
-                   sysDbInfo.getIvySystemDbVersion());
+      SystemDatabaseInfo sysDbInfo = collector.getSystemDatabaseInfo(connection);
+      setLabelText(dbIvySysDbVersionLabel, dbIvySysDbVersion, sysDbInfo.getIvySystemDbVersion());
       setLabelText(dbTypeLabel, dbType, sysDbInfo.getType());
       setLabelText(dbVersionLabel, dbVersion, sysDbInfo.getVersion());
       setLabelText(dbDriverNameLabel, dbDriverName, sysDbInfo.getDriver());
-      setLabelText(dbHostLabel, dbHost,
-                   DataUtils.getHostFromConnectionUrl(sysDbInfo
-              .getConnectionUrl()));
-      setLabelText(dbPortLabel, dbPort,
-                   DataUtils.getPortFromConnectionUrl(sysDbInfo
-              .getConnectionUrl()));
-      setLabelText(dbNameLabel, dbName,
-                   DataUtils.getSchemaFromConnectionUrl(sysDbInfo
-              .getConnectionUrl()));
-      setLabelText(dbConnectionUrlLabel, dbConnectionUrl,
-                   sysDbInfo.getConnectionUrl());
+      setLabelText(dbHostLabel, dbHost, DataUtils.getHostFromConnectionUrl(sysDbInfo.getConnectionUrl()));
+      setLabelText(dbPortLabel, dbPort, DataUtils.getPortFromConnectionUrl(sysDbInfo.getConnectionUrl()));
+      setLabelText(dbNameLabel, dbName, DataUtils.getSchemaFromConnectionUrl(sysDbInfo.getConnectionUrl()));
+      setLabelText(dbConnectionUrlLabel, dbConnectionUrl, sysDbInfo.getConnectionUrl());
 
       String username = sysDbInfo.getUsername();
       if ((username == null) || "".equals(username.trim())) {
@@ -758,23 +745,19 @@ public final class InformationPanelTopComponent extends TopComponent {
     }
 
     try {
-      List<ServerConnectorInfo> connectorInfo = collector
-              .getMappedConnectors(connection);
+      List<ServerConnectorInfo> connectorInfo = collector.getMappedConnectors(connection);
       connectorsPanel.removeAll();
       if (connectorInfo.size() > 0) {
         int index = 0;
         for (ServerConnectorInfo connector : connectorInfo) {
-          JLabel label = new JLabel(connector.getProtocol() + " - "
-                                    + connector.getPort());
-          connectorsPanel.add(label, new GridBagConstraints(0,
-                                                            index++, 1, 1, 1, 1, GridBagConstraints.NORTHWEST,
-                                                            GridBagConstraints.NONE, LABEL_INSETS, 0, 0));
+          JLabel label = new JLabel(connector.getProtocol() + " - " + connector.getPort());
+          connectorsPanel.add(label, new GridBagConstraints(0, index++, 1, 1, 1, 1,
+                  GridBagConstraints.NORTHWEST, GridBagConstraints.NONE, LABEL_INSETS, 0, 0));
         }
       } else {
         JLabel label = new JLabel("No connector!");
-        connectorsPanel.add(label, new GridBagConstraints(0, 0, 1, 1,
-                                                          0, 0, GridBagConstraints.NORTHWEST,
-                                                          GridBagConstraints.NONE, LABEL_INSETS, 0, 0));
+        connectorsPanel.add(label, new GridBagConstraints(0, 0, 1, 1, 0, 0, GridBagConstraints.NORTHWEST,
+                GridBagConstraints.NONE, LABEL_INSETS, 0, 0));
       }
     } catch (IvyJmxDataCollectException ex) {
       Exceptions.printStackTrace(ex);

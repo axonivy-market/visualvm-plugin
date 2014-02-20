@@ -17,12 +17,12 @@ import javax.management.ObjectName;
  * @author rwei
  */
 public class MQuery {
-  private Map<ObjectName, List<String>> queries = new HashMap<ObjectName, List<String>>();
+  private Map<ObjectName, List<String>> queries = new HashMap<>();
 
   void addSubQuery(ObjectName mBeanName, Set<String> attributesToAdd) {
     List<String> attributes = queries.get(mBeanName);
     if (attributes == null) {
-      attributes = new ArrayList<String>();
+      attributes = new ArrayList<>();
       queries.put(mBeanName, attributes);
     }
     for (String attribute : attributesToAdd) {
@@ -35,7 +35,7 @@ public class MQuery {
   void addSubQuery(ObjectName mBeanName, String attribute) {
     List<String> attributes = queries.get(mBeanName);
     if (attributes == null) {
-      attributes = new ArrayList<String>();
+      attributes = new ArrayList<>();
       queries.put(mBeanName, attributes);
     }
     if (!attributes.contains(attribute)) {

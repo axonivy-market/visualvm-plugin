@@ -26,11 +26,11 @@ public class AbstractView {
   public DataViewComponent getViewComponent() {
     if (fViewComponent == null) {
       // Add the master view and configuration view to the component:
-      DataViewComponent.MasterView masterView = new DataViewComponent.MasterView(
-              getMasterViewTitle(), "", getMasterViewComponent());
+      DataViewComponent.MasterView masterView = new DataViewComponent.MasterView(getMasterViewTitle(), "",
+              getMasterViewComponent());
       // Configuration of master view:
       DataViewComponent.MasterViewConfiguration masterConfiguration
-                                                = new DataViewComponent.MasterViewConfiguration(false);
+              = new DataViewComponent.MasterViewConfiguration(false);
       fViewComponent = new DataViewComponent(masterView, masterConfiguration);
     }
     return fViewComponent;

@@ -28,8 +28,7 @@ public final class DataUtils {
     int revIndex = version.lastIndexOf('.');
     String ivyVersion = version.substring(0, revIndex);
     String revision = version.substring(revIndex + 1, version.length());
-    version = MessageFormat.format("{0} (revision {1})", ivyVersion,
-            revision);
+    version = MessageFormat.format("{0} (revision {1})", ivyVersion, revision);
     return version;
   }
 
@@ -125,8 +124,7 @@ public final class DataUtils {
       }
     }
     if (index < 0) {
-      index = Math.max(lowerExp.lastIndexOf("/"),
-              lowerExp.lastIndexOf(":"));
+      index = Math.max(lowerExp.lastIndexOf("/"), lowerExp.lastIndexOf(":"));
     }
     return index;
   }

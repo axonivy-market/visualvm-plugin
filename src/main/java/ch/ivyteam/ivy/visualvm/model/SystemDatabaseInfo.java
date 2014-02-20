@@ -14,7 +14,7 @@ public class SystemDatabaseInfo {
   }
 
   public void setType(String type) {
-    this.fType = type;
+    fType = type;
   }
 
   public String getVersion() {
@@ -22,7 +22,7 @@ public class SystemDatabaseInfo {
   }
 
   public void setVersion(String version) {
-    this.fVersion = version;
+    fVersion = version;
   }
 
   public String getDriver() {
@@ -30,7 +30,7 @@ public class SystemDatabaseInfo {
   }
 
   public void setDriver(String driver) {
-    this.fDriver = driver;
+    fDriver = driver;
   }
 
   public String getConnectionUrl() {
@@ -38,7 +38,7 @@ public class SystemDatabaseInfo {
   }
 
   public void setConnectionUrl(String connectionUrl) {
-    this.fConnectionUrl = connectionUrl;
+    fConnectionUrl = connectionUrl;
   }
 
   public String getUsername() {
@@ -46,7 +46,7 @@ public class SystemDatabaseInfo {
   }
 
   public void setUsername(String username) {
-    this.fUsername = username;
+    fUsername = username;
   }
 
   public String getIvySystemDbVersion() {
@@ -54,7 +54,7 @@ public class SystemDatabaseInfo {
   }
 
   public void setIvySystemDbVersion(String ivySystemDbVersion) {
-    this.fIvySystemDbVersion = ivySystemDbVersion;
+    fIvySystemDbVersion = ivySystemDbVersion;
   }
 
 }

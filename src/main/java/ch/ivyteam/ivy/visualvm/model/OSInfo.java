@@ -10,7 +10,7 @@ public class OSInfo {
   }
 
   public void setName(String name) {
-    this.fName = name;
+    fName = name;
   }
 
   public String getArch() {
@@ -18,7 +18,7 @@ public class OSInfo {
   }
 
   public void setArch(String arch) {
-    this.fArch = arch;
+    fArch = arch;
   }
 
 }

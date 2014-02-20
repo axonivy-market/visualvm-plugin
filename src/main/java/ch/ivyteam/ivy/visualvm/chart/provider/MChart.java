@@ -10,19 +10,20 @@ import ch.ivyteam.ivy.visualvm.chart.MChartDataSource;
  * @author rwei
  */
 class MChart implements IChart {
-  private final MBeanInstance instance;
-  private final String name;
+  private final MBeanInstance fInstance;
+  private final String fName;
 
   public MChart(MBeanInstance instance, String name) {
-    this.instance = instance;
-    this.name = name;
+    fInstance = instance;
+    fName = name;
   }
 
   @Override
   public String getName() {
-    return name;
+    return fName;
   }
 
+  @Override
   public MChartDataSource createDataSource() {
     return null;// type.createChartDataSource(instance, name);
   }

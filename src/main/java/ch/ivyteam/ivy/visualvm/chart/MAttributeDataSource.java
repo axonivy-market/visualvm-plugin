@@ -13,8 +13,8 @@ class MAttributeDataSource extends MSerieDataSource {
   private String fAttribute;
   private ObjectName fMBeanName;
 
-  MAttributeDataSource(String serie, long scaleFactor, SerieStyle serieStyle,
-          ObjectName mBeanName, String attribute) {
+  MAttributeDataSource(String serie, long scaleFactor, SerieStyle serieStyle, ObjectName mBeanName,
+          String attribute) {
     super(serie, scaleFactor, serieStyle);
     this.fAttribute = attribute;
     this.fMBeanName = mBeanName;

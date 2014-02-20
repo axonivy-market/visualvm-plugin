@@ -142,13 +142,11 @@ public class MBeanAttributeChooserPanel extends javax.swing.JPanel {
   private void jButton1ActionPerformed(java.awt.event.ActionEvent evt)// GEN-FIRST:event_jButton1ActionPerformed
   {// GEN-HEADEREND:event_jButton1ActionPerformed
     MBeanBrowserTopComponent mBeanBrowser = new MBeanBrowserTopComponent();
-    mBeanBrowser
-            .setMBeanTreeModel(new MBeanTreeModel(mBeanServerConnection));
+    mBeanBrowser.setMBeanTreeModel(new MBeanTreeModel(mBeanServerConnection));
     mBeanBrowser.setSelected(mBeanName.getText(), attribute.getText());
 
-    NotifyDescriptor descriptor = new NotifyDescriptor(mBeanBrowser,
-            "New chart", NotifyDescriptor.OK_CANCEL_OPTION,
-            NotifyDescriptor.PLAIN_MESSAGE, null,
+    NotifyDescriptor descriptor = new NotifyDescriptor(mBeanBrowser, "New chart",
+            NotifyDescriptor.OK_CANCEL_OPTION, NotifyDescriptor.PLAIN_MESSAGE, null,
             NotifyDescriptor.YES_OPTION);
 
     if (DialogDisplayer.getDefault().notify(descriptor) == NotifyDescriptor.OK_OPTION) {

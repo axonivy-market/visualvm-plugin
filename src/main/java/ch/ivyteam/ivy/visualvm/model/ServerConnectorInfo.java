@@ -11,7 +11,7 @@ public class ServerConnectorInfo {
   }
 
   public void setProtocol(String protocol) {
-    this.fProtocol = protocol;
+    fProtocol = protocol;
   }
 
   public String getPort() {
@@ -32,7 +32,7 @@ public class ServerConnectorInfo {
       throw new IllegalArgumentException(
               "The port param must be an integer", e);
     }
-    this.fPort = port;
+    fPort = port;
   }
 
   public String getScheme() {
@@ -40,7 +40,7 @@ public class ServerConnectorInfo {
   }
 
   public void setScheme(String scheme) {
-    this.fScheme = scheme;
+    fScheme = scheme;
   }
 
 }

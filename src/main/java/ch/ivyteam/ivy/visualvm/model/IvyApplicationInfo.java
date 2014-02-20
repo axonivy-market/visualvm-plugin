@@ -19,7 +19,7 @@ public class IvyApplicationInfo {
   }
 
   public void setApplicationName(String applicationName) {
-    this.fApplicationName = applicationName;
+    fApplicationName = applicationName;
   }
 
   public String getVersion() {
@@ -27,7 +27,7 @@ public class IvyApplicationInfo {
   }
 
   public void setVersion(String version) {
-    this.fVersion = version;
+    fVersion = version;
   }
 
   public Date getBuildDate() {
@@ -35,7 +35,7 @@ public class IvyApplicationInfo {
   }
 
   public void setBuildDate(Date buildDate) {
-    this.fBuildDate = buildDate;
+    fBuildDate = buildDate;
   }
 
   public String getInstallationDirectory() {
@@ -43,7 +43,7 @@ public class IvyApplicationInfo {
   }
 
   public void setInstallationDirectory(String installationDirectory) {
-    this.fInstallationDirectory = installationDirectory;
+    fInstallationDirectory = installationDirectory;
   }
 
   public boolean isDeveloperMode() {
@@ -51,7 +51,7 @@ public class IvyApplicationInfo {
   }
 
   public void setDeveloperMode(boolean developerMode) {
-    this.fDeveloperMode = developerMode;
+    fDeveloperMode = developerMode;
   }
 
   public boolean isReleaseCandidate() {
@@ -59,7 +59,7 @@ public class IvyApplicationInfo {
   }
 
   public void setReleaseCandidate(boolean releaseCandidate) {
-    this.fReleaseCandidate = releaseCandidate;
+    fReleaseCandidate = releaseCandidate;
   }
 
 }

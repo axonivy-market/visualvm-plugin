@@ -11,25 +11,25 @@ import javax.management.ObjectInstance;
  * @author rwei
  */
 class MBeanInstance implements IObjectInstance {
-  private final MBeanType type;
-  private final ObjectInstance mBean;
-  private final String displayName;
+  private final MBeanType fType;
+  private final ObjectInstance fMBean;
+  private final String fDisplayName;
 
   public MBeanInstance(MBeanType type, ObjectInstance mBean,
           String displayName) {
-    this.type = type;
-    this.mBean = mBean;
-    this.displayName = displayName;
+    fType = type;
+    fMBean = mBean;
+    fDisplayName = displayName;
   }
 
   @Override
   public String getName() {
-    return displayName;
+    return fDisplayName;
   }
 
   @Override
   public List<IChart> getCharts() {
-    return type.getCharts(this);
+    return fType.getCharts(this);
   }
 
 }

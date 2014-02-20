@@ -11,8 +11,7 @@ class MMeanDataSource extends MSerieDataSource {
   private MSerieDataSource fTotalValueDataSource;
   private MSerieDataSource fCountValueDataSource;
 
-  public MMeanDataSource(String serie, SerieStyle serieStyle,
-          MSerieDataSource totalValueDataSource,
+  public MMeanDataSource(String serie, SerieStyle serieStyle, MSerieDataSource totalValueDataSource,
           MSerieDataSource countValueDataSource) {
     super(serie, 1L, serieStyle);
     fTotalValueDataSource = totalValueDataSource;

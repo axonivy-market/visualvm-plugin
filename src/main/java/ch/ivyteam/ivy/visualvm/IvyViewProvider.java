@@ -31,7 +31,7 @@ class IvyViewProvider extends DataSourceViewProvider<Application> {
     MBeanServerConnection mbsc = jmx.getMBeanServerConnection();
     try {
       Object name = mbsc.getAttribute(IvyJmxConstant.IvyServer.Server.NAME,
-                                      IvyJmxConstant.IvyServer.Server.KEY_APPLICATION_NAME);
+              IvyJmxConstant.IvyServer.Server.KEY_APPLICATION_NAME);
       if (name != null) {
         return name.toString().contains("Xpert.ivy");
       } else {
@@ -49,8 +49,7 @@ class IvyViewProvider extends DataSourceViewProvider<Application> {
   }
 
   static void initialize() {
-    DataSourceViewsManager.sharedInstance().addViewProvider(INSTANCE,
-                                                            Application.class);
+    DataSourceViewsManager.sharedInstance().addViewProvider(INSTANCE, Application.class);
   }
 
   static void unregister() {

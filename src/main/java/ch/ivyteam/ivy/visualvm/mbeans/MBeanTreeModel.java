@@ -21,14 +21,13 @@ import javax.swing.tree.TreePath;
  */
 class MBeanTreeModel extends DefaultTreeModel {
 
-  private MBeanServerConnection mBeanServerConnection;
+  private MBeanServerConnection fMBeanServerConnection;
 
   public MBeanTreeModel(MBeanServerConnection mBeanServerConnection) {
     super(new MBeanNode());
     try {
-      this.mBeanServerConnection = mBeanServerConnection;
-      Set<ObjectName> names = mBeanServerConnection.queryNames(
-              ObjectName.WILDCARD, null);
+      fMBeanServerConnection = mBeanServerConnection;
+      Set<ObjectName> names = mBeanServerConnection.queryNames(ObjectName.WILDCARD, null);
       for (ObjectName name : names) {
         List<String> nameTokens = getNameTokens(name);
         createNodes(nameTokens, name);
@@ -38,7 +37,7 @@ class MBeanTreeModel extends DefaultTreeModel {
   }
 
   private List<String> getNameTokens(ObjectName name) {
-    List<String> tokens = new ArrayList<String>();
+    List<String> tokens = new ArrayList<>();
     tokens.add(name.getDomain());
     for (String property : name.getKeyPropertyListString().split(",")) {
       int pos = property.lastIndexOf("=");
@@ -53,8 +52,7 @@ class MBeanTreeModel extends DefaultTreeModel {
     createNodes(rootNode, nameTokens, name);
   }
 
-  private void createNodes(MBeanNode parentNode, List<String> nameTokens,
-          ObjectName name) throws Exception {
+  private void createNodes(MBeanNode parentNode, List<String> nameTokens, ObjectName name) throws Exception {
     String nodeName = nameTokens.remove(0);
     MBeanNode node = findNode(parentNode, nodeName);
     if (node == null) {
@@ -77,11 +75,10 @@ class MBeanTreeModel extends DefaultTreeModel {
   }
 
   private void createAttributeNodes(MBeanNode parentNode) throws Exception {
-    MBeanInfo beanInfo = mBeanServerConnection.getMBeanInfo(MUtil
-            .createObjectName(parentNode.getMBeanName()));
+    MBeanInfo beanInfo = fMBeanServerConnection.
+            getMBeanInfo(MUtil.createObjectName(parentNode.getMBeanName()));
     for (MBeanAttributeInfo attribute : beanInfo.getAttributes()) {
-      MBeanNode attributeNode = new MBeanNode(parentNode.getObjectName(),
-              attribute.getName());
+      MBeanNode attributeNode = new MBeanNode(parentNode.getObjectName(), attribute.getName());
       parentNode.add(attributeNode);
     }
   }

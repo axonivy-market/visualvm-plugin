@@ -58,35 +58,23 @@ public final class NewMSerieTopComponent extends TopComponent {
 
   MSerieDataSource getSerieDataSource() {
     if (valueKind.isSelected()) {
-      return new MAttributeDataSource(serie.getText(), 1L,
-              getSerieStyle(), MUtil.createObjectName(value
-                      .getMBeanName()), value.getAttribute());
+      return new MAttributeDataSource(serie.getText(), 1L, getSerieStyle(),
+              MUtil.createObjectName(value.getMBeanName()), value.getAttribute());
     } else if (deltaKind.isSelected()) {
-      return new MDeltaAttributeDataSource(serie.getText(), 1L,
-              getSerieStyle(), MUtil.createObjectName(value
-                      .getMBeanName()), value.getAttribute());
+      return new MDeltaAttributeDataSource(serie.getText(), 1L, getSerieStyle(),
+              MUtil.createObjectName(value.getMBeanName()), value.getAttribute());
     } else if (meanKind.isSelected()) {
-      MSerieDataSource valueDs = new MAttributeDataSource(
-              serie.getText(), 1L, getSerieStyle(),
-              MUtil.createObjectName(value.getMBeanName()),
-              value.getAttribute());
-      MSerieDataSource countDs = new MAttributeDataSource(
-              serie.getText(), 1L, getSerieStyle(),
-              MUtil.createObjectName(count.getMBeanName()),
-              count.getAttribute());
-      return new MMeanDataSource(serie.getText(), getSerieStyle(),
-              valueDs, countDs);
+      MSerieDataSource valueDs = new MAttributeDataSource(serie.getText(), 1L, getSerieStyle(),
+              MUtil.createObjectName(value.getMBeanName()), value.getAttribute());
+      MSerieDataSource countDs = new MAttributeDataSource(serie.getText(), 1L, getSerieStyle(),
+              MUtil.createObjectName(count.getMBeanName()), count.getAttribute());
+      return new MMeanDataSource(serie.getText(), getSerieStyle(), valueDs, countDs);
     } else {
-      MSerieDataSource valueDs = new MDeltaAttributeDataSource(
-              serie.getText(), 1L, getSerieStyle(),
-              MUtil.createObjectName(value.getMBeanName()),
-              value.getAttribute());
-      MSerieDataSource countDs = new MDeltaAttributeDataSource(
-              serie.getText(), 1L, getSerieStyle(),
-              MUtil.createObjectName(count.getMBeanName()),
-              count.getAttribute());
-      return new MMeanDataSource(serie.getText(), getSerieStyle(),
-              valueDs, countDs);
+      MSerieDataSource valueDs = new MDeltaAttributeDataSource(serie.getText(), 1L, getSerieStyle(),
+              MUtil.createObjectName(value.getMBeanName()), value.getAttribute());
+      MSerieDataSource countDs = new MDeltaAttributeDataSource(serie.getText(), 1L, getSerieStyle(),
+              MUtil.createObjectName(count.getMBeanName()), count.getAttribute());
+      return new MMeanDataSource(serie.getText(), getSerieStyle(), valueDs, countDs);
     }
   }
 

@@ -38,15 +38,13 @@ public class BasicIvyJmxDataCollector {
         IvyJmxConstant.IvyServer.Server.KEY_RELEASE_CANDIDATE,
         IvyJmxConstant.IvyServer.Server.KEY_APPLICATION_NAME};
 
-      AttributeList attributes = connection.getAttributes(
-              IvyJmxConstant.IvyServer.Server.NAME, attributeNames);
+      AttributeList attributes = connection.getAttributes(IvyJmxConstant.IvyServer.Server.NAME,
+              attributeNames);
       for (Attribute attribute : attributes.asList()) {
         if (attribute.getValue() != null) {
           switch (attribute.getName()) {
             case IvyJmxConstant.IvyServer.Server.KEY_VERSION:
-              String version = DataUtils
-                      .getIvyServerVersion(attribute.getValue()
-                              .toString());
+              String version = DataUtils.getIvyServerVersion(attribute.getValue().toString());
               result.setVersion(version);
               break;
             case IvyJmxConstant.IvyServer.Server.KEY_BUILD_DATE:
@@ -55,20 +53,16 @@ public class BasicIvyJmxDataCollector {
               }
               break;
             case IvyJmxConstant.IvyServer.Server.KEY_APPLICATION_NAME:
-              result.setApplicationName(attribute.getValue()
-                      .toString());
+              result.setApplicationName(attribute.getValue().toString());
               break;
             case IvyJmxConstant.IvyServer.Server.KEY_INSTALLATION_DIRECTORY:
-              result.setInstallationDirectory(attribute.getValue()
-                      .toString());
+              result.setInstallationDirectory(attribute.getValue().toString());
               break;
             case IvyJmxConstant.IvyServer.Server.KEY_DEVELOPER_MODE:
-              result.setDeveloperMode(Boolean.TRUE.equals(attribute
-                      .getValue()));
+              result.setDeveloperMode(Boolean.TRUE.equals(attribute.getValue()));
               break;
             case IvyJmxConstant.IvyServer.Server.KEY_RELEASE_CANDIDATE:
-              result.setReleaseCandidate(Boolean.TRUE
-                      .equals(attribute.getValue()));
+              result.setReleaseCandidate(Boolean.TRUE.equals(attribute.getValue()));
               break;
           }
         }
@@ -79,15 +73,13 @@ public class BasicIvyJmxDataCollector {
     return result;
   }
 
-  public String getHostInfo(MBeanServerConnection connection)
-          throws IvyJmxDataCollectException {
+  public String getHostInfo(MBeanServerConnection connection) throws IvyJmxDataCollectException {
     String result = null;
     try {
-      Object attribute = connection.getAttribute(
-              IvyJmxConstant.JavaLang.Runtime.NAME, IvyJmxConstant.JavaLang.Runtime.KEY_NAME);
+      Object attribute = connection.getAttribute(IvyJmxConstant.JavaLang.Runtime.NAME,
+              IvyJmxConstant.JavaLang.Runtime.KEY_NAME);
       if (attribute != null) {
-        result = DataUtils.getHostNameFromRuntimeId(attribute
-                .toString());
+        result = DataUtils.getHostNameFromRuntimeId(attribute.toString());
       }
     } catch (InstanceNotFoundException | ReflectionException | MBeanException | AttributeNotFoundException |
             IOException ex) {
@@ -96,15 +88,14 @@ public class BasicIvyJmxDataCollector {
     return result;
   }
 
-  public OSInfo getOSInfo(MBeanServerConnection connection)
-          throws IvyJmxDataCollectException {
+  public OSInfo getOSInfo(MBeanServerConnection connection) throws IvyJmxDataCollectException {
     OSInfo osInfo = new OSInfo();
     try {
       String[] attributeNames = new String[]{IvyJmxConstant.JavaLang.OperatingSystem.KEY_NAME,
         IvyJmxConstant.JavaLang.OperatingSystem.KEY_ARCH};
 
-      AttributeList attributes = connection.getAttributes(
-              IvyJmxConstant.JavaLang.OperatingSystem.NAME, attributeNames);
+      AttributeList attributes = connection.getAttributes(IvyJmxConstant.JavaLang.OperatingSystem.NAME,
+              attributeNames);
       for (Attribute attribute : attributes.asList()) {
         if (attribute.getValue() != null) {
           switch (attribute.getName()) {
@@ -117,8 +108,7 @@ public class BasicIvyJmxDataCollector {
           }
         }
       }
-      String fullOSName = DataUtils.getFullOSName(osInfo.getName(),
-                                                  osInfo.getArch());
+      String fullOSName = DataUtils.getFullOSName(osInfo.getName(), osInfo.getArch());
       osInfo.setName(fullOSName);
     } catch (InstanceNotFoundException | ReflectionException | IOException ex) {
       throw new IvyJmxDataCollectException(ex);
@@ -126,39 +116,35 @@ public class BasicIvyJmxDataCollector {
     return osInfo;
   }
 
-  public List<ServerConnectorInfo> getMappedConnectors(
-          MBeanServerConnection connection) throws IvyJmxDataCollectException {
+  public List<ServerConnectorInfo> getMappedConnectors(MBeanServerConnection connection) throws
+          IvyJmxDataCollectException {
     List<ServerConnectorInfo> mappedConnectors = new ArrayList<>();
     try {
-      Set<ObjectName> mbeanNames = connection.queryNames(
-              IvyJmxConstant.Ivy.Connector.PATTERN, null);
+      Set<ObjectName> mbeanNames = connection.queryNames(IvyJmxConstant.Ivy.Connector.PATTERN, null);
       String[] attributeNames = new String[]{
         IvyJmxConstant.Ivy.Connector.KEY_PROTOCOL,
         IvyJmxConstant.Ivy.Connector.KEY_PORT,
         IvyJmxConstant.Ivy.Connector.KEY_SCHEME};
       for (ObjectName beanName : mbeanNames) {
         ServerConnectorInfo connector = new ServerConnectorInfo();
-        AttributeList attributes = connection.getAttributes(beanName,
-                                                            attributeNames);
+        AttributeList attributes = connection.getAttributes(beanName, attributeNames);
         for (Attribute attribute : attributes.asList()) {
           if (attribute.getValue() != null) {
             switch (attribute.getName()) {
               case IvyJmxConstant.Ivy.Connector.KEY_PROTOCOL:
-                connector.setProtocol(attribute.getValue()
-                        .toString());
+                connector.setProtocol(attribute.getValue().toString());
                 break;
               case IvyJmxConstant.Ivy.Connector.KEY_PORT:
                 connector.setPort(attribute.getValue().toString());
                 break;
               case IvyJmxConstant.Ivy.Connector.KEY_SCHEME:
-                connector
-                        .setScheme(attribute.getValue().toString());
+                connector.setScheme(attribute.getValue().toString());
                 break;
             }
           }
         }
-        String fullProtocol = DataUtils.getFullConnectorProtocol(
-                connector.getProtocol(), connector.getScheme());
+        String fullProtocol = DataUtils.getFullConnectorProtocol(connector.getProtocol(),
+                connector.getScheme());
         connector.setProtocol(fullProtocol);
         mappedConnectors.add(connector);
       }
@@ -168,8 +154,8 @@ public class BasicIvyJmxDataCollector {
     return mappedConnectors;
   }
 
-  public SystemDatabaseInfo getSystemDatabaseInfo(
-          MBeanServerConnection connection) throws IvyJmxDataCollectException {
+  public SystemDatabaseInfo getSystemDatabaseInfo(MBeanServerConnection connection) throws
+          IvyJmxDataCollectException {
     SystemDatabaseInfo systemDatabase = new SystemDatabaseInfo();
     try {
       String[] attributeNames = new String[]{
@@ -188,24 +174,19 @@ public class BasicIvyJmxDataCollector {
               systemDatabase.setType(attribute.getValue().toString());
               break;
             case IvyJmxConstant.IvyServer.DatabasePersistency.KEY_PRODUCT_VERSION:
-              systemDatabase.setVersion(attribute.getValue()
-                      .toString());
+              systemDatabase.setVersion(attribute.getValue().toString());
               break;
             case IvyJmxConstant.IvyServer.DatabasePersistency.KEY_IVY_SYSDB_VERSION:
-              systemDatabase.setIvySystemDbVersion(attribute
-                      .getValue().toString());
+              systemDatabase.setIvySystemDbVersion(attribute.getValue().toString());
               break;
             case IvyJmxConstant.IvyServer.DatabasePersistency.KEY_DRIVER_NAME:
-              systemDatabase.setDriver(attribute.getValue()
-                      .toString());
+              systemDatabase.setDriver(attribute.getValue().toString());
               break;
             case IvyJmxConstant.IvyServer.DatabasePersistency.KEY_USERNAME:
-              systemDatabase.setUsername(attribute.getValue()
-                      .toString());
+              systemDatabase.setUsername(attribute.getValue().toString());
               break;
             case IvyJmxConstant.IvyServer.DatabasePersistency.KEY_CONNECTION_URL:
-              systemDatabase.setConnectionUrl(attribute.getValue()
-                      .toString());
+              systemDatabase.setConnectionUrl(attribute.getValue().toString());
               break;
           }
         }

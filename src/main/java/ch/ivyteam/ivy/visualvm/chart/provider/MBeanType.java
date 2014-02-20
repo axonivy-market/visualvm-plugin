@@ -23,15 +23,15 @@ public class MBeanType implements IObjectType {
 
   private MBeanServerConnection connection;
 
+  @Override
   public String getName() {
     return displayName;
   }
 
+  @Override
   public List<IObjectInstance> getInstances() throws IOException {
-    Set<ObjectInstance> mBeans = connection.queryMBeans(instanceFilter,
-            null);
-    List<IObjectInstance> instances = new ArrayList<IObjectInstance>(
-            mBeans.size());
+    Set<ObjectInstance> mBeans = connection.queryMBeans(instanceFilter, null);
+    List<IObjectInstance> instances = new ArrayList<>(mBeans.size());
     for (ObjectInstance mBean : mBeans) {
       instances
               .add(new MBeanInstance(this, mBean, toInstanceName(mBean)));
@@ -40,7 +40,7 @@ public class MBeanType implements IObjectType {
   }
 
   List<IChart> getCharts(MBeanInstance instance) {
-    List<IChart> charts = new ArrayList<IChart>();
+    List<IChart> charts = new ArrayList<>();
     for (String name : chartNames) {
       charts.add(new MChart(instance, name));
     }

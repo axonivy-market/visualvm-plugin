@@ -20,49 +20,35 @@ public class SystemDatabaseView extends AbstractView {
   }
 
   private void createSystemDbView() {
-    super.getViewComponent().configureDetailsArea(
-            new DataViewComponent.DetailsAreaConfiguration(
-                    "External Systems", false),
-            DataViewComponent.BOTTOM_LEFT);
+    super.getViewComponent().configureDetailsArea(new DataViewComponent.DetailsAreaConfiguration(
+            "External Systems", false), DataViewComponent.BOTTOM_LEFT);
     ChartsPanel systemDbPanel = new ChartsPanel();
     getUpdatableUIObjects().add(systemDbPanel);
 
-    MChartDataSource dataSource = new MChartDataSource(
-            "Transaction Processing Time", null, TIME_US);
+    MChartDataSource dataSource = new MChartDataSource("Transaction Processing Time", null, TIME_US);
     dataSource.addSerie(MAX, IvyJmxConstant.IvyServer.DatabasePersistency.NAME,
-                        "transactionsMaxExecutionTimeDeltaInMicroSeconds");
-    dataSource.addDeltaMeanSerie(MEAN,
-                                 IvyJmxConstant.IvyServer.DatabasePersistency.NAME,
-                                 "transactionsTotalExecutionTimeInMicroSeconds",
-                                 TRANSACTIONS.toLowerCase());
+            "transactionsMaxExecutionTimeDeltaInMicroSeconds");
+    dataSource.addDeltaMeanSerie(MEAN, IvyJmxConstant.IvyServer.DatabasePersistency.NAME,
+            "transactionsTotalExecutionTimeInMicroSeconds", TRANSACTIONS.toLowerCase());
     dataSource.addSerie(MIN, IvyJmxConstant.IvyServer.DatabasePersistency.NAME,
-                        "transactionsMinExecutionTimeDeltaInMicroSeconds");
+            "transactionsMinExecutionTimeDeltaInMicroSeconds");
     systemDbPanel.addChart(dataSource);
 
     dataSource = new MChartDataSource(TRANSACTIONS, null, TRANSACTIONS);
-    dataSource.addDeltaSerie(TRANSACTIONS,
-                             IvyJmxConstant.IvyServer.DatabasePersistency.NAME,
-                             TRANSACTIONS.toLowerCase());
-    dataSource.addDeltaSerie(ERRORS,
-                             IvyJmxConstant.IvyServer.DatabasePersistency.NAME, "errors");
+    dataSource.addDeltaSerie(TRANSACTIONS, IvyJmxConstant.IvyServer.DatabasePersistency.NAME,
+            TRANSACTIONS.toLowerCase());
+    dataSource.addDeltaSerie(ERRORS, IvyJmxConstant.IvyServer.DatabasePersistency.NAME, "errors");
     systemDbPanel.addChart(dataSource);
 
     dataSource = new MChartDataSource("Connections", null, "Connections");
-    dataSource.addSerie(MAX, IvyJmxConstant.IvyServer.DatabasePersistency.NAME,
-                        "maxConnections");
-    dataSource
-            .addSerie("Open", IvyJmxConstant.IvyServer.DatabasePersistency.NAME,
-                      "openConnections");
-    dataSource
-            .addSerie("Used", IvyJmxConstant.IvyServer.DatabasePersistency.NAME,
-                      "usedConnections");
+    dataSource.addSerie(MAX, IvyJmxConstant.IvyServer.DatabasePersistency.NAME, "maxConnections");
+    dataSource.addSerie("Open", IvyJmxConstant.IvyServer.DatabasePersistency.NAME, "openConnections");
+    dataSource.addSerie("Used", IvyJmxConstant.IvyServer.DatabasePersistency.NAME, "usedConnections");
     systemDbPanel.addChart(dataSource);
 
     // Add detail views to the component:
-    super.getViewComponent().addDetailsView(new DataViewComponent.DetailsView("System Database",
-                                                                              null, 10, systemDbPanel.
-            getUiComponent(), null),
-                                            DataViewComponent.BOTTOM_LEFT);
+    super.getViewComponent().addDetailsView(new DataViewComponent.DetailsView("System Database", null, 10,
+            systemDbPanel.getUiComponent(), null), DataViewComponent.BOTTOM_LEFT);
   }
 
   @Override

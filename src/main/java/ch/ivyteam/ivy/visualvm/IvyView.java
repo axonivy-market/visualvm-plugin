@@ -58,8 +58,8 @@ class IvyView extends DataSourceView {
   @SuppressWarnings("unused")
   private ScheduledTask updateTask;
   private ChartsPanel chartsPanel;
-  private static final ObjectName CLUSTER_CHANNEL_NAME = MUtil
-          .createObjectName("Xpert.ivy Server:type=Cluster Channel");
+  private static final ObjectName CLUSTER_CHANNEL_NAME = MUtil.createObjectName(
+          "Xpert.ivy Server:type=Cluster Channel");
   private final List<ChartsPanel> chartsPanels = new ArrayList<>();
   private final List<AbstractView> views = new ArrayList<>();
   private static final String ERRORS = "Errors";
@@ -69,14 +69,14 @@ class IvyView extends DataSourceView {
   private static final String MAX = "Max";
   private static final String TRANSACTIONS = "Transactions";
   private static final String XPERTIVY_SERVER_DATABASE_PERSISTENCY_SERVICE
-                              = "Xpert.ivy Server:type=Database Persistency Service";
+          = "Xpert.ivy Server:type=Database Persistency Service";
   private static final String NAME = "name";
   private static final String APPLICATION = "application";
   private IDataBeanProvider dataBeanProvider;
 
   public IvyView(Application application) {
-    super(application, "Xpert.ivy", new ImageIcon(ImageUtilities.loadImage(
-            IVY_IMAGE_PATH, true)).getImage(), 60, false);
+    super(application, "Xpert.ivy", new ImageIcon(ImageUtilities.loadImage(IVY_IMAGE_PATH, true)).getImage(),
+            60, false);
   }
 
   @Override
@@ -109,33 +109,24 @@ class IvyView extends DataSourceView {
     dvcSystemDB = createDVC("", null);
     dvcUserDefined = createDVC("", null);
 
-    tabbed.addTab("Information",
-                  (Icon) ImageUtilities.loadImage(INFO_IMAGE_PATH, true), infoView.getViewComponent());
-    tabbed.addTab("User Requests",
-                  (Icon) ImageUtilities.loadImage(USER_REQ_IMAGE_PATH, true),
-                  requestView.getViewComponent());
-    tabbed.addTab("User Requests New",
-                  (Icon) ImageUtilities.loadImage(USER_REQ_IMAGE_PATH, true),
-                  requestViewNew.getViewComponent());
-    tabbed.addTab("DB Connection",
-                  (Icon) ImageUtilities.loadImage(DBCON_IMAGE_PATH, true),
-                  dvcSystemDB);
-    tabbed.addTab("DB Connection",
-                  (Icon) ImageUtilities.loadImage(DBCON_IMAGE_PATH, true),
-                  sysDbView.getViewComponent());
-    tabbed.addTab("User Defined",
-                  (Icon) ImageUtilities.loadImage(USER_DEF_IMAGE_PATH, true),
-                  dvcUserDefined);
+    tabbed.addTab("Information", (Icon) ImageUtilities.loadImage(INFO_IMAGE_PATH, true), infoView.
+            getViewComponent());
+    tabbed.addTab("User Requests", (Icon) ImageUtilities.loadImage(USER_REQ_IMAGE_PATH, true),
+            requestView.getViewComponent());
+    tabbed.addTab("User Requests New", (Icon) ImageUtilities.loadImage(USER_REQ_IMAGE_PATH, true),
+            requestViewNew.getViewComponent());
+    tabbed.addTab("DB Connection", (Icon) ImageUtilities.loadImage(DBCON_IMAGE_PATH, true), dvcSystemDB);
+    tabbed.addTab("DB Connection", (Icon) ImageUtilities.loadImage(DBCON_IMAGE_PATH, true),
+            sysDbView.getViewComponent());
+    tabbed.addTab("User Defined", (Icon) ImageUtilities.loadImage(USER_DEF_IMAGE_PATH, true), dvcUserDefined);
 
     createSystemDatabaseView(dvcSystemDB);
     createClusterView(dvcSystemDB);
     createExternalDatabase(dvcSystemDB);
     createExternalWebService(dvcSystemDB);
     createUserDefinedChartView(dvcUserDefined);
-    updateTask = Scheduler.sharedInstance().schedule(
-            new UpdateChartTask(),
-            Quantum.seconds(GlobalPreferences.sharedInstance()
-            .getMonitoredDataPoll()));
+    updateTask = Scheduler.sharedInstance().schedule(new UpdateChartTask(),
+            Quantum.seconds(GlobalPreferences.sharedInstance().getMonitoredDataPoll()));
     return dvcRoot;
   }
 
@@ -146,18 +137,17 @@ class IvyView extends DataSourceView {
 
     // Configuration of master view:
     DataViewComponent.MasterViewConfiguration masterConfiguration
-                                              = new DataViewComponent.MasterViewConfiguration(
-            false);
+            = new DataViewComponent.MasterViewConfiguration(
+                    false);
     return new DataViewComponent(masterView, masterConfiguration);
   }
 
   private void addChart() {
     NewMChartTopComponent newMChart = new NewMChartTopComponent();
     newMChart.setMBeanServerConnection(getMBeanServerConnection());
-    NotifyDescriptor descriptor = new NotifyDescriptor(newMChart,
-                                                       "New chart", NotifyDescriptor.OK_CANCEL_OPTION,
-                                                       NotifyDescriptor.PLAIN_MESSAGE, null,
-                                                       NotifyDescriptor.YES_OPTION);
+    NotifyDescriptor descriptor = new NotifyDescriptor(newMChart, "New chart",
+            NotifyDescriptor.OK_CANCEL_OPTION, NotifyDescriptor.PLAIN_MESSAGE, null,
+            NotifyDescriptor.YES_OPTION);
 
     if (DialogDisplayer.getDefault().notify(descriptor) == NotifyDescriptor.OK_OPTION) {
       chartsPanel.addChart(newMChart.getChartDataSource());
@@ -165,10 +155,8 @@ class IvyView extends DataSourceView {
   }
 
   MBeanServerConnection getMBeanServerConnection() {
-    JmxModel jmx = JmxModelFactory
-            .getJmxModelFor((Application) getDataSource());
-    if (jmx != null
-        && jmx.getConnectionState() == JmxModel.ConnectionState.CONNECTED) {
+    JmxModel jmx = JmxModelFactory.getJmxModelFor((Application) getDataSource());
+    if (jmx != null && jmx.getConnectionState() == JmxModel.ConnectionState.CONNECTED) {
       return jmx.getMBeanServerConnection();
     } else {
       return null;
@@ -176,9 +164,8 @@ class IvyView extends DataSourceView {
   }
 
   private void createUserDefinedChartView(DataViewComponent dvc) {
-    dvc.configureDetailsArea(
-            new DataViewComponent.DetailsAreaConfiguration("User Defined",
-                                                           false), DataViewComponent.BOTTOM_RIGHT);
+    dvc.configureDetailsArea(new DataViewComponent.DetailsAreaConfiguration("User Defined", false),
+            DataViewComponent.BOTTOM_RIGHT);
 
     chartsPanel = new ChartsPanel();
     chartsPanels.add(chartsPanel);
@@ -192,17 +179,14 @@ class IvyView extends DataSourceView {
       }
 
     });
+
     // Add detail views to the component:
-    dvc.addDetailsView(new DataViewComponent.DetailsView("User Defined",
-                                                         null, 10, chartsPanel.getUiComponent(),
-                                                         new JComponent[]{addChartButton}),
-                       DataViewComponent.BOTTOM_RIGHT);
+    dvc.addDetailsView(new DataViewComponent.DetailsView("User Defined", null, 10, chartsPanel.
+            getUiComponent(), new JComponent[]{addChartButton}), DataViewComponent.BOTTOM_RIGHT);
   }
 
   private void createSystemDatabaseView(DataViewComponent dvc) {
-    dvc.configureDetailsArea(
-            new DataViewComponent.DetailsAreaConfiguration(
-                    "External Systems", false),
+    dvc.configureDetailsArea(new DataViewComponent.DetailsAreaConfiguration("External Systems", false),
             DataViewComponent.BOTTOM_LEFT);
     ChartsPanel systemDbPanel = new ChartsPanel();
     chartsPanels.add(systemDbPanel);
@@ -210,38 +194,38 @@ class IvyView extends DataSourceView {
     MChartDataSource dataSource = new MChartDataSource(
             "Transaction Processing Time", null, TIME_US);
     dataSource.addSerie(MAX, XPERTIVY_SERVER_DATABASE_PERSISTENCY_SERVICE,
-                        "transactionsMaxExecutionTimeDeltaInMicroSeconds");
+            "transactionsMaxExecutionTimeDeltaInMicroSeconds");
     dataSource.addDeltaMeanSerie(MEAN,
-                                 XPERTIVY_SERVER_DATABASE_PERSISTENCY_SERVICE,
-                                 "transactionsTotalExecutionTimeInMicroSeconds",
-                                 TRANSACTIONS.toLowerCase());
+            XPERTIVY_SERVER_DATABASE_PERSISTENCY_SERVICE,
+            "transactionsTotalExecutionTimeInMicroSeconds",
+            TRANSACTIONS.toLowerCase());
     dataSource.addSerie(MIN, XPERTIVY_SERVER_DATABASE_PERSISTENCY_SERVICE,
-                        "transactionsMinExecutionTimeDeltaInMicroSeconds");
+            "transactionsMinExecutionTimeDeltaInMicroSeconds");
     systemDbPanel.addChart(dataSource);
 
     dataSource = new MChartDataSource(TRANSACTIONS, null, TRANSACTIONS);
     dataSource.addDeltaSerie(TRANSACTIONS,
-                             XPERTIVY_SERVER_DATABASE_PERSISTENCY_SERVICE,
-                             TRANSACTIONS.toLowerCase());
+            XPERTIVY_SERVER_DATABASE_PERSISTENCY_SERVICE,
+            TRANSACTIONS.toLowerCase());
     dataSource.addDeltaSerie(ERRORS,
-                             XPERTIVY_SERVER_DATABASE_PERSISTENCY_SERVICE, "errors");
+            XPERTIVY_SERVER_DATABASE_PERSISTENCY_SERVICE, "errors");
     systemDbPanel.addChart(dataSource);
 
     dataSource = new MChartDataSource("Connections", null, "Connections");
     dataSource.addSerie(MAX, XPERTIVY_SERVER_DATABASE_PERSISTENCY_SERVICE,
-                        "maxConnections");
+            "maxConnections");
     dataSource
             .addSerie("Open", XPERTIVY_SERVER_DATABASE_PERSISTENCY_SERVICE,
-                      "openConnections");
+                    "openConnections");
     dataSource
             .addSerie("Used", XPERTIVY_SERVER_DATABASE_PERSISTENCY_SERVICE,
-                      "usedConnections");
+                    "usedConnections");
     systemDbPanel.addChart(dataSource);
 
     // Add detail views to the component:
     dvc.addDetailsView(new DataViewComponent.DetailsView("System Database",
-                                                         null, 10, systemDbPanel.getUiComponent(), null),
-                       DataViewComponent.BOTTOM_LEFT);
+            null, 10, systemDbPanel.getUiComponent(), null),
+            DataViewComponent.BOTTOM_LEFT);
   }
 
   private void createExternalDatabase(DataViewComponent dvc) {
@@ -255,23 +239,23 @@ class IvyView extends DataSourceView {
               "Transaction Processing Time (" + displayName + ")", null,
               TIME_US);
       dataSource.addSerie(MAX, extDbName,
-                          "transactionsMaxExecutionTimeDeltaInMicroSeconds");
+              "transactionsMaxExecutionTimeDeltaInMicroSeconds");
       dataSource.addDeltaMeanSerie(MEAN, extDbName,
-                                   "transactionsTotalExecutionTimeInMicroSeconds",
-                                   TRANSACTIONS.toLowerCase());
+              "transactionsTotalExecutionTimeInMicroSeconds",
+              TRANSACTIONS.toLowerCase());
       dataSource.addSerie(MIN, extDbName,
-                          "transactionsMinExecutionTimeDeltaInMicroSeconds");
+              "transactionsMinExecutionTimeDeltaInMicroSeconds");
       extDbPanel.addChart(dataSource);
 
       dataSource = new MChartDataSource("Transactions (" + displayName
-                                        + ")", null, TRANSACTIONS);
+              + ")", null, TRANSACTIONS);
       dataSource.addDeltaSerie(TRANSACTIONS, extDbName,
-                               TRANSACTIONS.toLowerCase());
+              TRANSACTIONS.toLowerCase());
       dataSource.addDeltaSerie(ERRORS, extDbName, "errors");
       extDbPanel.addChart(dataSource);
 
       dataSource = new MChartDataSource("Connections (" + displayName
-                                        + ")", null, "Connections");
+              + ")", null, "Connections");
       dataSource.addSerie(MAX, extDbName, "maxConnections");
       dataSource.addSerie("Open", extDbName, "openConnections");
       dataSource.addSerie("Used", extDbName, "usedConnections");
@@ -293,15 +277,15 @@ class IvyView extends DataSourceView {
       MChartDataSource dataSource = new MChartDataSource(
               "Processing Time (" + displayName + ")", null, TIME_US);
       dataSource.addSerie(MAX, extWebServiceName,
-                          "callsMaxExecutionTimeDeltaInMicroSeconds");
+              "callsMaxExecutionTimeDeltaInMicroSeconds");
       dataSource.addDeltaMeanSerie(MEAN, extWebServiceName,
-                                   "callsTotalExecutionTimeInMicroSeconds", "calls");
+              "callsTotalExecutionTimeInMicroSeconds", "calls");
       dataSource.addSerie(MIN, extWebServiceName,
-                          "callsMinExecutionTimeDeltaInMicroSeconds");
+              "callsMinExecutionTimeDeltaInMicroSeconds");
       extWebServicePanel.addChart(dataSource);
 
       dataSource = new MChartDataSource("Calls (" + displayName + ")",
-                                        null, "Calls");
+              null, "Calls");
       dataSource.addDeltaSerie("Calls", extWebServiceName, "calls");
       dataSource.addDeltaSerie(ERRORS, extWebServiceName, "errors");
       extWebServicePanel.addChart(dataSource);
@@ -309,7 +293,7 @@ class IvyView extends DataSourceView {
     // Add detail views to the component:
     dvc.addDetailsView(
             new DataViewComponent.DetailsView("External Web Services",
-                                              null, 10, extWebServicePanel.getUiComponent(), null),
+                    null, 10, extWebServicePanel.getUiComponent(), null),
             DataViewComponent.BOTTOM_LEFT);
   }
 
@@ -320,17 +304,17 @@ class IvyView extends DataSourceView {
       MChartDataSource dataSource = new MChartDataSource(
               "Send Message Processing Time", null, TIME_US);
       dataSource.addSerie(MAX, CLUSTER_CHANNEL_NAME,
-                          "sendMessagesMaxExecutionTimeDeltaInMicroSeconds");
+              "sendMessagesMaxExecutionTimeDeltaInMicroSeconds");
       dataSource.addDeltaMeanSerie(MEAN, CLUSTER_CHANNEL_NAME,
-                                   "sendMessagesTotalExecutionTimeInMicroSeconds",
-                                   "sendMessages");
+              "sendMessagesTotalExecutionTimeInMicroSeconds",
+              "sendMessages");
       dataSource.addSerie(MIN, CLUSTER_CHANNEL_NAME,
-                          "sendMessagesMinExecutionTimeDeltaInMicroSeconds");
+              "sendMessagesMinExecutionTimeDeltaInMicroSeconds");
       clusterPanel.addChart(dataSource);
 
       dataSource = new MChartDataSource("Send Messages", null, MESSAGES);
       dataSource.addDeltaSerie(MESSAGES, CLUSTER_CHANNEL_NAME,
-                               "sendMessages");
+              "sendMessages");
       dataSource
               .addDeltaSerie(ERRORS, CLUSTER_CHANNEL_NAME, "sendErrors");
       clusterPanel.addChart(dataSource);
@@ -338,32 +322,31 @@ class IvyView extends DataSourceView {
       dataSource = new MChartDataSource(
               "Received Message Processing Time", null, TIME_US);
       dataSource.addSerie(MAX, CLUSTER_CHANNEL_NAME,
-                          "receiveMessagesMaxExecutionTimeDeltaInMicroSeconds");
+              "receiveMessagesMaxExecutionTimeDeltaInMicroSeconds");
       dataSource.addDeltaMeanSerie(MEAN, CLUSTER_CHANNEL_NAME,
-                                   "receiveMessagesTotalExecutionTimeInMicroSeconds",
-                                   "receiveMessages");
-      dataSource.addSerie(MIN, CLUSTER_CHANNEL_NAME,
-                          "receiveMessagesMinExecutionTimeDeltaInMicroSeconds");
+              "receiveMessagesTotalExecutionTimeInMicroSeconds",
+              "receiveMessages");
+      dataSource.addSerie(MIN, CLUSTER_CHANNEL_NAME, "receiveMessagesMinExecutionTimeDeltaInMicroSeconds");
       clusterPanel.addChart(dataSource);
 
       dataSource = new MChartDataSource("Received Messages", null,
-                                        MESSAGES);
+              MESSAGES);
       dataSource.addDeltaSerie(MESSAGES, CLUSTER_CHANNEL_NAME,
-                               "receiveMessages");
+              "receiveMessages");
       dataSource.addDeltaSerie(ERRORS, CLUSTER_CHANNEL_NAME,
-                               "receiveErrors");
+              "receiveErrors");
       clusterPanel.addChart(dataSource);
 
       dataSource = new MChartDataSource("Suspects/Views", null,
-                                        "Suspects/Views");
+              "Suspects/Views");
       dataSource.addSerie("Views", CLUSTER_CHANNEL_NAME, "views");
       dataSource.addSerie("Suspects", CLUSTER_CHANNEL_NAME, "suspects");
       clusterPanel.addChart(dataSource);
 
       // Add detail views to the component:
       dvc.addDetailsView(new DataViewComponent.DetailsView("Cluster",
-                                                           null, 10, clusterPanel.getUiComponent(), null),
-                         DataViewComponent.BOTTOM_LEFT);
+              null, 10, clusterPanel.getUiComponent(), null),
+              DataViewComponent.BOTTOM_LEFT);
     }
   }
 

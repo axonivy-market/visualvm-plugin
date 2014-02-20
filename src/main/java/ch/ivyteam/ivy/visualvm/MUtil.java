@@ -26,8 +26,7 @@ public final class MUtil {
     }
   }
 
-  public static Set<ObjectName> queryNames(MBeanServerConnection serverConnection,
-          String filter) {
+  public static Set<ObjectName> queryNames(MBeanServerConnection serverConnection, String filter) {
     try {
       return serverConnection.queryNames(new ObjectName(filter), null);
     } catch (IOException | MalformedObjectNameException ex) {

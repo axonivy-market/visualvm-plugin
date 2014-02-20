@@ -17,19 +17,15 @@ import javax.swing.DefaultListModel;
  * @author rwei
  */
 class MAttributeListModel extends DefaultListModel {
-  private List<String> NUMBER_TYPES = Arrays.asList(Long.class.getName(),
-          Long.TYPE.getName(), Integer.class.getName(),
-          Integer.TYPE.getName(), Short.class.getName(),
-          Short.TYPE.getName(), Byte.class.getName(), Byte.TYPE.getName(),
-          Float.class.getName(), Float.TYPE.getName(),
+  private List<String> NUMBER_TYPES = Arrays.asList(Long.class.getName(), Long.TYPE.getName(),
+          Integer.class.getName(), Integer.TYPE.getName(), Short.class.getName(), Short.TYPE.getName(),
+          Byte.class.getName(), Byte.TYPE.getName(), Float.class.getName(), Float.TYPE.getName(),
           Double.class.getName(), Double.TYPE.getName());
 
-  MAttributeListModel(MBeanServerConnection mBeanServerConnection,
-          String mBeanName) {
+  MAttributeListModel(MBeanServerConnection mBeanServerConnection, String mBeanName) {
     MBeanInfo mBeanInfo;
     try {
-      mBeanInfo = mBeanServerConnection.getMBeanInfo(new ObjectName(
-              mBeanName));
+      mBeanInfo = mBeanServerConnection.getMBeanInfo(new ObjectName(mBeanName));
 
       for (MBeanAttributeInfo attribute : mBeanInfo.getAttributes()) {
         if (isNumberType(attribute)) {
@@ -45,7 +41,7 @@ class MAttributeListModel extends DefaultListModel {
   }
 
   int[] getIndexes(String[] attributes) {
-    List<Integer> indexes = new ArrayList<Integer>();
+    List<Integer> indexes = new ArrayList<>();
     for (String attribute : attributes) {
       int index = indexOf(attribute);
       if (index >= 0) {

@@ -20,8 +20,7 @@ class MChart implements IUpdatableUIObject {
 
   MChart(MChartDataSource dataSource) {
     fDataSource = dataSource;
-    SimpleXYChartDescriptor chartDescriptor = SimpleXYChartDescriptor
-            .decimal(10, true, 1000);
+    SimpleXYChartDescriptor chartDescriptor = SimpleXYChartDescriptor.decimal(10, true, 1000);
     dataSource.configureChart(chartDescriptor);
     chart = ChartFactory.createSimpleXYChart(chartDescriptor);
   }

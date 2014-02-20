@@ -11,6 +11,7 @@ import java.util.Collections;
 import java.util.Set;
 import javax.management.MalformedObjectNameException;
 import javax.management.ObjectName;
+import javax.swing.JPanel;
 import org.openide.util.Exceptions;
 
 public class RequestView extends AbstractView {
@@ -25,54 +26,46 @@ public class RequestView extends AbstractView {
   }
 
   private void createRequestView() {
-    super.getViewComponent().configureDetailsArea(
-            new DataViewComponent.DetailsAreaConfiguration(REQUESTS, false),
-            DataViewComponent.TOP_RIGHT);
+    super.getViewComponent().configureDetailsArea(new DataViewComponent.DetailsAreaConfiguration(REQUESTS,
+            false), DataViewComponent.TOP_RIGHT);
     ChartsPanel requestPanel = new ChartsPanel();
 
-    MChartDataSource requestDataSource = new MChartDataSource(REQUESTS,
-                                                              null, REQUESTS);
-    MChartDataSource errorDataSource = new MChartDataSource(ERRORS, null,
-                                                            ERRORS);
-    MChartDataSource processingTimeDataSource = new MChartDataSource(
-            "Processing Time", null, "Time [ms]");
+    MChartDataSource requestDataSource = new MChartDataSource(REQUESTS, null, REQUESTS);
+    MChartDataSource errorDataSource = new MChartDataSource(ERRORS, null, ERRORS);
+    MChartDataSource processingTimeDataSource = new MChartDataSource("Processing Time", null, "Time [ms]");
     for (ObjectName processorName : getTomcatRequestProcessors()) {
       String protocol = getProtocol(processorName);
-      requestDataSource.addDeltaSerie(protocol, processorName,
-                                      "requestCount");
-      errorDataSource
-              .addDeltaSerie(protocol, processorName, "errorCount");
-      processingTimeDataSource.addDeltaSerie(protocol, processorName,
-                                             "processingTime");
+      requestDataSource.addDeltaSerie(protocol, processorName, "requestCount");
+      errorDataSource.addDeltaSerie(protocol, processorName, "errorCount");
+      processingTimeDataSource.addDeltaSerie(protocol, processorName, "processingTime");
     }
     requestPanel.addChart(requestDataSource);
     requestPanel.addChart(errorDataSource);
     requestPanel.addChart(processingTimeDataSource);
-    MChartDataSource sessionDataSource = new MChartDataSource(SESSIONS,
-                                                              null, SESSIONS);
+    MChartDataSource sessionDataSource = new MChartDataSource(SESSIONS, null, SESSIONS);
     ObjectName tomcatManager = getTomcatManagerName();
     if (tomcatManager != null) {
-      sessionDataSource.addSerie("Http", SerieStyle.LINE, tomcatManager,
-                                 "sessionCounter");
+      sessionDataSource.addSerie("Http", SerieStyle.LINE, tomcatManager, "sessionCounter");
     }
-    sessionDataSource.addSerie("Ivy", SerieStyle.LINE,
-                               IvyJmxConstant.IvyServer.SecurityManager.NAME, "sessions");
-    sessionDataSource.addSerie("Licensed", SerieStyle.LINE,
-                               IvyJmxConstant.IvyServer.SecurityManager.NAME, "licensedSessions");
+    sessionDataSource.addSerie("Ivy", SerieStyle.LINE, IvyJmxConstant.IvyServer.SecurityManager.NAME,
+            "sessions");
+    sessionDataSource.addSerie("Licensed", SerieStyle.LINE, IvyJmxConstant.IvyServer.SecurityManager.NAME,
+            "licensedSessions");
     requestPanel.addChart(sessionDataSource);
 
     // Add detail views to the component:
-    super.getViewComponent().addDetailsView(new DataViewComponent.DetailsView(REQUESTS, null,
-                                                                              10, requestPanel.
-            getUiComponent(),
-                                                                              null),
-                                            DataViewComponent.TOP_RIGHT);
+    super.getViewComponent().addDetailsView(new DataViewComponent.DetailsView(REQUESTS, null, 10,
+            requestPanel.getUiComponent(), null), DataViewComponent.TOP_RIGHT);
     getUpdatableUIObjects().add(requestPanel);
   }
 
   @Override
   public DataViewComponent getViewComponent() {
     DataViewComponent viewComponent = super.getViewComponent();
+    JPanel panel = (JPanel) viewComponent.getComponent(0);
+    if (panel != null) {
+      panel.remove(0);
+    }
     if (!uiComplete) {
       createRequestView();
       uiComplete = true;
@@ -82,9 +75,8 @@ public class RequestView extends AbstractView {
 
   private Set<ObjectName> getTomcatRequestProcessors() {
     try {
-      return getDataBeanProvider().getMBeanServerConnection().queryNames(
-              new ObjectName("*:type=GlobalRequestProcessor,name=*"),
-              null);
+      return getDataBeanProvider().getMBeanServerConnection().queryNames(new ObjectName(
+              "*:type=GlobalRequestProcessor,name=*"), null);
     } catch (IOException | MalformedObjectNameException ex) {
       Exceptions.printStackTrace(ex);
       return Collections.emptySet();
@@ -99,8 +91,7 @@ public class RequestView extends AbstractView {
   }
 
   private ObjectName getTomcatManagerName() {
-    Set<ObjectName> tomcatManagers = MUtil.queryNames(
-            getDataBeanProvider().getMBeanServerConnection(),
+    Set<ObjectName> tomcatManagers = MUtil.queryNames(getDataBeanProvider().getMBeanServerConnection(),
             "*:type=Manager,context=*,host=localhost");
     if (tomcatManagers.size() >= 1) {
       return tomcatManagers.iterator().next();

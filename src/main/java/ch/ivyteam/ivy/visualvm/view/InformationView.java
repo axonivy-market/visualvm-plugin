@@ -16,13 +16,9 @@ public class InformationView extends AbstractView {
 
   private void createInfoView() {
     super.getViewComponent().addDetailsView(new DataViewComponent.DetailsView("System Database",
-                                                                              null, 10, fInformationPanel.
-            getSysDbPanel(), null),
-                                            DataViewComponent.TOP_LEFT);
+            null, 10, fInformationPanel.getSysDbPanel(), null), DataViewComponent.TOP_LEFT);
     super.getViewComponent().addDetailsView(new DataViewComponent.DetailsView("Ports", null, 10,
-                                                                              fInformationPanel.
-            getConnectorsPanel(), null),
-                                            DataViewComponent.TOP_RIGHT);
+            fInformationPanel.getConnectorsPanel(), null), DataViewComponent.TOP_RIGHT);
   }
 
   private InformationPanelTopComponent createInfoPanel() {

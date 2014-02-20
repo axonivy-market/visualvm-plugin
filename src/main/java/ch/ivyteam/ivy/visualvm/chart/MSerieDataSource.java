@@ -11,16 +11,16 @@ import com.sun.tools.visualvm.charts.SimpleXYChartDescriptor;
  */
 abstract class MSerieDataSource {
 
-  private long scaleFactor = 1L;
-  private String serie;
-  private SerieStyle style;
+  private long fScaleFactor = 1L;
+  private String fSerie;
+  private SerieStyle fStyle;
 
   MSerieDataSource(String serie, long scaleFactor, SerieStyle style) {
-    this.serie = serie;
-    this.scaleFactor = scaleFactor;
-    this.style = style;
-    if (this.style == null) {
-      this.style = SerieStyle.LINE_FILLED;
+    fSerie = serie;
+    fScaleFactor = scaleFactor;
+    fStyle = style;
+    if (fStyle == null) {
+      fStyle = SerieStyle.LINE_FILLED;
     }
   }
 
@@ -30,35 +30,35 @@ abstract class MSerieDataSource {
 
   protected long toScaledLong(Object value) {
     if (value instanceof Number) {
-      return ((Number) value).longValue() / scaleFactor;
+      return ((Number) value).longValue() / fScaleFactor;
     }
     return 0L;
   }
 
   void configureSerie(SimpleXYChartDescriptor chartDescriptor) {
-    switch (style) {
+    switch (fStyle) {
       case LINE_FILLED:
-        chartDescriptor.addLineFillItems(serie);
+        chartDescriptor.addLineFillItems(fSerie);
         break;
       case LINE:
-        chartDescriptor.addLineItems(serie);
+        chartDescriptor.addLineItems(fSerie);
         break;
       case FILLED:
-        chartDescriptor.addFillItems(serie);
+        chartDescriptor.addFillItems(fSerie);
         break;
     }
   }
 
   String getSerie() {
-    return serie;
+    return fSerie;
   }
 
   SerieStyle getStyle() {
-    return style;
+    return fStyle;
   }
 
   public String toString() {
-    return serie;
+    return fSerie;
   }
 
 }

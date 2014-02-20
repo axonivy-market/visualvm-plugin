@@ -48,9 +48,9 @@ public class RequestViewNew extends AbstractView {
       sessionDataSource.addSerie("Http", SerieStyle.LINE, tomcatManager, "sessionCounter");
     }
     sessionDataSource.addSerie("Ivy", SerieStyle.LINE, IvyJmxConstant.IvyServer.SecurityManager.NAME,
-                               "sessions");
+            "sessions");
     sessionDataSource.addSerie("Licensed", SerieStyle.LINE, IvyJmxConstant.IvyServer.SecurityManager.NAME,
-                               "licensedSessions");
+            "licensedSessions");
     sessionChart.addChart(sessionDataSource);
     getUpdatableUIObjects().add(requestChart);
     getUpdatableUIObjects().add(errorChart);
@@ -58,20 +58,13 @@ public class RequestViewNew extends AbstractView {
     getUpdatableUIObjects().add(sessionChart);
 
     super.getViewComponent().addDetailsView(new DataViewComponent.DetailsView("Requests", null, 10,
-                                                                              requestChart.getUiComponent(),
-                                                                              null),
-                                            DataViewComponent.TOP_LEFT);
+            requestChart.getUiComponent(), null), DataViewComponent.TOP_LEFT);
     super.getViewComponent().addDetailsView(new DataViewComponent.DetailsView("Errors", null, 10, errorChart.
-            getUiComponent(),
-                                                                              null),
-                                            DataViewComponent.TOP_RIGHT);
+            getUiComponent(), null), DataViewComponent.TOP_RIGHT);
     super.getViewComponent().addDetailsView(new DataViewComponent.DetailsView("Processing Time", null, 10,
-                                                                              processingTimeChart.
-            getUiComponent(), null), DataViewComponent.BOTTOM_LEFT);
+            processingTimeChart.getUiComponent(), null), DataViewComponent.BOTTOM_LEFT);
     super.getViewComponent().addDetailsView(new DataViewComponent.DetailsView(SESSIONS, null, 10,
-                                                                              sessionChart.getUiComponent(),
-                                                                              null),
-                                            DataViewComponent.BOTTOM_RIGHT);
+            sessionChart.getUiComponent(), null), DataViewComponent.BOTTOM_RIGHT);
   }
 
   @Override
@@ -86,9 +79,8 @@ public class RequestViewNew extends AbstractView {
 
   private Set<ObjectName> getTomcatRequestProcessors() {
     try {
-      return getDataBeanProvider().getMBeanServerConnection().queryNames(
-              new ObjectName("*:type=GlobalRequestProcessor,name=*"),
-              null);
+      return getDataBeanProvider().getMBeanServerConnection().queryNames(new ObjectName(
+              "*:type=GlobalRequestProcessor,name=*"), null);
     } catch (IOException | MalformedObjectNameException ex) {
       Exceptions.printStackTrace(ex);
       return Collections.emptySet();
@@ -103,8 +95,7 @@ public class RequestViewNew extends AbstractView {
   }
 
   private ObjectName getTomcatManagerName() {
-    Set<ObjectName> tomcatManagers = MUtil.queryNames(
-            getDataBeanProvider().getMBeanServerConnection(),
+    Set<ObjectName> tomcatManagers = MUtil.queryNames(getDataBeanProvider().getMBeanServerConnection(),
             "*:type=Manager,context=*,host=localhost");
     if (tomcatManagers.size() >= 1) {
       return tomcatManagers.iterator().next();

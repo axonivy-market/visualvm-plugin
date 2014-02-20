@@ -11,7 +11,7 @@ import java.util.List;
  * @author rwei
  */
 public class MChartDataSourceProviderRegistry {
-  private List<IObjectType> providers = new ArrayList<IObjectType>();
+  private List<IObjectType> providers = new ArrayList<>();
 
   public List<IObjectType> getObjectTypes() {
     return providers;

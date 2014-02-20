@@ -12,8 +12,8 @@ import javax.management.ObjectName;
 public class MDeltaAttributeDataSource extends MAttributeDataSource {
   private long lastValue = Long.MIN_VALUE;
 
-  public MDeltaAttributeDataSource(String serie, long scaleFactor,
-          SerieStyle serieStyle, ObjectName mBeanName, String attribute) {
+  public MDeltaAttributeDataSource(String serie, long scaleFactor, SerieStyle serieStyle, ObjectName mBeanName,
+          String attribute) {
     super(serie, scaleFactor, serieStyle, mBeanName, attribute);
   }
 

@@ -10,7 +10,7 @@ import com.sun.tools.visualvm.application.type.ApplicationTypeFactory;
 import com.sun.tools.visualvm.application.type.MainClassApplicationTypeFactory;
 
 /**
- * 
+ *
  * @author rwei
  */
 class IvyApplicationTypeFactory extends MainClassApplicationTypeFactory {
@@ -43,14 +43,12 @@ class IvyApplicationTypeFactory extends MainClassApplicationTypeFactory {
   }
 
   private boolean isIvyDesigner(String mainClass, Jvm jvm) {
-    return isDesignerInstallation(mainClass)
-            || isDesignerStartedFromIde(mainClass, jvm);
+    return isDesignerInstallation(mainClass) || isDesignerStartedFromIde(mainClass, jvm);
   }
 
   private boolean isDesignerStartedFromIde(String mainClass, Jvm jvm) {
     return "org.eclipse.equinox.launcher.Main".equals(mainClass)
-            && jvm.getCommandLine().contains(
-                    "-product ch.ivyteam.ivy.designer.branding.product");
+            && jvm.getCommandLine().contains("-product ch.ivyteam.ivy.designer.branding.product");
   }
 
   private boolean isDesignerInstallation(String mainClass) {

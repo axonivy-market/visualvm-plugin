@@ -329,14 +329,12 @@ public final class NewMChartTopComponent extends TopComponent {
   {// GEN-HEADEREND:event_addButtonActionPerformed
     NewMSerieTopComponent newSerie = new NewMSerieTopComponent();
     newSerie.setMBeanServerConnection(fMBeanServerConnection);
-    NotifyDescriptor descriptor = new NotifyDescriptor(newSerie,
-            "Add Chart Serie", NotifyDescriptor.OK_CANCEL_OPTION,
-            NotifyDescriptor.PLAIN_MESSAGE, null,
+    NotifyDescriptor descriptor = new NotifyDescriptor(newSerie, "Add Chart Serie",
+            NotifyDescriptor.OK_CANCEL_OPTION, NotifyDescriptor.PLAIN_MESSAGE, null,
             NotifyDescriptor.YES_OPTION);
 
     if (DialogDisplayer.getDefault().notify(descriptor) == NotifyDescriptor.OK_OPTION) {
-      ((DefaultListModel) series.getModel()).addElement(newSerie
-              .getSerieDataSource());
+      ((DefaultListModel) series.getModel()).addElement(newSerie.getSerieDataSource());
     }
   }// GEN-LAST:event_addButtonActionPerformed
 
@@ -351,13 +349,11 @@ public final class NewMChartTopComponent extends TopComponent {
   }// GEN-LAST:event_chartTitleActionPerformed
 
   public MChartDataSource getChartDataSource() {
-    MChartDataSource chartDataSource = new MChartDataSource(
-            chartTitle.getText(), xAxisDescription.getText(),
+    MChartDataSource chartDataSource = new MChartDataSource(chartTitle.getText(), xAxisDescription.getText(),
             yAxisDescription.getText());
     DefaultListModel model = (DefaultListModel) series.getModel();
     for (int pos = 0; pos < model.size(); pos++) {
-      chartDataSource
-              .addSerie((MSerieDataSource) model.getElementAt(pos));
+      chartDataSource.addSerie((MSerieDataSource) model.getElementAt(pos));
     }
     return chartDataSource;
   }

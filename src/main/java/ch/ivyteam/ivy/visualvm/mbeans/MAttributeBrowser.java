@@ -21,13 +21,11 @@ class MAttributeBrowser implements IMAttributeBrowser {
   @Override
   public String[] browse(String mBeanName, String[] attributes) {
     MAttributeBrowserTopComponent mAttributeBrowser = new MAttributeBrowserTopComponent();
-    mAttributeBrowser.setAttributeListModel(new MAttributeListModel(
-            mBeanServerConnection, mBeanName));
+    mAttributeBrowser.setAttributeListModel(new MAttributeListModel(mBeanServerConnection, mBeanName));
     mAttributeBrowser.setSelectedAttributes(attributes);
 
-    NotifyDescriptor descriptor = new NotifyDescriptor(mAttributeBrowser,
-            "New chart", NotifyDescriptor.OK_CANCEL_OPTION,
-            NotifyDescriptor.PLAIN_MESSAGE, null,
+    NotifyDescriptor descriptor = new NotifyDescriptor(mAttributeBrowser, "New chart",
+            NotifyDescriptor.OK_CANCEL_OPTION, NotifyDescriptor.PLAIN_MESSAGE, null,
             NotifyDescriptor.YES_OPTION);
 
     if (DialogDisplayer.getDefault().notify(descriptor) == NotifyDescriptor.OK_OPTION) {

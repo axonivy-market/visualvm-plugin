@@ -9,14 +9,16 @@ import javax.management.MBeanServerConnection;
  *
  * @author rwei
  */
-public class MBrowserFactory {
-  public static IMBeanBrowser createMBeanBrowser(
-          MBeanServerConnection serverConnection) {
+public final class MBrowserFactory {
+
+  private MBrowserFactory() {
+  }
+
+  public static IMBeanBrowser createMBeanBrowser(MBeanServerConnection serverConnection) {
     return new MBeanBrowser(serverConnection);
   }
 
-  public static IMAttributeBrowser createMAttributeBrowser(
-          MBeanServerConnection serverConnection) {
+  public static IMAttributeBrowser createMAttributeBrowser(MBeanServerConnection serverConnection) {
     return new MAttributeBrowser(serverConnection);
   }
 
