@@ -4,47 +4,11 @@
 	<artifactId>visualvm-5.1</artifactId> 
 	<name>visualvm-5.1</name> 
 	<version>1.0</version> 
-	<build> 
-		<sourceDirectory>src</sourceDirectory>
-		<outputDirectory>target</outputDirectory> 
-		<plugins> 
-			<plugin> 
-				<groupId>org.codehaus.mojo</groupId> 
-				<artifactId>build-helper-maven-plugin</artifactId> 
-				<version>1.7</version> 
-				<executions> 
-					<execution> 
-						<id>add-source</id> 
-						<phase>generate-sources</phase> 
-						<goals> 
-						  <goal>add-source</goal> 
-						</goals> 
-						<configuration> 
-							<sources> 
-                                <source>src\main\java</source>
-                                <source>src\teset\java</source>
-							</sources> 
-						</configuration> 
-					</execution> 
-				</executions> 
-			</plugin>
-			<plugin> 
-				<groupId>org.apache.maven.plugins</groupId> 
-				<artifactId>maven-compiler-plugin</artifactId> 
-				<configuration> 
-					<source>1.5</source> 
-					<target>1.5</target> 
-					<excludes> 
-						<exclude>**/*.*</exclude> 
-					</excludes>
-				</configuration> 
-			</plugin>
-		</plugins> 
-	</build> 
 	<properties> 
 		<sonar.importSources>true</sonar.importSources>
 		<sonar.phase>generate-sources</sonar.phase> 
 		<sonar.dynamicAnalysis>false</sonar.dynamicAnalysis>
 		<sonar.light>true</sonar.light>
+		<sonar.java.source>1.7</sonar.java.source>
 	</properties> 
 </project>
