@@ -62,10 +62,6 @@ public class ServerInformationTest extends TestCase {
     private static final String OS_ARCH = "amd64";
     private static final String OS_NAME_CUSTOM = "Windows Server 2008 (64bit)";
 
-    @Override
-    protected void setUp() throws Exception {
-        super.setUp();
-    }
 
     /**
      * Test server, database and connectors info using mock
