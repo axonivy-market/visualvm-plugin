@@ -71,7 +71,8 @@ public class MChartDataSource {
     serieDataSources.add(serieDataSource);
   }
 
-  public void addMeanSerie(String serie, String mBeanName, String totalValueAttribute, String countAttribute) {
+  public void addMeanSerie(String serie, String mBeanName, String totalValueAttribute,
+          String countAttribute) {
     addMeanSerie(serie, (SerieStyle) null, mBeanName, totalValueAttribute, countAttribute);
   }
 
