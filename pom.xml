@@ -136,7 +136,7 @@
                     <netbeansInstallation>${visualvm.installation}</netbeansInstallation>
                     <author>ivyTeam AG</author>
                     <homePageUrl>http://www.xpertivy.ch</homePageUrl>
-                    <licenseFile>license.txt</licenseFile>
+                    <licenseFile>${basedir}/target/license.txt</licenseFile>
                     <licenseName>Xpert.ivy Server Monitor</licenseName>
                     <requiresRestart>true</requiresRestart>
                 </configuration>
@@ -193,8 +193,8 @@
                     </execution>
                 </executions>
                 <configuration>
-                    <file>${basedir}/licenseFormat</file>
-                    <outputFile>${basedir}/license.txt</outputFile>
+                    <file>${basedir}/license.txt</file>
+                    <outputFile>${basedir}/target/license.txt</outputFile>
                     <replacements>
                         <replacement>
                             <token>CURRENT_YEAR</token>
