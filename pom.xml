@@ -13,7 +13,7 @@
         <netbean.version>RELEASE72</netbean.version>
         <netbeans.run.params.ide/>
         <netbeans.run.params>${netbeans.run.params.ide}</netbeans.run.params>
-        <netbeans.installation>D:\teamup\ws_visualvm\visualvm_136</netbeans.installation>
+        <visualvm.installation>D:\Project\ivyvisualvm\visualvm_platform\visualvm_137</visualvm.installation>
     </properties>
 
     <repositories>
@@ -133,7 +133,7 @@
                 <version>3.11</version>
                 <extensions>true</extensions>
                 <configuration>
-                    <netbeansInstallation>${netbeans.installation}</netbeansInstallation>
+                    <netbeansInstallation>${visualvm.installation}</netbeansInstallation>
                     <author>ivyTeam AG</author>
                     <homePageUrl>http://www.xpertivy.ch</homePageUrl>
                     <licenseFile>license.txt</licenseFile>
