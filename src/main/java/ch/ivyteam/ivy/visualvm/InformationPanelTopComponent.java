@@ -5,7 +5,6 @@ package ch.ivyteam.ivy.visualvm;
 
 import ch.ivyteam.ivy.visualvm.exception.IvyJmxDataCollectException;
 import ch.ivyteam.ivy.visualvm.model.IvyApplicationInfo;
-import ch.ivyteam.ivy.visualvm.model.IvyJmxConstant;
 import ch.ivyteam.ivy.visualvm.model.OSInfo;
 import ch.ivyteam.ivy.visualvm.model.ServerConnectorInfo;
 import ch.ivyteam.ivy.visualvm.model.SystemDatabaseInfo;
@@ -13,24 +12,8 @@ import ch.ivyteam.ivy.visualvm.service.BasicIvyJmxDataCollector;
 import ch.ivyteam.ivy.visualvm.util.DataUtils;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.util.Iterator;
 import java.util.List;
-import java.util.Map.Entry;
-import java.util.Set;
-import javax.management.AttributeNotFoundException;
-import javax.management.InstanceNotFoundException;
-import javax.management.IntrospectionException;
-import javax.management.MBeanAttributeInfo;
-import javax.management.MBeanException;
-import javax.management.MBeanInfo;
 import javax.management.MBeanServerConnection;
-import javax.management.ObjectName;
-import javax.management.ReflectionException;
-import javax.management.RuntimeMBeanException;
-import javax.management.openmbean.CompositeDataSupport;
-import javax.management.openmbean.TabularDataSupport;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
 import org.netbeans.api.settings.ConvertAsProperties;
@@ -786,8 +769,6 @@ public final class InformationPanelTopComponent extends TopComponent {
     } catch (IvyJmxDataCollectException ex) {
       Exceptions.printStackTrace(ex);
     }
-
-    collectAll(connection);
   }
 
   private void setLabelText(JLabel titleLabel, JLabel valueLabel, Object data) {
@@ -819,61 +800,6 @@ public final class InformationPanelTopComponent extends TopComponent {
 
   public JComponent getSysDbPanel() {
     return sysDbScrollPane;
-  }
-
-  private void collectAll(MBeanServerConnection connection) {
-    try {
-      Set<ObjectName> m = connection.queryNames(null, null);
-      System.out.println("=========");
-      for (ObjectName on : m) {
-        System.out.println(on);
-      }
-      System.out.println("+++++++++");
-
-      Set<ObjectName> mbeans = connection.queryNames(null, null);
-      for (ObjectName on : mbeans) {
-        MBeanInfo infos = connection.getMBeanInfo(on);
-        StringBuilder sb = new StringBuilder();
-        for (MBeanAttributeInfo beanInfo : infos.getAttributes()) {
-          sb.append(beanInfo.getName());
-          sb.append(" <=> ");
-          try {
-            if (on.equals(IvyJmxConstant.IvyServer.Server.NAME) && "licenceParameters".equals(beanInfo.
-                    getName())) {
-              TabularDataSupport t = (TabularDataSupport) connection.getAttribute(on, beanInfo.getName());
-              StringBuilder licenses = new StringBuilder();
-              Iterator<Entry<Object, Object>> it = t.entrySet().iterator();
-              while (it.hasNext()) {
-                Entry<Object, Object> entry = it.next();
-                CompositeDataSupport data = (CompositeDataSupport) entry.getValue();
-                licenses.append(data.get("propertyName"));
-                licenses.append(" <=> ");
-                licenses.append(data.get("propertyValue"));
-                licenses.append("\n");
-              }
-              try (FileOutputStream fos = new FileOutputStream("D:\\jmx\\-----licences.txt")) {
-                fos.write(licenses.toString().getBytes());
-              }
-            }
-            sb.append(connection.getAttribute(on, beanInfo.getName()));
-          } catch (IOException | AttributeNotFoundException | InstanceNotFoundException |
-                  MBeanException | ReflectionException | RuntimeMBeanException exp) {
-            sb.append("-------------------------------");
-          }
-          sb.append("\n");
-        }
-        try (FileOutputStream fos
-                = new FileOutputStream("D:\\jmx\\"
-                        + on.toString().replace(":", "@").replace("\\", "#")
-                        .replace("/", "~").replace("\"", "'")
-                        + ".txt")) {
-                  fos.write(sb.toString().getBytes());
-                }
-      }
-    } catch (IOException | InstanceNotFoundException |
-            IntrospectionException | ReflectionException ex) {
-      Exceptions.printStackTrace(ex);
-    }
   }
 
 }
