@@ -1,6 +1,5 @@
 package ch.ivyteam.ivy.visualvm.view;
 
-import com.sun.tools.visualvm.core.ui.components.DataViewComponent;
 import javax.swing.JComponent;
 
 public class LicenseView extends AbstractView {
@@ -11,12 +10,6 @@ public class LicenseView extends AbstractView {
     super(dataBeanProvider);
     fLicenseInformationPanel = new LicenseInformationPanel();
     fLicenseInformationPanel.readInformation(getDataBeanProvider().getMBeanServerConnection());
-  }
-
-  @Override
-  public DataViewComponent getViewComponent() {
-    DataViewComponent viewComponent = super.getViewComponent();
-    return viewComponent;
   }
 
   @Override
