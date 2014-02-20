@@ -37,7 +37,7 @@ public class DataUtilsTest {
   public void testToDateString() {
     Calendar calendar = Calendar.getInstance();
     calendar.set(2014, 1, 14);
-    assertEquals("Friday, 14 February 2014", DataUtils.toDateString(calendar.getTime()));
+    assertEquals("Friday, February 14, 2014", DataUtils.toDateString(calendar.getTime()));
   }
 
   @Test
