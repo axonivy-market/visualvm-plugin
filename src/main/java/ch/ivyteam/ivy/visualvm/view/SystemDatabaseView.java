@@ -48,7 +48,9 @@ public class SystemDatabaseView extends AbstractView {
 
     // Add detail views to the component:
     super.getViewComponent().addDetailsView(new DataViewComponent.DetailsView("System Database", null, 10,
-            systemDbPanel.getUiComponent(), null), DataViewComponent.BOTTOM_LEFT);
+            systemDbPanel.getUiComponent(),
+            null),
+            DataViewComponent.BOTTOM_LEFT);
   }
 
   @Override
