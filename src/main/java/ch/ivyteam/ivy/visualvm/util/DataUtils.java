@@ -6,8 +6,11 @@ package ch.ivyteam.ivy.visualvm.util;
 
 import java.text.DateFormat;
 import java.text.MessageFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
+import org.openide.util.Exceptions;
 
 public final class DataUtils {
 
@@ -15,6 +18,16 @@ public final class DataUtils {
     "database=", "databasename=", "schema="};
 
   private DataUtils() {
+  }
+
+  public static Date stringToDate(String dateString) {
+    SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+    try {
+      return format.parse(dateString);
+    } catch (ParseException ex) {
+      Exceptions.printStackTrace(ex);
+    }
+    return new Date();
   }
 
   public static String toDateString(Date date) {

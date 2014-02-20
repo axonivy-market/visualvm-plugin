@@ -15,6 +15,7 @@ public class IvyJmxConstant {
       public static final String KEY_DEVELOPER_MODE = "developerMode";
       public static final String KEY_RELEASE_CANDIDATE = "releaseCandidate";
       public static final String KEY_INSTALLATION_DIRECTORY = "installationDirectory";
+      public static final String KEY_LICENSE_PARAMETERS = "licenceParameters";
 
       static {
         try {

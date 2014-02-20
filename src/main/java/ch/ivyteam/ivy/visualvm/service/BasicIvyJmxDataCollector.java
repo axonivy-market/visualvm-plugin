@@ -7,6 +7,7 @@ package ch.ivyteam.ivy.visualvm.service;
 import ch.ivyteam.ivy.visualvm.exception.IvyJmxDataCollectException;
 import ch.ivyteam.ivy.visualvm.model.IvyApplicationInfo;
 import ch.ivyteam.ivy.visualvm.model.IvyJmxConstant;
+import ch.ivyteam.ivy.visualvm.model.IvyLicenseInfo;
 import ch.ivyteam.ivy.visualvm.model.OSInfo;
 import ch.ivyteam.ivy.visualvm.model.ServerConnectorInfo;
 import ch.ivyteam.ivy.visualvm.model.SystemDatabaseInfo;
@@ -14,7 +15,9 @@ import ch.ivyteam.ivy.visualvm.util.DataUtils;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import javax.management.Attribute;
 import javax.management.AttributeList;
@@ -24,6 +27,8 @@ import javax.management.MBeanException;
 import javax.management.MBeanServerConnection;
 import javax.management.ObjectName;
 import javax.management.ReflectionException;
+import javax.management.openmbean.CompositeDataSupport;
+import javax.management.openmbean.TabularDataSupport;
 
 public class BasicIvyJmxDataCollector {
 
@@ -195,6 +200,27 @@ public class BasicIvyJmxDataCollector {
       throw new IvyJmxDataCollectException(ex);
     }
     return systemDatabase;
+  }
+
+  public IvyLicenseInfo getLicenseInfo(MBeanServerConnection connection) throws IvyJmxDataCollectException {
+    IvyLicenseInfo licenseInfo = new IvyLicenseInfo();
+    String attributeName = IvyJmxConstant.IvyServer.Server.KEY_LICENSE_PARAMETERS;
+    ObjectName objectName = IvyJmxConstant.IvyServer.Server.NAME;
+    try {
+      TabularDataSupport tabular = (TabularDataSupport) connection.getAttribute(objectName, attributeName);
+      Iterator<Map.Entry<Object, Object>> it = tabular.entrySet().iterator();
+      while (it.hasNext()) {
+        Map.Entry<Object, Object> entry = it.next();
+        CompositeDataSupport data = (CompositeDataSupport) entry.getValue();
+        if (data.get("propertyName").toString().equals("licence.valid.until")) {
+          licenseInfo.setLicenseExpirationDay(data.get("propertyValue").toString());
+        }
+      }
+    } catch (MBeanException | AttributeNotFoundException | InstanceNotFoundException | ReflectionException |
+            IOException ex) {
+      throw new IvyJmxDataCollectException(ex);
+    }
+    return licenseInfo;
   }
 
 }
