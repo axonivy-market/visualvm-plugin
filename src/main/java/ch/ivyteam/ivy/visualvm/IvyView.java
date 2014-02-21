@@ -6,8 +6,6 @@ import ch.ivyteam.ivy.visualvm.view.InformationView;
 import ch.ivyteam.ivy.visualvm.view.LicenseView;
 import ch.ivyteam.ivy.visualvm.view.RequestView;
 import ch.ivyteam.ivy.visualvm.view.RequestViewNew;
-import ch.ivyteam.ivy.visualvm.view.SystemDatabaseView;
-import ch.ivyteam.ivy.visualvm.view.UserDefinedView;
 import com.sun.tools.visualvm.application.Application;
 import com.sun.tools.visualvm.core.options.GlobalPreferences;
 import com.sun.tools.visualvm.core.scheduler.Quantum;
@@ -71,14 +69,10 @@ class IvyView extends DataSourceView {
     LicenseView licenseView = new LicenseView(dataBeanProvider);
     RequestView requestView = new RequestView(dataBeanProvider);
     RequestViewNew requestViewNew = new RequestViewNew(dataBeanProvider);
-    SystemDatabaseView sysDbView = new SystemDatabaseView(dataBeanProvider);
-    UserDefinedView userDefinedView = new UserDefinedView(dataBeanProvider);
     views.add(infoView);
     views.add(licenseView);
     views.add(requestView);
     views.add(requestViewNew);
-    views.add(sysDbView);
-    views.add(userDefinedView);
 
     tabbed.addTab("Information", (Icon) ImageUtilities.loadImage(INFO_IMAGE_PATH, true),
             infoView.getViewComponent());
@@ -88,14 +82,9 @@ class IvyView extends DataSourceView {
             requestView.getViewComponent());
     tabbed.addTab("User Requests New", (Icon) ImageUtilities.loadImage(USER_REQ_IMAGE_PATH, true),
             requestViewNew.getViewComponent());
-    tabbed.addTab("DB Connection", (Icon) ImageUtilities.loadImage(DBCON_IMAGE_PATH, true),
-            sysDbView.getViewComponent());
-    tabbed.addTab("User Defined", (Icon) ImageUtilities.loadImage(USER_DEF_IMAGE_PATH, true),
-            userDefinedView.getViewComponent());
 
     updateTask = Scheduler.sharedInstance().schedule(new UpdateChartTask(),
-            Quantum.seconds(GlobalPreferences.sharedInstance().
-                    getMonitoredDataPoll()));
+            Quantum.seconds(GlobalPreferences.sharedInstance().getMonitoredDataPoll()));
     return dvcRoot;
   }
 
