@@ -1,10 +1,10 @@
 package ch.ivyteam.ivy.visualvm.view;
 
-import ch.ivyteam.ivy.visualvm.MUtil;
 import ch.ivyteam.ivy.visualvm.chart.ChartsPanel;
 import ch.ivyteam.ivy.visualvm.chart.MChartDataSource;
 import ch.ivyteam.ivy.visualvm.chart.SerieStyle;
 import ch.ivyteam.ivy.visualvm.model.IvyJmxConstant;
+import ch.ivyteam.ivy.visualvm.util.DataUtils;
 import com.sun.tools.visualvm.core.ui.components.DataViewComponent;
 import java.io.IOException;
 import java.util.Collections;
@@ -91,7 +91,7 @@ public class RequestView extends AbstractView {
   }
 
   private ObjectName getTomcatManagerName() {
-    Set<ObjectName> tomcatManagers = MUtil.queryNames(getDataBeanProvider().getMBeanServerConnection(),
+    Set<ObjectName> tomcatManagers = DataUtils.queryNames(getDataBeanProvider().getMBeanServerConnection(),
             "*:type=Manager,context=*,host=localhost");
     if (tomcatManagers.size() >= 1) {
       return tomcatManagers.iterator().next();

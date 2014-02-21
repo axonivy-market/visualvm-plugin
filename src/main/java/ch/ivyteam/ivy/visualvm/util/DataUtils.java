@@ -4,12 +4,17 @@
  */
 package ch.ivyteam.ivy.visualvm.util;
 
+import java.io.IOException;
 import java.text.DateFormat;
 import java.text.MessageFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
+import java.util.Set;
+import javax.management.MBeanServerConnection;
+import javax.management.MalformedObjectNameException;
+import javax.management.ObjectName;
 import org.openide.util.Exceptions;
 
 public final class DataUtils {
@@ -200,6 +205,14 @@ public final class DataUtils {
 
   private static boolean isValidCharForSchema(char c) {
     return Character.isDigit(c) || Character.isLetter(c) || ('_' == c);
+  }
+
+  public static Set<ObjectName> queryNames(MBeanServerConnection serverConnection, String filter) {
+    try {
+      return serverConnection.queryNames(new ObjectName(filter), null);
+    } catch (IOException | MalformedObjectNameException ex) {
+      throw new IllegalArgumentException(ex);
+    }
   }
 
 }

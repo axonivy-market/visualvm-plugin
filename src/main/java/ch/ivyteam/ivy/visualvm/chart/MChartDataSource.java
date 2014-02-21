@@ -3,7 +3,6 @@
  */
 package ch.ivyteam.ivy.visualvm.chart;
 
-import ch.ivyteam.ivy.visualvm.MUtil;
 import com.sun.tools.visualvm.charts.SimpleXYChartDescriptor;
 import java.util.ArrayList;
 import java.util.List;
@@ -26,7 +25,7 @@ public class MChartDataSource {
     fYAxisDescription = yAxisDescription;
   }
 
-  long[] getValues(MQueryResult result) {
+  public long[] getValues(MQueryResult result) {
     long[] values = new long[serieDataSources.size()];
     int pos = 0;
     for (MSerieDataSource dataSource : serieDataSources) {
@@ -35,46 +34,22 @@ public class MChartDataSource {
     return values;
   }
 
-  public void addSerie(String serie, String mBeanName, String attribute) {
-    addSerie(serie, MUtil.createObjectName(mBeanName), attribute);
-  }
-
-  public void addSerie(String serie, SerieStyle style, String mBeanName, String attribute) {
-    addSerie(serie, style, MUtil.createObjectName(mBeanName), attribute);
-  }
-
-  public void addSerie(String serie, ObjectName mBeanName, String attribute) {
-    addSerie(serie, null, mBeanName, attribute);
-  }
-
   public void addSerie(String serie, SerieStyle style, ObjectName mBeanName, String attribute) {
     MSerieDataSource serieDataSource = new MAttributeDataSource(serie, 1L,
             style, mBeanName, attribute);
     serieDataSources.add(serieDataSource);
   }
 
-  public void addDeltaSerie(String serie, String mBeanName, String attribute) {
-    addDeltaSerie(serie, MUtil.createObjectName(mBeanName), attribute);
-  }
-
-  public void addDeltaSerie(String serie, SerieStyle style, String mBeanName, String attribute) {
-    addDeltaSerie(serie, style, MUtil.createObjectName(mBeanName), attribute);
-  }
-
   public void addDeltaSerie(String serie, ObjectName mBeanName, String attribute) {
     addDeltaSerie(serie, null, mBeanName, attribute);
   }
 
-  public void addDeltaSerie(String serie, SerieStyle style, ObjectName mBeanName, String attribute) {
+  private void addDeltaSerie(String serie, SerieStyle style, ObjectName mBeanName, String attribute) {
     MSerieDataSource serieDataSource = new MDeltaAttributeDataSource(serie, 1L, style, mBeanName, attribute);
     serieDataSources.add(serieDataSource);
   }
 
-  void addSerie(MSerieDataSource serieDataSource) {
-    serieDataSources.add(serieDataSource);
-  }
-
-  void configureChart(SimpleXYChartDescriptor chartDescriptor) {
+  public void configureChart(SimpleXYChartDescriptor chartDescriptor) {
     if (fChartName != null) {
       chartDescriptor.setChartTitle(fChartName);
     }
@@ -90,7 +65,7 @@ public class MChartDataSource {
     }
   }
 
-  void updateQuery(MQuery query) {
+  public void updateQuery(MQuery query) {
     for (MSerieDataSource dataSource : serieDataSources) {
       dataSource.updateQuery(query);
     }

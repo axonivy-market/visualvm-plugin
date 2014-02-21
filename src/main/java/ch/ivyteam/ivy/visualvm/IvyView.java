@@ -54,7 +54,7 @@ class IvyView extends DataSourceView {
     // Master view:
     JTabbedPane tabbed = new JTabbedPane();
     // Add the master view and configuration view to the component:
-    DataViewComponent dvcRoot = createDVC("", tabbed);
+    DataViewComponent dvcRoot = createDVC("", null);
     dvcRoot.add(tabbed);
 
     dataBeanProvider = new IDataBeanProvider() {
