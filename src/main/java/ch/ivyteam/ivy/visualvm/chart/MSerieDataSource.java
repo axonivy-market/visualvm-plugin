@@ -12,7 +12,7 @@ import com.sun.tools.visualvm.charts.SimpleXYChartDescriptor;
 abstract class MSerieDataSource {
 
   private long fScaleFactor = 1L;
-  private String fSerie;
+  private final String fSerie;
   private SerieStyle fStyle;
 
   MSerieDataSource(String serie, long scaleFactor, SerieStyle style) {
@@ -57,6 +57,7 @@ abstract class MSerieDataSource {
     return fStyle;
   }
 
+  @Override
   public String toString() {
     return fSerie;
   }

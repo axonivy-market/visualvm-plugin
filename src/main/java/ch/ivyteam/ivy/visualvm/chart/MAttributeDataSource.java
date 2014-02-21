@@ -10,8 +10,8 @@ import javax.management.ObjectName;
  * @author rwei
  */
 class MAttributeDataSource extends MSerieDataSource {
-  private String fAttribute;
-  private ObjectName fMBeanName;
+  private final String fAttribute;
+  private final ObjectName fMBeanName;
 
   MAttributeDataSource(String serie, long scaleFactor, SerieStyle serieStyle, ObjectName mBeanName,
           String attribute) {
