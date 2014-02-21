@@ -51,6 +51,8 @@ public class RequestView extends AbstractView {
             "sessions");
     sessionDataSource.addSerie("Licensed", SerieStyle.LINE, IvyJmxConstant.IvyServer.SecurityManager.NAME,
             "licensedSessions");
+    sessionDataSource.addSerie("RD", SerieStyle.LINE, IvyJmxConstant.IvyServer.RichDialogExecution.NAME,
+            IvyJmxConstant.IvyServer.RichDialogExecution.KEY_RD_SESSIONS);
     requestPanel.addChart(sessionDataSource);
 
     // Add detail views to the component:

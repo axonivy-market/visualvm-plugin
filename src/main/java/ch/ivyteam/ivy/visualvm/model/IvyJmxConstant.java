@@ -43,6 +43,20 @@ public class IvyJmxConstant {
 
     }
 
+    public static final class RichDialogExecution {
+      public static ObjectName NAME;
+      public static final String KEY_RD_SESSIONS = "richDialogSessions";
+
+      static {
+        try {
+          NAME = new ObjectName("Xpert.ivy Server:type=Rich Dialog Execution Manager");
+        } catch (MalformedObjectNameException ex) {
+          Exceptions.printStackTrace(ex);
+        }
+      }
+
+    }
+
     public static final class DatabasePersistency {
       public static ObjectName NAME;
       public static final String KEY_PRODUCT_NAME = "databaseProductName";
