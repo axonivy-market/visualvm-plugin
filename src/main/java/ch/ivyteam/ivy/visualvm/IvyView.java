@@ -1,6 +1,5 @@
 package ch.ivyteam.ivy.visualvm;
 
-import ch.ivyteam.ivy.visualvm.chart.ChartsPanel;
 import ch.ivyteam.ivy.visualvm.view.AbstractView;
 import ch.ivyteam.ivy.visualvm.view.IDataBeanProvider;
 import ch.ivyteam.ivy.visualvm.view.InformationView;
@@ -39,10 +38,10 @@ class IvyView extends DataSourceView {
   public static final String DBCON_IMAGE_PATH = "resources/icons/dbcon.png";
   public static final String USER_REQ_IMAGE_PATH = "resources/icons/user_req.png";
   public static final String USER_DEF_IMAGE_PATH = "resources/icons/user_def.png";
+  public static final String LICENSE_IMAGE_PATH = "resources/icons/licence.png";
 
   @SuppressWarnings("unused")
   private ScheduledTask updateTask;
-  private final List<ChartsPanel> chartsPanels = new ArrayList<>();
   private final List<AbstractView> views = new ArrayList<>();
   private IDataBeanProvider dataBeanProvider;
 
@@ -83,7 +82,7 @@ class IvyView extends DataSourceView {
 
     tabbed.addTab("Information", (Icon) ImageUtilities.loadImage(INFO_IMAGE_PATH, true),
             infoView.getViewComponent());
-    tabbed.addTab("License", (Icon) ImageUtilities.loadImage(IVY_IMAGE_PATH, true),
+    tabbed.addTab("License", (Icon) ImageUtilities.loadImage(LICENSE_IMAGE_PATH, true),
             licenseView.getViewComponent());
     tabbed.addTab("User Requests", (Icon) ImageUtilities.loadImage(USER_REQ_IMAGE_PATH, true),
             requestView.getViewComponent());

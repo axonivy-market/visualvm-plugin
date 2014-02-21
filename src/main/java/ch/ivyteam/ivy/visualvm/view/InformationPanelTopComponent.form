@@ -59,7 +59,7 @@
             <Component class="javax.swing.JLabel" name="versionLabel">
               <Properties>
                 <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-                  <ResourceString bundle="ch/ivyteam/ivy/visualvm/Bundle.properties" key="InformationPanelTopComponent.versionLabel.text" replaceFormat="org.openide.util.NbBundle.getMessage({sourceFileName}.class, &quot;{key}&quot;)"/>
+                  <ResourceString bundle="ch/ivyteam/ivy/visualvm/view/Bundle.properties" key="InformationPanelTopComponent.versionLabel.text" replaceFormat="org.openide.util.NbBundle.getMessage({sourceFileName}.class, &quot;{key}&quot;)"/>
                 </Property>
               </Properties>
               <Constraints>
@@ -71,7 +71,7 @@
             <Component class="javax.swing.JLabel" name="buildDateLabel">
               <Properties>
                 <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-                  <ResourceString bundle="ch/ivyteam/ivy/visualvm/Bundle.properties" key="InformationPanelTopComponent.buildDateLabel.text" replaceFormat="org.openide.util.NbBundle.getMessage({sourceFileName}.class, &quot;{key}&quot;)"/>
+                  <ResourceString bundle="ch/ivyteam/ivy/visualvm/view/Bundle.properties" key="InformationPanelTopComponent.buildDateLabel.text" replaceFormat="org.openide.util.NbBundle.getMessage({sourceFileName}.class, &quot;{key}&quot;)"/>
                 </Property>
               </Properties>
               <Constraints>
@@ -83,7 +83,7 @@
             <Component class="javax.swing.JLabel" name="installDirLabel">
               <Properties>
                 <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-                  <ResourceString bundle="ch/ivyteam/ivy/visualvm/Bundle.properties" key="InformationPanelTopComponent.installDirLabel.text" replaceFormat="org.openide.util.NbBundle.getMessage({sourceFileName}.class, &quot;{key}&quot;)"/>
+                  <ResourceString bundle="ch/ivyteam/ivy/visualvm/view/Bundle.properties" key="InformationPanelTopComponent.installDirLabel.text" replaceFormat="org.openide.util.NbBundle.getMessage({sourceFileName}.class, &quot;{key}&quot;)"/>
                 </Property>
               </Properties>
               <Constraints>
@@ -95,7 +95,7 @@
             <Component class="javax.swing.JLabel" name="operatingSystemLabel">
               <Properties>
                 <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-                  <ResourceString bundle="ch/ivyteam/ivy/visualvm/Bundle.properties" key="InformationPanelTopComponent.operatingSystemLabel.text" replaceFormat="org.openide.util.NbBundle.getMessage({sourceFileName}.class, &quot;{key}&quot;)"/>
+                  <ResourceString bundle="ch/ivyteam/ivy/visualvm/view/Bundle.properties" key="InformationPanelTopComponent.operatingSystemLabel.text" replaceFormat="org.openide.util.NbBundle.getMessage({sourceFileName}.class, &quot;{key}&quot;)"/>
                 </Property>
               </Properties>
               <Constraints>
@@ -122,7 +122,7 @@
             <Component class="javax.swing.JLabel" name="hostNameLabel">
               <Properties>
                 <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-                  <ResourceString bundle="ch/ivyteam/ivy/visualvm/Bundle.properties" key="InformationPanelTopComponent.hostNameLabel.text" replaceFormat="org.openide.util.NbBundle.getMessage({sourceFileName}.class, &quot;{key}&quot;)"/>
+                  <ResourceString bundle="ch/ivyteam/ivy/visualvm/view/Bundle.properties" key="InformationPanelTopComponent.hostNameLabel.text" replaceFormat="org.openide.util.NbBundle.getMessage({sourceFileName}.class, &quot;{key}&quot;)"/>
                 </Property>
               </Properties>
               <Constraints>
@@ -150,7 +150,7 @@
             <Component class="javax.swing.JLabel" name="version">
               <Properties>
                 <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-                  <ResourceString bundle="ch/ivyteam/ivy/visualvm/Bundle.properties" key="InformationPanelTopComponent.version.text" replaceFormat="org.openide.util.NbBundle.getMessage({sourceFileName}.class, &quot;{key}&quot;)"/>
+                  <ResourceString bundle="ch/ivyteam/ivy/visualvm/view/Bundle.properties" key="InformationPanelTopComponent.version.text" replaceFormat="org.openide.util.NbBundle.getMessage({sourceFileName}.class, &quot;{key}&quot;)"/>
                 </Property>
               </Properties>
               <Constraints>
@@ -162,7 +162,7 @@
             <Component class="javax.swing.JLabel" name="buildDate">
               <Properties>
                 <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-                  <ResourceString bundle="ch/ivyteam/ivy/visualvm/Bundle.properties" key="InformationPanelTopComponent.buildDate.text" replaceFormat="org.openide.util.NbBundle.getMessage({sourceFileName}.class, &quot;{key}&quot;)"/>
+                  <ResourceString bundle="ch/ivyteam/ivy/visualvm/view/Bundle.properties" key="InformationPanelTopComponent.buildDate.text" replaceFormat="org.openide.util.NbBundle.getMessage({sourceFileName}.class, &quot;{key}&quot;)"/>
                 </Property>
               </Properties>
               <Constraints>
@@ -174,7 +174,7 @@
             <Component class="javax.swing.JLabel" name="installationDirectory">
               <Properties>
                 <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-                  <ResourceString bundle="ch/ivyteam/ivy/visualvm/Bundle.properties" key="InformationPanelTopComponent.installationDirectory.text" replaceFormat="org.openide.util.NbBundle.getMessage({sourceFileName}.class, &quot;{key}&quot;)"/>
+                  <ResourceString bundle="ch/ivyteam/ivy/visualvm/view/Bundle.properties" key="InformationPanelTopComponent.installationDirectory.text" replaceFormat="org.openide.util.NbBundle.getMessage({sourceFileName}.class, &quot;{key}&quot;)"/>
                 </Property>
               </Properties>
               <Constraints>
@@ -201,7 +201,7 @@
             <Component class="javax.swing.JLabel" name="operatingSystem">
               <Properties>
                 <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-                  <ResourceString bundle="ch/ivyteam/ivy/visualvm/Bundle.properties" key="InformationPanelTopComponent.operatingSystem.text" replaceFormat="org.openide.util.NbBundle.getMessage({sourceFileName}.class, &quot;{key}&quot;)"/>
+                  <ResourceString bundle="ch/ivyteam/ivy/visualvm/view/Bundle.properties" key="InformationPanelTopComponent.operatingSystem.text" replaceFormat="org.openide.util.NbBundle.getMessage({sourceFileName}.class, &quot;{key}&quot;)"/>
                 </Property>
               </Properties>
               <Constraints>
@@ -213,7 +213,7 @@
             <Component class="javax.swing.JLabel" name="hostNameValue">
               <Properties>
                 <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-                  <ResourceString bundle="ch/ivyteam/ivy/visualvm/Bundle.properties" key="InformationPanelTopComponent.hostNameValue.text" replaceFormat="org.openide.util.NbBundle.getMessage({sourceFileName}.class, &quot;{key}&quot;)"/>
+                  <ResourceString bundle="ch/ivyteam/ivy/visualvm/view/Bundle.properties" key="InformationPanelTopComponent.hostNameValue.text" replaceFormat="org.openide.util.NbBundle.getMessage({sourceFileName}.class, &quot;{key}&quot;)"/>
                 </Property>
               </Properties>
               <Constraints>
@@ -278,7 +278,7 @@
                 <Component class="javax.swing.JLabel" name="dbIvySysDbVersionLabel">
                   <Properties>
                     <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-                      <ResourceString bundle="ch/ivyteam/ivy/visualvm/Bundle.properties" key="InformationPanelTopComponent.dbIvySysDbVersionLabel.text" replaceFormat="org.openide.util.NbBundle.getMessage({sourceFileName}.class, &quot;{key}&quot;)"/>
+                      <ResourceString bundle="ch/ivyteam/ivy/visualvm/view/Bundle.properties" key="InformationPanelTopComponent.dbIvySysDbVersionLabel.text" replaceFormat="org.openide.util.NbBundle.getMessage({sourceFileName}.class, &quot;{key}&quot;)"/>
                     </Property>
                   </Properties>
                   <Constraints>
@@ -290,7 +290,7 @@
                 <Component class="javax.swing.JLabel" name="dbTypeLabel">
                   <Properties>
                     <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-                      <ResourceString bundle="ch/ivyteam/ivy/visualvm/Bundle.properties" key="InformationPanelTopComponent.dbTypeLabel.text" replaceFormat="org.openide.util.NbBundle.getMessage({sourceFileName}.class, &quot;{key}&quot;)"/>
+                      <ResourceString bundle="ch/ivyteam/ivy/visualvm/view/Bundle.properties" key="InformationPanelTopComponent.dbTypeLabel.text" replaceFormat="org.openide.util.NbBundle.getMessage({sourceFileName}.class, &quot;{key}&quot;)"/>
                     </Property>
                     <Property name="horizontalTextPosition" type="int" value="2"/>
                   </Properties>
@@ -303,7 +303,7 @@
                 <Component class="javax.swing.JLabel" name="dbVersionLabel">
                   <Properties>
                     <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-                      <ResourceString bundle="ch/ivyteam/ivy/visualvm/Bundle.properties" key="InformationPanelTopComponent.dbVersionLabel.text" replaceFormat="org.openide.util.NbBundle.getMessage({sourceFileName}.class, &quot;{key}&quot;)"/>
+                      <ResourceString bundle="ch/ivyteam/ivy/visualvm/view/Bundle.properties" key="InformationPanelTopComponent.dbVersionLabel.text" replaceFormat="org.openide.util.NbBundle.getMessage({sourceFileName}.class, &quot;{key}&quot;)"/>
                     </Property>
                   </Properties>
                   <Constraints>
@@ -315,7 +315,7 @@
                 <Component class="javax.swing.JLabel" name="dbDriverNameLabel">
                   <Properties>
                     <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-                      <ResourceString bundle="ch/ivyteam/ivy/visualvm/Bundle.properties" key="InformationPanelTopComponent.dbDriverNameLabel.text" replaceFormat="org.openide.util.NbBundle.getMessage({sourceFileName}.class, &quot;{key}&quot;)"/>
+                      <ResourceString bundle="ch/ivyteam/ivy/visualvm/view/Bundle.properties" key="InformationPanelTopComponent.dbDriverNameLabel.text" replaceFormat="org.openide.util.NbBundle.getMessage({sourceFileName}.class, &quot;{key}&quot;)"/>
                     </Property>
                   </Properties>
                   <Constraints>
@@ -327,7 +327,7 @@
                 <Component class="javax.swing.JLabel" name="dbConnectionUrlLabel">
                   <Properties>
                     <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-                      <ResourceString bundle="ch/ivyteam/ivy/visualvm/Bundle.properties" key="InformationPanelTopComponent.dbConnectionUrlLabel.text" replaceFormat="org.openide.util.NbBundle.getMessage({sourceFileName}.class, &quot;{key}&quot;)"/>
+                      <ResourceString bundle="ch/ivyteam/ivy/visualvm/view/Bundle.properties" key="InformationPanelTopComponent.dbConnectionUrlLabel.text" replaceFormat="org.openide.util.NbBundle.getMessage({sourceFileName}.class, &quot;{key}&quot;)"/>
                     </Property>
                   </Properties>
                   <Constraints>
@@ -339,7 +339,7 @@
                 <Component class="javax.swing.JLabel" name="dbCredentialUsernameLabel">
                   <Properties>
                     <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-                      <ResourceString bundle="ch/ivyteam/ivy/visualvm/Bundle.properties" key="InformationPanelTopComponent.dbCredentialUsernameLabel.text" replaceFormat="org.openide.util.NbBundle.getMessage({sourceFileName}.class, &quot;{key}&quot;)"/>
+                      <ResourceString bundle="ch/ivyteam/ivy/visualvm/view/Bundle.properties" key="InformationPanelTopComponent.dbCredentialUsernameLabel.text" replaceFormat="org.openide.util.NbBundle.getMessage({sourceFileName}.class, &quot;{key}&quot;)"/>
                     </Property>
                   </Properties>
                   <Constraints>
@@ -351,7 +351,7 @@
                 <Component class="javax.swing.JLabel" name="dbHostLabel">
                   <Properties>
                     <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-                      <ResourceString bundle="ch/ivyteam/ivy/visualvm/Bundle.properties" key="InformationPanelTopComponent.dbHostLabel.text" replaceFormat="org.openide.util.NbBundle.getMessage({sourceFileName}.class, &quot;{key}&quot;)"/>
+                      <ResourceString bundle="ch/ivyteam/ivy/visualvm/view/Bundle.properties" key="InformationPanelTopComponent.dbHostLabel.text" replaceFormat="org.openide.util.NbBundle.getMessage({sourceFileName}.class, &quot;{key}&quot;)"/>
                     </Property>
                   </Properties>
                   <Constraints>
@@ -363,7 +363,7 @@
                 <Component class="javax.swing.JLabel" name="dbPortLabel">
                   <Properties>
                     <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-                      <ResourceString bundle="ch/ivyteam/ivy/visualvm/Bundle.properties" key="InformationPanelTopComponent.dbPortLabel.text" replaceFormat="org.openide.util.NbBundle.getMessage({sourceFileName}.class, &quot;{key}&quot;)"/>
+                      <ResourceString bundle="ch/ivyteam/ivy/visualvm/view/Bundle.properties" key="InformationPanelTopComponent.dbPortLabel.text" replaceFormat="org.openide.util.NbBundle.getMessage({sourceFileName}.class, &quot;{key}&quot;)"/>
                     </Property>
                   </Properties>
                   <Constraints>
@@ -390,7 +390,7 @@
                 <Component class="javax.swing.JLabel" name="dbNameLabel">
                   <Properties>
                     <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-                      <ResourceString bundle="ch/ivyteam/ivy/visualvm/Bundle.properties" key="InformationPanelTopComponent.dbNameLabel.text" replaceFormat="org.openide.util.NbBundle.getMessage({sourceFileName}.class, &quot;{key}&quot;)"/>
+                      <ResourceString bundle="ch/ivyteam/ivy/visualvm/view/Bundle.properties" key="InformationPanelTopComponent.dbNameLabel.text" replaceFormat="org.openide.util.NbBundle.getMessage({sourceFileName}.class, &quot;{key}&quot;)"/>
                     </Property>
                   </Properties>
                   <Constraints>
@@ -418,7 +418,7 @@
                 <Component class="javax.swing.JLabel" name="dbIvySysDbVersion">
                   <Properties>
                     <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-                      <ResourceString bundle="ch/ivyteam/ivy/visualvm/Bundle.properties" key="InformationPanelTopComponent.dbIvySysDbVersion.text" replaceFormat="org.openide.util.NbBundle.getMessage({sourceFileName}.class, &quot;{key}&quot;)"/>
+                      <ResourceString bundle="ch/ivyteam/ivy/visualvm/view/Bundle.properties" key="InformationPanelTopComponent.dbIvySysDbVersion.text" replaceFormat="org.openide.util.NbBundle.getMessage({sourceFileName}.class, &quot;{key}&quot;)"/>
                     </Property>
                   </Properties>
                   <Constraints>
@@ -431,7 +431,7 @@
                   <Properties>
                     <Property name="horizontalAlignment" type="int" value="2"/>
                     <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-                      <ResourceString bundle="ch/ivyteam/ivy/visualvm/Bundle.properties" key="InformationPanelTopComponent.dbType.text" replaceFormat="org.openide.util.NbBundle.getMessage({sourceFileName}.class, &quot;{key}&quot;)"/>
+                      <ResourceString bundle="ch/ivyteam/ivy/visualvm/view/Bundle.properties" key="InformationPanelTopComponent.dbType.text" replaceFormat="org.openide.util.NbBundle.getMessage({sourceFileName}.class, &quot;{key}&quot;)"/>
                     </Property>
                   </Properties>
                   <Constraints>
@@ -444,7 +444,7 @@
                   <Properties>
                     <Property name="horizontalAlignment" type="int" value="2"/>
                     <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-                      <ResourceString bundle="ch/ivyteam/ivy/visualvm/Bundle.properties" key="InformationPanelTopComponent.dbVersion.text" replaceFormat="org.openide.util.NbBundle.getMessage({sourceFileName}.class, &quot;{key}&quot;)"/>
+                      <ResourceString bundle="ch/ivyteam/ivy/visualvm/view/Bundle.properties" key="InformationPanelTopComponent.dbVersion.text" replaceFormat="org.openide.util.NbBundle.getMessage({sourceFileName}.class, &quot;{key}&quot;)"/>
                     </Property>
                   </Properties>
                   <Constraints>
@@ -457,7 +457,7 @@
                   <Properties>
                     <Property name="horizontalAlignment" type="int" value="2"/>
                     <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-                      <ResourceString bundle="ch/ivyteam/ivy/visualvm/Bundle.properties" key="InformationPanelTopComponent.dbDriverName.text" replaceFormat="org.openide.util.NbBundle.getMessage({sourceFileName}.class, &quot;{key}&quot;)"/>
+                      <ResourceString bundle="ch/ivyteam/ivy/visualvm/view/Bundle.properties" key="InformationPanelTopComponent.dbDriverName.text" replaceFormat="org.openide.util.NbBundle.getMessage({sourceFileName}.class, &quot;{key}&quot;)"/>
                     </Property>
                   </Properties>
                   <Constraints>
@@ -470,7 +470,7 @@
                   <Properties>
                     <Property name="horizontalAlignment" type="int" value="2"/>
                     <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-                      <ResourceString bundle="ch/ivyteam/ivy/visualvm/Bundle.properties" key="InformationPanelTopComponent.dbConnectionUrl.text" replaceFormat="org.openide.util.NbBundle.getMessage({sourceFileName}.class, &quot;{key}&quot;)"/>
+                      <ResourceString bundle="ch/ivyteam/ivy/visualvm/view/Bundle.properties" key="InformationPanelTopComponent.dbConnectionUrl.text" replaceFormat="org.openide.util.NbBundle.getMessage({sourceFileName}.class, &quot;{key}&quot;)"/>
                     </Property>
                   </Properties>
                   <Constraints>
@@ -482,7 +482,7 @@
                 <Component class="javax.swing.JLabel" name="dbCredentialUsername">
                   <Properties>
                     <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-                      <ResourceString bundle="ch/ivyteam/ivy/visualvm/Bundle.properties" key="InformationPanelTopComponent.dbCredentialUsername.text" replaceFormat="org.openide.util.NbBundle.getMessage({sourceFileName}.class, &quot;{key}&quot;)"/>
+                      <ResourceString bundle="ch/ivyteam/ivy/visualvm/view/Bundle.properties" key="InformationPanelTopComponent.dbCredentialUsername.text" replaceFormat="org.openide.util.NbBundle.getMessage({sourceFileName}.class, &quot;{key}&quot;)"/>
                     </Property>
                   </Properties>
                   <Constraints>
@@ -494,7 +494,7 @@
                 <Component class="javax.swing.JLabel" name="dbHost">
                   <Properties>
                     <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-                      <ResourceString bundle="ch/ivyteam/ivy/visualvm/Bundle.properties" key="InformationPanelTopComponent.dbHost.text" replaceFormat="org.openide.util.NbBundle.getMessage({sourceFileName}.class, &quot;{key}&quot;)"/>
+                      <ResourceString bundle="ch/ivyteam/ivy/visualvm/view/Bundle.properties" key="InformationPanelTopComponent.dbHost.text" replaceFormat="org.openide.util.NbBundle.getMessage({sourceFileName}.class, &quot;{key}&quot;)"/>
                     </Property>
                   </Properties>
                   <Constraints>
@@ -506,7 +506,7 @@
                 <Component class="javax.swing.JLabel" name="dbPort">
                   <Properties>
                     <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-                      <ResourceString bundle="ch/ivyteam/ivy/visualvm/Bundle.properties" key="InformationPanelTopComponent.dbPort.text" replaceFormat="org.openide.util.NbBundle.getMessage({sourceFileName}.class, &quot;{key}&quot;)"/>
+                      <ResourceString bundle="ch/ivyteam/ivy/visualvm/view/Bundle.properties" key="InformationPanelTopComponent.dbPort.text" replaceFormat="org.openide.util.NbBundle.getMessage({sourceFileName}.class, &quot;{key}&quot;)"/>
                     </Property>
                   </Properties>
                   <Constraints>
@@ -533,7 +533,7 @@
                 <Component class="javax.swing.JLabel" name="dbName">
                   <Properties>
                     <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-                      <ResourceString bundle="ch/ivyteam/ivy/visualvm/Bundle.properties" key="InformationPanelTopComponent.dbName.text" replaceFormat="org.openide.util.NbBundle.getMessage({sourceFileName}.class, &quot;{key}&quot;)"/>
+                      <ResourceString bundle="ch/ivyteam/ivy/visualvm/view/Bundle.properties" key="InformationPanelTopComponent.dbName.text" replaceFormat="org.openide.util.NbBundle.getMessage({sourceFileName}.class, &quot;{key}&quot;)"/>
                     </Property>
                   </Properties>
                   <Constraints>

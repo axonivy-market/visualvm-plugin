@@ -1,6 +1,5 @@
 package ch.ivyteam.ivy.visualvm.view;
 
-import ch.ivyteam.ivy.visualvm.InformationPanelTopComponent;
 import com.sun.tools.visualvm.core.ui.components.DataViewComponent;
 import javax.swing.JComponent;
 

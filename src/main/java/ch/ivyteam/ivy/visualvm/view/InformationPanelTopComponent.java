@@ -1,7 +1,7 @@
 /*
  * To change this template, choose Tools | Templates and open the template in the editor.
  */
-package ch.ivyteam.ivy.visualvm;
+package ch.ivyteam.ivy.visualvm.view;
 
 import ch.ivyteam.ivy.visualvm.exception.IvyJmxDataCollectException;
 import ch.ivyteam.ivy.visualvm.model.IvyApplicationInfo;
@@ -26,12 +26,12 @@ import org.openide.windows.TopComponent;
 /**
  * Top component which displays something.
  */
-@ConvertAsProperties(dtd = "-//ch.ivyteam.ivy.visualvm//InformationPanel//EN", autostore = false)
+@ConvertAsProperties(dtd = "-//ch.ivyteam.ivy.visualvm.view//InformationPanel//EN", autostore = false)
 @TopComponent.Description(preferredID = "InformationPanelTopComponent",
         // iconBase="SET/PATH/TO/ICON/HERE",
         persistenceType = TopComponent.PERSISTENCE_ALWAYS)
 @TopComponent.Registration(mode = "bottomSlidingSide", openAtStartup = false)
-@ActionID(category = "Window", id = "ch.ivyteam.ivy.visualvm.InformationPanelTopComponent")
+@ActionID(category = "Window", id = "ch.ivyteam.ivy.visualvm.view.InformationPanelTopComponent")
 @ActionReference(path = "Menu/Window" /*
  * , position = 333
  */)
@@ -61,7 +61,7 @@ public final class InformationPanelTopComponent extends TopComponent {
    */
   @SuppressWarnings("PMD")
   // <editor-fold defaultstate="collapsed"
-  // desc="Generated Code">//GEN-BEGIN:initComponents
+  // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
   private void initComponents() {
     java.awt.GridBagConstraints gridBagConstraints;
 
@@ -71,15 +71,13 @@ public final class InformationPanelTopComponent extends TopComponent {
     buildDateLabel = new javax.swing.JLabel();
     installDirLabel = new javax.swing.JLabel();
     operatingSystemLabel = new javax.swing.JLabel();
-    filler6 = new javax.swing.Box.Filler(new java.awt.Dimension(0, 0),
-            new java.awt.Dimension(0, 0), new java.awt.Dimension(0, 32767));
+    filler6 = new javax.swing.Box.Filler(new java.awt.Dimension(0, 0), new java.awt.Dimension(0, 0), new java.awt.Dimension(0, 32767));
     hostNameLabel = new javax.swing.JLabel();
     generalValue = new javax.swing.JPanel();
     version = new javax.swing.JLabel();
     buildDate = new javax.swing.JLabel();
     installationDirectory = new javax.swing.JLabel();
-    filler7 = new javax.swing.Box.Filler(new java.awt.Dimension(0, 0),
-            new java.awt.Dimension(0, 0), new java.awt.Dimension(0, 32767));
+    filler7 = new javax.swing.Box.Filler(new java.awt.Dimension(0, 0), new java.awt.Dimension(0, 0), new java.awt.Dimension(0, 32767));
     operatingSystem = new javax.swing.JLabel();
     hostNameValue = new javax.swing.JLabel();
     sysDbScrollPane = new javax.swing.JScrollPane();
@@ -93,8 +91,7 @@ public final class InformationPanelTopComponent extends TopComponent {
     dbCredentialUsernameLabel = new javax.swing.JLabel();
     dbHostLabel = new javax.swing.JLabel();
     dbPortLabel = new javax.swing.JLabel();
-    filler2 = new javax.swing.Box.Filler(new java.awt.Dimension(0, 0),
-            new java.awt.Dimension(0, 0), new java.awt.Dimension(0, 32767));
+    filler2 = new javax.swing.Box.Filler(new java.awt.Dimension(0, 0), new java.awt.Dimension(0, 0), new java.awt.Dimension(0, 32767));
     dbNameLabel = new javax.swing.JLabel();
     sysDbValue = new javax.swing.JPanel();
     dbIvySysDbVersion = new javax.swing.JLabel();
@@ -105,14 +102,12 @@ public final class InformationPanelTopComponent extends TopComponent {
     dbCredentialUsername = new javax.swing.JLabel();
     dbHost = new javax.swing.JLabel();
     dbPort = new javax.swing.JLabel();
-    filler3 = new javax.swing.Box.Filler(new java.awt.Dimension(0, 0),
-            new java.awt.Dimension(0, 0), new java.awt.Dimension(0, 32767));
+    filler3 = new javax.swing.Box.Filler(new java.awt.Dimension(0, 0), new java.awt.Dimension(0, 0), new java.awt.Dimension(0, 32767));
     dbName = new javax.swing.JLabel();
     connectorsContainScrollPane = new javax.swing.JScrollPane();
     connectorsContainPanel = new javax.swing.JPanel();
     connectorsPanel = new javax.swing.JPanel();
-    filler1 = new javax.swing.Box.Filler(new java.awt.Dimension(0, 0),
-            new java.awt.Dimension(0, 0), new java.awt.Dimension(0, 32767));
+    filler1 = new javax.swing.Box.Filler(new java.awt.Dimension(0, 0), new java.awt.Dimension(0, 0), new java.awt.Dimension(0, 32767));
 
     setLayout(new java.awt.GridBagLayout());
 
@@ -126,10 +121,7 @@ public final class InformationPanelTopComponent extends TopComponent {
     generalLabel.setPreferredSize(new java.awt.Dimension(120, 72));
     generalLabel.setLayout(new java.awt.GridBagLayout());
 
-    org.openide.awt.Mnemonics.setLocalizedText(versionLabel,
-            org.openide.util.NbBundle.getMessage(
-                    InformationPanelTopComponent.class,
-                    "InformationPanelTopComponent.versionLabel.text")); // NOI18N
+    org.openide.awt.Mnemonics.setLocalizedText(versionLabel, org.openide.util.NbBundle.getMessage(InformationPanelTopComponent.class, "InformationPanelTopComponent.versionLabel.text")); // NOI18N
     gridBagConstraints = new java.awt.GridBagConstraints();
     gridBagConstraints.gridx = 0;
     gridBagConstraints.gridy = 0;
@@ -139,10 +131,7 @@ public final class InformationPanelTopComponent extends TopComponent {
     gridBagConstraints.insets = new java.awt.Insets(5, 5, 5, 5);
     generalLabel.add(versionLabel, gridBagConstraints);
 
-    org.openide.awt.Mnemonics.setLocalizedText(buildDateLabel,
-            org.openide.util.NbBundle.getMessage(
-                    InformationPanelTopComponent.class,
-                    "InformationPanelTopComponent.buildDateLabel.text")); // NOI18N
+    org.openide.awt.Mnemonics.setLocalizedText(buildDateLabel, org.openide.util.NbBundle.getMessage(InformationPanelTopComponent.class, "InformationPanelTopComponent.buildDateLabel.text")); // NOI18N
     gridBagConstraints = new java.awt.GridBagConstraints();
     gridBagConstraints.gridx = 0;
     gridBagConstraints.gridy = 1;
@@ -150,10 +139,7 @@ public final class InformationPanelTopComponent extends TopComponent {
     gridBagConstraints.insets = new java.awt.Insets(5, 5, 5, 5);
     generalLabel.add(buildDateLabel, gridBagConstraints);
 
-    org.openide.awt.Mnemonics.setLocalizedText(installDirLabel,
-            org.openide.util.NbBundle.getMessage(
-                    InformationPanelTopComponent.class,
-                    "InformationPanelTopComponent.installDirLabel.text")); // NOI18N
+    org.openide.awt.Mnemonics.setLocalizedText(installDirLabel, org.openide.util.NbBundle.getMessage(InformationPanelTopComponent.class, "InformationPanelTopComponent.installDirLabel.text")); // NOI18N
     gridBagConstraints = new java.awt.GridBagConstraints();
     gridBagConstraints.gridx = 0;
     gridBagConstraints.gridy = 2;
@@ -161,12 +147,7 @@ public final class InformationPanelTopComponent extends TopComponent {
     gridBagConstraints.insets = new java.awt.Insets(5, 5, 5, 5);
     generalLabel.add(installDirLabel, gridBagConstraints);
 
-    org.openide.awt.Mnemonics
-            .setLocalizedText(
-                    operatingSystemLabel,
-                    org.openide.util.NbBundle
-                            .getMessage(InformationPanelTopComponent.class,
-                                    "InformationPanelTopComponent.operatingSystemLabel.text")); // NOI18N
+    org.openide.awt.Mnemonics.setLocalizedText(operatingSystemLabel, org.openide.util.NbBundle.getMessage(InformationPanelTopComponent.class, "InformationPanelTopComponent.operatingSystemLabel.text")); // NOI18N
     gridBagConstraints = new java.awt.GridBagConstraints();
     gridBagConstraints.gridx = 0;
     gridBagConstraints.gridy = 3;
@@ -181,10 +162,7 @@ public final class InformationPanelTopComponent extends TopComponent {
     gridBagConstraints.weighty = 1.0;
     generalLabel.add(filler6, gridBagConstraints);
 
-    org.openide.awt.Mnemonics.setLocalizedText(hostNameLabel,
-            org.openide.util.NbBundle.getMessage(
-                    InformationPanelTopComponent.class,
-                    "InformationPanelTopComponent.hostNameLabel.text")); // NOI18N
+    org.openide.awt.Mnemonics.setLocalizedText(hostNameLabel, org.openide.util.NbBundle.getMessage(InformationPanelTopComponent.class, "InformationPanelTopComponent.hostNameLabel.text")); // NOI18N
     gridBagConstraints = new java.awt.GridBagConstraints();
     gridBagConstraints.gridx = 0;
     gridBagConstraints.gridy = 4;
@@ -207,10 +185,7 @@ public final class InformationPanelTopComponent extends TopComponent {
     generalValue.setBackground(new java.awt.Color(255, 255, 255));
     generalValue.setLayout(new java.awt.GridBagLayout());
 
-    org.openide.awt.Mnemonics.setLocalizedText(version,
-            org.openide.util.NbBundle.getMessage(
-                    InformationPanelTopComponent.class,
-                    "InformationPanelTopComponent.version.text")); // NOI18N
+    org.openide.awt.Mnemonics.setLocalizedText(version, org.openide.util.NbBundle.getMessage(InformationPanelTopComponent.class, "InformationPanelTopComponent.version.text")); // NOI18N
     gridBagConstraints = new java.awt.GridBagConstraints();
     gridBagConstraints.gridx = 0;
     gridBagConstraints.gridy = 0;
@@ -220,10 +195,7 @@ public final class InformationPanelTopComponent extends TopComponent {
     gridBagConstraints.insets = new java.awt.Insets(5, 5, 5, 5);
     generalValue.add(version, gridBagConstraints);
 
-    org.openide.awt.Mnemonics.setLocalizedText(buildDate,
-            org.openide.util.NbBundle.getMessage(
-                    InformationPanelTopComponent.class,
-                    "InformationPanelTopComponent.buildDate.text")); // NOI18N
+    org.openide.awt.Mnemonics.setLocalizedText(buildDate, org.openide.util.NbBundle.getMessage(InformationPanelTopComponent.class, "InformationPanelTopComponent.buildDate.text")); // NOI18N
     gridBagConstraints = new java.awt.GridBagConstraints();
     gridBagConstraints.gridx = 0;
     gridBagConstraints.gridy = 1;
@@ -231,12 +203,7 @@ public final class InformationPanelTopComponent extends TopComponent {
     gridBagConstraints.insets = new java.awt.Insets(5, 5, 5, 5);
     generalValue.add(buildDate, gridBagConstraints);
 
-    org.openide.awt.Mnemonics
-            .setLocalizedText(
-                    installationDirectory,
-                    org.openide.util.NbBundle
-                            .getMessage(InformationPanelTopComponent.class,
-                                    "InformationPanelTopComponent.installationDirectory.text")); // NOI18N
+    org.openide.awt.Mnemonics.setLocalizedText(installationDirectory, org.openide.util.NbBundle.getMessage(InformationPanelTopComponent.class, "InformationPanelTopComponent.installationDirectory.text")); // NOI18N
     gridBagConstraints = new java.awt.GridBagConstraints();
     gridBagConstraints.gridx = 0;
     gridBagConstraints.gridy = 2;
@@ -251,10 +218,7 @@ public final class InformationPanelTopComponent extends TopComponent {
     gridBagConstraints.weighty = 1.0;
     generalValue.add(filler7, gridBagConstraints);
 
-    org.openide.awt.Mnemonics.setLocalizedText(operatingSystem,
-            org.openide.util.NbBundle.getMessage(
-                    InformationPanelTopComponent.class,
-                    "InformationPanelTopComponent.operatingSystem.text")); // NOI18N
+    org.openide.awt.Mnemonics.setLocalizedText(operatingSystem, org.openide.util.NbBundle.getMessage(InformationPanelTopComponent.class, "InformationPanelTopComponent.operatingSystem.text")); // NOI18N
     gridBagConstraints = new java.awt.GridBagConstraints();
     gridBagConstraints.gridx = 0;
     gridBagConstraints.gridy = 3;
@@ -262,10 +226,7 @@ public final class InformationPanelTopComponent extends TopComponent {
     gridBagConstraints.insets = new java.awt.Insets(5, 5, 5, 5);
     generalValue.add(operatingSystem, gridBagConstraints);
 
-    org.openide.awt.Mnemonics.setLocalizedText(hostNameValue,
-            org.openide.util.NbBundle.getMessage(
-                    InformationPanelTopComponent.class,
-                    "InformationPanelTopComponent.hostNameValue.text")); // NOI18N
+    org.openide.awt.Mnemonics.setLocalizedText(hostNameValue, org.openide.util.NbBundle.getMessage(InformationPanelTopComponent.class, "InformationPanelTopComponent.hostNameValue.text")); // NOI18N
     gridBagConstraints = new java.awt.GridBagConstraints();
     gridBagConstraints.gridx = 0;
     gridBagConstraints.gridy = 4;
@@ -306,12 +267,7 @@ public final class InformationPanelTopComponent extends TopComponent {
     sysDbLabel.setPreferredSize(new java.awt.Dimension(120, 194));
     sysDbLabel.setLayout(new java.awt.GridBagLayout());
 
-    org.openide.awt.Mnemonics
-            .setLocalizedText(
-                    dbIvySysDbVersionLabel,
-                    org.openide.util.NbBundle
-                            .getMessage(InformationPanelTopComponent.class,
-                                    "InformationPanelTopComponent.dbIvySysDbVersionLabel.text")); // NOI18N
+    org.openide.awt.Mnemonics.setLocalizedText(dbIvySysDbVersionLabel, org.openide.util.NbBundle.getMessage(InformationPanelTopComponent.class, "InformationPanelTopComponent.dbIvySysDbVersionLabel.text")); // NOI18N
     gridBagConstraints = new java.awt.GridBagConstraints();
     gridBagConstraints.gridx = 0;
     gridBagConstraints.gridy = 0;
@@ -321,10 +277,7 @@ public final class InformationPanelTopComponent extends TopComponent {
     gridBagConstraints.insets = new java.awt.Insets(5, 5, 5, 5);
     sysDbLabel.add(dbIvySysDbVersionLabel, gridBagConstraints);
 
-    org.openide.awt.Mnemonics.setLocalizedText(dbTypeLabel,
-            org.openide.util.NbBundle.getMessage(
-                    InformationPanelTopComponent.class,
-                    "InformationPanelTopComponent.dbTypeLabel.text")); // NOI18N
+    org.openide.awt.Mnemonics.setLocalizedText(dbTypeLabel, org.openide.util.NbBundle.getMessage(InformationPanelTopComponent.class, "InformationPanelTopComponent.dbTypeLabel.text")); // NOI18N
     dbTypeLabel.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
     gridBagConstraints = new java.awt.GridBagConstraints();
     gridBagConstraints.gridx = 0;
@@ -335,10 +288,7 @@ public final class InformationPanelTopComponent extends TopComponent {
     gridBagConstraints.insets = new java.awt.Insets(5, 5, 5, 5);
     sysDbLabel.add(dbTypeLabel, gridBagConstraints);
 
-    org.openide.awt.Mnemonics.setLocalizedText(dbVersionLabel,
-            org.openide.util.NbBundle.getMessage(
-                    InformationPanelTopComponent.class,
-                    "InformationPanelTopComponent.dbVersionLabel.text")); // NOI18N
+    org.openide.awt.Mnemonics.setLocalizedText(dbVersionLabel, org.openide.util.NbBundle.getMessage(InformationPanelTopComponent.class, "InformationPanelTopComponent.dbVersionLabel.text")); // NOI18N
     gridBagConstraints = new java.awt.GridBagConstraints();
     gridBagConstraints.gridx = 0;
     gridBagConstraints.gridy = 2;
@@ -348,10 +298,7 @@ public final class InformationPanelTopComponent extends TopComponent {
     gridBagConstraints.insets = new java.awt.Insets(5, 5, 5, 5);
     sysDbLabel.add(dbVersionLabel, gridBagConstraints);
 
-    org.openide.awt.Mnemonics.setLocalizedText(dbDriverNameLabel,
-            org.openide.util.NbBundle.getMessage(
-                    InformationPanelTopComponent.class,
-                    "InformationPanelTopComponent.dbDriverNameLabel.text")); // NOI18N
+    org.openide.awt.Mnemonics.setLocalizedText(dbDriverNameLabel, org.openide.util.NbBundle.getMessage(InformationPanelTopComponent.class, "InformationPanelTopComponent.dbDriverNameLabel.text")); // NOI18N
     gridBagConstraints = new java.awt.GridBagConstraints();
     gridBagConstraints.gridx = 0;
     gridBagConstraints.gridy = 3;
@@ -361,12 +308,7 @@ public final class InformationPanelTopComponent extends TopComponent {
     gridBagConstraints.insets = new java.awt.Insets(5, 5, 5, 5);
     sysDbLabel.add(dbDriverNameLabel, gridBagConstraints);
 
-    org.openide.awt.Mnemonics
-            .setLocalizedText(
-                    dbConnectionUrlLabel,
-                    org.openide.util.NbBundle
-                            .getMessage(InformationPanelTopComponent.class,
-                                    "InformationPanelTopComponent.dbConnectionUrlLabel.text")); // NOI18N
+    org.openide.awt.Mnemonics.setLocalizedText(dbConnectionUrlLabel, org.openide.util.NbBundle.getMessage(InformationPanelTopComponent.class, "InformationPanelTopComponent.dbConnectionUrlLabel.text")); // NOI18N
     gridBagConstraints = new java.awt.GridBagConstraints();
     gridBagConstraints.gridx = 0;
     gridBagConstraints.gridy = 8;
@@ -376,12 +318,7 @@ public final class InformationPanelTopComponent extends TopComponent {
     gridBagConstraints.insets = new java.awt.Insets(5, 5, 5, 5);
     sysDbLabel.add(dbConnectionUrlLabel, gridBagConstraints);
 
-    org.openide.awt.Mnemonics
-            .setLocalizedText(
-                    dbCredentialUsernameLabel,
-                    org.openide.util.NbBundle
-                            .getMessage(InformationPanelTopComponent.class,
-                                    "InformationPanelTopComponent.dbCredentialUsernameLabel.text")); // NOI18N
+    org.openide.awt.Mnemonics.setLocalizedText(dbCredentialUsernameLabel, org.openide.util.NbBundle.getMessage(InformationPanelTopComponent.class, "InformationPanelTopComponent.dbCredentialUsernameLabel.text")); // NOI18N
     gridBagConstraints = new java.awt.GridBagConstraints();
     gridBagConstraints.gridx = 0;
     gridBagConstraints.gridy = 7;
@@ -391,10 +328,7 @@ public final class InformationPanelTopComponent extends TopComponent {
     gridBagConstraints.insets = new java.awt.Insets(5, 5, 5, 5);
     sysDbLabel.add(dbCredentialUsernameLabel, gridBagConstraints);
 
-    org.openide.awt.Mnemonics.setLocalizedText(dbHostLabel,
-            org.openide.util.NbBundle.getMessage(
-                    InformationPanelTopComponent.class,
-                    "InformationPanelTopComponent.dbHostLabel.text")); // NOI18N
+    org.openide.awt.Mnemonics.setLocalizedText(dbHostLabel, org.openide.util.NbBundle.getMessage(InformationPanelTopComponent.class, "InformationPanelTopComponent.dbHostLabel.text")); // NOI18N
     gridBagConstraints = new java.awt.GridBagConstraints();
     gridBagConstraints.gridx = 0;
     gridBagConstraints.gridy = 4;
@@ -404,10 +338,7 @@ public final class InformationPanelTopComponent extends TopComponent {
     gridBagConstraints.insets = new java.awt.Insets(5, 5, 5, 5);
     sysDbLabel.add(dbHostLabel, gridBagConstraints);
 
-    org.openide.awt.Mnemonics.setLocalizedText(dbPortLabel,
-            org.openide.util.NbBundle.getMessage(
-                    InformationPanelTopComponent.class,
-                    "InformationPanelTopComponent.dbPortLabel.text")); // NOI18N
+    org.openide.awt.Mnemonics.setLocalizedText(dbPortLabel, org.openide.util.NbBundle.getMessage(InformationPanelTopComponent.class, "InformationPanelTopComponent.dbPortLabel.text")); // NOI18N
     gridBagConstraints = new java.awt.GridBagConstraints();
     gridBagConstraints.gridx = 0;
     gridBagConstraints.gridy = 5;
@@ -424,10 +355,7 @@ public final class InformationPanelTopComponent extends TopComponent {
     gridBagConstraints.weighty = 1.0;
     sysDbLabel.add(filler2, gridBagConstraints);
 
-    org.openide.awt.Mnemonics.setLocalizedText(dbNameLabel,
-            org.openide.util.NbBundle.getMessage(
-                    InformationPanelTopComponent.class,
-                    "InformationPanelTopComponent.dbNameLabel.text")); // NOI18N
+    org.openide.awt.Mnemonics.setLocalizedText(dbNameLabel, org.openide.util.NbBundle.getMessage(InformationPanelTopComponent.class, "InformationPanelTopComponent.dbNameLabel.text")); // NOI18N
     gridBagConstraints = new java.awt.GridBagConstraints();
     gridBagConstraints.gridx = 0;
     gridBagConstraints.gridy = 6;
@@ -448,10 +376,7 @@ public final class InformationPanelTopComponent extends TopComponent {
     sysDbValue.setBackground(new java.awt.Color(255, 255, 255));
     sysDbValue.setLayout(new java.awt.GridBagLayout());
 
-    org.openide.awt.Mnemonics.setLocalizedText(dbIvySysDbVersion,
-            org.openide.util.NbBundle.getMessage(
-                    InformationPanelTopComponent.class,
-                    "InformationPanelTopComponent.dbIvySysDbVersion.text")); // NOI18N
+    org.openide.awt.Mnemonics.setLocalizedText(dbIvySysDbVersion, org.openide.util.NbBundle.getMessage(InformationPanelTopComponent.class, "InformationPanelTopComponent.dbIvySysDbVersion.text")); // NOI18N
     gridBagConstraints = new java.awt.GridBagConstraints();
     gridBagConstraints.gridx = 0;
     gridBagConstraints.gridy = 0;
@@ -462,10 +387,7 @@ public final class InformationPanelTopComponent extends TopComponent {
     sysDbValue.add(dbIvySysDbVersion, gridBagConstraints);
 
     dbType.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-    org.openide.awt.Mnemonics.setLocalizedText(dbType,
-            org.openide.util.NbBundle.getMessage(
-                    InformationPanelTopComponent.class,
-                    "InformationPanelTopComponent.dbType.text")); // NOI18N
+    org.openide.awt.Mnemonics.setLocalizedText(dbType, org.openide.util.NbBundle.getMessage(InformationPanelTopComponent.class, "InformationPanelTopComponent.dbType.text")); // NOI18N
     gridBagConstraints = new java.awt.GridBagConstraints();
     gridBagConstraints.gridx = 0;
     gridBagConstraints.gridy = 1;
@@ -476,10 +398,7 @@ public final class InformationPanelTopComponent extends TopComponent {
     sysDbValue.add(dbType, gridBagConstraints);
 
     dbVersion.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-    org.openide.awt.Mnemonics.setLocalizedText(dbVersion,
-            org.openide.util.NbBundle.getMessage(
-                    InformationPanelTopComponent.class,
-                    "InformationPanelTopComponent.dbVersion.text")); // NOI18N
+    org.openide.awt.Mnemonics.setLocalizedText(dbVersion, org.openide.util.NbBundle.getMessage(InformationPanelTopComponent.class, "InformationPanelTopComponent.dbVersion.text")); // NOI18N
     gridBagConstraints = new java.awt.GridBagConstraints();
     gridBagConstraints.gridx = 0;
     gridBagConstraints.gridy = 2;
@@ -490,10 +409,7 @@ public final class InformationPanelTopComponent extends TopComponent {
     sysDbValue.add(dbVersion, gridBagConstraints);
 
     dbDriverName.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-    org.openide.awt.Mnemonics.setLocalizedText(dbDriverName,
-            org.openide.util.NbBundle.getMessage(
-                    InformationPanelTopComponent.class,
-                    "InformationPanelTopComponent.dbDriverName.text")); // NOI18N
+    org.openide.awt.Mnemonics.setLocalizedText(dbDriverName, org.openide.util.NbBundle.getMessage(InformationPanelTopComponent.class, "InformationPanelTopComponent.dbDriverName.text")); // NOI18N
     gridBagConstraints = new java.awt.GridBagConstraints();
     gridBagConstraints.gridx = 0;
     gridBagConstraints.gridy = 3;
@@ -504,10 +420,7 @@ public final class InformationPanelTopComponent extends TopComponent {
     sysDbValue.add(dbDriverName, gridBagConstraints);
 
     dbConnectionUrl.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-    org.openide.awt.Mnemonics.setLocalizedText(dbConnectionUrl,
-            org.openide.util.NbBundle.getMessage(
-                    InformationPanelTopComponent.class,
-                    "InformationPanelTopComponent.dbConnectionUrl.text")); // NOI18N
+    org.openide.awt.Mnemonics.setLocalizedText(dbConnectionUrl, org.openide.util.NbBundle.getMessage(InformationPanelTopComponent.class, "InformationPanelTopComponent.dbConnectionUrl.text")); // NOI18N
     gridBagConstraints = new java.awt.GridBagConstraints();
     gridBagConstraints.gridx = 0;
     gridBagConstraints.gridy = 8;
@@ -517,12 +430,7 @@ public final class InformationPanelTopComponent extends TopComponent {
     gridBagConstraints.insets = new java.awt.Insets(5, 5, 5, 5);
     sysDbValue.add(dbConnectionUrl, gridBagConstraints);
 
-    org.openide.awt.Mnemonics
-            .setLocalizedText(
-                    dbCredentialUsername,
-                    org.openide.util.NbBundle
-                            .getMessage(InformationPanelTopComponent.class,
-                                    "InformationPanelTopComponent.dbCredentialUsername.text")); // NOI18N
+    org.openide.awt.Mnemonics.setLocalizedText(dbCredentialUsername, org.openide.util.NbBundle.getMessage(InformationPanelTopComponent.class, "InformationPanelTopComponent.dbCredentialUsername.text")); // NOI18N
     gridBagConstraints = new java.awt.GridBagConstraints();
     gridBagConstraints.gridx = 0;
     gridBagConstraints.gridy = 7;
@@ -532,10 +440,7 @@ public final class InformationPanelTopComponent extends TopComponent {
     gridBagConstraints.insets = new java.awt.Insets(5, 5, 5, 5);
     sysDbValue.add(dbCredentialUsername, gridBagConstraints);
 
-    org.openide.awt.Mnemonics.setLocalizedText(dbHost,
-            org.openide.util.NbBundle.getMessage(
-                    InformationPanelTopComponent.class,
-                    "InformationPanelTopComponent.dbHost.text")); // NOI18N
+    org.openide.awt.Mnemonics.setLocalizedText(dbHost, org.openide.util.NbBundle.getMessage(InformationPanelTopComponent.class, "InformationPanelTopComponent.dbHost.text")); // NOI18N
     gridBagConstraints = new java.awt.GridBagConstraints();
     gridBagConstraints.gridx = 0;
     gridBagConstraints.gridy = 4;
@@ -545,10 +450,7 @@ public final class InformationPanelTopComponent extends TopComponent {
     gridBagConstraints.insets = new java.awt.Insets(5, 5, 5, 5);
     sysDbValue.add(dbHost, gridBagConstraints);
 
-    org.openide.awt.Mnemonics.setLocalizedText(dbPort,
-            org.openide.util.NbBundle.getMessage(
-                    InformationPanelTopComponent.class,
-                    "InformationPanelTopComponent.dbPort.text")); // NOI18N
+    org.openide.awt.Mnemonics.setLocalizedText(dbPort, org.openide.util.NbBundle.getMessage(InformationPanelTopComponent.class, "InformationPanelTopComponent.dbPort.text")); // NOI18N
     gridBagConstraints = new java.awt.GridBagConstraints();
     gridBagConstraints.gridx = 0;
     gridBagConstraints.gridy = 5;
@@ -565,10 +467,7 @@ public final class InformationPanelTopComponent extends TopComponent {
     gridBagConstraints.weighty = 1.0;
     sysDbValue.add(filler3, gridBagConstraints);
 
-    org.openide.awt.Mnemonics.setLocalizedText(dbName,
-            org.openide.util.NbBundle.getMessage(
-                    InformationPanelTopComponent.class,
-                    "InformationPanelTopComponent.dbName.text")); // NOI18N
+    org.openide.awt.Mnemonics.setLocalizedText(dbName, org.openide.util.NbBundle.getMessage(InformationPanelTopComponent.class, "InformationPanelTopComponent.dbName.text")); // NOI18N
     gridBagConstraints = new java.awt.GridBagConstraints();
     gridBagConstraints.gridx = 0;
     gridBagConstraints.gridy = 6;
@@ -662,7 +561,6 @@ public final class InformationPanelTopComponent extends TopComponent {
   private javax.swing.JPanel sysDbValue;
   private javax.swing.JLabel version;
   private javax.swing.JLabel versionLabel;
-
   // End of variables declaration//GEN-END:variables
   @Override
   public void componentOpened() {
