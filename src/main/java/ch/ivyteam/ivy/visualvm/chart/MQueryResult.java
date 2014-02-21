@@ -15,7 +15,7 @@ import javax.management.ObjectName;
  * @author rwei
  */
 public class MQueryResult {
-  private Map<ObjectName, List<Attribute>> results = new HashMap<>();
+  private final Map<ObjectName, List<Attribute>> results = new HashMap<>();
 
   void addSubResult(ObjectName mBeanName, AttributeList attributes) {
     results.put(mBeanName, attributes.asList());

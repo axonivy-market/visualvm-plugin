@@ -12,22 +12,39 @@ import javax.management.ObjectName;
 class MAttributeDataSource extends MSerieDataSource {
   private final String fAttribute;
   private final ObjectName fMBeanName;
+  private final long fFixedValue;
 
   MAttributeDataSource(String serie, long scaleFactor, SerieStyle serieStyle, ObjectName mBeanName,
           String attribute) {
     super(serie, scaleFactor, serieStyle);
-    this.fAttribute = attribute;
-    this.fMBeanName = mBeanName;
+    fAttribute = attribute;
+    fMBeanName = mBeanName;
+    fFixedValue = -1;
+  }
+
+  MAttributeDataSource(String serie, long scaleFactor, SerieStyle serieStyle, long fixedValue) {
+    super(serie, scaleFactor, serieStyle);
+    fAttribute = null;
+    fMBeanName = null;
+    fFixedValue = fixedValue;
   }
 
   @Override
   void updateQuery(MQuery query) {
-    query.addSubQuery(fMBeanName, fAttribute);
+    if (fFixedValue == -1) {
+      query.addSubQuery(fMBeanName, fAttribute);
+    }
   }
 
   @Override
   long getValue(MQueryResult result) {
-    return toScaledLong(result.getValue(fMBeanName, fAttribute));
+    long value;
+    if (fFixedValue > -1) {
+      value = fFixedValue;
+    } else {
+      value = toScaledLong(result.getValue(fMBeanName, fAttribute));
+    }
+    return value;
   }
 
 }

@@ -34,6 +34,11 @@ public class MChartDataSource {
     return values;
   }
 
+  public void addFixedSerie(String serie, long fixedValue) {
+    MSerieDataSource serieDataSource = new MAttributeDataSource(serie, 1L, SerieStyle.FILLED, fixedValue);
+    serieDataSources.add(serieDataSource);
+  }
+
   public void addSerie(String serie, SerieStyle style, ObjectName mBeanName, String attribute) {
     MSerieDataSource serieDataSource = new MAttributeDataSource(serie, 1L,
             style, mBeanName, attribute);
