@@ -1,0 +1,27 @@
+<xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:element name="mBeanTestData">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="dataset" type="Dataset" maxOccurs="unbounded" minOccurs="0" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:complexType name="Dataset">
+    <xs:sequence>
+      <xs:element name="property" type="Property" maxOccurs="unbounded" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="Property">
+    <xs:sequence>
+      <xs:element type="xs:string" name="name"/>
+      <xs:choice>
+        <xs:element type="xs:string" name="value"/>
+        <xs:element name="dataset" type= "Dataset"/>
+      </xs:choice>
+    </xs:sequence>
+  </xs:complexType>
+
+</xs:schema>
+
