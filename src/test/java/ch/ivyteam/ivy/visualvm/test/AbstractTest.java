@@ -43,7 +43,6 @@ public abstract class AbstractTest extends TestCase {
       AttributeList mockAttrList = mock(AttributeList.class);
       when(mockAttrList.asList()).thenReturn(mockAttrs);
       when(mockConnection.getAttributes(objectName, attrNames)).thenReturn(mockAttrList);
-      System.out.println("123");
     }
   }
 
