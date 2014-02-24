@@ -23,7 +23,7 @@ public class IvyLicenseInfo {
   private boolean fServerRIA;
   private int fServerUsersLimit;
   private int fServerSessionsLimit;
-  private static final long MILLISECONDS_IN_DAY = 24 * 60 * 60 * 1000;
+  private long fRemaingTime;
 
   public IvyLicenseInfo() {
   }
@@ -61,7 +61,7 @@ public class IvyLicenseInfo {
   }
 
   public String getLicenseKeyVersion() {
-    return fLicenseKeyVersion;
+    return fLicenseKeyVersion.replace("xpertline/", "");
   }
 
   public void setLicenseKeyVersion(String licenceKeyVersion) {
@@ -74,6 +74,7 @@ public class IvyLicenseInfo {
 
   public void setLicenseValidUntil(Date licenceValidUntil) {
     fLicenseValidUntil = licenceValidUntil;
+    setRemainingTime(fLicenseValidUntil.getTime() - new Date().getTime());
   }
 
   public String getLicenseeIndividual() {
@@ -108,9 +109,12 @@ public class IvyLicenseInfo {
     fServerSessionsLimit = serverSessionsLimit;
   }
 
-  public int getRemaingDays() {
-    long delta = fLicenseValidUntil.getTime() - new Date().getTime();
-    return (int) (delta / MILLISECONDS_IN_DAY);
+  public long getRemaingTime() {
+    return fRemaingTime;
+  }
+
+  public void setRemainingTime(long remaingTime) {
+    fRemaingTime = remaingTime;
   }
 
 }

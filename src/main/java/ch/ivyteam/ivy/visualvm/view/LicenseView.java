@@ -5,6 +5,7 @@ import ch.ivyteam.ivy.visualvm.chart.MLicenseChartDataSource;
 import ch.ivyteam.ivy.visualvm.exception.IvyJmxDataCollectException;
 import ch.ivyteam.ivy.visualvm.model.IvyLicenseInfo;
 import ch.ivyteam.ivy.visualvm.service.BasicIvyJmxDataCollector;
+import com.sun.tools.visualvm.core.options.GlobalPreferences;
 import com.sun.tools.visualvm.core.ui.components.DataViewComponent;
 import javax.management.MBeanServerConnection;
 import javax.swing.JComponent;
@@ -14,10 +15,12 @@ public class LicenseView extends AbstractView {
 
   private boolean uiComplete;
   private IvyLicenseInfo fLicenseInfo;
+  private LicenseInformationPanel fLicenseInformationPanel;
 
   public LicenseView(IDataBeanProvider dataBeanProvider) {
     super(dataBeanProvider);
     retrieveLicenseInfo();
+    fLicenseInformationPanel = new LicenseInformationPanel(fLicenseInfo);
   }
 
   @Override
@@ -27,7 +30,7 @@ public class LicenseView extends AbstractView {
 
   @Override
   protected JComponent getMasterViewComponent() {
-    return new LicenseInformationPanel(fLicenseInfo);
+    return fLicenseInformationPanel;
   }
 
   @Override
@@ -67,6 +70,14 @@ public class LicenseView extends AbstractView {
       fLicenseInfo = null;
       Exceptions.printStackTrace(ex);
     }
+  }
+
+  @Override
+  public void update() {
+    super.update();
+    fLicenseInfo.setRemainingTime(fLicenseInfo.getRemaingTime() - 1000 * GlobalPreferences.sharedInstance().
+            getMonitoredDataPoll());
+    fLicenseInformationPanel.setValidUntilInfo();
   }
 
 }

@@ -16,8 +16,11 @@ import javax.swing.JLabel;
  */
 public class LicenseInformationPanel extends javax.swing.JPanel {
 
-  private final StringBuilder fLicenseExpirationInfo = new StringBuilder();
   private final IvyLicenseInfo fLicenseInfo;
+  private static final long MILLISECONDS_IN_ONE_SECOND = 1000;
+  private static final long MILLISECONDS_IN_ONE_MINUTE = 60 * MILLISECONDS_IN_ONE_SECOND;
+  private static final long MILLISECONDS_IN_ONE_HOUR = 60 * MILLISECONDS_IN_ONE_MINUTE;
+  private static final long MILLISECONDS_IN_ONE_DAY = 24 * MILLISECONDS_IN_ONE_HOUR;
 
   /**
    * Creates new form LicenseInformationPanel
@@ -418,15 +421,28 @@ public class LicenseInformationPanel extends javax.swing.JPanel {
     setInfoLabelsText(licenseVersionLabel, licenseVersionValue, fLicenseInfo.getLicenseKeyVersion());
   }
 
-  private void setValidUntilInfo() {
-    fLicenseExpirationInfo.append(DataUtils.toDateString(fLicenseInfo.
-            getLicenseValidUntil())).append(" (in").append(fLicenseInfo.getRemaingDays());
-    if (fLicenseInfo.getRemaingDays() > 1) {
-      fLicenseExpirationInfo.append(" days)");
-    } else {
-      fLicenseExpirationInfo.append(" day)");
+  public void setValidUntilInfo() {
+    StringBuilder licenseExpirationInfo = new StringBuilder();
+    licenseExpirationInfo.append(DataUtils.toDateString(fLicenseInfo.getLicenseValidUntil())).append(" [in ");
+    long delta = fLicenseInfo.getRemaingTime();
+    if (delta > MILLISECONDS_IN_ONE_DAY) {
+      int day = (int) (delta / MILLISECONDS_IN_ONE_DAY);
+      licenseExpirationInfo.append(day).append(" day(s) ");
+      delta = delta - day * MILLISECONDS_IN_ONE_DAY;
     }
-    setInfoLabelsText(licenseValidUntilLabel, licenseValidUntilValue, fLicenseExpirationInfo);
+    if (delta > MILLISECONDS_IN_ONE_HOUR) {
+      int hour = (int) (delta / MILLISECONDS_IN_ONE_HOUR);
+      licenseExpirationInfo.append(hour).append(" hour(s) ");
+      delta = delta - hour * MILLISECONDS_IN_ONE_HOUR;
+    }
+    if (delta > MILLISECONDS_IN_ONE_MINUTE) {
+      int minute = (int) (delta / MILLISECONDS_IN_ONE_MINUTE);
+      licenseExpirationInfo.append(minute).append(" minute(s) ");
+      delta = delta - minute * MILLISECONDS_IN_ONE_MINUTE;
+    }
+    delta = delta / MILLISECONDS_IN_ONE_SECOND;
+    licenseExpirationInfo.append(delta).append(" second(s)] ");
+    setInfoLabelsText(licenseValidUntilLabel, licenseValidUntilValue, licenseExpirationInfo);
   }
 
   private void setValidFromInfo() {
