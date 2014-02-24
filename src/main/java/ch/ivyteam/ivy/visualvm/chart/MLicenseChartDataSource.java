@@ -17,8 +17,8 @@ import org.openide.util.Exceptions;
 public class MLicenseChartDataSource extends MChartDataSource {
   private int fServerSessionLimit;
 
-  public MLicenseChartDataSource(IDataBeanProvider dataBeanProvider, String chartName, String xAxisDescription,
-          String yAxisDescription) {
+  public MLicenseChartDataSource(IDataBeanProvider dataBeanProvider, String chartName,
+          String xAxisDescription, String yAxisDescription) {
     super(dataBeanProvider, chartName, xAxisDescription, yAxisDescription);
     retrieveLicenseInfo();
     addSerie("Licensed", SerieStyle.LINE, IvyJmxConstant.IvyServer.SecurityManager.NAME,

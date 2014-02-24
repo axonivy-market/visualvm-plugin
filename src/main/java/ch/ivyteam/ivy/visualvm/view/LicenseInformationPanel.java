@@ -7,6 +7,7 @@ package ch.ivyteam.ivy.visualvm.view;
 
 import ch.ivyteam.ivy.visualvm.model.IvyLicenseInfo;
 import ch.ivyteam.ivy.visualvm.util.DataUtils;
+import java.awt.Component;
 import javax.swing.JLabel;
 
 /**
@@ -16,13 +17,15 @@ import javax.swing.JLabel;
 public class LicenseInformationPanel extends javax.swing.JPanel {
 
   private final StringBuilder fLicenseExpirationInfo = new StringBuilder();
+  private final IvyLicenseInfo fLicenseInfo;
 
   /**
    * Creates new form LicenseInformationPanel
    */
   public LicenseInformationPanel(IvyLicenseInfo licenseInfo) {
     initComponents();
-    setLicenseData(licenseInfo);
+    fLicenseInfo = licenseInfo;
+    setLicenseData();
   }
 
   /* CHECKSTYLE:OFF */
@@ -36,7 +39,7 @@ public class LicenseInformationPanel extends javax.swing.JPanel {
     java.awt.GridBagConstraints gridBagConstraints;
 
     jPanel1 = new javax.swing.JPanel();
-    filler1 = new javax.swing.Box.Filler(new java.awt.Dimension(0, 0), new java.awt.Dimension(0, 0), new java.awt.Dimension(0, 32767));
+    filler1 = new javax.swing.Box.Filler(new java.awt.Dimension(0, 0), new java.awt.Dimension(1, 1), new java.awt.Dimension(0, 32767));
     licenseeOrganisationLabel = new javax.swing.JLabel();
     licenseeIndividualLabel = new javax.swing.JLabel();
     licenseValidFromLabel = new javax.swing.JLabel();
@@ -49,7 +52,7 @@ public class LicenseInformationPanel extends javax.swing.JPanel {
     hostNameLabel = new javax.swing.JLabel();
     jPanel2 = new javax.swing.JPanel();
     licenseeOrganisationValue = new javax.swing.JLabel();
-    filler2 = new javax.swing.Box.Filler(new java.awt.Dimension(0, 0), new java.awt.Dimension(0, 0), new java.awt.Dimension(0, 32767));
+    filler2 = new javax.swing.Box.Filler(new java.awt.Dimension(0, 0), new java.awt.Dimension(1, 1), new java.awt.Dimension(0, 32767));
     licenseeIndividualValue = new javax.swing.JLabel();
     licenseValidFromValue = new javax.swing.JLabel();
     licenseValidUntilValue = new javax.swing.JLabel();
@@ -61,14 +64,9 @@ public class LicenseInformationPanel extends javax.swing.JPanel {
     hostNameValue = new javax.swing.JLabel();
 
     setBackground(new java.awt.Color(255, 255, 255));
-    setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
-    setMinimumSize(new java.awt.Dimension(194, 245));
-    setPreferredSize(new java.awt.Dimension(194, 245));
     setLayout(new java.awt.GridBagLayout());
 
     jPanel1.setBackground(new java.awt.Color(255, 255, 255));
-    jPanel1.setMinimumSize(new java.awt.Dimension(120, 140));
-    jPanel1.setPreferredSize(new java.awt.Dimension(120, 140));
     jPanel1.setRequestFocusEnabled(false);
     jPanel1.setLayout(new java.awt.GridBagLayout());
     gridBagConstraints = new java.awt.GridBagConstraints();
@@ -84,9 +82,10 @@ public class LicenseInformationPanel extends javax.swing.JPanel {
     gridBagConstraints = new java.awt.GridBagConstraints();
     gridBagConstraints.gridx = 0;
     gridBagConstraints.gridy = 0;
-    gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+    gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
     gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
     gridBagConstraints.weightx = 1.0;
+    gridBagConstraints.weighty = 1.0;
     gridBagConstraints.insets = new java.awt.Insets(5, 5, 5, 5);
     jPanel1.add(licenseeOrganisationLabel, gridBagConstraints);
 
@@ -94,9 +93,10 @@ public class LicenseInformationPanel extends javax.swing.JPanel {
     gridBagConstraints = new java.awt.GridBagConstraints();
     gridBagConstraints.gridx = 0;
     gridBagConstraints.gridy = 1;
-    gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+    gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
     gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
     gridBagConstraints.weightx = 1.0;
+    gridBagConstraints.weighty = 1.0;
     gridBagConstraints.insets = new java.awt.Insets(5, 5, 5, 5);
     jPanel1.add(licenseeIndividualLabel, gridBagConstraints);
 
@@ -104,9 +104,10 @@ public class LicenseInformationPanel extends javax.swing.JPanel {
     gridBagConstraints = new java.awt.GridBagConstraints();
     gridBagConstraints.gridx = 0;
     gridBagConstraints.gridy = 2;
-    gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+    gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
     gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
     gridBagConstraints.weightx = 1.0;
+    gridBagConstraints.weighty = 1.0;
     gridBagConstraints.insets = new java.awt.Insets(5, 5, 5, 5);
     jPanel1.add(licenseValidFromLabel, gridBagConstraints);
 
@@ -114,9 +115,10 @@ public class LicenseInformationPanel extends javax.swing.JPanel {
     gridBagConstraints = new java.awt.GridBagConstraints();
     gridBagConstraints.gridx = 0;
     gridBagConstraints.gridy = 3;
-    gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+    gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
     gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
     gridBagConstraints.weightx = 1.0;
+    gridBagConstraints.weighty = 1.0;
     gridBagConstraints.insets = new java.awt.Insets(5, 5, 5, 5);
     jPanel1.add(licenseValidUntilLabel, gridBagConstraints);
 
@@ -124,9 +126,10 @@ public class LicenseInformationPanel extends javax.swing.JPanel {
     gridBagConstraints = new java.awt.GridBagConstraints();
     gridBagConstraints.gridx = 0;
     gridBagConstraints.gridy = 4;
-    gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+    gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
     gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
     gridBagConstraints.weightx = 1.0;
+    gridBagConstraints.weighty = 1.0;
     gridBagConstraints.insets = new java.awt.Insets(5, 5, 5, 5);
     jPanel1.add(licenseVersionLabel, gridBagConstraints);
 
@@ -134,9 +137,10 @@ public class LicenseInformationPanel extends javax.swing.JPanel {
     gridBagConstraints = new java.awt.GridBagConstraints();
     gridBagConstraints.gridx = 0;
     gridBagConstraints.gridy = 9;
-    gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+    gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
     gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
     gridBagConstraints.weightx = 1.0;
+    gridBagConstraints.weighty = 1.0;
     gridBagConstraints.insets = new java.awt.Insets(5, 5, 5, 5);
     jPanel1.add(serverElementsLimitLabel, gridBagConstraints);
 
@@ -144,9 +148,10 @@ public class LicenseInformationPanel extends javax.swing.JPanel {
     gridBagConstraints = new java.awt.GridBagConstraints();
     gridBagConstraints.gridx = 0;
     gridBagConstraints.gridy = 6;
-    gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+    gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
     gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
     gridBagConstraints.weightx = 1.0;
+    gridBagConstraints.weighty = 1.0;
     gridBagConstraints.insets = new java.awt.Insets(5, 5, 5, 5);
     jPanel1.add(serverUsersLimitLabel, gridBagConstraints);
 
@@ -154,9 +159,10 @@ public class LicenseInformationPanel extends javax.swing.JPanel {
     gridBagConstraints = new java.awt.GridBagConstraints();
     gridBagConstraints.gridx = 0;
     gridBagConstraints.gridy = 7;
-    gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+    gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
     gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
     gridBagConstraints.weightx = 1.0;
+    gridBagConstraints.weighty = 1.0;
     gridBagConstraints.insets = new java.awt.Insets(5, 5, 5, 5);
     jPanel1.add(serverSessionsLimitLabel, gridBagConstraints);
 
@@ -164,9 +170,10 @@ public class LicenseInformationPanel extends javax.swing.JPanel {
     gridBagConstraints = new java.awt.GridBagConstraints();
     gridBagConstraints.gridx = 0;
     gridBagConstraints.gridy = 8;
-    gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+    gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
     gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
     gridBagConstraints.weightx = 1.0;
+    gridBagConstraints.weighty = 1.0;
     gridBagConstraints.insets = new java.awt.Insets(5, 5, 5, 5);
     jPanel1.add(serverRIALabel, gridBagConstraints);
 
@@ -174,9 +181,10 @@ public class LicenseInformationPanel extends javax.swing.JPanel {
     gridBagConstraints = new java.awt.GridBagConstraints();
     gridBagConstraints.gridx = 0;
     gridBagConstraints.gridy = 5;
-    gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+    gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
     gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
     gridBagConstraints.weightx = 1.0;
+    gridBagConstraints.weighty = 1.0;
     gridBagConstraints.insets = new java.awt.Insets(5, 5, 5, 5);
     jPanel1.add(hostNameLabel, gridBagConstraints);
 
@@ -185,14 +193,12 @@ public class LicenseInformationPanel extends javax.swing.JPanel {
     gridBagConstraints.gridy = 0;
     gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
     gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-    gridBagConstraints.weightx = 0.01;
+    gridBagConstraints.weightx = 0.1;
     gridBagConstraints.weighty = 1.0;
     gridBagConstraints.insets = new java.awt.Insets(5, 10, 0, 5);
     add(jPanel1, gridBagConstraints);
 
     jPanel2.setBackground(new java.awt.Color(255, 255, 255));
-    jPanel2.setMinimumSize(new java.awt.Dimension(44, 140));
-    jPanel2.setPreferredSize(new java.awt.Dimension(44, 140));
     jPanel2.setRequestFocusEnabled(false);
     jPanel2.setLayout(new java.awt.GridBagLayout());
 
@@ -201,9 +207,10 @@ public class LicenseInformationPanel extends javax.swing.JPanel {
     gridBagConstraints = new java.awt.GridBagConstraints();
     gridBagConstraints.gridx = 0;
     gridBagConstraints.gridy = 0;
-    gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+    gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
     gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
     gridBagConstraints.weightx = 1.0;
+    gridBagConstraints.weighty = 1.0;
     gridBagConstraints.insets = new java.awt.Insets(5, 5, 5, 5);
     jPanel2.add(licenseeOrganisationValue, gridBagConstraints);
     gridBagConstraints = new java.awt.GridBagConstraints();
@@ -218,9 +225,10 @@ public class LicenseInformationPanel extends javax.swing.JPanel {
     gridBagConstraints = new java.awt.GridBagConstraints();
     gridBagConstraints.gridx = 0;
     gridBagConstraints.gridy = 1;
-    gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+    gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
     gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
     gridBagConstraints.weightx = 1.0;
+    gridBagConstraints.weighty = 1.0;
     gridBagConstraints.insets = new java.awt.Insets(5, 5, 5, 5);
     jPanel2.add(licenseeIndividualValue, gridBagConstraints);
 
@@ -228,9 +236,10 @@ public class LicenseInformationPanel extends javax.swing.JPanel {
     gridBagConstraints = new java.awt.GridBagConstraints();
     gridBagConstraints.gridx = 0;
     gridBagConstraints.gridy = 2;
-    gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+    gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
     gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
     gridBagConstraints.weightx = 1.0;
+    gridBagConstraints.weighty = 1.0;
     gridBagConstraints.insets = new java.awt.Insets(5, 5, 5, 5);
     jPanel2.add(licenseValidFromValue, gridBagConstraints);
 
@@ -238,9 +247,10 @@ public class LicenseInformationPanel extends javax.swing.JPanel {
     gridBagConstraints = new java.awt.GridBagConstraints();
     gridBagConstraints.gridx = 0;
     gridBagConstraints.gridy = 3;
-    gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+    gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
     gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
     gridBagConstraints.weightx = 1.0;
+    gridBagConstraints.weighty = 1.0;
     gridBagConstraints.insets = new java.awt.Insets(5, 5, 5, 5);
     jPanel2.add(licenseValidUntilValue, gridBagConstraints);
 
@@ -248,9 +258,10 @@ public class LicenseInformationPanel extends javax.swing.JPanel {
     gridBagConstraints = new java.awt.GridBagConstraints();
     gridBagConstraints.gridx = 0;
     gridBagConstraints.gridy = 4;
-    gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+    gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
     gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
     gridBagConstraints.weightx = 1.0;
+    gridBagConstraints.weighty = 1.0;
     gridBagConstraints.insets = new java.awt.Insets(5, 5, 5, 5);
     jPanel2.add(licenseVersionValue, gridBagConstraints);
 
@@ -258,9 +269,10 @@ public class LicenseInformationPanel extends javax.swing.JPanel {
     gridBagConstraints = new java.awt.GridBagConstraints();
     gridBagConstraints.gridx = 0;
     gridBagConstraints.gridy = 9;
-    gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+    gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
     gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
     gridBagConstraints.weightx = 1.0;
+    gridBagConstraints.weighty = 1.0;
     gridBagConstraints.insets = new java.awt.Insets(5, 5, 5, 5);
     jPanel2.add(serverElementsLimitValue, gridBagConstraints);
 
@@ -268,9 +280,10 @@ public class LicenseInformationPanel extends javax.swing.JPanel {
     gridBagConstraints = new java.awt.GridBagConstraints();
     gridBagConstraints.gridx = 0;
     gridBagConstraints.gridy = 6;
-    gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+    gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
     gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
     gridBagConstraints.weightx = 1.0;
+    gridBagConstraints.weighty = 1.0;
     gridBagConstraints.insets = new java.awt.Insets(5, 5, 5, 5);
     jPanel2.add(serverUsersLimitValue, gridBagConstraints);
 
@@ -278,9 +291,10 @@ public class LicenseInformationPanel extends javax.swing.JPanel {
     gridBagConstraints = new java.awt.GridBagConstraints();
     gridBagConstraints.gridx = 0;
     gridBagConstraints.gridy = 7;
-    gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+    gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
     gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
     gridBagConstraints.weightx = 1.0;
+    gridBagConstraints.weighty = 1.0;
     gridBagConstraints.insets = new java.awt.Insets(5, 5, 5, 5);
     jPanel2.add(serverSessionsLimitValue, gridBagConstraints);
 
@@ -288,9 +302,10 @@ public class LicenseInformationPanel extends javax.swing.JPanel {
     gridBagConstraints = new java.awt.GridBagConstraints();
     gridBagConstraints.gridx = 0;
     gridBagConstraints.gridy = 8;
-    gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+    gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
     gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
     gridBagConstraints.weightx = 1.0;
+    gridBagConstraints.weighty = 1.0;
     gridBagConstraints.insets = new java.awt.Insets(5, 5, 5, 5);
     jPanel2.add(serverRIAValue, gridBagConstraints);
 
@@ -298,9 +313,10 @@ public class LicenseInformationPanel extends javax.swing.JPanel {
     gridBagConstraints = new java.awt.GridBagConstraints();
     gridBagConstraints.gridx = 0;
     gridBagConstraints.gridy = 5;
-    gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+    gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
     gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
     gridBagConstraints.weightx = 1.0;
+    gridBagConstraints.weighty = 1.0;
     gridBagConstraints.insets = new java.awt.Insets(5, 5, 5, 5);
     jPanel2.add(hostNameValue, gridBagConstraints);
 
@@ -342,42 +358,92 @@ public class LicenseInformationPanel extends javax.swing.JPanel {
   // End of variables declaration//GEN-END:variables
   /* CHECKSTYLE:ON */
 
-  private void setLicenseData(IvyLicenseInfo licenseInfo) {
-    if (licenseInfo != null) {
-      setLabelText(licenseeOrganisationLabel, licenseeOrganisationValue,
-              licenseInfo.getLicenseeOrganisation());
-      setLabelText(licenseeIndividualLabel, licenseeIndividualValue, licenseInfo.getLicenseeIndividual());
-      setLabelText(licenseValidFromLabel, licenseValidFromValue, DataUtils.toDateString(licenseInfo.
-              getLicenseValidFrom()));
-      fLicenseExpirationInfo.append(DataUtils.toDateString(licenseInfo.
-              getLicenseValidUntil())).append(" (in").append(licenseInfo.getRemaingDays());
-      if (licenseInfo.getRemaingDays() > 1) {
-        fLicenseExpirationInfo.append(" days)");
-      } else {
-        fLicenseExpirationInfo.append(" day)");
-      }
-      setLabelText(licenseValidUntilLabel, licenseValidUntilValue, fLicenseExpirationInfo);
-      setLabelText(licenseVersionLabel, licenseVersionValue, licenseInfo.getLicenseKeyVersion());
-      setLabelText(hostNameLabel, hostNameValue, licenseInfo.getHostName());
-      setLabelText(serverUsersLimitLabel, serverUsersLimitValue, licenseInfo.getServerUsersLimit());
-      setLabelText(serverSessionsLimitLabel, serverSessionsLimitValue, licenseInfo.getServerSessionsLimit());
-      setLabelText(serverRIALabel, serverRIAValue, licenseInfo.isServerRIA());
-      setLabelText(serverElementsLimitLabel, serverElementsLimitValue, licenseInfo.getServerElementsLimit());
+  private void setLicenseData() {
+    if (fLicenseInfo != null) {
+      setOrganisationInfo();
+      setIndividualInfo();
+      setValidFromInfo();
+      setValidUntilInfo();
+      setKeyVersionInfo();
+      setHostNameInfo();
+      setServerUsersLimitInfo();
+      setServerSessionsLimitInfo();
+      setServerSupportRIAInfo();
+      setServerElementsLimitInfo();
     } else {
-      hideInfoLabels(licenseeOrganisationLabel, licenseeOrganisationValue);
-      hideInfoLabels(licenseeIndividualLabel, licenseeIndividualValue);
-      hideInfoLabels(licenseValidFromLabel, licenseValidFromValue);
-      hideInfoLabels(licenseValidUntilLabel, licenseValidUntilValue);
-      hideInfoLabels(licenseVersionLabel, licenseVersionValue);
-      hideInfoLabels(serverUsersLimitLabel, serverUsersLimitValue);
-      hideInfoLabels(serverSessionsLimitLabel, serverSessionsLimitValue);
-      hideInfoLabels(serverRIALabel, serverRIAValue);
-      hideInfoLabels(serverElementsLimitLabel, serverElementsLimitValue);
+      for (Component comp : this.getComponents()) {
+        if (comp instanceof JLabel) {
+          comp.setVisible(false);
+        }
+      }
     }
-
   }
 
-  private void setLabelText(JLabel titleLabel, JLabel valueLabel, Object data) {
+  private void setServerElementsLimitInfo() {
+    if (fLicenseInfo.getServerElementsLimit() > 0) {
+      setInfoLabelsText(serverElementsLimitLabel, serverElementsLimitValue, fLicenseInfo.
+              getServerElementsLimit());
+    } else {
+      hideInfoLabels(serverElementsLimitLabel, serverElementsLimitValue);
+    }
+  }
+
+  private void setServerSupportRIAInfo() {
+    setInfoLabelsText(serverRIALabel, serverRIAValue, fLicenseInfo.isServerRIA());
+  }
+
+  private void setServerSessionsLimitInfo() {
+    if (fLicenseInfo.getServerSessionsLimit() > 0) {
+      setInfoLabelsText(serverSessionsLimitLabel, serverSessionsLimitValue, fLicenseInfo.
+              getServerSessionsLimit());
+    } else {
+      hideInfoLabels(serverSessionsLimitLabel, serverSessionsLimitValue);
+    }
+  }
+
+  private void setServerUsersLimitInfo() {
+    if (fLicenseInfo.getServerUsersLimit() > 0) {
+      setInfoLabelsText(serverUsersLimitLabel, serverUsersLimitValue, fLicenseInfo.
+              getServerUsersLimit());
+    } else {
+      hideInfoLabels(serverUsersLimitLabel, serverUsersLimitValue);
+    }
+  }
+
+  private void setHostNameInfo() {
+    setInfoLabelsText(hostNameLabel, hostNameValue, fLicenseInfo.getHostName());
+  }
+
+  private void setKeyVersionInfo() {
+    setInfoLabelsText(licenseVersionLabel, licenseVersionValue, fLicenseInfo.getLicenseKeyVersion());
+  }
+
+  private void setValidUntilInfo() {
+    fLicenseExpirationInfo.append(DataUtils.toDateString(fLicenseInfo.
+            getLicenseValidUntil())).append(" (in").append(fLicenseInfo.getRemaingDays());
+    if (fLicenseInfo.getRemaingDays() > 1) {
+      fLicenseExpirationInfo.append(" days)");
+    } else {
+      fLicenseExpirationInfo.append(" day)");
+    }
+    setInfoLabelsText(licenseValidUntilLabel, licenseValidUntilValue, fLicenseExpirationInfo);
+  }
+
+  private void setValidFromInfo() {
+    setInfoLabelsText(licenseValidFromLabel, licenseValidFromValue, DataUtils.toDateString(fLicenseInfo.
+            getLicenseValidFrom()));
+  }
+
+  private void setOrganisationInfo() {
+    setInfoLabelsText(licenseeOrganisationLabel, licenseeOrganisationValue,
+            fLicenseInfo.getLicenseeOrganisation());
+  }
+
+  private void setIndividualInfo() {
+    setInfoLabelsText(licenseeIndividualLabel, licenseeIndividualValue, fLicenseInfo.getLicenseeIndividual());
+  }
+
+  private void setInfoLabelsText(JLabel titleLabel, JLabel valueLabel, Object data) {
     if (data != null) {
       titleLabel.setVisible(true);
       valueLabel.setVisible(true);

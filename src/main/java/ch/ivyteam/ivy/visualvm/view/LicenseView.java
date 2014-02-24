@@ -6,10 +6,8 @@ import ch.ivyteam.ivy.visualvm.exception.IvyJmxDataCollectException;
 import ch.ivyteam.ivy.visualvm.model.IvyLicenseInfo;
 import ch.ivyteam.ivy.visualvm.service.BasicIvyJmxDataCollector;
 import com.sun.tools.visualvm.core.ui.components.DataViewComponent;
-import java.awt.Color;
 import javax.management.MBeanServerConnection;
 import javax.swing.JComponent;
-import javax.swing.border.LineBorder;
 import org.openide.util.Exceptions;
 
 public class LicenseView extends AbstractView {
@@ -39,7 +37,6 @@ public class LicenseView extends AbstractView {
       createLicenseChartView();
       uiComplete = true;
     }
-    viewComponent.setBorder(new LineBorder(Color.GREEN));
     return viewComponent;
   }
 
