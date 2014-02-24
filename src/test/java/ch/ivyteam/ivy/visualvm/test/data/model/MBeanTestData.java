@@ -4,9 +4,11 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
+import javax.xml.bind.annotation.XmlValue;
 
 /**
  * The object for test data, create a xml file then unmarshall it to generate.
@@ -56,7 +58,7 @@ public class MBeanTestData {
       @XmlElement(required = true)
       protected String name;
       @XmlElement
-      protected String value;
+      protected Value value;
       @XmlElement
       protected Dataset dataset;
 
@@ -68,11 +70,11 @@ public class MBeanTestData {
         this.name = name;
       }
 
-      public String getValue() {
+      public Value getValue() {
         return value;
       }
 
-      public void setValue(String value) {
+      public void setValue(Value value) {
         this.value = value;
       }
 
@@ -88,6 +90,30 @@ public class MBeanTestData {
 
       }
 
+      @XmlAccessorType(XmlAccessType.FIELD)
+      public static class Value {
+        @XmlValue
+        protected String value;
+        @XmlAttribute
+        protected String type;
+
+        public String getValue() {
+          return value;
+        }
+
+        public void setValue(String value) {
+          this.value = value;
+        }
+
+        public String getType() {
+          return type;
+        }
+
+        public void setType(String type) {
+          this.type = type;
+        }
+
+      }
     }
   }
 
