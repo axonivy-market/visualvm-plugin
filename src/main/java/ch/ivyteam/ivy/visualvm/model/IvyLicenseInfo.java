@@ -110,8 +110,7 @@ public class IvyLicenseInfo {
 
   public int getRemaingDays() {
     long delta = fLicenseValidUntil.getTime() - new Date().getTime();
-    int remaingDays = (int) (delta / MILLISECONDS_IN_DAY);
-    return remaingDays;
+    return (int) (delta / MILLISECONDS_IN_DAY);
   }
 
 }
