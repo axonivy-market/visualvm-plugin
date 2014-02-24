@@ -3,6 +3,7 @@
  */
 package ch.ivyteam.ivy.visualvm.chart;
 
+import ch.ivyteam.ivy.visualvm.view.IDataBeanProvider;
 import com.sun.tools.visualvm.charts.SimpleXYChartDescriptor;
 import java.util.ArrayList;
 import java.util.List;
@@ -17,9 +18,12 @@ public class MChartDataSource {
   private final String fChartName;
   private final String fXAxisDescription;
   private final String fYAxisDescription;
+  private final IDataBeanProvider fDataBeanProvider;
   private final List<MSerieDataSource> serieDataSources = new ArrayList<>();
 
-  public MChartDataSource(String chartName, String xAxisDescription, String yAxisDescription) {
+  public MChartDataSource(IDataBeanProvider dataBeanProvider, String chartName,
+          String xAxisDescription, String yAxisDescription) {
+    fDataBeanProvider = dataBeanProvider;
     fChartName = chartName;
     fXAxisDescription = xAxisDescription;
     fYAxisDescription = yAxisDescription;
@@ -74,6 +78,10 @@ public class MChartDataSource {
     for (MSerieDataSource dataSource : serieDataSources) {
       dataSource.updateQuery(query);
     }
+  }
+
+  public IDataBeanProvider getDataBeanProvider() {
+    return fDataBeanProvider;
   }
 
 }

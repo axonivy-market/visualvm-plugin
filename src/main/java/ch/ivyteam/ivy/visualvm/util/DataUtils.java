@@ -9,6 +9,7 @@ import java.text.DateFormat;
 import java.text.MessageFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Collections;
 import java.util.Date;
 import java.util.Locale;
 import java.util.Set;
@@ -142,7 +143,7 @@ public final class DataUtils {
       }
     }
     if (index < 0) {
-      index = Math.max(lowerExp.lastIndexOf("/"), lowerExp.lastIndexOf(":"));
+      index = Math.max(lowerExp.lastIndexOf('/'), lowerExp.lastIndexOf(':'));
     }
     return index;
   }
@@ -213,6 +214,32 @@ public final class DataUtils {
     } catch (IOException | MalformedObjectNameException ex) {
       throw new IllegalArgumentException(ex);
     }
+  }
+
+  public static Set<ObjectName> getTomcatRequestProcessors(MBeanServerConnection serverConnection) {
+    try {
+      return serverConnection.queryNames(new ObjectName(
+              "*:type=GlobalRequestProcessor,name=*"), null);
+    } catch (IOException | MalformedObjectNameException ex) {
+      Exceptions.printStackTrace(ex);
+      return Collections.emptySet();
+    }
+  }
+
+  public static String getProtocol(ObjectName processorName) {
+    String protocol = processorName.getKeyProperty("name");
+    protocol = protocol.substring(1, protocol.length() - 1);
+    protocol = protocol.replace("-bio", "");
+    return protocol;
+  }
+
+  public static ObjectName getTomcatManagerName(MBeanServerConnection serverConnection) {
+    Set<ObjectName> tomcatManagers = queryNames(serverConnection,
+            "*:type=Manager,context=*,host=localhost");
+    if (tomcatManagers.size() >= 1) {
+      return tomcatManagers.iterator().next();
+    }
+    return null;
   }
 
 }

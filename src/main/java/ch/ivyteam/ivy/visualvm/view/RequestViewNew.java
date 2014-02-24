@@ -1,17 +1,11 @@
 package ch.ivyteam.ivy.visualvm.view;
 
 import ch.ivyteam.ivy.visualvm.chart.ChartsPanel;
-import ch.ivyteam.ivy.visualvm.chart.MChartDataSource;
-import ch.ivyteam.ivy.visualvm.chart.SerieStyle;
-import ch.ivyteam.ivy.visualvm.model.IvyJmxConstant;
-import ch.ivyteam.ivy.visualvm.util.DataUtils;
+import ch.ivyteam.ivy.visualvm.chart.MErrorChartDataSource;
+import ch.ivyteam.ivy.visualvm.chart.MProcessTimeChartDataSource;
+import ch.ivyteam.ivy.visualvm.chart.MRequestChartDataSource;
+import ch.ivyteam.ivy.visualvm.chart.MSessionChartDataSource;
 import com.sun.tools.visualvm.core.ui.components.DataViewComponent;
-import java.io.IOException;
-import java.util.Collections;
-import java.util.Set;
-import javax.management.MalformedObjectNameException;
-import javax.management.ObjectName;
-import org.openide.util.Exceptions;
 
 public class RequestViewNew extends AbstractView {
 
@@ -30,30 +24,20 @@ public class RequestViewNew extends AbstractView {
     ChartsPanel processingTimeChart = new ChartsPanel();
     ChartsPanel sessionChart = new ChartsPanel();
 
-    MChartDataSource requestDataSource = new MChartDataSource(REQUESTS, null, REQUESTS);
-    MChartDataSource errorDataSource = new MChartDataSource(ERRORS, null, ERRORS);
-    MChartDataSource processingTimeDataSource = new MChartDataSource("Processing Time", null, "Time [ms]");
-    for (ObjectName processorName : getTomcatRequestProcessors()) {
-      String protocol = getProtocol(processorName);
-      requestDataSource.addDeltaSerie(protocol, processorName, "requestCount");
-      errorDataSource.addDeltaSerie(protocol, processorName, "errorCount");
-      processingTimeDataSource.addDeltaSerie(protocol, processorName, "processingTime");
-    }
+    MRequestChartDataSource requestDataSource = new MRequestChartDataSource(
+            getDataBeanProvider(), REQUESTS, null, REQUESTS);
+    MErrorChartDataSource errorDataSource = new MErrorChartDataSource(
+            getDataBeanProvider(), ERRORS, null, ERRORS);
+    MProcessTimeChartDataSource processingTimeDataSource = new MProcessTimeChartDataSource(
+            getDataBeanProvider(), "Processing Time", null, "Time [ms]");
+    MSessionChartDataSource sessionDataSource = new MSessionChartDataSource(
+            getDataBeanProvider(), SESSIONS, null, SESSIONS);
+
     requestChart.addChart(requestDataSource);
     errorChart.addChart(errorDataSource);
     processingTimeChart.addChart(processingTimeDataSource);
-    MChartDataSource sessionDataSource = new MChartDataSource(SESSIONS, null, SESSIONS);
-    ObjectName tomcatManager = getTomcatManagerName();
-    if (tomcatManager != null) {
-      sessionDataSource.addSerie("Http", SerieStyle.LINE, tomcatManager, "sessionCounter");
-    }
-    sessionDataSource.addSerie("Ivy", SerieStyle.LINE, IvyJmxConstant.IvyServer.SecurityManager.NAME,
-            "sessions");
-    sessionDataSource.addSerie("Licensed", SerieStyle.LINE, IvyJmxConstant.IvyServer.SecurityManager.NAME,
-            "licensedSessions");
-    sessionDataSource.addSerie("RD", SerieStyle.LINE, IvyJmxConstant.IvyServer.RichDialogExecution.NAME,
-            IvyJmxConstant.IvyServer.RichDialogExecution.KEY_RD_SESSIONS);
     sessionChart.addChart(sessionDataSource);
+
     getUpdatableUIObjects().add(requestChart);
     getUpdatableUIObjects().add(errorChart);
     getUpdatableUIObjects().add(processingTimeChart);
@@ -77,32 +61,6 @@ public class RequestViewNew extends AbstractView {
       uiComplete = true;
     }
     return viewComponent;
-  }
-
-  private Set<ObjectName> getTomcatRequestProcessors() {
-    try {
-      return getDataBeanProvider().getMBeanServerConnection().queryNames(new ObjectName(
-              "*:type=GlobalRequestProcessor,name=*"), null);
-    } catch (IOException | MalformedObjectNameException ex) {
-      Exceptions.printStackTrace(ex);
-      return Collections.emptySet();
-    }
-  }
-
-  private String getProtocol(ObjectName processorName) {
-    String protocol = processorName.getKeyProperty("name");
-    protocol = protocol.substring(1, protocol.length() - 1);
-    protocol = protocol.replace("-bio", "");
-    return protocol;
-  }
-
-  private ObjectName getTomcatManagerName() {
-    Set<ObjectName> tomcatManagers = DataUtils.queryNames(getDataBeanProvider().getMBeanServerConnection(),
-            "*:type=Manager,context=*,host=localhost");
-    if (tomcatManagers.size() >= 1) {
-      return tomcatManagers.iterator().next();
-    }
-    return null;
   }
 
 }

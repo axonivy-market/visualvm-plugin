@@ -1,10 +1,8 @@
 package ch.ivyteam.ivy.visualvm.view;
 
 import ch.ivyteam.ivy.visualvm.chart.ChartsPanel;
-import ch.ivyteam.ivy.visualvm.chart.MChartDataSource;
-import ch.ivyteam.ivy.visualvm.chart.SerieStyle;
+import ch.ivyteam.ivy.visualvm.chart.MLicenseChartDataSource;
 import ch.ivyteam.ivy.visualvm.exception.IvyJmxDataCollectException;
-import ch.ivyteam.ivy.visualvm.model.IvyJmxConstant;
 import ch.ivyteam.ivy.visualvm.model.IvyLicenseInfo;
 import ch.ivyteam.ivy.visualvm.service.BasicIvyJmxDataCollector;
 import com.sun.tools.visualvm.core.ui.components.DataViewComponent;
@@ -52,10 +50,8 @@ public class LicenseView extends AbstractView {
   }
 
   private void createSessionChart() {
-    MChartDataSource sessionDataSource = new MChartDataSource("Sessions", null, "Sessions");
-    sessionDataSource.addSerie("Licensed", SerieStyle.LINE, IvyJmxConstant.IvyServer.SecurityManager.NAME,
-            IvyJmxConstant.IvyServer.SecurityManager.KEY_LICENSED_SESSIONS);
-    sessionDataSource.addFixedSerie("Max", fLicenseInfo.getServerSessionsLimit());
+    MLicenseChartDataSource sessionDataSource = new MLicenseChartDataSource(
+            getDataBeanProvider(), "Sessions", null, "Sessions");
 
     ChartsPanel sessionChart = new ChartsPanel();
     sessionChart.addChart(sessionDataSource);
