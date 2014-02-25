@@ -21,7 +21,7 @@ public class MLicenseChartDataSource extends MChartDataSource {
           String xAxisDescription, String yAxisDescription) {
     super(dataBeanProvider, chartName, xAxisDescription, yAxisDescription);
     retrieveLicenseInfo();
-    addSerie("Licensed", SerieStyle.LINE, IvyJmxConstant.IvyServer.SecurityManager.NAME,
+    addSerie("Current", SerieStyle.LINE, IvyJmxConstant.IvyServer.SecurityManager.NAME,
             IvyJmxConstant.IvyServer.SecurityManager.KEY_LICENSED_SESSIONS);
     addFixedSerie("Max", fServerSessionLimit);
   }

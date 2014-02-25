@@ -51,7 +51,7 @@ public class LicenseView extends AbstractView {
 
   private void createSessionChart() {
     MLicenseChartDataSource sessionDataSource = new MLicenseChartDataSource(
-            getDataBeanProvider(), "Sessions", null, "Sessions");
+            getDataBeanProvider(), null, null, "Concurrent Users");
 
     ChartsPanel sessionChart = new ChartsPanel();
     sessionChart.addChart(sessionDataSource);
@@ -77,7 +77,8 @@ public class LicenseView extends AbstractView {
     super.update();
     fLicenseInfo.setRemainingTime(fLicenseInfo.getRemaingTime() - 1000 * GlobalPreferences.sharedInstance().
             getMonitoredDataPoll());
-    fLicenseInformationPanel.setValidUntilInfo();
+    fLicenseInformationPanel.setRemainingTimeInfo();
+    fLicenseInformationPanel.setExpireWarning();
   }
 
 }
