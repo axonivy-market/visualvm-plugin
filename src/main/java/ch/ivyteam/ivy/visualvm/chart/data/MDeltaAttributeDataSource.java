@@ -32,7 +32,7 @@ public class MDeltaAttributeDataSource extends MAttributeDataSource {
       val = delta;
     } else {
       lastValue = val;
-      val = 0;
+      val = paramVal;
     }
     return val;
   }

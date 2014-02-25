@@ -4,6 +4,7 @@
  */
 package ch.ivyteam.ivy.visualvm.util;
 
+import ch.ivyteam.ivy.visualvm.model.IvyJmxConstant;
 import java.io.IOException;
 import java.text.DateFormat;
 import java.text.MessageFormat;
@@ -210,17 +211,24 @@ public final class DataUtils {
 
   public static Set<ObjectName> queryNames(MBeanServerConnection serverConnection, String filter) {
     try {
-      return serverConnection.queryNames(new ObjectName(filter), null);
-    } catch (IOException | MalformedObjectNameException ex) {
+      return queryNames(serverConnection, new ObjectName(filter));
+    } catch (MalformedObjectNameException ex) {
+      throw new IllegalArgumentException(ex);
+    }
+  }
+
+  public static Set<ObjectName> queryNames(MBeanServerConnection serverConnection, ObjectName filter) {
+    try {
+      return serverConnection.queryNames(filter, null);
+    } catch (IOException ex) {
       throw new IllegalArgumentException(ex);
     }
   }
 
   public static Set<ObjectName> getTomcatRequestProcessors(MBeanServerConnection serverConnection) {
     try {
-      return serverConnection.queryNames(new ObjectName(
-              "*:type=GlobalRequestProcessor,name=*"), null);
-    } catch (IOException | MalformedObjectNameException ex) {
+      return serverConnection.queryNames(IvyJmxConstant.Ivy.Processor.PATTERN, null);
+    } catch (IOException ex) {
       Exceptions.printStackTrace(ex);
       return Collections.emptySet();
     }
@@ -235,7 +243,7 @@ public final class DataUtils {
 
   public static ObjectName getTomcatManagerName(MBeanServerConnection serverConnection) {
     Set<ObjectName> tomcatManagers = queryNames(serverConnection,
-            "*:type=Manager,context=*,host=localhost");
+            IvyJmxConstant.Ivy.Manager.PATTERN);
     if (tomcatManagers.size() >= 1) {
       return tomcatManagers.iterator().next();
     }

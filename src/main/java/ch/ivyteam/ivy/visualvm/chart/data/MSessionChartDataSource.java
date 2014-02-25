@@ -14,10 +14,10 @@ public class MSessionChartDataSource extends MChartDataSource {
     MBeanServerConnection mBeanServerConnection = getDataBeanProvider().getMBeanServerConnection();
     ObjectName tomcatManager = DataUtils.getTomcatManagerName(mBeanServerConnection);
     if (tomcatManager != null) {
-      addSerie("Http", SerieStyle.LINE, tomcatManager, "sessionCounter");
+      addSerie("Http", SerieStyle.LINE, tomcatManager, IvyJmxConstant.Ivy.Manager.KEY_SESSION_COUNTER);
     }
     addSerie("Ivy", SerieStyle.LINE, IvyJmxConstant.IvyServer.SecurityManager.NAME,
-            "sessions");
+            IvyJmxConstant.IvyServer.SecurityManager.KEY_SESSIONS);
     addSerie("Licensed", SerieStyle.LINE, IvyJmxConstant.IvyServer.SecurityManager.NAME,
             IvyJmxConstant.IvyServer.SecurityManager.KEY_LICENSED_SESSIONS);
     addSerie("RD", SerieStyle.LINE, IvyJmxConstant.IvyServer.RichDialogExecution.NAME,

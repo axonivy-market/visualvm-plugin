@@ -1,5 +1,6 @@
 package ch.ivyteam.ivy.visualvm.chart.data;
 
+import ch.ivyteam.ivy.visualvm.model.IvyJmxConstant;
 import ch.ivyteam.ivy.visualvm.util.DataUtils;
 import ch.ivyteam.ivy.visualvm.view.IDataBeanProvider;
 import javax.management.MBeanServerConnection;
@@ -12,7 +13,7 @@ public class MProcessTimeChartDataSource extends MChartDataSource {
     MBeanServerConnection mBeanServerConnection = getDataBeanProvider().getMBeanServerConnection();
     for (ObjectName processorName : DataUtils.getTomcatRequestProcessors(mBeanServerConnection)) {
       String protocol = DataUtils.getProtocol(processorName);
-      addDeltaSerie(protocol, processorName, "processingTime");
+      addDeltaSerie(protocol, processorName, IvyJmxConstant.Ivy.Processor.KEY_PROCESS_TIME);
     }
   }
 

@@ -88,6 +88,18 @@ public class IvyJmxConstant {
       public static final String KEY_PORT = "port";
       public static final String KEY_SCHEME = "scheme";
     }
+
+    public static final class Processor {
+      public static final ObjectName PATTERN = initObjectName("ivy:type=GlobalRequestProcessor,name=*");
+      public static final String KEY_REQUEST_COUNT = "requestCount";
+      public static final String KEY_ERROR_COUNT = "errorCount";
+      public static final String KEY_PROCESS_TIME = "processingTime";
+    }
+
+    public static final class Manager {
+      public static final ObjectName PATTERN = initObjectName("ivy:type=Manager,context=*,host=localhost");
+      public static final String KEY_SESSION_COUNTER = "sessionCounter";
+    }
   }
 
 }
