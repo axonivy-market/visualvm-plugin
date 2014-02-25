@@ -1,7 +1,7 @@
 package ch.ivyteam.ivy.visualvm.view;
 
 import ch.ivyteam.ivy.visualvm.chart.ChartsPanel;
-import ch.ivyteam.ivy.visualvm.chart.MLicenseChartDataSource;
+import ch.ivyteam.ivy.visualvm.chart.data.MLicenseChartDataSource;
 import ch.ivyteam.ivy.visualvm.exception.IvyJmxDataCollectException;
 import ch.ivyteam.ivy.visualvm.model.IvyLicenseInfo;
 import ch.ivyteam.ivy.visualvm.service.BasicIvyJmxDataCollector;

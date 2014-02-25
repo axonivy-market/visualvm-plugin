@@ -3,6 +3,7 @@
  */
 package ch.ivyteam.ivy.visualvm.chart;
 
+import ch.ivyteam.ivy.visualvm.chart.data.MChartDataSource;
 import ch.ivyteam.ivy.visualvm.view.IUpdatableUIObject;
 import com.sun.tools.visualvm.charts.ChartFactory;
 import com.sun.tools.visualvm.charts.SimpleXYChartDescriptor;

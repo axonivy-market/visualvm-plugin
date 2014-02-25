@@ -1,10 +1,10 @@
 package ch.ivyteam.ivy.visualvm.view;
 
 import ch.ivyteam.ivy.visualvm.chart.ChartsPanel;
-import ch.ivyteam.ivy.visualvm.chart.MErrorChartDataSource;
-import ch.ivyteam.ivy.visualvm.chart.MProcessTimeChartDataSource;
-import ch.ivyteam.ivy.visualvm.chart.MRequestChartDataSource;
-import ch.ivyteam.ivy.visualvm.chart.MSessionChartDataSource;
+import ch.ivyteam.ivy.visualvm.chart.data.MErrorChartDataSource;
+import ch.ivyteam.ivy.visualvm.chart.data.MProcessTimeChartDataSource;
+import ch.ivyteam.ivy.visualvm.chart.data.MRequestChartDataSource;
+import ch.ivyteam.ivy.visualvm.chart.data.MSessionChartDataSource;
 import com.sun.tools.visualvm.core.ui.components.DataViewComponent;
 
 public class RequestView extends AbstractView {

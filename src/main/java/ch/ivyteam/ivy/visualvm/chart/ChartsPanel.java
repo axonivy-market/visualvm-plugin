@@ -3,6 +3,8 @@
  */
 package ch.ivyteam.ivy.visualvm.chart;
 
+import ch.ivyteam.ivy.visualvm.chart.data.MChartDataSource;
+import ch.ivyteam.ivy.visualvm.chart.data.MGaugeDataSource;
 import ch.ivyteam.ivy.visualvm.view.IUpdatableUIObject;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -13,7 +15,8 @@ import javax.swing.JPanel;
 
 public class ChartsPanel implements IUpdatableUIObject {
 
-  private final List<MChart> charts = new ArrayList<>();
+  private final List<MChart> barCharts = new ArrayList<>();
+  private final List<MGauge> gauges = new ArrayList<>();
   private final JPanel chartPanel;
   private static final GridBagConstraints CONSTRAINTS;
 
@@ -35,20 +38,26 @@ public class ChartsPanel implements IUpdatableUIObject {
 
   public void addChart(MChartDataSource dataSource) {
     final MChart chart = new MChart(dataSource);
-    charts.add(chart);
+    barCharts.add(chart);
     chartPanel.add(chart.getUi(), CONSTRAINTS);
+  }
+
+  public void addGauge(MGaugeDataSource dataSource) {
+    final MGauge gauge = new MGauge(dataSource);
+    gauges.add(gauge);
+    chartPanel.add(gauge.getUi(), CONSTRAINTS);
   }
 
   @Override
   public void updateValues(MQueryResult result) {
-    for (MChart chart : charts) {
+    for (MChart chart : barCharts) {
       chart.updateValues(result);
     }
   }
 
   @Override
   public void updateQuery(MQuery query) {
-    for (MChart chart : charts) {
+    for (MChart chart : barCharts) {
       chart.updateQuery(query);
     }
   }

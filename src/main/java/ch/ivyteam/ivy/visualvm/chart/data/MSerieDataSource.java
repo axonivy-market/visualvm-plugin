@@ -1,8 +1,11 @@
 /*
  * To change this template, choose Tools | Templates and open the template in the editor.
  */
-package ch.ivyteam.ivy.visualvm.chart;
+package ch.ivyteam.ivy.visualvm.chart.data;
 
+import ch.ivyteam.ivy.visualvm.chart.MQuery;
+import ch.ivyteam.ivy.visualvm.chart.MQueryResult;
+import ch.ivyteam.ivy.visualvm.chart.SerieStyle;
 import com.sun.tools.visualvm.charts.SimpleXYChartDescriptor;
 
 /**

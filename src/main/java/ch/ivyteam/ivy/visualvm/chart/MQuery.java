@@ -23,8 +23,8 @@ import javax.management.ReflectionException;
 public class MQuery {
   private final Map<ObjectName, List<String>> queries = new HashMap<>();
   private static final Logger LOGGER = Logger.getLogger(MQuery.class.getName());
-  
-  void addSubQuery(ObjectName mBeanName, Set<String> attributesToAdd) {
+
+  public void addSubQuery(ObjectName mBeanName, Set<String> attributesToAdd) {
     List<String> attributes = queries.get(mBeanName);
     if (attributes == null) {
       attributes = new ArrayList<>();
@@ -36,8 +36,8 @@ public class MQuery {
       }
     }
   }
-  
-  void addSubQuery(ObjectName mBeanName, String attribute) {
+
+  public void addSubQuery(ObjectName mBeanName, String attribute) {
     List<String> attributes = queries.get(mBeanName);
     if (attributes == null) {
       attributes = new ArrayList<>();
@@ -47,7 +47,7 @@ public class MQuery {
       attributes.add(attribute);
     }
   }
-  
+
   public MQueryResult execute(MBeanServerConnection serverConnection) {
     MQueryResult result = new MQueryResult();
     for (Map.Entry<ObjectName, List<String>> entry : queries.entrySet()) {
@@ -64,5 +64,5 @@ public class MQuery {
     }
     return result;
   }
-  
+
 }

@@ -21,7 +21,7 @@ public class MQueryResult {
     results.put(mBeanName, attributes.asList());
   }
 
-  Object getValue(ObjectName mBeanName, String attributeName) {
+  public Object getValue(ObjectName mBeanName, String attributeName) {
     List<Attribute> attributes = getAttributes(mBeanName);
     if (attributes == null) {
       return null;

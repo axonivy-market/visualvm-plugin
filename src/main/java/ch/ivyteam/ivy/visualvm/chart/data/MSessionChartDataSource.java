@@ -1,5 +1,6 @@
-package ch.ivyteam.ivy.visualvm.chart;
+package ch.ivyteam.ivy.visualvm.chart.data;
 
+import ch.ivyteam.ivy.visualvm.chart.SerieStyle;
 import ch.ivyteam.ivy.visualvm.model.IvyJmxConstant;
 import ch.ivyteam.ivy.visualvm.util.DataUtils;
 import ch.ivyteam.ivy.visualvm.view.IDataBeanProvider;
