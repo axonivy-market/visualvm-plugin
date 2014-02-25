@@ -6,6 +6,7 @@
 package ch.ivyteam.ivy.visualvm.chart;
 
 import ch.ivyteam.ivy.visualvm.chart.data.MGaugeDataSource;
+import ch.ivyteam.ivy.visualvm.view.IUpdatableUIObject;
 import eu.hansolo.steelseries.gauges.RadialBargraph;
 import eu.hansolo.steelseries.tools.BackgroundColor;
 import eu.hansolo.steelseries.tools.GaugeType;
@@ -13,43 +14,24 @@ import eu.hansolo.steelseries.tools.LcdColor;
 import eu.hansolo.steelseries.tools.Section;
 import java.awt.Color;
 import java.awt.geom.Rectangle2D;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Timer;
-import java.util.TimerTask;
 import javax.swing.JComponent;
-import org.pushingpixels.trident.Timeline;
-import org.pushingpixels.trident.callback.TimelineCallback;
-import org.pushingpixels.trident.ease.Spline;
 
 /**
  *
  * @author thtam
  */
-public class MGauge {
+public class MGauge implements IUpdatableUIObject {
 
   private RadialBargraph fRadial;
-  private MGaugeDataSource fDataSource;
   private static final Rectangle2D DEFAULT_LCD_RECTANGLE = new Rectangle2D.Double(0.55D, 0.75D, 0.27D, 0.1D);
-  private final Color[] fColors = new Color[]{Color.GREEN, Color.YELLOW, Color.RED};
-  private static final Color DEFAULT_RANGE_COLOR = Color.GRAY;
-  private final double[] fLevels = new double[]{0d, 5d, 10d, 100d};
-  private List<Section> fSections;
-  private double newValue;
+  private final List<Section> fSections;
+  private final MGaugeDataSource fDataSource;
 
-  MGauge(MGaugeDataSource dataSource) {
+  public MGauge(MGaugeDataSource dataSource) {
     fDataSource = dataSource;
-    initSections();
+    fSections = dataSource.getSections();
     initGauge();
-  }
-
-  private void initSections() {
-    fSections = new ArrayList<>();
-    for (int i = 0; i < fColors.length; i++) {
-      Color sectionColor = fColors[i] == null ? DEFAULT_RANGE_COLOR : this.fColors[i];
-      fSections.add(new Section(this.fLevels[i], this.fLevels[(i + 1)], sectionColor, setAlpha(
-              sectionColor.brighter().brighter(), 0.5F), null, null));
-    }
   }
 
   private void initGauge() {
@@ -83,26 +65,9 @@ public class MGauge {
     fRadial.setFrameVisible(false);
     fRadial.setLedVisible(false);
     fRadial.getModel().setGaugeType(GaugeType.TYPE4);
-    fRadial.setValue(10);
     fRadial.setLcdColor(LcdColor.CUSTOM);
     fRadial.setCustomLcdBackground(Color.WHITE);
     fRadial.setCustomLcdForeground(Color.BLUE);
-    animate(1);
-  }
-
-  public void animate(int second) {
-    Timer timer = new Timer();
-    timer.schedule(new TimerTask() {
-      @Override
-      public void run() {
-        newValue = Math.random() * fRadial.getMaxValue();
-        addTween(fRadial, "value", null, 2000, fRadial.getValue(), newValue);
-      }
-
-    }, second * 2000, second * 2000);
-
-    fRadial.setValueAnimated(newValue);
-    fRadial.setLcdValueAnimated(newValue);
   }
 
   public JComponent getUi() {
@@ -136,30 +101,15 @@ public class MGauge {
     return Double.valueOf(tickSpacing);
   }
 
-  private Color setAlpha(Color color, float alpha) {
-    if (alpha > 1.0F) {
-      return setAlpha(color, 255);
-    }
-    if (alpha < 0.0F) {
-      return setAlpha(color, 0);
-    }
-    return setAlpha(color, (int) Math.ceil(255.0F * alpha));
+  @Override
+  public void updateValues(MQueryResult result) {
+    double values = fDataSource.getValue(result);
+    fRadial.setValue(values);
   }
 
-  private Color setAlpha(Color color, int alpha) {
-    return new Color(color.getRed(), color.getGreen(), color.getBlue(), alpha);
-  }
-
-  private void addTween(Object mainObject, String propertyName, TimelineCallback callback, int duration,
-          double from, double to) {
-    Timeline timeline = new Timeline(mainObject);
-    timeline.addPropertyToInterpolate(propertyName, Double.valueOf(from), Double.valueOf(to));
-    timeline.setDuration(duration);
-    if (callback != null) {
-      timeline.addCallback(callback);
-    }
-    timeline.setEase(new Spline(0.6F));
-    timeline.play();
+  @Override
+  public void updateQuery(MQuery query) {
+    fDataSource.updateQuery(query);
   }
 
 }

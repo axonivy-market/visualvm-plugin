@@ -221,7 +221,7 @@ public class BasicIvyJmxDataCollector {
       licenseInfo.setServerElementsLimit(Integer.parseInt(getLicenseDetail(tabular,
               IvyJmxConstant.IvyServer.Server.License.KEY_SERVER_ELEMENTS_LIMIT)));
       licenseInfo.setServerRIA(Boolean.valueOf(getLicenseDetail(tabular,
-              IvyJmxConstant.IvyServer.Server.License.KEY_LICENSEE_INDIVIDUAL)));
+              IvyJmxConstant.IvyServer.Server.License.KEY_SERVER_RIA)));
       licenseInfo.setServerSessionsLimit(Integer.parseInt(getLicenseDetail(tabular,
               IvyJmxConstant.IvyServer.Server.License.KEY_SERVER_SESSIONS_LIMIT)));
       licenseInfo.setServerUsersLimit(Integer.parseInt(getLicenseDetail(tabular,

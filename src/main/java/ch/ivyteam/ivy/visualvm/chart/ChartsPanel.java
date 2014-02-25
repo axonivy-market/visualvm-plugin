@@ -53,12 +53,18 @@ public class ChartsPanel implements IUpdatableUIObject {
     for (MChart chart : barCharts) {
       chart.updateValues(result);
     }
+    for (MGauge gauge : gauges) {
+      gauge.updateValues(result);
+    }
   }
 
   @Override
   public void updateQuery(MQuery query) {
     for (MChart chart : barCharts) {
       chart.updateQuery(query);
+    }
+    for (MGauge gauge : gauges) {
+      gauge.updateQuery(query);
     }
   }
 

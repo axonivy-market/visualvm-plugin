@@ -36,7 +36,7 @@ public class MLicenseChartDataSource extends MChartDataSource {
     }
   }
 
-  public int getSessionLimit(MBeanServerConnection connection) throws IvyJmxDataCollectException {
+  private int getSessionLimit(MBeanServerConnection connection) throws IvyJmxDataCollectException {
     int result = 0;
     ObjectName objectName = IvyJmxConstant.IvyServer.Server.NAME;
     String attributeName = IvyJmxConstant.IvyServer.Server.KEY_LICENSE_PARAMETERS;
