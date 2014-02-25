@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<mBeanTestData>
+  <dataset>
+    <property>
+      <name>ivy:type=Manager,context=/ivy,host=localhost</name>
+      <dataset>
+        <property>
+          <name>sessionCounter</name>
+          <value type="java.lang.Long">0</value>
+        </property>
+      </dataset>
+    </property>
+    
+    <property>
+      <name>Xpert.ivy Server:type=Security Manager</name>
+      <dataset>
+        <property>
+          <name>sessions</name>
+          <value type="java.lang.Long">0</value>
+        </property>
+        <property>
+          <name>licensedSessions</name>
+          <value type="java.lang.Long">0</value>
+        </property>
+      </dataset>
+    </property>
+    
+    <property>
+      <name>Xpert.ivy Server:type=Rich Dialog Execution Manager</name>
+      <dataset>
+        <property>
+          <name>richDialogSessions</name>
+          <value type="java.lang.Long">0</value>
+        </property>
+      </dataset>
+    </property>
+  </dataset>
+  
+  <dataset>
+    <property>
+      <name>ivy:type=Manager,context=/ivy,host=localhost</name>
+      <dataset>
+        <property>
+          <name>sessionCounter</name>
+          <value type="java.lang.Long">5</value>
+        </property>
+      </dataset>
+    </property>
+    
+    <property>
+      <name>Xpert.ivy Server:type=Security Manager</name>
+      <dataset>
+        <property>
+          <name>sessions</name>
+          <value type="java.lang.Long">5</value>
+        </property>
+        <property>
+          <name>licensedSessions</name>
+          <value type="java.lang.Long">3</value>
+        </property>
+      </dataset>
+    </property>
+    
+    <property>
+      <name>Xpert.ivy Server:type=Rich Dialog Execution Manager</name>
+      <dataset>
+        <property>
+          <name>richDialogSessions</name>
+          <value type="java.lang.Long">2</value>
+        </property>
+      </dataset>
+    </property>
+  </dataset>
+  
+  <dataset>
+    <property>
+      <name>ivy:type=Manager,context=/ivy,host=localhost</name>
+      <dataset>
+        <property>
+          <name>sessionCounter</name>
+          <value type="java.lang.Long">500</value>
+        </property>
+      </dataset>
+    </property>
+    
+    <property>
+      <name>Xpert.ivy Server:type=Security Manager</name>
+      <dataset>
+        <property>
+          <name>sessions</name>
+          <value type="java.lang.Long">500</value>
+        </property>
+        <property>
+          <name>licensedSessions</name>
+          <value type="java.lang.Long">300</value>
+        </property>
+      </dataset>
+    </property>
+    
+    <property>
+      <name>Xpert.ivy Server:type=Rich Dialog Execution Manager</name>
+      <dataset>
+        <property>
+          <name>richDialogSessions</name>
+          <value type="java.lang.Long">200</value>
+        </property>
+      </dataset>
+    </property>
+  </dataset>
+</mBeanTestData>

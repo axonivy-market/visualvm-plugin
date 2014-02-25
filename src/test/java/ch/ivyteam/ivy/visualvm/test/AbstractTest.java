@@ -19,6 +19,12 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 public abstract class AbstractTest extends TestCase {
+  private final MBeanTestData.Dataset fDataset;
+
+  public AbstractTest(MBeanTestData.Dataset dataset) {
+    this.fDataset = dataset;
+  }
+
   public static MBeanServerConnection createMockConnection() {
     MBeanServerConnection connection = mock(MBeanServerConnection.class);
     return connection;
@@ -54,9 +60,15 @@ public abstract class AbstractTest extends TestCase {
       } catch (ParseException ex) {
         throw new RuntimeException(ex);
       }
+    } else if ("java.lang.Long".equals(attr.getValue().getType())) {
+      return Long.parseLong(attr.getValue().getValue());
     } else {
       return attr.getValue().getValue();
     }
+  }
+
+  protected MBeanTestData.Dataset getDataset() {
+    return fDataset;
   }
 
 }

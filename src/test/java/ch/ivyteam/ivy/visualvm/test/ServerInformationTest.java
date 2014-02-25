@@ -1,35 +1,31 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package ch.ivyteam.ivy.visualvm.test;
 
 import ch.ivyteam.ivy.visualvm.exception.IvyJmxDataCollectException;
 import ch.ivyteam.ivy.visualvm.model.IvyApplicationInfo;
 import ch.ivyteam.ivy.visualvm.model.OSInfo;
+import ch.ivyteam.ivy.visualvm.model.ServerConnectorInfo;
 import ch.ivyteam.ivy.visualvm.model.SystemDatabaseInfo;
 import ch.ivyteam.ivy.visualvm.service.BasicIvyJmxDataCollector;
-import ch.ivyteam.ivy.visualvm.test.data.JAXBUtils;
 import ch.ivyteam.ivy.visualvm.test.data.model.MBeanTestData;
-import ch.ivyteam.ivy.visualvm.test.data.model.MBeanTestData.Dataset;
+import ch.ivyteam.ivy.visualvm.test.util.TestUtil;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import javax.management.InstanceNotFoundException;
 import javax.management.MBeanServerConnection;
 import javax.management.MalformedObjectNameException;
+import javax.management.ObjectName;
 import javax.management.ReflectionException;
 import javax.xml.bind.JAXBException;
 import static junit.framework.TestCase.assertEquals;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
-import static org.mockito.Mockito.mock;
-import org.openide.util.Utilities;
+import static org.mockito.Mockito.when;
 
 @RunWith(Parameterized.class)
 public class ServerInformationTest extends AbstractTest {
@@ -44,31 +40,25 @@ public class ServerInformationTest extends AbstractTest {
   private static final String DB_DRIVER_NAME = "com.jdbc.mysql.Driver";
   private static final String DB_USERNAME = "root";
 
-//  private static final String PORT_8009 = "8009";
-//  private static final String PORT_8443 = "8443";
-//  private static final String HTTPS = "https";
-//  private static final String AJP_13 = "AJP/1.3";
-//  private static final String HTTP = "http";
-//  private static final String HTTP_11 = "HTTP/1.1";
-//  private static final String HTTPS_11 = "HTTPS/1.1";
-//  private static final String PORT_8080 = "8080";
+  private static final String PORT_8009 = "8009";
+  private static final String PORT_8443 = "8443";
+  private static final String HTTPS = "https";
+  private static final String AJP_13 = "AJP/1.3";
+  private static final String HTTP = "http";
+  private static final String HTTP_11 = "HTTP/1.1";
+  private static final String HTTPS_11 = "HTTPS/1.1";
+  private static final String PORT_8080 = "8080";
   private static final String OS_NAME_CUSTOM = "Windows Server 2008 (64bit)";
 
   @Parameterized.Parameters(name = "{index}")
-  public static Iterable<MBeanTestData.Dataset[]> data() throws JAXBException, URISyntaxException {
-    MBeanTestData testData = JAXBUtils.unmarshall(Utilities.toFile(JAXBUtils.class.getResource(
-            "/ch/ivyteam/ivy/visualvm/test/ServerInformationTest.xml").toURI()));
-
-    Dataset[] datasets = new Dataset[]{testData.getDataset().get(0)};
-    List<Dataset[]> listDatasets = new ArrayList<>();
-    listDatasets.add(datasets);
-    return listDatasets;
+  public static Iterable<Object[]> data() throws JAXBException, URISyntaxException {
+    Iterable<Object[]> data = TestUtil.createTestData(
+            "/ch/ivyteam/ivy/visualvm/test/ServerInformationTest.xml");
+    return data;
   }
 
-  private final MBeanTestData.Dataset fDataset;
-
   public ServerInformationTest(MBeanTestData.Dataset dataset) {
-    fDataset = dataset;
+    super(dataset);
   }
 
   @Override
@@ -90,8 +80,14 @@ public class ServerInformationTest extends AbstractTest {
           IOException, IvyJmxDataCollectException, IOException,
           InstanceNotFoundException, ReflectionException {
 
-    MBeanServerConnection mockedMBeanServer = mock(MBeanServerConnection.class);
-    addTestData(mockedMBeanServer, fDataset);
+    MBeanServerConnection mockedMBeanServer = createMockConnection();
+    addTestData(mockedMBeanServer, getDataset());
+    Set<ObjectName> connectorObjNames = new HashSet<>();
+    connectorObjNames.add(new ObjectName("ivy:type=Connector,port=8009"));
+    connectorObjNames.add(new ObjectName("ivy:type=Connector,port=8080"));
+    connectorObjNames.add(new ObjectName("ivy:type=Connector,port=8443"));
+    when(mockedMBeanServer.queryNames(new ObjectName("ivy:type=Connector,port=*"), null))
+            .thenReturn(connectorObjNames);
 
     BasicIvyJmxDataCollector collector = new BasicIvyJmxDataCollector();
     // retrieve information of server, database and connectors
@@ -116,21 +112,21 @@ public class ServerInformationTest extends AbstractTest {
     assertEquals(DB_DRIVER_NAME, sysDbInfo.getDriver());
     assertEquals(DB_CONNECTION_URL, sysDbInfo.getConnectionUrl());
     assertEquals(DB_USERNAME, sysDbInfo.getUsername());
-//
-    // verify connectors
-//    List<ServerConnectorInfo> connectorInfo = collector.getMappedConnectors(mockedMBeanServer);
-//    assertEquals(PORT_8080, connectorInfo.get(0).getPort());
-//    assertEquals(HTTP_11, connectorInfo.get(0).getProtocol());
-//    assertEquals(HTTP, connectorInfo.get(0).getScheme());
-//
-//    assertEquals(PORT_8009, connectorInfo.get(1).getPort());
-//    assertEquals(AJP_13, connectorInfo.get(1).getProtocol());
-//    assertEquals(HTTP, connectorInfo.get(1).getScheme());
-//
-//    assertEquals(PORT_8443, connectorInfo.get(2).getPort());
-//    // HTTPS_11 because HTTP will be replaced by HTTPS if scheme is https
-//    assertEquals(HTTPS_11, connectorInfo.get(2).getProtocol());
-//    assertEquals(HTTPS, connectorInfo.get(2).getScheme());
+
+//     verify connectors
+    List<ServerConnectorInfo> connectorInfo = collector.getMappedConnectors(mockedMBeanServer);
+    assertEquals(PORT_8080, connectorInfo.get(0).getPort());
+    assertEquals(HTTP_11, connectorInfo.get(0).getProtocol());
+    assertEquals(HTTP, connectorInfo.get(0).getScheme());
+
+    assertEquals(PORT_8009, connectorInfo.get(1).getPort());
+    assertEquals(AJP_13, connectorInfo.get(1).getProtocol());
+    assertEquals(HTTP, connectorInfo.get(1).getScheme());
+
+    assertEquals(PORT_8443, connectorInfo.get(2).getPort());
+    // HTTPS_11 because HTTP will be replaced by HTTPS if scheme is https
+    assertEquals(HTTPS_11, connectorInfo.get(2).getProtocol());
+    assertEquals(HTTPS, connectorInfo.get(2).getScheme());
 
   }
 

@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<mBeanTestData>
+  <dataset>
+    <property>
+      <name>ivy:type=GlobalRequestProcessor,name="ajp-bio-8009"</name>
+      <dataset>
+        <!--
+        <property>
+          <name>requestCount</name>
+          <value type="java.lang.Long">0</value>
+        </property>
+        -->
+        <property>
+          <name>errorCount</name>
+          <value type="java.lang.Long">0</value>
+        </property>
+        <!--
+        <property>
+          <name>processingTime</name>
+          <value type="java.lang.Long">0</value>
+        </property>
+        -->
+      </dataset>
+    </property>
+    
+    <property>
+      <name>ivy:type=GlobalRequestProcessor,name="http-bio-8080"</name>
+      <dataset>
+        <!--
+        <property>
+          <name>requestCount</name>
+          <value type="java.lang.Long">0</value>
+        </property>
+        -->
+        <property>
+          <name>errorCount</name>
+          <value type="java.lang.Long">0</value>
+        </property>
+        <!--
+        <property>
+          <name>processingTime</name>
+          <value type="java.lang.Long">0</value>
+        </property>
+        -->
+      </dataset>
+    </property>
+    
+    <property>
+      <name>ivy:type=GlobalRequestProcessor,name="http-bio-8443"</name>
+      <dataset>
+        <!--
+        <property>
+          <name>requestCount</name>
+          <value type="java.lang.Long">0</value>
+        </property>
+        -->
+        <property>
+          <name>errorCount</name>
+          <value type="java.lang.Long">0</value>
+        </property>
+        <!--
+        <property>
+          <name>processingTime</name>
+          <value type="java.lang.Long">0</value>
+        </property>
+        -->
+      </dataset>
+    </property>
+  </dataset>
+  
+  <dataset>
+    <property>
+      <name>ivy:type=GlobalRequestProcessor,name="ajp-bio-8009"</name>
+      <dataset>
+        <!--
+        <property>
+          <name>requestCount</name>
+          <value type="java.lang.Long">4</value>
+        </property>
+        -->
+        <property>
+          <name>errorCount</name>
+          <value type="java.lang.Long">3</value>
+        </property>
+        <!--
+        <property>
+          <name>processingTime</name>
+          <value type="java.lang.Long">34</value>
+        </property>
+        -->
+      </dataset>
+    </property>
+    
+    <property>
+      <name>ivy:type=GlobalRequestProcessor,name="http-bio-8080"</name>
+      <dataset>
+        <!--
+        <property>
+          <name>requestCount</name>
+          <value type="java.lang.Long">11</value>
+        </property>
+        -->
+        <property>
+          <name>errorCount</name>
+          <value type="java.lang.Long">9</value>
+        </property>
+        <!--
+        <property>
+          <name>processingTime</name>
+          <value type="java.lang.Long">98</value>
+        </property>
+        -->
+      </dataset>
+    </property>
+    
+    <property>
+      <name>ivy:type=GlobalRequestProcessor,name="http-bio-8443"</name>
+      <dataset>
+        <!--
+        <property>
+          <name>requestCount</name>
+          <value type="java.lang.Long">8</value>
+        </property>
+        -->
+        <property>
+          <name>errorCount</name>
+          <value type="java.lang.Long">6</value>
+        </property>
+        <!--
+        <property>
+          <name>processingTime</name>
+          <value type="java.lang.Long">72</value>
+        </property>
+        -->
+      </dataset>
+    </property>
+  </dataset>
+  
+  <dataset>
+    <property>
+      <name>ivy:type=GlobalRequestProcessor,name="ajp-bio-8009"</name>
+      <dataset>
+        <!--
+        <property>
+          <name>requestCount</name>
+          <value type="java.lang.Long">400</value>
+        </property>
+        -->
+        <property>
+          <name>errorCount</name>
+          <value type="java.lang.Long">300</value>
+        </property>
+        <!--
+        <property>
+          <name>processingTime</name>
+          <value type="java.lang.Long">3400</value>
+        </property>
+        -->
+      </dataset>
+    </property>
+    
+    <property>
+      <name>ivy:type=GlobalRequestProcessor,name="http-bio-8080"</name>
+      <dataset>
+        <!--
+        <property>
+          <name>requestCount</name>
+          <value type="java.lang.Long">1100</value>
+        </property>
+        -->
+        <property>
+          <name>errorCount</name>
+          <value type="java.lang.Long">900</value>
+        </property>
+        <!--
+        <property>
+          <name>processingTime</name>
+          <value type="java.lang.Long">9800</value>
+        </property>
+        -->
+      </dataset>
+    </property>
+    
+    <property>
+      <name>ivy:type=GlobalRequestProcessor,name="http-bio-8443"</name>
+      <dataset>
+        <!--
+        <property>
+          <name>requestCount</name>
+          <value type="java.lang.Long">800</value>
+        </property>
+        -->
+        <property>
+          <name>errorCount</name>
+          <value type="java.lang.Long">600</value>
+        </property>
+        <!--
+        <property>
+          <name>processingTime</name>
+          <value type="java.lang.Long">7200</value>
+        </property>
+        -->
+      </dataset>
+    </property>
+  </dataset>
+</mBeanTestData>
