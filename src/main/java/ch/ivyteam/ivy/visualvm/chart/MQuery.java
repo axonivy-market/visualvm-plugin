@@ -1,6 +1,3 @@
-/*
- * To change this template, choose Tools | Templates and open the template in the editor.
- */
 package ch.ivyteam.ivy.visualvm.chart;
 
 import ch.ivyteam.ivy.visualvm.exception.ClosedIvyServerConnectionException;
@@ -17,10 +14,6 @@ import javax.management.MBeanServerConnection;
 import javax.management.ObjectName;
 import javax.management.ReflectionException;
 
-/**
- *
- * @author rwei
- */
 public class MQuery {
   private final Map<ObjectName, List<String>> queries = new HashMap<>();
   private static final Logger LOGGER = Logger.getLogger(MQuery.class.getName());

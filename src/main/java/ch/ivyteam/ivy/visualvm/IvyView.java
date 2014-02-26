@@ -5,7 +5,7 @@ import ch.ivyteam.ivy.visualvm.view.AbstractView;
 import ch.ivyteam.ivy.visualvm.view.IDataBeanProvider;
 import ch.ivyteam.ivy.visualvm.view.InformationView;
 import ch.ivyteam.ivy.visualvm.view.LicenseView;
-import ch.ivyteam.ivy.visualvm.view.RequestView2;
+import ch.ivyteam.ivy.visualvm.view.RequestView;
 import com.sun.tools.visualvm.application.Application;
 import com.sun.tools.visualvm.core.options.GlobalPreferences;
 import com.sun.tools.visualvm.core.scheduler.Quantum;
@@ -28,10 +28,6 @@ import javax.swing.JComponent;
 import javax.swing.JTabbedPane;
 import org.openide.util.ImageUtilities;
 
-/**
- *
- * @author rwei
- */
 class IvyView extends DataSourceView {
 
   private static final Logger LOGGER = Logger.getLogger(IvyView.class.getName());
@@ -47,7 +43,7 @@ class IvyView extends DataSourceView {
   private ScheduledTask updateTask;
   private final List<AbstractView> views = new ArrayList<>();
   private IDataBeanProvider dataBeanProvider;
-  private DataPollSettingChangeListener pollSettingChangeListener = new DataPollSettingChangeListener();
+  private final DataPollSettingChangeListener pollSettingChangeListener = new DataPollSettingChangeListener();
 
   public IvyView(Application application) {
     super(application, "Xpert.ivy", new ImageIcon(ImageUtilities.loadImage(IVY_IMAGE_PATH, true)).
@@ -74,7 +70,7 @@ class IvyView extends DataSourceView {
 
     InformationView infoView = new InformationView(dataBeanProvider);
     LicenseView licenseView = new LicenseView(dataBeanProvider);
-    RequestView2 requestViewNew = new RequestView2(dataBeanProvider);
+    RequestView requestViewNew = new RequestView(dataBeanProvider);
     views.add(infoView);
     views.add(licenseView);
     views.add(requestViewNew);

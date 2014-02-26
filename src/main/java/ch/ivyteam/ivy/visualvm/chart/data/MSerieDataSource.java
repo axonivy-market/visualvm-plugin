@@ -1,6 +1,3 @@
-/*
- * To change this template, choose Tools | Templates and open the template in the editor.
- */
 package ch.ivyteam.ivy.visualvm.chart.data;
 
 import ch.ivyteam.ivy.visualvm.chart.MQuery;
@@ -8,10 +5,6 @@ import ch.ivyteam.ivy.visualvm.chart.MQueryResult;
 import ch.ivyteam.ivy.visualvm.chart.SerieStyle;
 import com.sun.tools.visualvm.charts.SimpleXYChartDescriptor;
 
-/**
- *
- * @author rwei
- */
 abstract class MSerieDataSource {
 
   private long fScaleFactor = 1L;

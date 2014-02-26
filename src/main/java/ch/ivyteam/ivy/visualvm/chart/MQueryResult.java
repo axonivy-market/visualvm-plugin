@@ -1,6 +1,3 @@
-/*
- * To change this template, choose Tools | Templates and open the template in the editor.
- */
 package ch.ivyteam.ivy.visualvm.chart;
 
 import java.util.HashMap;
@@ -10,10 +7,6 @@ import javax.management.Attribute;
 import javax.management.AttributeList;
 import javax.management.ObjectName;
 
-/**
- *
- * @author rwei
- */
 public class MQueryResult {
   private final Map<ObjectName, List<Attribute>> results = new HashMap<>();
 

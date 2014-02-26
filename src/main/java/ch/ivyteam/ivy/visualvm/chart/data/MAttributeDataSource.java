@@ -1,6 +1,3 @@
-/*
- * To change this template, choose Tools | Templates and open the template in the editor.
- */
 package ch.ivyteam.ivy.visualvm.chart.data;
 
 import ch.ivyteam.ivy.visualvm.chart.MQuery;
@@ -8,10 +5,6 @@ import ch.ivyteam.ivy.visualvm.chart.MQueryResult;
 import ch.ivyteam.ivy.visualvm.chart.SerieStyle;
 import javax.management.ObjectName;
 
-/**
- *
- * @author rwei
- */
 class MAttributeDataSource extends MSerieDataSource {
   private final String fAttribute;
   private final ObjectName fMBeanName;

@@ -1,6 +1,3 @@
-/*
- * To change this template, choose Tools | Templates and open the template in the editor.
- */
 package ch.ivyteam.ivy.visualvm;
 
 import com.sun.tools.visualvm.application.Application;
@@ -9,10 +6,6 @@ import com.sun.tools.visualvm.application.type.ApplicationType;
 import com.sun.tools.visualvm.application.type.ApplicationTypeFactory;
 import com.sun.tools.visualvm.application.type.MainClassApplicationTypeFactory;
 
-/**
- *
- * @author rwei
- */
 class IvyApplicationTypeFactory extends MainClassApplicationTypeFactory {
 
   private static final IvyApplicationTypeFactory INSTANCE = new IvyApplicationTypeFactory();

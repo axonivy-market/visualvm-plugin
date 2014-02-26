@@ -1,6 +1,3 @@
-/*
- * To change this template, choose Tools | Templates and open the template in the editor.
- */
 package ch.ivyteam.ivy.visualvm;
 
 import ch.ivyteam.ivy.visualvm.model.IvyJmxConstant;
@@ -17,10 +14,6 @@ import javax.management.MBeanException;
 import javax.management.MBeanServerConnection;
 import javax.management.ReflectionException;
 
-/**
- *
- * @author rwei
- */
 class IvyViewProvider extends DataSourceViewProvider<Application> {
 
   private static final DataSourceViewProvider<Application> INSTANCE = new IvyViewProvider();
