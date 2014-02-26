@@ -6,7 +6,6 @@
 package ch.ivyteam.ivy.visualvm.view;
 
 import ch.ivyteam.ivy.visualvm.model.IvyLicenseInfo;
-import javax.swing.JLabel;
 
 /**
  *
@@ -95,25 +94,6 @@ public class LicenseInformationPanel extends javax.swing.JPanel {
     licenseExpirationInfo.append(" ").append(delta).append(" second");
     appendPluralIndicator(licenseExpirationInfo, (int) delta);
     licenseExpirationInfo.append(" )");
-  }
-
-  private void setInfoLabelsText(JLabel titleLabel, JLabel valueLabel, Object data) {
-    if (data != null) {
-      titleLabel.setVisible(true);
-      valueLabel.setVisible(true);
-      if (data instanceof String) {
-        valueLabel.setText((String) data);
-      } else {
-        valueLabel.setText(data.toString());
-      }
-    } else {
-      hideInfoLabels(titleLabel, valueLabel);
-    }
-  }
-
-  private void hideInfoLabels(JLabel titleLabel, JLabel valueLabel) {
-    titleLabel.setVisible(false);
-    valueLabel.setVisible(false);
   }
 
   private void appendPluralIndicator(StringBuilder licenseExpirationInfo, int amount) {
