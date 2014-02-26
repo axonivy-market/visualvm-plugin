@@ -10,7 +10,7 @@
     <name>Xpert.ivy Server Monitor</name>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <netbean.version>RELEASE72</netbean.version>
+        <visualvm.version>RELEASE135</visualvm.version>
         <netbeans.run.params.ide/>
         <netbeans.run.params>${netbeans.run.params.ide}</netbeans.run.params>
         <visualvm.installation>D:\Project\ivyvisualvm\visualvm_platform\visualvm_137</visualvm.installation>
@@ -45,69 +45,69 @@
     <dependencies>
         <!--for netbean-->
         <dependency>
-            <groupId>org.netbeans.api</groupId>
+            <groupId>com.sun.tools.visualvm.api</groupId>
             <artifactId>org-netbeans-api-annotations-common</artifactId>
-            <version>${netbean.version}</version>
+            <version>${visualvm.version}</version>
         </dependency>
         <dependency>
-            <groupId>org.netbeans.api</groupId>
+            <groupId>com.sun.tools.visualvm.api</groupId>
             <artifactId>org-netbeans-modules-settings</artifactId>
-            <version>${netbean.version}</version>
+            <version>${visualvm.version}</version>
         </dependency>
         
         <!--for visualvm-->
         <dependency>
             <groupId>com.sun.tools.visualvm.api</groupId>
             <artifactId>com-sun-tools-visualvm-application</artifactId>
-            <version>RELEASE135</version>
+            <version>${visualvm.version}</version>
         </dependency>
         <dependency>
             <groupId>com.sun.tools.visualvm.api</groupId>
             <artifactId>com-sun-tools-visualvm-charts</artifactId>
-            <version>RELEASE135</version>
+            <version>${visualvm.version}</version>
         </dependency>
         <dependency>
             <groupId>com.sun.tools.visualvm.api</groupId>
             <artifactId>com-sun-tools-visualvm-jmx</artifactId>
-            <version>RELEASE135</version>
+            <version>${visualvm.version}</version>
         </dependency>
 
         <!--Below dependencies are included due to above dependencies but in
         runtime OSGi they are not accessible, so we explicitly declare them -->
         <dependency>
-            <groupId>org.netbeans.api</groupId>
+            <groupId>com.sun.tools.visualvm.api</groupId>
             <artifactId>org-openide-dialogs</artifactId>
-            <version>${netbean.version}</version>
+            <version>${visualvm.version}</version>
         </dependency>
         <dependency>
-            <groupId>org.netbeans.api</groupId>
+            <groupId>com.sun.tools.visualvm.api</groupId>
             <artifactId>org-openide-awt</artifactId>
-            <version>${netbean.version}</version>
+            <version>${visualvm.version}</version>
         </dependency>
         <dependency>
-            <groupId>org.netbeans.api</groupId>
+            <groupId>com.sun.tools.visualvm.api</groupId>
             <artifactId>org-openide-modules</artifactId>
-            <version>${netbean.version}</version>
+            <version>${visualvm.version}</version>
         </dependency>
         <dependency>
-            <groupId>org.netbeans.api</groupId>
+            <groupId>com.sun.tools.visualvm.api</groupId>
             <artifactId>org-openide-util</artifactId>
-            <version>${netbean.version}</version>
+            <version>${visualvm.version}</version>
         </dependency>
         <dependency>
-            <groupId>org.netbeans.api</groupId>
+            <groupId>com.sun.tools.visualvm.api</groupId>
             <artifactId>org-openide-windows</artifactId>
-            <version>${netbean.version}</version>
+            <version>${visualvm.version}</version>
         </dependency>
         <dependency>
             <groupId>com.sun.tools.visualvm.api</groupId>
             <artifactId>com-sun-tools-visualvm-core</artifactId>
-            <version>RELEASE135</version>
+            <version>${visualvm.version}</version>
         </dependency>
         <dependency>
             <groupId>com.sun.tools.visualvm.api</groupId>
             <artifactId>com-sun-tools-visualvm-tools</artifactId>
-            <version>RELEASE135</version>
+            <version>${visualvm.version}</version>
         </dependency>
         <dependency>
             <groupId>junit</groupId>
