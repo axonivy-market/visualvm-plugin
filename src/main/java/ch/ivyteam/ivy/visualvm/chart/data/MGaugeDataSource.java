@@ -22,7 +22,7 @@ public class MGaugeDataSource {
   private final IDataBeanProvider fDataBeanProvider;
   private final String fAttribute;
   private final ObjectName fMBeanName;
-  private final double fScaleFactor = 1D;
+  private static final double SCALE_FACTOR = 1D;
 
   public MGaugeDataSource(IDataBeanProvider dataBeanProvider, List<Section> sections,
           ObjectName mBeanName, String attribute) {
@@ -50,7 +50,7 @@ public class MGaugeDataSource {
 
   private double toScaledDouble(Object value) {
     if (value instanceof Number) {
-      return ((Number) value).doubleValue() / fScaleFactor;
+      return ((Number) value).doubleValue() / SCALE_FACTOR;
     }
     return 0D;
   }
