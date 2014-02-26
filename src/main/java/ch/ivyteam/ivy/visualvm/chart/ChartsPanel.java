@@ -6,8 +6,9 @@ package ch.ivyteam.ivy.visualvm.chart;
 import ch.ivyteam.ivy.visualvm.chart.data.MChartDataSource;
 import ch.ivyteam.ivy.visualvm.chart.data.MGaugeDataSource;
 import ch.ivyteam.ivy.visualvm.view.IUpdatableUIObject;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
+import java.awt.Color;
+import java.awt.GridLayout;
+import java.awt.LayoutManager;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JComponent;
@@ -18,18 +19,22 @@ public class ChartsPanel implements IUpdatableUIObject {
   private final List<MChart> barCharts = new ArrayList<>();
   private final List<MGauge> gauges = new ArrayList<>();
   private final JPanel chartPanel;
-  private static final GridBagConstraints CONSTRAINTS;
 
-  static {
-    CONSTRAINTS = new GridBagConstraints();
-    CONSTRAINTS.fill = GridBagConstraints.BOTH;
-    CONSTRAINTS.weightx = 1.0;
-    CONSTRAINTS.weighty = 1.0;
-    CONSTRAINTS.gridx = 0;
-  }
-
-  public ChartsPanel() {
-    chartPanel = new JPanel(new GridBagLayout());
+  /**
+   * Constructor
+   *
+   * @param horizontalOrVertical <code>true</code> to lay charts horizontally, <code>false</code> to lay
+   *                             charts vertically
+   */
+  public ChartsPanel(boolean horizontalOrVertical) {
+    LayoutManager layout;
+    if (horizontalOrVertical) {
+      layout = new GridLayout(1, 0);
+    } else {
+      layout = new GridLayout(0, 1);
+    }
+    chartPanel = new JPanel(layout);
+    chartPanel.setBackground(Color.WHITE);
   }
 
   public JComponent getUiComponent() {
@@ -39,13 +44,13 @@ public class ChartsPanel implements IUpdatableUIObject {
   public void addChart(MChartDataSource dataSource) {
     final MChart chart = new MChart(dataSource);
     barCharts.add(chart);
-    chartPanel.add(chart.getUi(), CONSTRAINTS);
+    chartPanel.add(chart.getUi());
   }
 
   public void addGauge(MGaugeDataSource dataSource) {
     final MGauge gauge = new MGauge(dataSource);
     gauges.add(gauge);
-    chartPanel.add(gauge.getUi(), CONSTRAINTS);
+    chartPanel.add(gauge.getUi());
   }
 
   @Override

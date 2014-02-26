@@ -19,10 +19,10 @@ public class RequestViewNew extends AbstractView {
   }
 
   private void createRequestView() {
-    ChartsPanel requestChart = new ChartsPanel();
-    ChartsPanel errorChart = new ChartsPanel();
-    ChartsPanel processingTimeChart = new ChartsPanel();
-    ChartsPanel sessionChart = new ChartsPanel();
+    ChartsPanel requestChart = new ChartsPanel(false);
+    ChartsPanel errorChart = new ChartsPanel(false);
+    ChartsPanel processingTimeChart = new ChartsPanel(false);
+    ChartsPanel sessionChart = new ChartsPanel(false);
 
     MRequestChartDataSource requestDataSource = new MRequestChartDataSource(
             getDataBeanProvider(), REQUESTS, null, REQUESTS);
@@ -38,10 +38,10 @@ public class RequestViewNew extends AbstractView {
     processingTimeChart.addChart(processingTimeDataSource);
     sessionChart.addChart(sessionDataSource);
 
-    getUpdatableUIObjects().add(requestChart);
-    getUpdatableUIObjects().add(errorChart);
-    getUpdatableUIObjects().add(processingTimeChart);
-    getUpdatableUIObjects().add(sessionChart);
+    registerScheduledUpdate(requestChart);
+    registerScheduledUpdate(errorChart);
+    registerScheduledUpdate(processingTimeChart);
+    registerScheduledUpdate(sessionChart);
 
     super.getViewComponent().addDetailsView(new DataViewComponent.DetailsView("Requests", null, 10,
             requestChart.getUiComponent(), null), DataViewComponent.TOP_LEFT);

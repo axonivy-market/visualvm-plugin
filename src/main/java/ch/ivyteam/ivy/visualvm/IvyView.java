@@ -5,7 +5,6 @@ import ch.ivyteam.ivy.visualvm.view.AbstractView;
 import ch.ivyteam.ivy.visualvm.view.IDataBeanProvider;
 import ch.ivyteam.ivy.visualvm.view.InformationView;
 import ch.ivyteam.ivy.visualvm.view.LicenseView;
-import ch.ivyteam.ivy.visualvm.view.RequestView;
 import ch.ivyteam.ivy.visualvm.view.RequestView2;
 import com.sun.tools.visualvm.application.Application;
 import com.sun.tools.visualvm.core.options.GlobalPreferences;
@@ -75,11 +74,9 @@ class IvyView extends DataSourceView {
 
     InformationView infoView = new InformationView(dataBeanProvider);
     LicenseView licenseView = new LicenseView(dataBeanProvider);
-    RequestView requestView = new RequestView(dataBeanProvider);
     RequestView2 requestViewNew = new RequestView2(dataBeanProvider);
     views.add(infoView);
     views.add(licenseView);
-    views.add(requestView);
     views.add(requestViewNew);
 
     tabbed.addTab("Information", (Icon) ImageUtilities.loadImage(INFO_IMAGE_PATH, true),
@@ -87,8 +84,6 @@ class IvyView extends DataSourceView {
     tabbed.addTab("License", (Icon) ImageUtilities.loadImage(LICENSE_IMAGE_PATH, true),
             licenseView.getViewComponent());
     tabbed.addTab("User Requests", (Icon) ImageUtilities.loadImage(USER_REQ_IMAGE_PATH, true),
-            requestView.getViewComponent());
-    tabbed.addTab("User Requests New", (Icon) ImageUtilities.loadImage(USER_REQ_IMAGE_PATH, true),
             requestViewNew.getViewComponent());
 
     updateTask = Scheduler.sharedInstance().schedule(new UpdateChartTask(),

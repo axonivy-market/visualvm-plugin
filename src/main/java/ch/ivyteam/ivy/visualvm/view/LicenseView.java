@@ -64,9 +64,9 @@ public class LicenseView extends AbstractView {
     MLicenseChartDataSource sessionDataSource = new MLicenseChartDataSource(
             getDataBeanProvider(), null, null, "Concurrent Users");
 
-    ChartsPanel sessionChart = new ChartsPanel();
+    ChartsPanel sessionChart = new ChartsPanel(false);
     sessionChart.addChart(sessionDataSource);
-    getUpdatableUIObjects().add(sessionChart);
+    registerScheduledUpdate(sessionChart);
 
     super.getViewComponent().addDetailsView(new DataViewComponent.DetailsView("Concurrent Users",
             null, 10, sessionChart.getUiComponent(), null), DataViewComponent.TOP_RIGHT);
@@ -91,9 +91,9 @@ public class LicenseView extends AbstractView {
     MGaugeDataSource dataSource = new MGaugeDataSource(getDataBeanProvider(), sections,
             IvyJmxConstant.IvyServer.SecurityManager.NAME,
             IvyJmxConstant.IvyServer.SecurityManager.KEY_LICENSED_USERS);
-    ChartsPanel userChart = new ChartsPanel();
+    ChartsPanel userChart = new ChartsPanel(false);
     userChart.addGauge(dataSource);
-    getUpdatableUIObjects().add(userChart);
+    registerScheduledUpdate(userChart);
 
     super.getViewComponent().addDetailsView(new DataViewComponent.DetailsView("Named Users",
             null, 10, userChart.getUiComponent(), null), DataViewComponent.BOTTOM_RIGHT);
@@ -117,9 +117,9 @@ public class LicenseView extends AbstractView {
     MGaugeDataSource dataSource = new MGaugeDataSource(getDataBeanProvider(), sections,
             IvyJmxConstant.IvyServer.SecurityManager.NAME,
             IvyJmxConstant.IvyServer.SecurityManager.KEY_LICENSED_SESSIONS);
-    ChartsPanel sessionsChart = new ChartsPanel();
+    ChartsPanel sessionsChart = new ChartsPanel(false);
     sessionsChart.addGauge(dataSource);
-    getUpdatableUIObjects().add(sessionsChart);
+    registerScheduledUpdate(sessionsChart);
 
     super.getViewComponent().addDetailsView(new DataViewComponent.DetailsView("Concurrent Users",
             null, 10, sessionsChart.getUiComponent(), null), DataViewComponent.BOTTOM_LEFT);

@@ -21,7 +21,7 @@ public class RequestView extends AbstractView {
   private void createRequestView() {
     super.getViewComponent().configureDetailsArea(new DataViewComponent.DetailsAreaConfiguration(REQUESTS,
             false), DataViewComponent.TOP_RIGHT);
-    ChartsPanel requestPanel = new ChartsPanel();
+    ChartsPanel requestPanel = new ChartsPanel(false);
 
     MRequestChartDataSource requestDataSource = new MRequestChartDataSource(
             getDataBeanProvider(), REQUESTS, null, REQUESTS);
@@ -40,7 +40,7 @@ public class RequestView extends AbstractView {
     // Add detail views to the component:
     super.getViewComponent().addDetailsView(new DataViewComponent.DetailsView(REQUESTS, null, 10,
             requestPanel.getUiComponent(), null), DataViewComponent.TOP_RIGHT);
-    getUpdatableUIObjects().add(requestPanel);
+    registerScheduledUpdate(requestPanel);
   }
 
   @Override

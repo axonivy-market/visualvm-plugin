@@ -56,8 +56,8 @@ public class AbstractView {
     }
   }
 
-  public List<IUpdatableUIObject> getUpdatableUIObjects() {
-    return fUpdatableUIObjects;
+  public void registerScheduledUpdate(IUpdatableUIObject updatableObject) {
+    fUpdatableUIObjects.add(updatableObject);
   }
 
 }

@@ -1,6 +1,3 @@
-/*
- * To change this template, choose Tools | Templates and open the template in the editor.
- */
 package ch.ivyteam.ivy.visualvm.chart;
 
 import ch.ivyteam.ivy.visualvm.chart.data.MChartDataSource;
@@ -11,10 +8,6 @@ import com.sun.tools.visualvm.charts.SimpleXYChartSupport;
 import com.sun.tools.visualvm.core.options.GlobalPreferences;
 import javax.swing.JComponent;
 
-/**
- *
- * @author rwei
- */
 class MChart implements IUpdatableUIObject {
 
   private final SimpleXYChartSupport chart;

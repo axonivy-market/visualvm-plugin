@@ -235,10 +235,13 @@ public final class DataUtils {
   }
 
   public static String getProtocol(ObjectName processorName) {
-    String protocol = processorName.getKeyProperty("name");
-    protocol = protocol.substring(1, protocol.length() - 1);
-    protocol = protocol.replace("-bio", "");
-    return protocol;
+    String[] splits = processorName.getKeyProperty("name")
+            .replaceAll("\"", "")
+            .replace("-bio", "")
+            .split("-");
+    String protocol = splits[0].toUpperCase();
+    String fullProtocol = MessageFormat.format("{0} ({1})", protocol, splits[1]);
+    return fullProtocol;
   }
 
   public static ObjectName getTomcatManagerName(MBeanServerConnection serverConnection) {
