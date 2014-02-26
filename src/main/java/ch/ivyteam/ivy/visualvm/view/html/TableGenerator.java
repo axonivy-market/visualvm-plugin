@@ -57,7 +57,7 @@ public class TableGenerator {
     sb.append(TAG_CELL_END);
   }
 
-  private class Row {
+  private final class Row {
     private String fLabel;
     private String fValue;
 

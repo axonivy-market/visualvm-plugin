@@ -40,9 +40,8 @@ public class LicenseView extends AbstractView {
             "General Information", false), DataViewComponent.TOP_LEFT);
     if (!uiComplete) {
       createLicenseInfoView();
-      createLicenseChartView();
-      createUserGaugeView();
-      createSessionGaugeView();
+      createSessionsView();
+      createUsersView();
       uiComplete = true;
     }
     return viewComponent;
@@ -54,75 +53,54 @@ public class LicenseView extends AbstractView {
 
   }
 
-  private void createLicenseChartView() {
+  private void createSessionsView() {
     if (fLicenseInfo.getServerSessionsLimit() > 0) {
-      createSessionChart();
+      MLicenseChartDataSource sessionDataSource = new MLicenseChartDataSource(
+              getDataBeanProvider(), null, null, "Concurrent Users");
+
+      List<Section> sections = new ArrayList<>();
+      int sessionsLimit = fLicenseInfo.getServerSessionsLimit();
+      Section greenSection = new Section(0, Math.round(sessionsLimit * 0.9), Color.GREEN);
+      Section orangeSection = new Section(Math.round(sessionsLimit * 0.9), sessionsLimit, Color.ORANGE);
+      Section redSection = new Section(sessionsLimit, Math.round(sessionsLimit * 1.5), Color.RED);
+      sections.add(greenSection);
+      sections.add(orangeSection);
+      sections.add(redSection);
+      MGaugeDataSource dataSource = new MGaugeDataSource(getDataBeanProvider(), sections,
+              IvyJmxConstant.IvyServer.SecurityManager.NAME,
+              IvyJmxConstant.IvyServer.SecurityManager.KEY_LICENSED_SESSIONS);
+
+      ChartsPanel sessionsChart = new ChartsPanel(true);
+      sessionsChart.addChart(sessionDataSource);
+      sessionsChart.addGauge(dataSource);
+      registerScheduledUpdate(sessionsChart);
+
+      super.getViewComponent().addDetailsView(new DataViewComponent.DetailsView("Concurrent Users",
+              null, 10, sessionsChart.getUiComponent(), null), DataViewComponent.BOTTOM_LEFT);
     }
   }
 
-  private void createSessionChart() {
-    MLicenseChartDataSource sessionDataSource = new MLicenseChartDataSource(
-            getDataBeanProvider(), null, null, "Concurrent Users");
-
-    ChartsPanel sessionChart = new ChartsPanel(false);
-    sessionChart.addChart(sessionDataSource);
-    registerScheduledUpdate(sessionChart);
-
-    super.getViewComponent().addDetailsView(new DataViewComponent.DetailsView("Concurrent Users",
-            null, 10, sessionChart.getUiComponent(), null), DataViewComponent.TOP_RIGHT);
-  }
-
-  private void createUserGaugeView() {
+  private void createUsersView() {
     if (fLicenseInfo.getServerUsersLimit() > 0) {
-      createUserGauge();
+      List<Section> sections = new ArrayList<>();
+      int usersLimit = fLicenseInfo.getServerUsersLimit();
+      Section greenSection = new Section(0, Math.round(usersLimit * 0.9), Color.GREEN);
+      Section orangeSection = new Section(Math.round(usersLimit * 0.9), Math.round(usersLimit * 0.95),
+              Color.ORANGE);
+      Section redSection = new Section(Math.round(usersLimit * 0.95), usersLimit, Color.RED);
+      sections.add(greenSection);
+      sections.add(orangeSection);
+      sections.add(redSection);
+      MGaugeDataSource dataSource = new MGaugeDataSource(getDataBeanProvider(), sections,
+              IvyJmxConstant.IvyServer.SecurityManager.NAME,
+              IvyJmxConstant.IvyServer.SecurityManager.KEY_LICENSED_USERS);
+      ChartsPanel userChart = new ChartsPanel(false);
+      userChart.addGauge(dataSource);
+      registerScheduledUpdate(userChart);
+
+      super.getViewComponent().addDetailsView(new DataViewComponent.DetailsView("Named Users",
+              null, 10, userChart.getUiComponent(), null), DataViewComponent.TOP_RIGHT);
     }
-  }
-
-  private void createUserGauge() {
-    List<Section> sections = new ArrayList<>();
-    int usersLimit = fLicenseInfo.getServerUsersLimit();
-    Section greenSection = new Section(0, Math.round(usersLimit * 0.9), Color.GREEN);
-    Section orangeSection = new Section(Math.round(usersLimit * 0.9), Math.round(usersLimit * 0.95),
-            Color.ORANGE);
-    Section redSection = new Section(Math.round(usersLimit * 0.95), usersLimit, Color.RED);
-    sections.add(greenSection);
-    sections.add(orangeSection);
-    sections.add(redSection);
-    MGaugeDataSource dataSource = new MGaugeDataSource(getDataBeanProvider(), sections,
-            IvyJmxConstant.IvyServer.SecurityManager.NAME,
-            IvyJmxConstant.IvyServer.SecurityManager.KEY_LICENSED_USERS);
-    ChartsPanel userChart = new ChartsPanel(false);
-    userChart.addGauge(dataSource);
-    registerScheduledUpdate(userChart);
-
-    super.getViewComponent().addDetailsView(new DataViewComponent.DetailsView("Named Users",
-            null, 10, userChart.getUiComponent(), null), DataViewComponent.BOTTOM_RIGHT);
-  }
-
-  private void createSessionGaugeView() {
-    if (fLicenseInfo.getServerSessionsLimit() > 0) {
-      createSessionGauge();
-    }
-  }
-
-  private void createSessionGauge() {
-    List<Section> sections = new ArrayList<>();
-    int sessionsLimit = fLicenseInfo.getServerSessionsLimit();
-    Section greenSection = new Section(0, Math.round(sessionsLimit * 0.9), Color.GREEN);
-    Section orangeSection = new Section(Math.round(sessionsLimit * 0.9), sessionsLimit, Color.ORANGE);
-    Section redSection = new Section(sessionsLimit, Math.round(sessionsLimit * 1.5), Color.RED);
-    sections.add(greenSection);
-    sections.add(orangeSection);
-    sections.add(redSection);
-    MGaugeDataSource dataSource = new MGaugeDataSource(getDataBeanProvider(), sections,
-            IvyJmxConstant.IvyServer.SecurityManager.NAME,
-            IvyJmxConstant.IvyServer.SecurityManager.KEY_LICENSED_SESSIONS);
-    ChartsPanel sessionsChart = new ChartsPanel(false);
-    sessionsChart.addGauge(dataSource);
-    registerScheduledUpdate(sessionsChart);
-
-    super.getViewComponent().addDetailsView(new DataViewComponent.DetailsView("Concurrent Users",
-            null, 10, sessionsChart.getUiComponent(), null), DataViewComponent.BOTTOM_LEFT);
   }
 
   private void retrieveLicenseInfo() {
@@ -141,7 +119,7 @@ public class LicenseView extends AbstractView {
     super.update();
     fLicenseInfo.setRemainingTime(fLicenseInfo.getRemaingTime() - 1000 * GlobalPreferences.sharedInstance().
             getMonitoredDataPoll());
-    fLicenseInformationPanel.setRemainingTimeInfo();
+    fLicenseInformationPanel.setLicenseData();
   }
 
 }

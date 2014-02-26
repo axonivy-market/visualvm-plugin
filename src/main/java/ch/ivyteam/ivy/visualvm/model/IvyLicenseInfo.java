@@ -130,9 +130,12 @@ public class IvyLicenseInfo {
 
   public String toHTMLString() {
     StringBuilder html = new StringBuilder("<html><body style=\"font-family:tahoma;font-size:11\">");
-    html.append("<table border='0' celspacing='10' celpadding='0'>");
-    html.append("<tr><td>").append(getExpireWarningInHTML());
-    html.append("</td></tr></table>");
+    String expire = getExpireWarningInHTML();
+    if (expire != null) {
+      html.append("<table border='0' celspacing='10' celpadding='0'>");
+      html.append("<tr><td>").append(expire);
+      html.append("</td></tr></table>");
+    }
 
     html.append("<table border='0' celspacing='10' celpadding='0'>");
     html.append("<tr><td>Organization: <td>");
@@ -197,7 +200,7 @@ public class IvyLicenseInfo {
       expireWarning = MessageFormat.format(EXPIRE_IN_30_DAYS_WARNING, expireDateString);
     }
     if (expireWarning == null) {
-      return "";
+      return null;
     }
     return "<font color='" + color + "'>" + expireWarning + "</font> ";
   }

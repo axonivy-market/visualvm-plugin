@@ -27,7 +27,7 @@ import javax.swing.JComponent;
 public class MGauge implements IUpdatableUIObject {
 
   private Radial fRadial;
-  private static final Rectangle2D DEFAULT_LCD_RECTANGLE = new Rectangle2D.Double(0.35, 0.6, 0.25, 0.12);
+  private static final Rectangle2D DEFAULT_LCD_RECTANGLE = new Rectangle2D.Double(0.27, 0.6, 0.27, 0.12);
   private final List<Section> fSections;
   private final MGaugeDataSource fDataSource;
 

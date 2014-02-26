@@ -62,7 +62,7 @@ public class LicenseInformationPanel extends javax.swing.JPanel {
   // End of variables declaration//GEN-END:variables
   /* CHECKSTYLE:ON */
 
-  private void setLicenseData() {
+  public void setLicenseData() {
     if (fLicenseInfo != null) {
       htmlLabelPanel1.setText(fLicenseInfo.toHTMLString());
     }
