@@ -1,5 +1,6 @@
 package ch.ivyteam.ivy.visualvm;
 
+import ch.ivyteam.ivy.visualvm.exception.ClosedIvyServerConnectionException;
 import ch.ivyteam.ivy.visualvm.view.AbstractView;
 import ch.ivyteam.ivy.visualvm.view.IDataBeanProvider;
 import ch.ivyteam.ivy.visualvm.view.InformationView;
@@ -18,6 +19,7 @@ import com.sun.tools.visualvm.tools.jmx.JmxModel;
 import com.sun.tools.visualvm.tools.jmx.JmxModelFactory;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Logger;
 import java.util.prefs.PreferenceChangeEvent;
 import java.util.prefs.PreferenceChangeListener;
 import javax.management.MBeanServerConnection;
@@ -32,6 +34,8 @@ import org.openide.util.ImageUtilities;
  * @author rwei
  */
 class IvyView extends DataSourceView {
+
+  private static final Logger LOGGER = Logger.getLogger(IvyView.class.getName());
 
   public static final String IVY_IMAGE_PATH = "resources/icons/ivy16.png";
   public static final String INFO_IMAGE_PATH = "resources/icons/info.png";
@@ -54,7 +58,7 @@ class IvyView extends DataSourceView {
 
   @Override
   protected DataViewComponent createComponent() {
-        // Data area for master view:
+    // Data area for master view:
     // Master view:
     JTabbedPane tabbed = new JTabbedPane();
     // Add the master view and configuration view to the component:
@@ -121,7 +125,13 @@ class IvyView extends DataSourceView {
     @Override
     public void onSchedule(long l) {
       for (AbstractView view : views) {
-        view.update();
+        try {
+          view.update();
+        } catch (ClosedIvyServerConnectionException ex) {
+          updateTask.suspend();
+          LOGGER.warning(ex.getMessage());
+          break;
+        }
       }
     }
 

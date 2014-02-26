@@ -3,6 +3,7 @@
  */
 package ch.ivyteam.ivy.visualvm.chart;
 
+import ch.ivyteam.ivy.visualvm.exception.ClosedIvyServerConnectionException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -50,6 +51,9 @@ public class MQuery {
 
   public MQueryResult execute(MBeanServerConnection serverConnection) {
     MQueryResult result = new MQueryResult();
+    if (serverConnection == null) {
+      throw new ClosedIvyServerConnectionException("");
+    }
     for (Map.Entry<ObjectName, List<String>> entry : queries.entrySet()) {
       List<String> attributes = entry.getValue();
       String[] attribs = new String[attributes.size()];
