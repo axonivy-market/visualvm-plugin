@@ -139,55 +139,58 @@ public class IvyLicenseInfo {
 
     html.append("<table border='0' celspacing='10' celpadding='0'>");
     html.append("<tr><td>Organization: <td>");
-    html.append("<td>").append(getLicenseeOrganisation());
-    html.append("</td></tr>");
+    html.append(TD_TAG).append(getLicenseeOrganisation());
+    html.append(TD_TR_END_TAG);
 
     html.append("<tr><td>Individual: <td>");
-    html.append("<td>").append(getLicenseeIndividual());
-    html.append("</td></tr>");
+    html.append(TD_TAG).append(getLicenseeIndividual());
+    html.append(TD_TR_END_TAG);
 
     html.append("<tr><td>Host Name: <td>");
-    html.append("<td>").append(getHostName());
-    html.append("</td></tr>");
+    html.append(TD_TAG).append(getHostName());
+    html.append(TD_TR_END_TAG);
 
     html.append("<tr><td>Version: <td>");
-    html.append("<td>").append(getLicenseKeyVersion());
-    html.append("</td></tr>");
+    html.append(TD_TAG).append(getLicenseKeyVersion());
+    html.append(TD_TR_END_TAG);
 
     html.append("<tr><td>Valid From: <td>");
-    html.append("<td>").append(DataUtils.toDateString(getLicenseValidFrom()));
-    html.append("</td></tr>");
+    html.append(TD_TAG).append(DataUtils.toDateString(getLicenseValidFrom()));
+    html.append(TD_TR_END_TAG);
 
     html.append("<tr><td>Expires: <td>");
-    html.append("<td>").append(DataUtils.toDateString(getLicenseValidUntil()));
-    html.append("</td></tr>");
+    html.append(TD_TAG).append(DataUtils.toDateString(getLicenseValidUntil()));
+    html.append(TD_TR_END_TAG);
 
     html.append("<tr><td>Supports RIA: <td>");
-    html.append("<td>").append(isServerRIA() ? "yes" : "no");
-    html.append("</td></tr>");
+    html.append(TD_TAG).append(isServerRIA() ? "yes" : "no");
+    html.append(TD_TR_END_TAG);
 
     if (getServerElementsLimit() > 0) {
       html.append("<tr><td>Elements Limit: <td>");
-      html.append("<td>").append(getServerElementsLimit());
-      html.append("</td></tr>");
+      html.append(TD_TAG).append(getServerElementsLimit());
+      html.append(TD_TR_END_TAG);
     }
 
     if (getServerUsersLimit() > 0) {
       html.append("<tr><td>Named Users Limit: <td>");
-      html.append("<td>").append(getServerUsersLimit());
-      html.append("</td></tr>");
+      html.append(TD_TAG).append(getServerUsersLimit());
+      html.append(TD_TR_END_TAG);
     }
 
     if (getServerSessionsLimit() > 0) {
       html.append("<tr><td>Current Users Limit: <td>");
-      html.append("<td>").append(getServerSessionsLimit());
-      html.append("</td></tr>");
+      html.append(TD_TAG).append(getServerSessionsLimit());
+      html.append(TD_TR_END_TAG);
     }
     html.append("</table>");
 
     html.append("</body></html>");
     return html.toString();
   }
+
+  public static final String TD_TR_END_TAG = "</td></tr>";
+  private static final String TD_TAG = "<td>";
 
   public String getExpireWarningInHTML() {
     long delta = getRemaingTime();

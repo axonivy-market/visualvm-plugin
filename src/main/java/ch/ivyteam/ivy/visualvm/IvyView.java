@@ -39,16 +39,13 @@ class IvyView extends DataSourceView {
   public static final String USER_DEF_IMAGE_PATH = "resources/icons/user_def.png";
   public static final String LICENSE_IMAGE_PATH = "resources/icons/licence.png";
 
-  @SuppressWarnings("unused")
   private ScheduledTask updateTask;
   private final List<AbstractView> views = new ArrayList<>();
-  private IDataBeanProvider dataBeanProvider;
   private final DataPollSettingChangeListener pollSettingChangeListener = new DataPollSettingChangeListener();
 
   public IvyView(Application application) {
     super(application, "Xpert.ivy", new ImageIcon(ImageUtilities.loadImage(IVY_IMAGE_PATH, true)).
-            getImage(),
-            60, false);
+            getImage(), 60, false);
   }
 
   @Override
@@ -60,7 +57,7 @@ class IvyView extends DataSourceView {
     DataViewComponent dvcRoot = createDVC("", null);
     dvcRoot.add(tabbed);
 
-    dataBeanProvider = new IDataBeanProvider() {
+    IDataBeanProvider dataBeanProvider = new IDataBeanProvider() {
       @Override
       public MBeanServerConnection getMBeanServerConnection() {
         return IvyView.this.getMBeanServerConnection();

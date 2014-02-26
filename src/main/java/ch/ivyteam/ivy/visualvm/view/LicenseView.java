@@ -26,6 +26,7 @@ public class LicenseView extends AbstractView {
     super(dataBeanProvider);
     retrieveLicenseInfo();
     fLicenseInformationPanel = new LicenseInformationPanel(fLicenseInfo);
+    fLicenseInformationPanel.setLicenseData();
   }
 
   @Override

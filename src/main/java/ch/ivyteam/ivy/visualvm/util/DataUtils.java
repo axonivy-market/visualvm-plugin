@@ -27,17 +27,18 @@ public final class DataUtils {
 
   public static Date stringToDate(String dateString) {
     SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
-    try {
-      return format.parse(dateString);
-    } catch (ParseException ex) {
-      Exceptions.printStackTrace(ex);
+    if (!dateString.isEmpty()) {
+      try {
+        return format.parse(dateString);
+      } catch (ParseException ex) {
+        Exceptions.printStackTrace(ex);
+      }
     }
     return new Date();
   }
 
   public static String toDateString(Date date) {
-    DateFormat localizedFormat = DateFormat.getDateInstance(
-            DateFormat.FULL, Locale.getDefault());
+    DateFormat localizedFormat = DateFormat.getDateInstance(DateFormat.FULL, Locale.getDefault());
     return localizedFormat.format(date);
   }
 
@@ -52,20 +53,16 @@ public final class DataUtils {
 
   public static String getFullOSName(String osName, String osArch) {
     String result = osName;
-    if (osName != null) {
-      if (osArch != null && osArch.toLowerCase().contains("64")) {
-        result = osName + " (64bit)";
-      }
+    if (osName != null && osArch != null && osArch.toLowerCase().contains("64")) {
+      result = osName + " (64bit)";
     }
     return result;
   }
 
   public static String getFullConnectorProtocol(String protocol, String scheme) {
     String result = protocol;
-    if (result != null) {
-      if ("https".equals(scheme)) {
-        result = result.replace("HTTP/", "HTTPS/");
-      }
+    if (result != null && "https".equals(scheme)) {
+      result = result.replace("HTTP/", "HTTPS/");
     }
     return result;
   }
@@ -73,7 +70,7 @@ public final class DataUtils {
   public static String getShortConnectorProtocol(String protocol, String scheme) {
     String result = getFullConnectorProtocol(protocol, scheme);
     if (result != null) {
-      int slashIndex = result.indexOf("/");
+      int slashIndex = result.indexOf('/');
       result = result.substring(0, slashIndex);
     }
     return result;
@@ -258,8 +255,7 @@ public final class DataUtils {
             .replace("-bio", "")
             .split("-");
     String protocol = splits[0].toUpperCase();
-    String fullProtocol = MessageFormat.format("{0} ({1})", protocol, splits[1]);
-    return fullProtocol;
+    return MessageFormat.format("{0} ({1})", protocol, splits[1]);
   }
 
   public static String getPort(ObjectName processorName) {

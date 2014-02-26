@@ -11,6 +11,7 @@ import ch.ivyteam.ivy.visualvm.model.IvyLicenseInfo;
  *
  * @author thtam
  */
+@SuppressWarnings("PMD.SingularField")
 public class LicenseInformationPanel extends javax.swing.JPanel {
 
   private final IvyLicenseInfo fLicenseInfo;
@@ -25,7 +26,6 @@ public class LicenseInformationPanel extends javax.swing.JPanel {
   public LicenseInformationPanel(IvyLicenseInfo licenseInfo) {
     initComponents();
     fLicenseInfo = licenseInfo;
-    setLicenseData();
   }
 
   /* CHECKSTYLE:OFF */
