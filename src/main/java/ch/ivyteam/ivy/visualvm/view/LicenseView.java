@@ -36,6 +36,8 @@ public class LicenseView extends AbstractView {
   @Override
   public DataViewComponent getViewComponent() {
     DataViewComponent viewComponent = super.getViewComponent();
+    viewComponent.configureDetailsArea(new DataViewComponent.DetailsAreaConfiguration(
+            "General Information", false), DataViewComponent.TOP_LEFT);
     if (!uiComplete) {
       createLicenseInfoView();
       createLicenseChartView();
@@ -47,7 +49,7 @@ public class LicenseView extends AbstractView {
   }
 
   private void createLicenseInfoView() {
-    super.getViewComponent().addDetailsView(new DataViewComponent.DetailsView("",
+    super.getViewComponent().addDetailsView(new DataViewComponent.DetailsView("General Information",
             null, 10, fLicenseInformationPanel, null), DataViewComponent.TOP_LEFT);
 
   }

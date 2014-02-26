@@ -28,11 +28,11 @@ public class IvyLicenseInfo {
   private int fServerSessionsLimit;
   private long fRemaingTime;
   private static final String EXPIRE_IN_30_DAYS_WARNING
-          = "Your licence will expire on the {0}. "
+          = "Your licence will expire on {0}. "
           + "If the licence is expired the server will no longer start. "
           + "Please request a new licence now!";
   private static final String EXPIRED_WARNING
-          = "Your licence has expired on the {0}. "
+          = "Your licence has expired on {0}. "
           + "You will not be able to restart your server. "
           + "Please request a new licence now!";
 
@@ -160,7 +160,7 @@ public class IvyLicenseInfo {
     html.append("</td></tr>");
 
     html.append("<tr><td>Supports RIA: <td>");
-    html.append("<td>").append(isServerRIA());
+    html.append("<td>").append(isServerRIA() ? "yes" : "no");
     html.append("</td></tr>");
 
     if (getServerElementsLimit() > 0) {
@@ -201,4 +201,5 @@ public class IvyLicenseInfo {
     }
     return "<font color='" + color + "'>" + expireWarning + "</font> ";
   }
+
 }
