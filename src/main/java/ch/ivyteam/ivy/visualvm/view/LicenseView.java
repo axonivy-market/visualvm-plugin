@@ -95,7 +95,7 @@ public class LicenseView extends AbstractView {
               IvyJmxConstant.IvyServer.SecurityManager.NAME,
               IvyJmxConstant.IvyServer.SecurityManager.KEY_LICENSED_USERS);
       ChartsPanel userChart = new ChartsPanel(false);
-      userChart.addGauge(dataSource);
+      userChart.addLinear(dataSource);
       registerScheduledUpdate(userChart);
 
       super.getViewComponent().addDetailsView(new DataViewComponent.DetailsView("Named Users",

@@ -16,8 +16,7 @@ import javax.swing.JPanel;
 
 public class ChartsPanel implements IUpdatableUIObject {
 
-  private final List<MChart> barCharts = new ArrayList<>();
-  private final List<MGauge> gauges = new ArrayList<>();
+  private final List<IUpdatableUIObject> updatableObjects = new ArrayList<>();
   private final JPanel chartPanel;
 
   /**
@@ -43,33 +42,33 @@ public class ChartsPanel implements IUpdatableUIObject {
 
   public void addChart(MChartDataSource dataSource) {
     final MChart chart = new MChart(dataSource);
-    barCharts.add(chart);
+    updatableObjects.add(chart);
     chartPanel.add(chart.getUi());
   }
 
   public void addGauge(MGaugeDataSource dataSource) {
     final MGauge gauge = new MGauge(dataSource);
-    gauges.add(gauge);
+    updatableObjects.add(gauge);
     chartPanel.add(gauge.getUi());
+  }
+
+  public void addLinear(MGaugeDataSource dataSource) {
+    final MLinear linear = new MLinear(dataSource);
+    updatableObjects.add(linear);
+    chartPanel.add(linear.getUi());
   }
 
   @Override
   public void updateValues(MQueryResult result) {
-    for (MChart chart : barCharts) {
-      chart.updateValues(result);
-    }
-    for (MGauge gauge : gauges) {
-      gauge.updateValues(result);
+    for (IUpdatableUIObject updatableObject : updatableObjects) {
+      updatableObject.updateValues(result);
     }
   }
 
   @Override
   public void updateQuery(MQuery query) {
-    for (MChart chart : barCharts) {
-      chart.updateQuery(query);
-    }
-    for (MGauge gauge : gauges) {
-      gauge.updateQuery(query);
+    for (IUpdatableUIObject updatableObject : updatableObjects) {
+      updatableObject.updateQuery(query);
     }
   }
 
