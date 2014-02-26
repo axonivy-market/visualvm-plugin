@@ -6,7 +6,12 @@ import ch.ivyteam.ivy.visualvm.chart.data.MProcessTimeChartDataSource;
 import ch.ivyteam.ivy.visualvm.chart.data.MRequestChartDataSource;
 import ch.ivyteam.ivy.visualvm.chart.data.MSessionChartDataSource;
 import com.sun.tools.visualvm.core.ui.components.DataViewComponent;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import javax.swing.JComponent;
 import javax.swing.JPanel;
+import javax.swing.KeyStroke;
 
 public class RequestView extends AbstractView {
 
@@ -22,7 +27,7 @@ public class RequestView extends AbstractView {
   }
 
   private void createRequestView() {
-    ChartsPanel requestPanel = new ChartsPanel(true);
+    final ChartsPanel requestPanel = new ChartsPanel(true);
     ChartsPanel sessionPanel = new ChartsPanel(true);
 
     MRequestChartDataSource requestDataSource = new MRequestChartDataSource(
@@ -48,6 +53,17 @@ public class RequestView extends AbstractView {
             sessionPanel.getUiComponent(), null), DataViewComponent.TOP_LEFT);
     registerScheduledUpdate(requestPanel);
     registerScheduledUpdate(sessionPanel);
+
+    requestPanel.getUiComponent().registerKeyboardAction(
+            new ActionListener() {
+              @Override
+              public void actionPerformed(ActionEvent e) {
+                requestPanel.switchLayoutOrientation();
+              }
+
+            }, KeyStroke.getKeyStroke(KeyEvent.VK_W, KeyEvent.CTRL_MASK),
+            JComponent.WHEN_IN_FOCUSED_WINDOW
+    );
   }
 
   @Override

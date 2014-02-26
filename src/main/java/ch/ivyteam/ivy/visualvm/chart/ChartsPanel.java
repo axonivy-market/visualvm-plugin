@@ -40,6 +40,19 @@ public class ChartsPanel implements IUpdatableUIObject {
     return chartPanel;
   }
 
+  public void setLayoutOrientation(boolean horizontalOrVertical) {
+    if (horizontalOrVertical) {
+      chartPanel.setLayout(new GridLayout(1, 0));
+    } else {
+      chartPanel.setLayout(new GridLayout(0, 1));
+    }
+  }
+
+  public void switchLayoutOrientation() {
+    GridLayout layout = (GridLayout) chartPanel.getLayout();
+    setLayoutOrientation(layout.getRows() == 0);
+  }
+
   public void addChart(MChartDataSource dataSource) {
     final MChart chart = new MChart(dataSource);
     updatableObjects.add(chart);

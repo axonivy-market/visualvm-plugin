@@ -1,6 +1,7 @@
 package ch.ivyteam.ivy.visualvm.util;
 
 import ch.ivyteam.ivy.visualvm.model.IvyJmxConstant;
+import ch.ivyteam.ivy.visualvm.model.ServerConnectorInfo;
 import java.io.IOException;
 import java.text.DateFormat;
 import java.text.MessageFormat;
@@ -8,6 +9,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Collections;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 import java.util.Set;
 import javax.management.MBeanServerConnection;
@@ -66,6 +68,26 @@ public final class DataUtils {
       }
     }
     return result;
+  }
+
+  public static String getShortConnectorProtocol(String protocol, String scheme) {
+    String result = getFullConnectorProtocol(protocol, scheme);
+    if (result != null) {
+      int slashIndex = result.indexOf("/");
+      result = result.substring(0, slashIndex);
+    }
+    return result;
+  }
+
+  public static String findProtocol(List<ServerConnectorInfo> mappedConnectors, String port) {
+    String protocol = "";
+    for (ServerConnectorInfo connector : mappedConnectors) {
+      if (port.equals(connector.getPort())) {
+        protocol = DataUtils.getShortConnectorProtocol(connector.getProtocol(), connector.getScheme());
+        break;
+      }
+    }
+    return protocol;
   }
 
   public static String getHostNameFromRuntimeId(String runtimeId) {
@@ -238,6 +260,13 @@ public final class DataUtils {
     String protocol = splits[0].toUpperCase();
     String fullProtocol = MessageFormat.format("{0} ({1})", protocol, splits[1]);
     return fullProtocol;
+  }
+
+  public static String getPort(ObjectName processorName) {
+    String[] splits = processorName.getKeyProperty("name")
+            .replaceAll("\"", "")
+            .split("-bio-");
+    return splits[1];
   }
 
   public static ObjectName getTomcatManagerName(MBeanServerConnection serverConnection) {

@@ -6,7 +6,11 @@ import com.sun.tools.visualvm.charts.ChartFactory;
 import com.sun.tools.visualvm.charts.SimpleXYChartDescriptor;
 import com.sun.tools.visualvm.charts.SimpleXYChartSupport;
 import com.sun.tools.visualvm.core.options.GlobalPreferences;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JComponent;
+import javax.swing.JPopupMenu;
 
 class MChart implements IUpdatableUIObject {
 
@@ -20,6 +24,8 @@ class MChart implements IUpdatableUIObject {
             60 * monitoredDataCache);
     dataSource.configureChart(chartDescriptor);
     chart = ChartFactory.createSimpleXYChart(chartDescriptor);
+    JPopupMenu menu = createLayoutMenu();
+    chart.getChart().setComponentPopupMenu(menu);
   }
 
   JComponent getUi() {
@@ -45,6 +51,22 @@ class MChart implements IUpdatableUIObject {
       result[index++] = Long.toString(num);
     }
     return result;
+  }
+
+  private JPopupMenu createLayoutMenu() {
+    JPopupMenu menu = new JPopupMenu();
+    JCheckBoxMenuItem legendVisibleItem = new JCheckBoxMenuItem("Show legends");
+    legendVisibleItem.setSelected(true);
+    legendVisibleItem.addActionListener(new ActionListener() {
+      @Override
+      public void actionPerformed(ActionEvent e) {
+        JCheckBoxMenuItem control = (JCheckBoxMenuItem) e.getSource();
+        chart.setLegendVisible(control.isSelected());
+      }
+
+    });
+    menu.add(legendVisibleItem);
+    return menu;
   }
 
 }
