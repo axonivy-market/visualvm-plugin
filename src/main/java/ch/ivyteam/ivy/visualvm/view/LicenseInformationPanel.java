@@ -6,10 +6,6 @@
 package ch.ivyteam.ivy.visualvm.view;
 
 import ch.ivyteam.ivy.visualvm.model.IvyLicenseInfo;
-import ch.ivyteam.ivy.visualvm.util.DataUtils;
-import java.awt.Color;
-import java.awt.Component;
-import java.text.MessageFormat;
 import javax.swing.JLabel;
 
 /**
@@ -22,13 +18,7 @@ public class LicenseInformationPanel extends javax.swing.JPanel {
   private static final long MILLISECONDS_IN_ONE_SECOND = 1000;
   private static final long MILLISECONDS_IN_ONE_MINUTE = 60 * MILLISECONDS_IN_ONE_SECOND;
   private static final long MILLISECONDS_IN_ONE_HOUR = 60 * MILLISECONDS_IN_ONE_MINUTE;
-  private static final long MILLISECONDS_IN_ONE_DAY = 24 * MILLISECONDS_IN_ONE_HOUR;
-  private static final String EXPIRE_IN_30_DAYS_WARNING
-          = "Your licence will expire on the {0}. If the licence is expired the server will no longer start! "
-          + "Please request a new licence now.";
-  private static final String EXPIRED_WARNING
-          = "Your licence has expired on the {0}. You will not be able to restart your server! "
-          + "Please request a new licence now.";
+  public static final long MILLISECONDS_IN_ONE_DAY = 24 * MILLISECONDS_IN_ONE_HOUR;
 
   /**
    * Creates new form LicenseInformationPanel
@@ -49,417 +39,34 @@ public class LicenseInformationPanel extends javax.swing.JPanel {
   private void initComponents() {
     java.awt.GridBagConstraints gridBagConstraints;
 
-    jPanel1 = new javax.swing.JPanel();
-    filler1 = new javax.swing.Box.Filler(new java.awt.Dimension(0, 0), new java.awt.Dimension(1, 1), new java.awt.Dimension(0, 32767));
-    licenseeOrganisationLabel = new javax.swing.JLabel();
-    licenseeIndividualLabel = new javax.swing.JLabel();
-    licenseValidFromLabel = new javax.swing.JLabel();
-    licenseValidUntilLabel = new javax.swing.JLabel();
-    licenseVersionLabel = new javax.swing.JLabel();
-    serverElementsLimitLabel = new javax.swing.JLabel();
-    serverUsersLimitLabel = new javax.swing.JLabel();
-    serverSessionsLimitLabel = new javax.swing.JLabel();
-    serverRIALabel = new javax.swing.JLabel();
-    hostNameLabel = new javax.swing.JLabel();
-    remainingTimeLabel = new javax.swing.JLabel();
-    warningLabel = new javax.swing.JLabel();
-    jPanel2 = new javax.swing.JPanel();
-    licenseeOrganisationValue = new javax.swing.JLabel();
-    filler2 = new javax.swing.Box.Filler(new java.awt.Dimension(0, 0), new java.awt.Dimension(1, 1), new java.awt.Dimension(0, 32767));
-    licenseeIndividualValue = new javax.swing.JLabel();
-    licenseValidFromValue = new javax.swing.JLabel();
-    licenseValidUntilValue = new javax.swing.JLabel();
-    licenseVersionValue = new javax.swing.JLabel();
-    serverElementsLimitValue = new javax.swing.JLabel();
-    serverUsersLimitValue = new javax.swing.JLabel();
-    serverSessionsLimitValue = new javax.swing.JLabel();
-    serverRIAValue = new javax.swing.JLabel();
-    hostNameValue = new javax.swing.JLabel();
-    remainingTimeValue = new javax.swing.JLabel();
-    warningValue = new javax.swing.JLabel();
+    jScrollPane2 = new javax.swing.JScrollPane();
+    htmlLabelPanel1 = new ch.ivyteam.ivy.visualvm.view.HtmlLabelPanel();
 
     setBackground(new java.awt.Color(255, 255, 255));
     setLayout(new java.awt.GridBagLayout());
 
-    jPanel1.setBackground(new java.awt.Color(255, 255, 255));
-    jPanel1.setRequestFocusEnabled(false);
-    jPanel1.setLayout(new java.awt.GridBagLayout());
-    gridBagConstraints = new java.awt.GridBagConstraints();
-    gridBagConstraints.gridx = 0;
-    gridBagConstraints.gridy = 20;
-    gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
-    gridBagConstraints.weightx = 1.0;
-    gridBagConstraints.weighty = 1.0;
-    jPanel1.add(filler1, gridBagConstraints);
+    jScrollPane2.setBorder(null);
+    jScrollPane2.setViewportView(htmlLabelPanel1);
 
-    licenseeOrganisationLabel.setBackground(new java.awt.Color(255, 255, 255));
-    org.openide.awt.Mnemonics.setLocalizedText(licenseeOrganisationLabel, org.openide.util.NbBundle.getMessage(LicenseInformationPanel.class, "LicenseInformationPanel.licenseeOrganisationLabel.text")); // NOI18N
-    gridBagConstraints = new java.awt.GridBagConstraints();
-    gridBagConstraints.gridx = 0;
-    gridBagConstraints.gridy = 0;
-    gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
-    gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-    gridBagConstraints.weightx = 1.0;
-    gridBagConstraints.weighty = 1.0;
-    gridBagConstraints.insets = new java.awt.Insets(5, 5, 5, 5);
-    jPanel1.add(licenseeOrganisationLabel, gridBagConstraints);
-
-    org.openide.awt.Mnemonics.setLocalizedText(licenseeIndividualLabel, org.openide.util.NbBundle.getMessage(LicenseInformationPanel.class, "LicenseInformationPanel.licenseeIndividualLabel.text")); // NOI18N
     gridBagConstraints = new java.awt.GridBagConstraints();
     gridBagConstraints.gridx = 0;
     gridBagConstraints.gridy = 1;
     gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
-    gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
     gridBagConstraints.weightx = 1.0;
     gridBagConstraints.weighty = 1.0;
-    gridBagConstraints.insets = new java.awt.Insets(5, 5, 5, 5);
-    jPanel1.add(licenseeIndividualLabel, gridBagConstraints);
-
-    org.openide.awt.Mnemonics.setLocalizedText(licenseValidFromLabel, org.openide.util.NbBundle.getMessage(LicenseInformationPanel.class, "LicenseInformationPanel.licenseValidFromLabel.text")); // NOI18N
-    gridBagConstraints = new java.awt.GridBagConstraints();
-    gridBagConstraints.gridx = 0;
-    gridBagConstraints.gridy = 4;
-    gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
-    gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-    gridBagConstraints.weightx = 1.0;
-    gridBagConstraints.weighty = 1.0;
-    gridBagConstraints.insets = new java.awt.Insets(5, 5, 5, 5);
-    jPanel1.add(licenseValidFromLabel, gridBagConstraints);
-
-    org.openide.awt.Mnemonics.setLocalizedText(licenseValidUntilLabel, org.openide.util.NbBundle.getMessage(LicenseInformationPanel.class, "LicenseInformationPanel.licenseValidUntilLabel.text")); // NOI18N
-    gridBagConstraints = new java.awt.GridBagConstraints();
-    gridBagConstraints.gridx = 0;
-    gridBagConstraints.gridy = 5;
-    gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
-    gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-    gridBagConstraints.weightx = 1.0;
-    gridBagConstraints.weighty = 1.0;
-    gridBagConstraints.insets = new java.awt.Insets(5, 5, 5, 5);
-    jPanel1.add(licenseValidUntilLabel, gridBagConstraints);
-
-    org.openide.awt.Mnemonics.setLocalizedText(licenseVersionLabel, org.openide.util.NbBundle.getMessage(LicenseInformationPanel.class, "LicenseInformationPanel.licenseVersionLabel.text")); // NOI18N
-    gridBagConstraints = new java.awt.GridBagConstraints();
-    gridBagConstraints.gridx = 0;
-    gridBagConstraints.gridy = 3;
-    gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
-    gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-    gridBagConstraints.weightx = 1.0;
-    gridBagConstraints.weighty = 1.0;
-    gridBagConstraints.insets = new java.awt.Insets(5, 5, 5, 5);
-    jPanel1.add(licenseVersionLabel, gridBagConstraints);
-
-    org.openide.awt.Mnemonics.setLocalizedText(serverElementsLimitLabel, org.openide.util.NbBundle.getMessage(LicenseInformationPanel.class, "LicenseInformationPanel.serverElementsLimitLabel.text")); // NOI18N
-    gridBagConstraints = new java.awt.GridBagConstraints();
-    gridBagConstraints.gridx = 0;
-    gridBagConstraints.gridy = 9;
-    gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
-    gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-    gridBagConstraints.weightx = 1.0;
-    gridBagConstraints.weighty = 1.0;
-    gridBagConstraints.insets = new java.awt.Insets(5, 5, 5, 5);
-    jPanel1.add(serverElementsLimitLabel, gridBagConstraints);
-
-    org.openide.awt.Mnemonics.setLocalizedText(serverUsersLimitLabel, org.openide.util.NbBundle.getMessage(LicenseInformationPanel.class, "LicenseInformationPanel.serverUsersLimitLabel.text")); // NOI18N
-    gridBagConstraints = new java.awt.GridBagConstraints();
-    gridBagConstraints.gridx = 0;
-    gridBagConstraints.gridy = 10;
-    gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
-    gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-    gridBagConstraints.weightx = 1.0;
-    gridBagConstraints.weighty = 1.0;
-    gridBagConstraints.insets = new java.awt.Insets(5, 5, 5, 5);
-    jPanel1.add(serverUsersLimitLabel, gridBagConstraints);
-
-    org.openide.awt.Mnemonics.setLocalizedText(serverSessionsLimitLabel, org.openide.util.NbBundle.getMessage(LicenseInformationPanel.class, "LicenseInformationPanel.serverSessionsLimitLabel.text")); // NOI18N
-    gridBagConstraints = new java.awt.GridBagConstraints();
-    gridBagConstraints.gridx = 0;
-    gridBagConstraints.gridy = 11;
-    gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
-    gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-    gridBagConstraints.weightx = 1.0;
-    gridBagConstraints.weighty = 1.0;
-    gridBagConstraints.insets = new java.awt.Insets(5, 5, 5, 5);
-    jPanel1.add(serverSessionsLimitLabel, gridBagConstraints);
-
-    org.openide.awt.Mnemonics.setLocalizedText(serverRIALabel, org.openide.util.NbBundle.getMessage(LicenseInformationPanel.class, "LicenseInformationPanel.serverRIALabel.text")); // NOI18N
-    gridBagConstraints = new java.awt.GridBagConstraints();
-    gridBagConstraints.gridx = 0;
-    gridBagConstraints.gridy = 8;
-    gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
-    gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-    gridBagConstraints.weightx = 1.0;
-    gridBagConstraints.weighty = 1.0;
-    gridBagConstraints.insets = new java.awt.Insets(5, 5, 5, 5);
-    jPanel1.add(serverRIALabel, gridBagConstraints);
-
-    org.openide.awt.Mnemonics.setLocalizedText(hostNameLabel, org.openide.util.NbBundle.getMessage(LicenseInformationPanel.class, "LicenseInformationPanel.hostNameLabel.text")); // NOI18N
-    gridBagConstraints = new java.awt.GridBagConstraints();
-    gridBagConstraints.gridx = 0;
-    gridBagConstraints.gridy = 2;
-    gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
-    gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-    gridBagConstraints.weightx = 1.0;
-    gridBagConstraints.weighty = 1.0;
-    gridBagConstraints.insets = new java.awt.Insets(5, 5, 5, 5);
-    jPanel1.add(hostNameLabel, gridBagConstraints);
-
-    org.openide.awt.Mnemonics.setLocalizedText(remainingTimeLabel, org.openide.util.NbBundle.getMessage(LicenseInformationPanel.class, "LicenseInformationPanel.remainingTimeLabel.text")); // NOI18N
-    remainingTimeLabel.setMinimumSize(new java.awt.Dimension(39, 14));
-    remainingTimeLabel.setPreferredSize(new java.awt.Dimension(39, 14));
-    gridBagConstraints = new java.awt.GridBagConstraints();
-    gridBagConstraints.gridx = 0;
-    gridBagConstraints.gridy = 6;
-    gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
-    gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-    gridBagConstraints.weightx = 1.0;
-    gridBagConstraints.weighty = 1.0;
-    gridBagConstraints.insets = new java.awt.Insets(5, 5, 5, 5);
-    jPanel1.add(remainingTimeLabel, gridBagConstraints);
-
-    org.openide.awt.Mnemonics.setLocalizedText(warningLabel, org.openide.util.NbBundle.getMessage(LicenseInformationPanel.class, "LicenseInformationPanel.warningLabel.text")); // NOI18N
-    warningLabel.setMinimumSize(new java.awt.Dimension(39, 14));
-    warningLabel.setPreferredSize(new java.awt.Dimension(39, 14));
-    gridBagConstraints = new java.awt.GridBagConstraints();
-    gridBagConstraints.gridx = 0;
-    gridBagConstraints.gridy = 7;
-    gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
-    gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-    gridBagConstraints.weightx = 1.0;
-    gridBagConstraints.weighty = 1.0;
-    gridBagConstraints.insets = new java.awt.Insets(5, 5, 5, 5);
-    jPanel1.add(warningLabel, gridBagConstraints);
-
-    gridBagConstraints = new java.awt.GridBagConstraints();
-    gridBagConstraints.gridx = 0;
-    gridBagConstraints.gridy = 0;
-    gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
-    gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-    gridBagConstraints.weightx = 0.1;
-    gridBagConstraints.weighty = 1.0;
-    gridBagConstraints.insets = new java.awt.Insets(5, 10, 0, 5);
-    add(jPanel1, gridBagConstraints);
-
-    jPanel2.setBackground(new java.awt.Color(255, 255, 255));
-    jPanel2.setRequestFocusEnabled(false);
-    jPanel2.setLayout(new java.awt.GridBagLayout());
-
-    licenseeOrganisationValue.setBackground(new java.awt.Color(255, 255, 255));
-    org.openide.awt.Mnemonics.setLocalizedText(licenseeOrganisationValue, org.openide.util.NbBundle.getMessage(LicenseInformationPanel.class, "LicenseInformationPanel.licenseeOrganisationValue.text")); // NOI18N
-    gridBagConstraints = new java.awt.GridBagConstraints();
-    gridBagConstraints.gridx = 0;
-    gridBagConstraints.gridy = 0;
-    gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
-    gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-    gridBagConstraints.weightx = 1.0;
-    gridBagConstraints.weighty = 1.0;
-    gridBagConstraints.insets = new java.awt.Insets(5, 5, 5, 5);
-    jPanel2.add(licenseeOrganisationValue, gridBagConstraints);
-    gridBagConstraints = new java.awt.GridBagConstraints();
-    gridBagConstraints.gridx = 0;
-    gridBagConstraints.gridy = 20;
-    gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
-    gridBagConstraints.weightx = 1.0;
-    gridBagConstraints.weighty = 1.0;
-    jPanel2.add(filler2, gridBagConstraints);
-
-    org.openide.awt.Mnemonics.setLocalizedText(licenseeIndividualValue, org.openide.util.NbBundle.getMessage(LicenseInformationPanel.class, "LicenseInformationPanel.licenseeIndividualValue.text")); // NOI18N
-    gridBagConstraints = new java.awt.GridBagConstraints();
-    gridBagConstraints.gridx = 0;
-    gridBagConstraints.gridy = 1;
-    gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
-    gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-    gridBagConstraints.weightx = 1.0;
-    gridBagConstraints.weighty = 1.0;
-    gridBagConstraints.insets = new java.awt.Insets(5, 5, 5, 5);
-    jPanel2.add(licenseeIndividualValue, gridBagConstraints);
-
-    org.openide.awt.Mnemonics.setLocalizedText(licenseValidFromValue, org.openide.util.NbBundle.getMessage(LicenseInformationPanel.class, "LicenseInformationPanel.licenseValidFromValue.text")); // NOI18N
-    gridBagConstraints = new java.awt.GridBagConstraints();
-    gridBagConstraints.gridx = 0;
-    gridBagConstraints.gridy = 4;
-    gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
-    gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-    gridBagConstraints.weightx = 1.0;
-    gridBagConstraints.weighty = 1.0;
-    gridBagConstraints.insets = new java.awt.Insets(5, 5, 5, 5);
-    jPanel2.add(licenseValidFromValue, gridBagConstraints);
-
-    org.openide.awt.Mnemonics.setLocalizedText(licenseValidUntilValue, org.openide.util.NbBundle.getMessage(LicenseInformationPanel.class, "LicenseInformationPanel.licenseValidUntilValue.text")); // NOI18N
-    gridBagConstraints = new java.awt.GridBagConstraints();
-    gridBagConstraints.gridx = 0;
-    gridBagConstraints.gridy = 5;
-    gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
-    gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-    gridBagConstraints.weightx = 1.0;
-    gridBagConstraints.weighty = 1.0;
-    gridBagConstraints.insets = new java.awt.Insets(5, 5, 5, 5);
-    jPanel2.add(licenseValidUntilValue, gridBagConstraints);
-
-    org.openide.awt.Mnemonics.setLocalizedText(licenseVersionValue, org.openide.util.NbBundle.getMessage(LicenseInformationPanel.class, "LicenseInformationPanel.licenseVersionValue.text")); // NOI18N
-    gridBagConstraints = new java.awt.GridBagConstraints();
-    gridBagConstraints.gridx = 0;
-    gridBagConstraints.gridy = 3;
-    gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
-    gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-    gridBagConstraints.weightx = 1.0;
-    gridBagConstraints.weighty = 1.0;
-    gridBagConstraints.insets = new java.awt.Insets(5, 5, 5, 5);
-    jPanel2.add(licenseVersionValue, gridBagConstraints);
-
-    org.openide.awt.Mnemonics.setLocalizedText(serverElementsLimitValue, org.openide.util.NbBundle.getMessage(LicenseInformationPanel.class, "LicenseInformationPanel.serverElementsLimitValue.text")); // NOI18N
-    gridBagConstraints = new java.awt.GridBagConstraints();
-    gridBagConstraints.gridx = 0;
-    gridBagConstraints.gridy = 9;
-    gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
-    gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-    gridBagConstraints.weightx = 1.0;
-    gridBagConstraints.weighty = 1.0;
-    gridBagConstraints.insets = new java.awt.Insets(5, 5, 5, 5);
-    jPanel2.add(serverElementsLimitValue, gridBagConstraints);
-
-    org.openide.awt.Mnemonics.setLocalizedText(serverUsersLimitValue, org.openide.util.NbBundle.getMessage(LicenseInformationPanel.class, "LicenseInformationPanel.serverUsersLimitValue.text")); // NOI18N
-    gridBagConstraints = new java.awt.GridBagConstraints();
-    gridBagConstraints.gridx = 0;
-    gridBagConstraints.gridy = 10;
-    gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
-    gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-    gridBagConstraints.weightx = 1.0;
-    gridBagConstraints.weighty = 1.0;
-    gridBagConstraints.insets = new java.awt.Insets(5, 5, 5, 5);
-    jPanel2.add(serverUsersLimitValue, gridBagConstraints);
-
-    org.openide.awt.Mnemonics.setLocalizedText(serverSessionsLimitValue, org.openide.util.NbBundle.getMessage(LicenseInformationPanel.class, "LicenseInformationPanel.serverSessionsLimitValue.text")); // NOI18N
-    gridBagConstraints = new java.awt.GridBagConstraints();
-    gridBagConstraints.gridx = 0;
-    gridBagConstraints.gridy = 11;
-    gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
-    gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-    gridBagConstraints.weightx = 1.0;
-    gridBagConstraints.weighty = 1.0;
-    gridBagConstraints.insets = new java.awt.Insets(5, 5, 5, 5);
-    jPanel2.add(serverSessionsLimitValue, gridBagConstraints);
-
-    org.openide.awt.Mnemonics.setLocalizedText(serverRIAValue, org.openide.util.NbBundle.getMessage(LicenseInformationPanel.class, "LicenseInformationPanel.serverRIAValue.text")); // NOI18N
-    gridBagConstraints = new java.awt.GridBagConstraints();
-    gridBagConstraints.gridx = 0;
-    gridBagConstraints.gridy = 8;
-    gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
-    gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-    gridBagConstraints.weightx = 1.0;
-    gridBagConstraints.weighty = 1.0;
-    gridBagConstraints.insets = new java.awt.Insets(5, 5, 5, 5);
-    jPanel2.add(serverRIAValue, gridBagConstraints);
-
-    org.openide.awt.Mnemonics.setLocalizedText(hostNameValue, org.openide.util.NbBundle.getMessage(LicenseInformationPanel.class, "LicenseInformationPanel.hostNameValue.text")); // NOI18N
-    gridBagConstraints = new java.awt.GridBagConstraints();
-    gridBagConstraints.gridx = 0;
-    gridBagConstraints.gridy = 2;
-    gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
-    gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-    gridBagConstraints.weightx = 1.0;
-    gridBagConstraints.weighty = 1.0;
-    gridBagConstraints.insets = new java.awt.Insets(5, 5, 5, 5);
-    jPanel2.add(hostNameValue, gridBagConstraints);
-
-    org.openide.awt.Mnemonics.setLocalizedText(remainingTimeValue, org.openide.util.NbBundle.getMessage(LicenseInformationPanel.class, "LicenseInformationPanel.remainingTimeValue.text")); // NOI18N
-    gridBagConstraints = new java.awt.GridBagConstraints();
-    gridBagConstraints.gridx = 0;
-    gridBagConstraints.gridy = 6;
-    gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
-    gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-    gridBagConstraints.weightx = 1.0;
-    gridBagConstraints.weighty = 1.0;
-    gridBagConstraints.insets = new java.awt.Insets(5, 5, 5, 5);
-    jPanel2.add(remainingTimeValue, gridBagConstraints);
-
-    org.openide.awt.Mnemonics.setLocalizedText(warningValue, org.openide.util.NbBundle.getMessage(LicenseInformationPanel.class, "LicenseInformationPanel.warningValue.text")); // NOI18N
-    gridBagConstraints = new java.awt.GridBagConstraints();
-    gridBagConstraints.gridx = 0;
-    gridBagConstraints.gridy = 7;
-    gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
-    gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-    gridBagConstraints.weightx = 1.0;
-    gridBagConstraints.weighty = 1.0;
-    gridBagConstraints.insets = new java.awt.Insets(5, 5, 5, 5);
-    jPanel2.add(warningValue, gridBagConstraints);
-
-    gridBagConstraints = new java.awt.GridBagConstraints();
-    gridBagConstraints.gridx = 1;
-    gridBagConstraints.gridy = 0;
-    gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
-    gridBagConstraints.weightx = 1.0;
-    gridBagConstraints.weighty = 1.0;
-    gridBagConstraints.insets = new java.awt.Insets(5, 10, 0, 5);
-    add(jPanel2, gridBagConstraints);
+    add(jScrollPane2, gridBagConstraints);
   }// </editor-fold>//GEN-END:initComponents
 
   // Variables declaration - do not modify//GEN-BEGIN:variables
-  private javax.swing.Box.Filler filler1;
-  private javax.swing.Box.Filler filler2;
-  private javax.swing.JLabel hostNameLabel;
-  private javax.swing.JLabel hostNameValue;
-  private javax.swing.JPanel jPanel1;
-  private javax.swing.JPanel jPanel2;
-  private javax.swing.JLabel licenseValidFromLabel;
-  private javax.swing.JLabel licenseValidFromValue;
-  private javax.swing.JLabel licenseValidUntilLabel;
-  private javax.swing.JLabel licenseValidUntilValue;
-  private javax.swing.JLabel licenseVersionLabel;
-  private javax.swing.JLabel licenseVersionValue;
-  private javax.swing.JLabel licenseeIndividualLabel;
-  private javax.swing.JLabel licenseeIndividualValue;
-  private javax.swing.JLabel licenseeOrganisationLabel;
-  private javax.swing.JLabel licenseeOrganisationValue;
-  private javax.swing.JLabel remainingTimeLabel;
-  private javax.swing.JLabel remainingTimeValue;
-  private javax.swing.JLabel serverElementsLimitLabel;
-  private javax.swing.JLabel serverElementsLimitValue;
-  private javax.swing.JLabel serverRIALabel;
-  private javax.swing.JLabel serverRIAValue;
-  private javax.swing.JLabel serverSessionsLimitLabel;
-  private javax.swing.JLabel serverSessionsLimitValue;
-  private javax.swing.JLabel serverUsersLimitLabel;
-  private javax.swing.JLabel serverUsersLimitValue;
-  private javax.swing.JLabel warningLabel;
-  private javax.swing.JLabel warningValue;
+  private ch.ivyteam.ivy.visualvm.view.HtmlLabelPanel htmlLabelPanel1;
+  private javax.swing.JScrollPane jScrollPane2;
   // End of variables declaration//GEN-END:variables
   /* CHECKSTYLE:ON */
 
   private void setLicenseData() {
     if (fLicenseInfo != null) {
-      setOrganisationInfo();
-      setIndividualInfo();
-      setValidFromInfo();
-      setValidUntilInfo();
-      setKeyVersionInfo();
-      setHostNameInfo();
-      setServerUsersLimitInfo();
-      setServerSessionsLimitInfo();
-      setServerSupportRIAInfo();
-      setServerElementsLimitInfo();
-      setRemainingTimeInfo();
-      setExpireWarning();
-    } else {
-      for (Component comp : this.getComponents()) {
-        if (comp instanceof JLabel) {
-          comp.setVisible(false);
-        }
-      }
+      htmlLabelPanel1.setText(fLicenseInfo.toHTMLString());
     }
-  }
-
-  public void setExpireWarning() {
-    long delta = fLicenseInfo.getRemaingTime();
-    String expireWarning = null;
-    String expireDateString = DataUtils.toDateString(fLicenseInfo.getLicenseValidUntil());
-    if (delta <= 0) {
-      expireWarning = MessageFormat.format(EXPIRED_WARNING, expireDateString);
-      warningValue.setForeground(Color.red);
-    } else if (delta < 30 * MILLISECONDS_IN_ONE_DAY) {
-      expireWarning = MessageFormat.format(EXPIRE_IN_30_DAYS_WARNING, expireDateString);
-      warningValue.setForeground(Color.yellow.darker());
-    }
-    setInfoLabelsText(warningLabel, warningValue, expireWarning);
   }
 
   public void setRemainingTimeInfo() {
@@ -488,66 +95,6 @@ public class LicenseInformationPanel extends javax.swing.JPanel {
     licenseExpirationInfo.append(" ").append(delta).append(" second");
     appendPluralIndicator(licenseExpirationInfo, (int) delta);
     licenseExpirationInfo.append(" )");
-    setInfoLabelsText(remainingTimeLabel, remainingTimeValue, licenseExpirationInfo);
-
-  }
-
-  private void setServerElementsLimitInfo() {
-    if (fLicenseInfo.getServerElementsLimit() > 0) {
-      setInfoLabelsText(serverElementsLimitLabel, serverElementsLimitValue, fLicenseInfo.
-              getServerElementsLimit());
-    } else {
-      hideInfoLabels(serverElementsLimitLabel, serverElementsLimitValue);
-    }
-  }
-
-  private void setServerSupportRIAInfo() {
-    setInfoLabelsText(serverRIALabel, serverRIAValue, fLicenseInfo.isServerRIA());
-  }
-
-  private void setServerSessionsLimitInfo() {
-    if (fLicenseInfo.getServerSessionsLimit() > 0) {
-      setInfoLabelsText(serverSessionsLimitLabel, serverSessionsLimitValue, fLicenseInfo.
-              getServerSessionsLimit());
-    } else {
-      hideInfoLabels(serverSessionsLimitLabel, serverSessionsLimitValue);
-    }
-  }
-
-  private void setServerUsersLimitInfo() {
-    if (fLicenseInfo.getServerUsersLimit() > 0) {
-      setInfoLabelsText(serverUsersLimitLabel, serverUsersLimitValue, fLicenseInfo.
-              getServerUsersLimit());
-    } else {
-      hideInfoLabels(serverUsersLimitLabel, serverUsersLimitValue);
-    }
-  }
-
-  private void setHostNameInfo() {
-    setInfoLabelsText(hostNameLabel, hostNameValue, fLicenseInfo.getHostName());
-  }
-
-  private void setKeyVersionInfo() {
-    setInfoLabelsText(licenseVersionLabel, licenseVersionValue, fLicenseInfo.getLicenseKeyVersion());
-  }
-
-  private void setValidUntilInfo() {
-    setInfoLabelsText(licenseValidUntilLabel, licenseValidUntilValue, DataUtils.toDateString(fLicenseInfo.
-            getLicenseValidUntil()));
-  }
-
-  private void setValidFromInfo() {
-    setInfoLabelsText(licenseValidFromLabel, licenseValidFromValue, DataUtils.toDateString(fLicenseInfo.
-            getLicenseValidFrom()));
-  }
-
-  private void setOrganisationInfo() {
-    setInfoLabelsText(licenseeOrganisationLabel, licenseeOrganisationValue,
-            fLicenseInfo.getLicenseeOrganisation());
-  }
-
-  private void setIndividualInfo() {
-    setInfoLabelsText(licenseeIndividualLabel, licenseeIndividualValue, fLicenseInfo.getLicenseeIndividual());
   }
 
   private void setInfoLabelsText(JLabel titleLabel, JLabel valueLabel, Object data) {

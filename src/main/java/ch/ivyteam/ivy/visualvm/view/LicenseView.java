@@ -14,7 +14,6 @@ import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
 import javax.management.MBeanServerConnection;
-import javax.swing.JComponent;
 import org.openide.util.Exceptions;
 
 public class LicenseView extends AbstractView {
@@ -35,20 +34,22 @@ public class LicenseView extends AbstractView {
   }
 
   @Override
-  protected JComponent getMasterViewComponent() {
-    return fLicenseInformationPanel;
-  }
-
-  @Override
   public DataViewComponent getViewComponent() {
     DataViewComponent viewComponent = super.getViewComponent();
     if (!uiComplete) {
+      createLicenseInfoView();
       createLicenseChartView();
       createUserGaugeView();
       createSessionGaugeView();
       uiComplete = true;
     }
     return viewComponent;
+  }
+
+  private void createLicenseInfoView() {
+    super.getViewComponent().addDetailsView(new DataViewComponent.DetailsView("",
+            null, 10, fLicenseInformationPanel, null), DataViewComponent.TOP_LEFT);
+
   }
 
   private void createLicenseChartView() {
@@ -66,7 +67,7 @@ public class LicenseView extends AbstractView {
     getUpdatableUIObjects().add(sessionChart);
 
     super.getViewComponent().addDetailsView(new DataViewComponent.DetailsView("Concurrent Users",
-            null, 10, sessionChart.getUiComponent(), null), DataViewComponent.TOP_LEFT);
+            null, 10, sessionChart.getUiComponent(), null), DataViewComponent.TOP_RIGHT);
   }
 
   private void createUserGaugeView() {
@@ -139,7 +140,6 @@ public class LicenseView extends AbstractView {
     fLicenseInfo.setRemainingTime(fLicenseInfo.getRemaingTime() - 1000 * GlobalPreferences.sharedInstance().
             getMonitoredDataPoll());
     fLicenseInformationPanel.setRemainingTimeInfo();
-    fLicenseInformationPanel.setExpireWarning();
   }
 
 }
