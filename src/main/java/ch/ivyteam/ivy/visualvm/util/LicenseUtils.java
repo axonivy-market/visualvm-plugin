@@ -46,7 +46,10 @@ public final class LicenseUtils {
 
   public static String getLicenseDetail(TabularDataSupport tabular, String keys) {
     CompositeDataSupport data = (CompositeDataSupport) tabular.get(new String[]{keys});
-    return data.get("propertyValue").toString();
+    if (data != null) {
+      return data.get("propertyValue").toString();
+    }
+    return null;
   }
 
 }

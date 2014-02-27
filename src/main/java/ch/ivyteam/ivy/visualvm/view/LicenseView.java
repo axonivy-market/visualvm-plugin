@@ -21,6 +21,8 @@ public class LicenseView extends AbstractView {
   private boolean uiComplete;
   private IvyLicenseInfo fLicenseInfo;
   private final LicenseInformationPanel fLicenseInformationPanel;
+  private MGaugeDataSource fGaugeSessionsDataSource;
+  private MGaugeDataSource fGaugeUsersDataSource;
 
   public LicenseView(IDataBeanProvider dataBeanProvider) {
     super(dataBeanProvider);
@@ -67,13 +69,13 @@ public class LicenseView extends AbstractView {
       sections.add(greenSection);
       sections.add(orangeSection);
       sections.add(redSection);
-      MGaugeDataSource dataSource = new MGaugeDataSource(getDataBeanProvider(), sections,
+      fGaugeSessionsDataSource = new MGaugeDataSource(getDataBeanProvider(), sections,
               IvyJmxConstant.IvyServer.SecurityManager.NAME,
               IvyJmxConstant.IvyServer.SecurityManager.KEY_LICENSED_SESSIONS);
 
       ChartsPanel sessionsChart = new ChartsPanel(true);
       sessionsChart.addChart2(sessionDataSource);
-      sessionsChart.addGauge(dataSource);
+      sessionsChart.addGauge(fGaugeSessionsDataSource);
       registerScheduledUpdate(sessionsChart);
 
       super.getViewComponent().addDetailsView(new DataViewComponent.DetailsView("Concurrent Users",
@@ -92,11 +94,11 @@ public class LicenseView extends AbstractView {
       sections.add(greenSection);
       sections.add(orangeSection);
       sections.add(redSection);
-      MGaugeDataSource dataSource = new MGaugeDataSource(getDataBeanProvider(), sections,
+      fGaugeUsersDataSource = new MGaugeDataSource(getDataBeanProvider(), sections,
               IvyJmxConstant.IvyServer.SecurityManager.NAME,
               IvyJmxConstant.IvyServer.SecurityManager.KEY_LICENSED_USERS);
       ChartsPanel userChart = new ChartsPanel(false);
-      userChart.addLinear(dataSource);
+      userChart.addLinear(fGaugeUsersDataSource);
       registerScheduledUpdate(userChart);
 
       super.getViewComponent().addDetailsView(new DataViewComponent.DetailsView("Named Users",

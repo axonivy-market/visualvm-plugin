@@ -27,7 +27,7 @@ public final class DataUtils {
 
   public static Date stringToDate(String dateString) {
     SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
-    if (!dateString.isEmpty()) {
+    if (dateString != null && !dateString.isEmpty()) {
       try {
         return format.parse(dateString);
       } catch (ParseException ex) {

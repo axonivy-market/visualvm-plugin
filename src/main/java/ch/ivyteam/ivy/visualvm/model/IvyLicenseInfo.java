@@ -35,6 +35,9 @@ public class IvyLicenseInfo {
           = "Your licence has expired on {0}. "
           + "You will not be able to restart your server. "
           + "Please request a new licence now!";
+  private static final String USERS_EXCEEDED_WARNING
+          = "Cannot create more users because the maximum users that are allowed by your licence has "
+          + "exceeded";
 
   public IvyLicenseInfo() {
   }
@@ -146,9 +149,11 @@ public class IvyLicenseInfo {
     html.append(TD_TAG).append(getLicenseeIndividual());
     html.append(TD_TR_END_TAG);
 
-    html.append("<tr><td>Host Name: <td>");
-    html.append(TD_TAG).append(getHostName());
-    html.append(TD_TR_END_TAG);
+    if (getHostName() != null) {
+      html.append("<tr><td>Host Name: <td>");
+      html.append(TD_TAG).append(getHostName());
+      html.append(TD_TR_END_TAG);
+    }
 
     html.append("<tr><td>Version: <td>");
     html.append(TD_TAG).append(getLicenseKeyVersion());
