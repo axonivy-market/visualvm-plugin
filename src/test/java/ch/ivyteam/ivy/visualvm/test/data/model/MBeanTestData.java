@@ -37,6 +37,11 @@ public class MBeanTestData {
   public static class Dataset {
     @XmlElement(required = true)
     protected List<Property> property;
+    @XmlAttribute
+    protected String type;
+
+    public Dataset() {
+    }
 
     public List<Property> getProperty() {
       if (property == null) {
@@ -49,7 +54,12 @@ public class MBeanTestData {
       this.property = property;
     }
 
-    public Dataset() {
+    public String getType() {
+      return type;
+    }
+
+    public void setType(String type) {
+      this.type = type;
     }
 
     @XmlAccessorType(XmlAccessType.FIELD)

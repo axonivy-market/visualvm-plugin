@@ -9,11 +9,15 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.management.Attribute;
 import javax.management.AttributeList;
+import javax.management.AttributeNotFoundException;
 import javax.management.InstanceNotFoundException;
+import javax.management.MBeanException;
 import javax.management.MBeanServerConnection;
 import javax.management.MalformedObjectNameException;
 import javax.management.ObjectName;
 import javax.management.ReflectionException;
+import javax.management.openmbean.CompositeDataSupport;
+import javax.management.openmbean.TabularDataSupport;
 import junit.framework.TestCase;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
@@ -30,25 +34,39 @@ public abstract class AbstractTest extends TestCase {
     return connection;
   }
 
-  public static void addTestData(MBeanServerConnection mockConnection, MBeanTestData.Dataset dataset)
-          throws InstanceNotFoundException, InstanceNotFoundException,
-          InstanceNotFoundException, IOException, ReflectionException, MalformedObjectNameException {
-    for (Property property : dataset.getProperty()) {
-      List<Attribute> mockAttrs = new ArrayList<>();
-      ObjectName objectName = new ObjectName(property.getName());
+  public static void addTestData(MBeanServerConnection mockConnection, MBeanTestData.Dataset dataset) {
+    try {
+      for (Property property : dataset.getProperty()) {
+        List<Attribute> mockAttrs = new ArrayList<>();
+        ObjectName objectName = new ObjectName(property.getName());
 
-      String[] attrNames = new String[property.getDataset().getProperty().size()];
-      int index = 0;
-      for (Property attr : property.getDataset().getProperty()) {
-        attrNames[index++] = attr.getName();
-        Attribute mockAttr = mock(Attribute.class);
-        when(mockAttr.getName()).thenReturn(attr.getName());
-        when(mockAttr.getValue()).thenReturn(getConvertedValue(attr));
-        mockAttrs.add(mockAttr);
+        String[] attrNames = new String[property.getDataset().getProperty().size()];
+        int index = 0;
+        for (Property attr : property.getDataset().getProperty()) {
+          attrNames[index++] = attr.getName();
+          Attribute mockAttr = mock(Attribute.class);
+          when(mockAttr.getName()).thenReturn(attr.getName());
+          if (attr.getValue() != null) {
+            when(mockAttr.getValue()).thenReturn(getConvertedValue(attr));
+          } else {
+            TabularDataSupport tabular = mock(TabularDataSupport.class);
+            when(mockConnection.getAttribute(objectName, attr.getName())).thenReturn(tabular);
+            for (Property element : attr.getDataset().getProperty()) {
+              CompositeDataSupport compositeData = mock(CompositeDataSupport.class);
+              when(tabular.get(new String[]{element.getName()})).thenReturn(compositeData);
+              when(compositeData.get("propertyValue")).thenReturn(element.getValue().getValue());
+            }
+          }
+          mockAttrs.add(mockAttr);
+        }
+        AttributeList mockAttrList = mock(AttributeList.class);
+        when(mockAttrList.asList()).thenReturn(mockAttrs);
+        when(mockConnection.getAttributes(objectName, attrNames)).thenReturn(mockAttrList);
       }
-      AttributeList mockAttrList = mock(AttributeList.class);
-      when(mockAttrList.asList()).thenReturn(mockAttrs);
-      when(mockConnection.getAttributes(objectName, attrNames)).thenReturn(mockAttrList);
+    } catch (AttributeNotFoundException | InstanceNotFoundException |
+            IOException | ReflectionException | MalformedObjectNameException |
+            MBeanException e) {
+      throw new RuntimeException();
     }
   }
 

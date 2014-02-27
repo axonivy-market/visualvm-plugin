@@ -13,7 +13,7 @@
     <visualvm.version>RELEASE135</visualvm.version>
     <netbeans.run.params.ide/>
     <netbeans.run.params>${netbeans.run.params.ide}</netbeans.run.params>
-    <visualvm.installation>D:\Project\ivyvisualvm\visualvm_platform\visualvm_137</visualvm.installation>
+    <visualvm.installation>D:\work\visualvm_136</visualvm.installation>
   </properties>
 
   <repositories>

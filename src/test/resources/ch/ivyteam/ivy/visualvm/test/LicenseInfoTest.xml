@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<mBeanTestData>
+  <dataset>
+    <property>
+      <name>Xpert.ivy Server:type=Server</name>
+      <dataset>
+        <property>
+          <name>licenceParameters</name>
+          <dataset type="javax.management.openmbean.TabularData">
+            <property>
+              <name>host.name</name>
+              <value>aavn-ws-147</value>
+            </property>
+            <property>
+              <name>licence.keyversion</name>
+              <value>xpertline/5000</value>
+            </property>
+            <property>
+              <name>licence.number</name>
+              <value>XLSSE-13F0-EA08-578G</value>
+            </property>
+            <property>
+              <name>licence.type</name>
+              <value>Standard Edition</value>
+            </property>
+            <property>
+              <name>licence.valid.from</name>
+              <value>2013-06-04</value>
+            </property>
+            <property>
+              <name>licence.valid.until</name>
+              <value>2014-06-30</value>
+            </property>
+            <property>
+              <name>licencee.individual</name>
+              <value>Tung Le</value>
+            </property>
+            <property>
+              <name>licencee.organisation</name>
+              <value>Axon Active Vietnam</value>
+            </property>
+            <property>
+              <name>product.name</name>
+              <value>Xpert.ivy Server</value>
+            </property>
+            <property>
+              <name>product.type</name>
+              <value>Server</value>
+            </property>
+            <property>
+              <name>server.elements.limit</name>
+              <value>0</value>
+            </property>
+            <property>
+              <name>server.ria</name>
+              <value>true</value>
+            </property>
+            <property>
+              <name></name>
+              <value></value>
+            </property>
+            <property>
+              <name>server.sessions.limit</name>
+              <value>0</value>
+            </property>
+            <property>
+              <name>server.users.limit</name>
+              <value>10</value>
+            </property>
+          </dataset>
+        </property>
+      </dataset>
+    </property>
+  </dataset>
+</mBeanTestData>
