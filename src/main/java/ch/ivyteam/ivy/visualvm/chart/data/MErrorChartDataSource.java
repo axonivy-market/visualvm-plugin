@@ -24,7 +24,7 @@ public class MErrorChartDataSource extends MChartDataSource {
     } catch (IvyJmxDataCollectException ex) {
       Exceptions.printStackTrace(ex);
     }
-    for (ObjectName processorName : DataUtils.getTomcatRequestProcessors(mBeanServerConnection)) {
+    for (ObjectName processorName : collector.getTomcatRequestProcessors(mBeanServerConnection)) {
       String port = DataUtils.getPort(processorName);
       String protocol = DataUtils.findProtocol(mappedConnectors, port);
       addDeltaSerie(protocol, processorName, IvyJmxConstant.Ivy.Processor.KEY_ERROR_COUNT);

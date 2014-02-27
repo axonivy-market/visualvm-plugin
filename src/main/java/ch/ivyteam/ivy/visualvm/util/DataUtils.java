@@ -1,19 +1,13 @@
 package ch.ivyteam.ivy.visualvm.util;
 
-import ch.ivyteam.ivy.visualvm.model.IvyJmxConstant;
 import ch.ivyteam.ivy.visualvm.model.ServerConnectorInfo;
-import java.io.IOException;
 import java.text.DateFormat;
 import java.text.MessageFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
-import java.util.Set;
-import javax.management.MBeanServerConnection;
-import javax.management.MalformedObjectNameException;
 import javax.management.ObjectName;
 import org.openide.util.Exceptions;
 
@@ -224,31 +218,6 @@ public final class DataUtils {
     return Character.isDigit(c) || Character.isLetter(c) || ('_' == c);
   }
 
-  public static Set<ObjectName> queryNames(MBeanServerConnection serverConnection, String filter) {
-    try {
-      return queryNames(serverConnection, new ObjectName(filter));
-    } catch (MalformedObjectNameException ex) {
-      throw new IllegalArgumentException(ex);
-    }
-  }
-
-  public static Set<ObjectName> queryNames(MBeanServerConnection serverConnection, ObjectName filter) {
-    try {
-      return serverConnection.queryNames(filter, null);
-    } catch (IOException ex) {
-      throw new IllegalArgumentException(ex);
-    }
-  }
-
-  public static Set<ObjectName> getTomcatRequestProcessors(MBeanServerConnection serverConnection) {
-    try {
-      return serverConnection.queryNames(IvyJmxConstant.Ivy.Processor.PATTERN, null);
-    } catch (IOException ex) {
-      Exceptions.printStackTrace(ex);
-      return Collections.emptySet();
-    }
-  }
-
   public static String getProtocol(ObjectName processorName) {
     String[] splits = processorName.getKeyProperty("name")
             .replaceAll("\"", "")
@@ -263,15 +232,6 @@ public final class DataUtils {
             .replaceAll("\"", "")
             .split("-bio-");
     return splits[1];
-  }
-
-  public static ObjectName getTomcatManagerName(MBeanServerConnection serverConnection) {
-    Set<ObjectName> tomcatManagers = queryNames(serverConnection,
-            IvyJmxConstant.Ivy.Manager.PATTERN);
-    if (tomcatManagers.size() >= 1) {
-      return tomcatManagers.iterator().next();
-    }
-    return null;
   }
 
 }

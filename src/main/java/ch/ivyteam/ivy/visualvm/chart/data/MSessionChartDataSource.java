@@ -2,7 +2,7 @@ package ch.ivyteam.ivy.visualvm.chart.data;
 
 import ch.ivyteam.ivy.visualvm.chart.SerieStyle;
 import ch.ivyteam.ivy.visualvm.model.IvyJmxConstant;
-import ch.ivyteam.ivy.visualvm.util.DataUtils;
+import ch.ivyteam.ivy.visualvm.service.BasicIvyJmxDataCollector;
 import ch.ivyteam.ivy.visualvm.view.IDataBeanProvider;
 import javax.management.MBeanServerConnection;
 import javax.management.ObjectName;
@@ -12,9 +12,10 @@ public class MSessionChartDataSource extends MChartDataSource {
           String xAxisDescription, String yAxisDescription) {
     super(dataBeanProvider, chartName, xAxisDescription, yAxisDescription);
     MBeanServerConnection mBeanServerConnection = getDataBeanProvider().getMBeanServerConnection();
-    ObjectName tomcatManager = DataUtils.getTomcatManagerName(mBeanServerConnection);
+    BasicIvyJmxDataCollector collector = new BasicIvyJmxDataCollector();
+    ObjectName tomcatManager = collector.getTomcatManagerName(mBeanServerConnection);
     if (tomcatManager != null) {
-      addSerie("Http", SerieStyle.LINE, tomcatManager, IvyJmxConstant.Ivy.Manager.KEY_SESSION_COUNTER);
+      addSerie("HTTP", SerieStyle.LINE, tomcatManager, IvyJmxConstant.Ivy.Manager.KEY_SESSION_COUNTER);
     }
     addSerie("Ivy", SerieStyle.LINE, IvyJmxConstant.IvyServer.SecurityManager.NAME,
             IvyJmxConstant.IvyServer.SecurityManager.KEY_SESSIONS);

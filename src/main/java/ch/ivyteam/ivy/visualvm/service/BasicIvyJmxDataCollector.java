@@ -11,6 +11,7 @@ import ch.ivyteam.ivy.visualvm.util.DataUtils;
 import ch.ivyteam.ivy.visualvm.util.LicenseUtils;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.Set;
@@ -20,9 +21,11 @@ import javax.management.AttributeNotFoundException;
 import javax.management.InstanceNotFoundException;
 import javax.management.MBeanException;
 import javax.management.MBeanServerConnection;
+import javax.management.MalformedObjectNameException;
 import javax.management.ObjectName;
 import javax.management.ReflectionException;
 import javax.management.openmbean.TabularDataSupport;
+import org.openide.util.Exceptions;
 
 public class BasicIvyJmxDataCollector {
 
@@ -208,6 +211,40 @@ public class BasicIvyJmxDataCollector {
       throw new IvyJmxDataCollectException(ex);
     }
     return licenseInfo;
+  }
+
+  public ObjectName getTomcatManagerName(MBeanServerConnection serverConnection) {
+    Set<ObjectName> tomcatManagers = queryNames(serverConnection,
+            IvyJmxConstant.Ivy.Manager.PATTERN);
+    if (tomcatManagers.size() >= 1) {
+      return tomcatManagers.iterator().next();
+    }
+    return null;
+  }
+
+  public Set<ObjectName> queryNames(MBeanServerConnection serverConnection, ObjectName filter) {
+    try {
+      return serverConnection.queryNames(filter, null);
+    } catch (IOException ex) {
+      throw new IllegalArgumentException(ex);
+    }
+  }
+
+  public Set<ObjectName> queryNames(MBeanServerConnection serverConnection, String filter) {
+    try {
+      return queryNames(serverConnection, new ObjectName(filter));
+    } catch (MalformedObjectNameException ex) {
+      throw new IllegalArgumentException(ex);
+    }
+  }
+
+  public Set<ObjectName> getTomcatRequestProcessors(MBeanServerConnection serverConnection) {
+    try {
+      return serverConnection.queryNames(IvyJmxConstant.Ivy.Processor.PATTERN, null);
+    } catch (IOException ex) {
+      Exceptions.printStackTrace(ex);
+      return Collections.emptySet();
+    }
   }
 
 }
