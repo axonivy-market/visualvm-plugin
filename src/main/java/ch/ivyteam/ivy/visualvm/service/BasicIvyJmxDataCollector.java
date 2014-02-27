@@ -247,4 +247,36 @@ public class BasicIvyJmxDataCollector {
     }
   }
 
+  public int getNamedUsers(MBeanServerConnection connection) throws IvyJmxDataCollectException {
+    int namedUsers = 0;
+    ObjectName objectName = IvyJmxConstant.IvyServer.SecurityManager.NAME;
+    String attributeName = IvyJmxConstant.IvyServer.SecurityManager.KEY_LICENSED_USERS;
+    try {
+      Object licensedUsers = connection.getAttribute(objectName, attributeName);
+      if (licensedUsers instanceof Number) {
+        namedUsers = ((Number) licensedUsers).intValue();
+      }
+    } catch (MBeanException | AttributeNotFoundException | InstanceNotFoundException | ReflectionException |
+            IOException ex) {
+      throw new IvyJmxDataCollectException(ex);
+    }
+    return namedUsers;
+  }
+
+  public int getConcurrentUsers(MBeanServerConnection connection) throws IvyJmxDataCollectException {
+    int concurrentUsers = 0;
+    ObjectName objectName = IvyJmxConstant.IvyServer.SecurityManager.NAME;
+    String attributeName = IvyJmxConstant.IvyServer.SecurityManager.KEY_LICENSED_SESSIONS;
+    try {
+      Object licensedSessions = connection.getAttribute(objectName, attributeName);
+      if (licensedSessions instanceof Number) {
+        concurrentUsers = ((Number) licensedSessions).intValue();
+      }
+    } catch (MBeanException | AttributeNotFoundException | InstanceNotFoundException | ReflectionException |
+            IOException ex) {
+      throw new IvyJmxDataCollectException(ex);
+    }
+    return concurrentUsers;
+  }
+
 }

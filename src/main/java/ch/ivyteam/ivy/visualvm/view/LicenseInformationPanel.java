@@ -71,7 +71,7 @@ public class LicenseInformationPanel extends javax.swing.JPanel {
   public void setRemainingTimeInfo() {
     StringBuilder licenseExpirationInfo = new StringBuilder();
     licenseExpirationInfo.append("(in ");
-    long delta = fLicenseInfo.getRemaingTime();
+    long delta = fLicenseInfo.getRemainingTime();
     if (delta > MILLISECONDS_IN_ONE_DAY) {
       int day = (int) (delta / MILLISECONDS_IN_ONE_DAY);
       licenseExpirationInfo.append(" ").append(day).append(" day");

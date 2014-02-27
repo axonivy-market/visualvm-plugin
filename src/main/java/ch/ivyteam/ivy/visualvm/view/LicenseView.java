@@ -21,8 +21,6 @@ public class LicenseView extends AbstractView {
   private boolean uiComplete;
   private IvyLicenseInfo fLicenseInfo;
   private final LicenseInformationPanel fLicenseInformationPanel;
-  private MGaugeDataSource fGaugeSessionsDataSource;
-  private MGaugeDataSource fGaugeUsersDataSource;
 
   public LicenseView(IDataBeanProvider dataBeanProvider) {
     super(dataBeanProvider);
@@ -69,13 +67,13 @@ public class LicenseView extends AbstractView {
       sections.add(greenSection);
       sections.add(orangeSection);
       sections.add(redSection);
-      fGaugeSessionsDataSource = new MGaugeDataSource(getDataBeanProvider(), sections,
+      MGaugeDataSource gaugeSessionsDataSource = new MGaugeDataSource(getDataBeanProvider(), sections,
               IvyJmxConstant.IvyServer.SecurityManager.NAME,
               IvyJmxConstant.IvyServer.SecurityManager.KEY_LICENSED_SESSIONS);
 
       ChartsPanel sessionsChart = new ChartsPanel(true);
       sessionsChart.addChart2(sessionDataSource);
-      sessionsChart.addGauge(fGaugeSessionsDataSource);
+      sessionsChart.addGauge(gaugeSessionsDataSource);
       registerScheduledUpdate(sessionsChart);
 
       super.getViewComponent().addDetailsView(new DataViewComponent.DetailsView("Concurrent Users",
@@ -94,11 +92,11 @@ public class LicenseView extends AbstractView {
       sections.add(greenSection);
       sections.add(orangeSection);
       sections.add(redSection);
-      fGaugeUsersDataSource = new MGaugeDataSource(getDataBeanProvider(), sections,
+      MGaugeDataSource gaugeUsersDataSource = new MGaugeDataSource(getDataBeanProvider(), sections,
               IvyJmxConstant.IvyServer.SecurityManager.NAME,
               IvyJmxConstant.IvyServer.SecurityManager.KEY_LICENSED_USERS);
       ChartsPanel userChart = new ChartsPanel(false);
-      userChart.addLinear(fGaugeUsersDataSource);
+      userChart.addLinear(gaugeUsersDataSource);
       registerScheduledUpdate(userChart);
 
       super.getViewComponent().addDetailsView(new DataViewComponent.DetailsView("Named Users",
@@ -120,7 +118,19 @@ public class LicenseView extends AbstractView {
   @Override
   public void update() {
     super.update();
-    fLicenseInfo.setRemainingTime(fLicenseInfo.getRemaingTime() - 1000 * GlobalPreferences.sharedInstance().
+    BasicIvyJmxDataCollector collector = new BasicIvyJmxDataCollector();
+    int namedUsers = 0;
+    int concurrentUsers = 0;
+    try {
+      MBeanServerConnection connection = getDataBeanProvider().getMBeanServerConnection();
+      namedUsers = collector.getNamedUsers(connection);
+      concurrentUsers = collector.getConcurrentUsers(connection);
+    } catch (IvyJmxDataCollectException ex) {
+      Exceptions.printStackTrace(ex);
+    }
+    fLicenseInfo.setNamedUsers(namedUsers);
+    fLicenseInfo.setConcurrentUsers(concurrentUsers);
+    fLicenseInfo.setRemainingTime(fLicenseInfo.getRemainingTime() - 1000 * GlobalPreferences.sharedInstance().
             getMonitoredDataPoll());
     fLicenseInformationPanel.setLicenseData();
   }

@@ -10,14 +10,24 @@ abstract class MSerieDataSource {
   private long fScaleFactor = 1L;
   private final String fSerie;
   private SerieStyle fStyle;
+  private String fLabel;
 
   MSerieDataSource(String serie, long scaleFactor, SerieStyle style) {
     fSerie = serie;
+    fLabel = serie;
     fScaleFactor = scaleFactor;
     fStyle = style;
     if (fStyle == null) {
       fStyle = SerieStyle.LINE_FILLED;
     }
+  }
+
+  public void setLabel(String label) {
+    fLabel = label;
+  }
+
+  public String getLabel() {
+    return fLabel;
   }
 
   abstract void updateQuery(MQuery query);

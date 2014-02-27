@@ -45,6 +45,13 @@ public class MChartDataSource {
     serieDataSources.add(serieDataSource);
   }
 
+  public void addSerie(String serie, String label, SerieStyle style, ObjectName mBeanName, String attribute) {
+    MSerieDataSource serieDataSource = new MAttributeDataSource(serie, 1L,
+            style, mBeanName, attribute);
+    serieDataSource.setLabel(label);
+    serieDataSources.add(serieDataSource);
+  }
+
   public void addDeltaSerie(String serie, ObjectName mBeanName, String attribute) {
     addDeltaSerie(serie, null, mBeanName, attribute);
   }
@@ -69,7 +76,7 @@ public class MChartDataSource {
     int index = 0;
     for (MSerieDataSource dataSource : serieDataSources) {
       dataSource.configureSerie(chartDescriptor);
-      details[index++] = dataSource.getSerie();
+      details[index++] = dataSource.getLabel();
     }
     chartDescriptor.setDetailsItems(details);
   }
