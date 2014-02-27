@@ -21,7 +21,6 @@ import javax.management.MBeanException;
 import javax.management.MBeanServerConnection;
 import javax.management.ObjectName;
 import javax.management.ReflectionException;
-import javax.management.openmbean.CompositeDataSupport;
 import javax.management.openmbean.TabularDataSupport;
 
 public class BasicIvyJmxDataCollector {
@@ -202,36 +201,31 @@ public class BasicIvyJmxDataCollector {
     String attributeName = IvyJmxConstant.IvyServer.Server.KEY_LICENSE_PARAMETERS;
     try {
       TabularDataSupport tabular = (TabularDataSupport) connection.getAttribute(objectName, attributeName);
-      licenseInfo.setHostName(getLicenseDetail(tabular,
+      licenseInfo.setHostName(DataUtils.getLicenseDetail(tabular,
               IvyJmxConstant.IvyServer.Server.License.KEY_HOST_NAME));
-      licenseInfo.setLicenseeIndividual(getLicenseDetail(tabular,
+      licenseInfo.setLicenseeIndividual(DataUtils.getLicenseDetail(tabular,
               IvyJmxConstant.IvyServer.Server.License.KEY_LICENSEE_INDIVIDUAL));
-      licenseInfo.setLicenseeOrganisation(getLicenseDetail(tabular,
+      licenseInfo.setLicenseeOrganisation(DataUtils.getLicenseDetail(tabular,
               IvyJmxConstant.IvyServer.Server.License.KEY_LICENSEE_ORGANISATION));
-      licenseInfo.setLicenseKeyVersion(getLicenseDetail(tabular,
+      licenseInfo.setLicenseKeyVersion(DataUtils.getLicenseDetail(tabular,
               IvyJmxConstant.IvyServer.Server.License.KEY_LICENSE_KEYVERSION));
-      licenseInfo.setLicenseValidFrom(DataUtils.stringToDate(getLicenseDetail(tabular,
+      licenseInfo.setLicenseValidFrom(DataUtils.stringToDate(DataUtils.getLicenseDetail(tabular,
               IvyJmxConstant.IvyServer.Server.License.KEY_LICENSE_VALID_FROM)));
-      licenseInfo.setLicenseValidUntil(DataUtils.stringToDate(getLicenseDetail(tabular,
+      licenseInfo.setLicenseValidUntil(DataUtils.stringToDate(DataUtils.getLicenseDetail(tabular,
               IvyJmxConstant.IvyServer.Server.License.KEY_LICENSE_VALID_UNTIL)));
-      licenseInfo.setServerElementsLimit(Integer.parseInt(getLicenseDetail(tabular,
+      licenseInfo.setServerElementsLimit(Integer.parseInt(DataUtils.getLicenseDetail(tabular,
               IvyJmxConstant.IvyServer.Server.License.KEY_SERVER_ELEMENTS_LIMIT)));
-      licenseInfo.setServerRIA(Boolean.valueOf(getLicenseDetail(tabular,
+      licenseInfo.setServerRIA(Boolean.valueOf(DataUtils.getLicenseDetail(tabular,
               IvyJmxConstant.IvyServer.Server.License.KEY_SERVER_RIA)));
-      licenseInfo.setServerSessionsLimit(Integer.parseInt(getLicenseDetail(tabular,
+      licenseInfo.setServerSessionsLimit(Integer.parseInt(DataUtils.getLicenseDetail(tabular,
               IvyJmxConstant.IvyServer.Server.License.KEY_SERVER_SESSIONS_LIMIT)));
-      licenseInfo.setServerUsersLimit(Integer.parseInt(getLicenseDetail(tabular,
+      licenseInfo.setServerUsersLimit(Integer.parseInt(DataUtils.getLicenseDetail(tabular,
               IvyJmxConstant.IvyServer.Server.License.KEY_SERVER_USERS_LIMIT)));
     } catch (MBeanException | AttributeNotFoundException | InstanceNotFoundException | ReflectionException |
             IOException ex) {
       throw new IvyJmxDataCollectException(ex);
     }
     return licenseInfo;
-  }
-
-  private String getLicenseDetail(TabularDataSupport tabular, String keys) {
-    CompositeDataSupport data = (CompositeDataSupport) tabular.get(new String[]{keys});
-    return data.get("propertyValue").toString();
   }
 
 }

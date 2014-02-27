@@ -15,6 +15,8 @@ import java.util.Set;
 import javax.management.MBeanServerConnection;
 import javax.management.MalformedObjectNameException;
 import javax.management.ObjectName;
+import javax.management.openmbean.CompositeDataSupport;
+import javax.management.openmbean.TabularDataSupport;
 import org.openide.util.Exceptions;
 
 public final class DataUtils {
@@ -272,6 +274,11 @@ public final class DataUtils {
       return tomcatManagers.iterator().next();
     }
     return null;
+  }
+
+  public static String getLicenseDetail(TabularDataSupport tabular, String keys) {
+    CompositeDataSupport data = (CompositeDataSupport) tabular.get(new String[]{keys});
+    return data.get("propertyValue").toString();
   }
 
 }

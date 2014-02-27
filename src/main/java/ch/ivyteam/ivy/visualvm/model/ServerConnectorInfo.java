@@ -22,15 +22,10 @@ public class ServerConnectorInfo {
     try {
       int parsedPort = Integer.parseInt(port);
       if (parsedPort <= 0) {
-        throw new IllegalArgumentException(
-                "The port param must be a positive integer");
+        throw new IllegalArgumentException("The port param must be a positive integer");
       }
-    } catch (NullPointerException e) {
-      throw new IllegalArgumentException(
-              "The port param must not be null", e);
     } catch (NumberFormatException e) {
-      throw new IllegalArgumentException(
-              "The port param must be an integer", e);
+      throw new IllegalArgumentException("The port param must be an integer", e);
     }
     fPort = port;
   }
