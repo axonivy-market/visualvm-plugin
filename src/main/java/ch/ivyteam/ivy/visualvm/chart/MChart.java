@@ -6,6 +6,8 @@ import com.sun.tools.visualvm.charts.ChartFactory;
 import com.sun.tools.visualvm.charts.SimpleXYChartDescriptor;
 import com.sun.tools.visualvm.charts.SimpleXYChartSupport;
 import com.sun.tools.visualvm.core.options.GlobalPreferences;
+import java.awt.Component;
+import java.awt.Container;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JCheckBoxMenuItem;
@@ -21,6 +23,9 @@ class MChart implements IUpdatableUIObject {
 
   MChart(MChartDataSource dataSource) {
     fDataSource = dataSource;
+    fLatestValues = new long[dataSource.getSerieDataSources().size()];
+    fMaxValues = new long[dataSource.getSerieDataSources().size()];
+
     int monitoredDataCache = GlobalPreferences.sharedInstance().getMonitoredDataCache();
     SimpleXYChartDescriptor chartDescriptor = SimpleXYChartDescriptor.decimal(10, true,
             60 * monitoredDataCache);
@@ -28,8 +33,6 @@ class MChart implements IUpdatableUIObject {
     chart = ChartFactory.createSimpleXYChart(chartDescriptor);
     JPopupMenu menu = createLayoutMenu();
     chart.getChart().setComponentPopupMenu(menu);
-    fLatestValues = new long[dataSource.getSerieDataSources().size()];
-    fMaxValues = new long[dataSource.getSerieDataSources().size()];
   }
 
   JComponent getUi() {
@@ -95,7 +98,20 @@ class MChart implements IUpdatableUIObject {
       }
 
     });
+
+    JCheckBoxMenuItem labelVisibleItem = new JCheckBoxMenuItem("Show labels");
+    labelVisibleItem.setSelected(true);
+    labelVisibleItem.addActionListener(new ActionListener() {
+      @Override
+      public void actionPerformed(ActionEvent e) {
+        JCheckBoxMenuItem control = (JCheckBoxMenuItem) e.getSource();
+        getLabelComponent().setVisible(control.isSelected());
+      }
+
+    });
+
     menu.add(legendVisibleItem);
+    menu.add(labelVisibleItem);
     return menu;
   }
 
@@ -105,6 +121,12 @@ class MChart implements IUpdatableUIObject {
 
   protected long[] getLatestValues() {
     return fLatestValues;
+  }
+
+  private Component getLabelComponent() {
+    Container chartContainer = (Container) chart.getChart();
+    Container labelPanel = (Container) chartContainer.getComponent(0);
+    return labelPanel.getComponent(0);
   }
 
 }
