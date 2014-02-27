@@ -59,6 +59,18 @@ public class ChartsPanel implements IUpdatableUIObject {
     chartPanel.add(chart.getUi());
   }
 
+  public void addChart2(MChartDataSource dataSource) {
+    final MChart chart = new MChart(dataSource) {
+      @Override
+      public void updateChartDetails(long[] values) {
+        super.updateChartDetails(getMaxValues());
+      }
+
+    };
+    updatableObjects.add(chart);
+    chartPanel.add(chart.getUi());
+  }
+
   public void addGauge(MGaugeDataSource dataSource) {
     final MGauge gauge = new MGauge(dataSource);
     updatableObjects.add(gauge);

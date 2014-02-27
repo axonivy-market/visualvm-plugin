@@ -16,6 +16,8 @@ class MChart implements IUpdatableUIObject {
 
   private final SimpleXYChartSupport chart;
   private final MChartDataSource fDataSource;
+  private final long[] fMaxValues;
+  private final long[] fLatestValues;
 
   MChart(MChartDataSource dataSource) {
     fDataSource = dataSource;
@@ -26,6 +28,8 @@ class MChart implements IUpdatableUIObject {
     chart = ChartFactory.createSimpleXYChart(chartDescriptor);
     JPopupMenu menu = createLayoutMenu();
     chart.getChart().setComponentPopupMenu(menu);
+    fLatestValues = new long[dataSource.getSerieDataSources().size()];
+    fMaxValues = new long[dataSource.getSerieDataSources().size()];
   }
 
   JComponent getUi() {
@@ -35,7 +39,33 @@ class MChart implements IUpdatableUIObject {
   @Override
   public void updateValues(MQueryResult result) {
     long[] values = fDataSource.getValues(result);
+    updateLatestValues(values);
+    updateMaxValues(values);
     chart.addValues(System.currentTimeMillis(), values);
+    updateChartDetails(values);
+  }
+
+  private void updateLatestValues(long[] values) {
+    for (int i = 0; i < getLatestValues().length; i++) {
+      if (i >= values.length) {
+        break;
+      }
+      fLatestValues[i] = values[i];
+    }
+  }
+
+  private void updateMaxValues(long[] values) {
+    for (int i = 0; i < getMaxValues().length; i++) {
+      if (i >= values.length) {
+        break;
+      }
+      if (values[i] > getMaxValues()[i]) {
+        fMaxValues[i] = values[i];
+      }
+    }
+  }
+
+  public void updateChartDetails(long[] values) {
     chart.updateDetails(convert(values));
   }
 
@@ -67,6 +97,14 @@ class MChart implements IUpdatableUIObject {
     });
     menu.add(legendVisibleItem);
     return menu;
+  }
+
+  protected long[] getMaxValues() {
+    return fMaxValues;
+  }
+
+  protected long[] getLatestValues() {
+    return fLatestValues;
   }
 
 }

@@ -84,4 +84,8 @@ public class MChartDataSource {
     return fDataBeanProvider;
   }
 
+  public List<MSerieDataSource> getSerieDataSources() {
+    return serieDataSources;
+  }
+
 }

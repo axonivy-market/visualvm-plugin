@@ -72,7 +72,7 @@ public class LicenseView extends AbstractView {
               IvyJmxConstant.IvyServer.SecurityManager.KEY_LICENSED_SESSIONS);
 
       ChartsPanel sessionsChart = new ChartsPanel(true);
-      sessionsChart.addChart(sessionDataSource);
+      sessionsChart.addChart2(sessionDataSource);
       sessionsChart.addGauge(dataSource);
       registerScheduledUpdate(sessionsChart);
 
