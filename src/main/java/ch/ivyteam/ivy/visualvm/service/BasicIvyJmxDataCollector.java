@@ -8,6 +8,7 @@ import ch.ivyteam.ivy.visualvm.model.OSInfo;
 import ch.ivyteam.ivy.visualvm.model.ServerConnectorInfo;
 import ch.ivyteam.ivy.visualvm.model.SystemDatabaseInfo;
 import ch.ivyteam.ivy.visualvm.util.DataUtils;
+import ch.ivyteam.ivy.visualvm.util.LicenseUtils;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
@@ -201,26 +202,7 @@ public class BasicIvyJmxDataCollector {
     String attributeName = IvyJmxConstant.IvyServer.Server.KEY_LICENSE_PARAMETERS;
     try {
       TabularDataSupport tabular = (TabularDataSupport) connection.getAttribute(objectName, attributeName);
-      licenseInfo.setHostName(DataUtils.getLicenseDetail(tabular,
-              IvyJmxConstant.IvyServer.Server.License.KEY_HOST_NAME));
-      licenseInfo.setLicenseeIndividual(DataUtils.getLicenseDetail(tabular,
-              IvyJmxConstant.IvyServer.Server.License.KEY_LICENSEE_INDIVIDUAL));
-      licenseInfo.setLicenseeOrganisation(DataUtils.getLicenseDetail(tabular,
-              IvyJmxConstant.IvyServer.Server.License.KEY_LICENSEE_ORGANISATION));
-      licenseInfo.setLicenseKeyVersion(DataUtils.getLicenseDetail(tabular,
-              IvyJmxConstant.IvyServer.Server.License.KEY_LICENSE_KEYVERSION));
-      licenseInfo.setLicenseValidFrom(DataUtils.stringToDate(DataUtils.getLicenseDetail(tabular,
-              IvyJmxConstant.IvyServer.Server.License.KEY_LICENSE_VALID_FROM)));
-      licenseInfo.setLicenseValidUntil(DataUtils.stringToDate(DataUtils.getLicenseDetail(tabular,
-              IvyJmxConstant.IvyServer.Server.License.KEY_LICENSE_VALID_UNTIL)));
-      licenseInfo.setServerElementsLimit(Integer.parseInt(DataUtils.getLicenseDetail(tabular,
-              IvyJmxConstant.IvyServer.Server.License.KEY_SERVER_ELEMENTS_LIMIT)));
-      licenseInfo.setServerRIA(Boolean.valueOf(DataUtils.getLicenseDetail(tabular,
-              IvyJmxConstant.IvyServer.Server.License.KEY_SERVER_RIA)));
-      licenseInfo.setServerSessionsLimit(Integer.parseInt(DataUtils.getLicenseDetail(tabular,
-              IvyJmxConstant.IvyServer.Server.License.KEY_SERVER_SESSIONS_LIMIT)));
-      licenseInfo.setServerUsersLimit(Integer.parseInt(DataUtils.getLicenseDetail(tabular,
-              IvyJmxConstant.IvyServer.Server.License.KEY_SERVER_USERS_LIMIT)));
+      licenseInfo = LicenseUtils.getLisenseInfoData(tabular);
     } catch (MBeanException | AttributeNotFoundException | InstanceNotFoundException | ReflectionException |
             IOException ex) {
       throw new IvyJmxDataCollectException(ex);
