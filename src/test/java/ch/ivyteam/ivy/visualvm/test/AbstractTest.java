@@ -49,13 +49,7 @@ public abstract class AbstractTest extends TestCase {
           if (attr.getValue() != null) {
             when(mockAttr.getValue()).thenReturn(getConvertedValue(attr));
           } else {
-            TabularDataSupport tabular = mock(TabularDataSupport.class);
-            when(mockConnection.getAttribute(objectName, attr.getName())).thenReturn(tabular);
-            for (Property element : attr.getDataset().getProperty()) {
-              CompositeDataSupport compositeData = mock(CompositeDataSupport.class);
-              when(tabular.get(new String[]{element.getName()})).thenReturn(compositeData);
-              when(compositeData.get("propertyValue")).thenReturn(element.getValue().getValue());
-            }
+            handleTabularData(mockConnection, objectName, attr);
           }
           mockAttrs.add(mockAttr);
         }
@@ -67,6 +61,18 @@ public abstract class AbstractTest extends TestCase {
             IOException | ReflectionException | MalformedObjectNameException |
             MBeanException e) {
       throw new RuntimeException();
+    }
+  }
+
+  private static void handleTabularData(MBeanServerConnection mockConnection, ObjectName objectName,
+          Property attr) throws ReflectionException, IOException, InstanceNotFoundException, MBeanException,
+          AttributeNotFoundException {
+    TabularDataSupport tabular = mock(TabularDataSupport.class);
+    when(mockConnection.getAttribute(objectName, attr.getName())).thenReturn(tabular);
+    for (Property element : attr.getDataset().getProperty()) {
+      CompositeDataSupport compositeData = mock(CompositeDataSupport.class);
+      when(tabular.get(new String[]{element.getName()})).thenReturn(compositeData);
+      when(compositeData.get("propertyValue")).thenReturn(element.getValue().getValue());
     }
   }
 
