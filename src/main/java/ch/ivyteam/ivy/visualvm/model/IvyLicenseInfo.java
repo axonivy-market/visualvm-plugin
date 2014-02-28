@@ -135,7 +135,7 @@ public class IvyLicenseInfo {
 
   private void appendSessionsLimit(StringBuilder html) {
     if (fServerSessionsLimit > 0) {
-      html.append("<tr><td>Current Users Limit: <td>");
+      html.append("<tr><td>Concurrent Users Limit: <td>");
       html.append(TD_TAG).append(fServerSessionsLimit);
       html.append(TD_TR_END_TAG);
     }
