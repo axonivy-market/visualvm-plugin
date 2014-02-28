@@ -38,14 +38,18 @@ class IvyView extends DataSourceView {
   public static final String USER_REQ_IMAGE_PATH = "resources/icons/user_req.png";
   public static final String USER_DEF_IMAGE_PATH = "resources/icons/user_def.png";
   public static final String LICENSE_IMAGE_PATH = "resources/icons/licence.png";
+  public static final String IVY_SERVER_APP_NAME = "Xpert.ivy Server";
+  public static final String IVY_DESIGNER_APP_NAME = "Xpert.ivy Designer";
 
   private ScheduledTask updateTask;
   private final List<AbstractView> views = new ArrayList<>();
   private final DataPollSettingChangeListener pollSettingChangeListener = new DataPollSettingChangeListener();
+  private final boolean IS_IVY_SERVER;
 
-  public IvyView(Application application) {
+  public IvyView(Application application, boolean isServer) {
     super(application, "Xpert.ivy", new ImageIcon(ImageUtilities.loadImage(IVY_IMAGE_PATH, true)).
             getImage(), 60, false);
+    IS_IVY_SERVER = isServer;
   }
 
   @Override
@@ -62,23 +66,28 @@ class IvyView extends DataSourceView {
       public MBeanServerConnection getMBeanServerConnection() {
         return IvyView.this.getMBeanServerConnection();
       }
-
     };
 
+    // add information view tab
     InformationView infoView = new InformationView(dataBeanProvider);
-    LicenseView licenseView = new LicenseView(dataBeanProvider);
-    RequestView requestViewNew = new RequestView(dataBeanProvider);
     views.add(infoView);
-    views.add(licenseView);
-    views.add(requestViewNew);
-
     tabbed.addTab("Information", (Icon) ImageUtilities.loadImage(INFO_IMAGE_PATH, true),
             infoView.getViewComponent());
-    tabbed.addTab("License", (Icon) ImageUtilities.loadImage(LICENSE_IMAGE_PATH, true),
-            licenseView.getViewComponent());
+
+    // add license view tab
+    if (IS_IVY_SERVER) {
+      LicenseView licenseView = new LicenseView(dataBeanProvider);
+      views.add(licenseView);
+      tabbed.addTab("License", (Icon) ImageUtilities.loadImage(LICENSE_IMAGE_PATH, true),
+              licenseView.getViewComponent());
+    }
+    // add request view tab
+    RequestView requestViewNew = new RequestView(dataBeanProvider);
+    views.add(requestViewNew);
     tabbed.addTab("User Requests", (Icon) ImageUtilities.loadImage(USER_REQ_IMAGE_PATH, true),
             requestViewNew.getViewComponent());
 
+    // init scheduler
     updateTask = Scheduler.sharedInstance().schedule(new UpdateChartTask(),
             Quantum.seconds(GlobalPreferences.sharedInstance().getMonitoredDataPoll()));
 
@@ -126,6 +135,7 @@ class IvyView extends DataSourceView {
   }
 
   private class DataPollSettingChangeListener implements PreferenceChangeListener {
+
     @Override
     public void preferenceChange(PreferenceChangeEvent evt) {
       updateTask.setInterval(Quantum.seconds(GlobalPreferences.sharedInstance().

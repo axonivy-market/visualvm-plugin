@@ -17,6 +17,7 @@ import javax.management.ReflectionException;
 class IvyViewProvider extends DataSourceViewProvider<Application> {
 
   private static final DataSourceViewProvider<Application> INSTANCE = new IvyViewProvider();
+  private IvyView ivyView = null;
 
   @Override
   protected boolean supportsViewFor(Application application) {
@@ -26,7 +27,11 @@ class IvyViewProvider extends DataSourceViewProvider<Application> {
       Object name = mbsc.getAttribute(IvyJmxConstant.IvyServer.Server.NAME,
               IvyJmxConstant.IvyServer.Server.KEY_APPLICATION_NAME);
       if (name != null) {
-        return name.toString().contains("Xpert.ivy");
+        boolean isIvyServer = name.toString().equals(IvyView.IVY_SERVER_APP_NAME);
+        boolean isIvyDesigner = name.toString().equals(IvyView.IVY_DESIGNER_APP_NAME);
+        
+        ivyView = new IvyView(application, isIvyServer);
+        return isIvyServer || isIvyDesigner;
       } else {
         return false;
       }
@@ -38,7 +43,7 @@ class IvyViewProvider extends DataSourceViewProvider<Application> {
 
   @Override
   protected DataSourceView createView(Application application) {
-    return new IvyView(application);
+    return ivyView;
   }
 
   static void initialize() {

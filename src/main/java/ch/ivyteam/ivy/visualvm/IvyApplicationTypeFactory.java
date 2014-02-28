@@ -23,9 +23,9 @@ class IvyApplicationTypeFactory extends MainClassApplicationTypeFactory {
           String mainClass) {
     // TODO: Specify the name of the application's main class here:
     if (isIvyServer(mainClass)) {
-      return new IvyApplicationType(app.getPid(), "Xpert.ivy Server");
+      return new IvyApplicationType(app.getPid(), IvyView.IVY_SERVER_APP_NAME);
     } else if (isIvyDesigner(mainClass, jvm)) {
-      return new IvyApplicationType(app.getPid(), "Xpert.ivy Designer");
+      return new IvyApplicationType(app.getPid(), IvyView.IVY_DESIGNER_APP_NAME);
     }
     return null;
 
