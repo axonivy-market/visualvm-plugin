@@ -50,7 +50,7 @@ class MChart implements IUpdatableUIObject {
 
   private void updateLatestValues(long[] values) {
     System.arraycopy(values, 0, fLatestValues, 0,
-            Math.max(values.length, fLatestValues.length));
+            Math.min(values.length, fLatestValues.length));
   }
 
   private void updateMaxValues(long[] values) {
