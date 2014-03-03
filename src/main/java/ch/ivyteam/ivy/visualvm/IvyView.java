@@ -44,12 +44,12 @@ class IvyView extends DataSourceView {
   private ScheduledTask updateTask;
   private final List<AbstractView> views = new ArrayList<>();
   private final DataPollSettingChangeListener pollSettingChangeListener = new DataPollSettingChangeListener();
-  private final boolean IS_IVY_SERVER;
+  private final boolean fIsIvyServer;
 
   public IvyView(Application application, boolean isServer) {
     super(application, "Xpert.ivy", new ImageIcon(ImageUtilities.loadImage(IVY_IMAGE_PATH, true)).
             getImage(), 60, false);
-    IS_IVY_SERVER = isServer;
+    fIsIvyServer = isServer;
   }
 
   @Override
@@ -66,6 +66,7 @@ class IvyView extends DataSourceView {
       public MBeanServerConnection getMBeanServerConnection() {
         return IvyView.this.getMBeanServerConnection();
       }
+
     };
 
     // add information view tab
@@ -75,7 +76,7 @@ class IvyView extends DataSourceView {
             infoView.getViewComponent());
 
     // add license view tab
-    if (IS_IVY_SERVER) {
+    if (fIsIvyServer) {
       LicenseView licenseView = new LicenseView(dataBeanProvider);
       views.add(licenseView);
       tabbed.addTab("License", (Icon) ImageUtilities.loadImage(LICENSE_IMAGE_PATH, true),

@@ -62,8 +62,10 @@ public class LicenseView extends AbstractView {
       List<Section> sections = new ArrayList<>();
       int sessionsLimit = fLicenseInfo.getServerSessionsLimit();
       Section greenSection = new Section(0, Math.round(sessionsLimit * 0.9), new Color(110, 184, 37));
-      Section orangeSection = new Section(Math.round(sessionsLimit * 0.9), sessionsLimit, new Color(255, 210, 10));
-      Section redSection = new Section(sessionsLimit, Math.round(sessionsLimit * 1.5), new Color(240, 40, 40));
+      Section orangeSection = new Section(Math.round(sessionsLimit * 0.9), sessionsLimit,
+              new Color(255, 210, 10));
+      Section redSection = new Section(sessionsLimit, Math.round(sessionsLimit * 1.5),
+              new Color(240, 40, 40));
       sections.add(greenSection);
       sections.add(orangeSection);
       sections.add(redSection);

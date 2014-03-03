@@ -47,6 +47,8 @@ public class IvyLicenseInfo {
   private static final String SESSIONS_EXCEEDED_50_PERCENT_WARNING
           = "Cannot create session because the maximum session that are allowed by your licence has exceeded "
           + "by a factor of 50%.";
+  private static final String TABLE_BORDER_CELSPACING_PADDING
+          = "<table border='0' celspacing='10' celpadding='0'>";
 
   public IvyLicenseInfo() {
   }
@@ -205,7 +207,7 @@ public class IvyLicenseInfo {
 
   private void appendLicenseeOrganisation(StringBuilder html) {
     if (fLicenseeOrganisation != null) {
-      html.append("<table border='0' celspacing='10' celpadding='0'>");
+      html.append(TABLE_BORDER_CELSPACING_PADDING);
       html.append("<tr><td>Organization: <td>");
       html.append(TD_TAG).append(fLicenseeOrganisation);
       html.append(TD_TR_END_TAG);
@@ -214,7 +216,7 @@ public class IvyLicenseInfo {
 
   private void appendSessionsLimitWarning(StringBuilder html) {
     if (fServerSessionsLimit > 0 && getConcurrentUserLimitWarningInHTML() != null) {
-      html.append("<table border='0' celspacing='10' celpadding='0'>");
+      html.append(TABLE_BORDER_CELSPACING_PADDING);
       html.append("<tr><td>").append(getConcurrentUserLimitWarningInHTML());
       html.append("</td></tr></table>");
     }
@@ -222,7 +224,7 @@ public class IvyLicenseInfo {
 
   private void appendUsersLimitWarning(StringBuilder html) {
     if (fServerUsersLimit > 0 && getNamedUserLimitWarningInHTML() != null) {
-      html.append("<table border='0' celspacing='10' celpadding='0'>");
+      html.append(TABLE_BORDER_CELSPACING_PADDING);
       html.append("<tr><td>").append(getNamedUserLimitWarningInHTML());
       html.append("</td></tr></table>");
     }
@@ -230,7 +232,7 @@ public class IvyLicenseInfo {
 
   private void appendExpireWarning(StringBuilder html) {
     if (getExpireWarningInHTML() != null) {
-      html.append("<table border='0' celspacing='10' celpadding='0'>");
+      html.append(TABLE_BORDER_CELSPACING_PADDING);
       html.append("<tr><td>").append(getExpireWarningInHTML());
       html.append("</td></tr></table>");
     }
