@@ -35,10 +35,10 @@ public abstract class AbstractGaugePanel implements IUpdatableUIObject {
   }
 
   private void setSections() {
-    if (!getSections().isEmpty()) {
-      fGauge.setMinValue(getSections().get(0).getStart());
-      fGauge.setMaxValue(getSections().get(getSections().size() - 1).getStop());
-      for (Section section : getSections()) {
+    if (!fSections.isEmpty()) {
+      fGauge.setMinValue(fSections.get(0).getStart());
+      fGauge.setMaxValue(fSections.get(fSections.size() - 1).getStop());
+      for (Section section : fSections) {
         fGauge.addSection(section);
       }
     }
