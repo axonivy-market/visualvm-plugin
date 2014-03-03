@@ -3,8 +3,8 @@
  */
 package ch.ivyteam.ivy.visualvm.chart;
 
-import ch.ivyteam.ivy.visualvm.chart.data.license.GaugeDataSource;
 import ch.ivyteam.ivy.visualvm.chart.data.XYChartDataSource;
+import ch.ivyteam.ivy.visualvm.chart.data.license.GaugeDataSource;
 import ch.ivyteam.ivy.visualvm.view.IUpdatableUIObject;
 import java.awt.Color;
 import java.awt.GridLayout;
@@ -21,9 +21,9 @@ public class ChartsPanel implements IUpdatableUIObject {
 
   /**
    * Constructor
-   *
+   * 
    * @param horizontalOrVertical <code>true</code> to lay charts horizontally, <code>false</code> to lay
-   *                             charts vertically
+   *          charts vertically
    */
   public ChartsPanel(boolean horizontalOrVertical) {
     LayoutManager layout;
@@ -57,6 +57,13 @@ public class ChartsPanel implements IUpdatableUIObject {
     final XYChartPanel chart = new XYChartPanel(dataSource);
     updatableObjects.add(chart);
     chartPanel.add(chart.getUI());
+  }
+
+  public void addChart(XYChartDataSource dataSource, String yAxisMessage) {
+    final XYChartPanel chart = new XYChartPanel(dataSource);
+    updatableObjects.add(chart);
+    chartPanel.add(chart.getUI());
+    chart.setYaxisHelpMessage(yAxisMessage);
   }
 
   public void addChart2(XYChartDataSource dataSource) {

@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.management.MBeanServerConnection;
 import javax.swing.JComponent;
+import javax.swing.ToolTipManager;
 
 public class AbstractView {
 
@@ -17,6 +18,8 @@ public class AbstractView {
   public AbstractView(IDataBeanProvider dataBeanProvider) {
     fDataBeanProvider = dataBeanProvider;
     fUpdatableUIObjects = new ArrayList<>();
+    ToolTipManager.sharedInstance().setInitialDelay(200);
+    ToolTipManager.sharedInstance().setDismissDelay(99999);
   }
 
   public IDataBeanProvider getDataBeanProvider() {
@@ -26,11 +29,12 @@ public class AbstractView {
   public DataViewComponent getViewComponent() {
     if (fViewComponent == null) {
       // Add the master view and configuration view to the component:
-      DataViewComponent.MasterView masterView = new DataViewComponent.MasterView(getMasterViewTitle(), "",
+      DataViewComponent.MasterView masterView = new DataViewComponent.MasterView(getMasterViewTitle(),
+              "",
               getMasterViewComponent());
       // Configuration of master view:
-      DataViewComponent.MasterViewConfiguration masterConfiguration
-              = new DataViewComponent.MasterViewConfiguration(false);
+      DataViewComponent.MasterViewConfiguration masterConfiguration = new DataViewComponent.MasterViewConfiguration(
+              false);
       fViewComponent = new DataViewComponent(masterView, masterConfiguration);
     }
     return fViewComponent;
