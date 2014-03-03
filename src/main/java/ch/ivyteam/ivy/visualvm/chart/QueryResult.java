@@ -7,7 +7,7 @@ import javax.management.Attribute;
 import javax.management.AttributeList;
 import javax.management.ObjectName;
 
-public class MQueryResult {
+public class QueryResult {
   private final Map<ObjectName, List<Attribute>> results = new HashMap<>();
 
   void addSubResult(ObjectName mBeanName, AttributeList attributes) {

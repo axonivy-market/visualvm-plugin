@@ -1,8 +1,8 @@
 package ch.ivyteam.ivy.visualvm.test;
 
-import ch.ivyteam.ivy.visualvm.chart.MQuery;
-import ch.ivyteam.ivy.visualvm.chart.MQueryResult;
-import ch.ivyteam.ivy.visualvm.chart.data.MSessionChartDataSource;
+import ch.ivyteam.ivy.visualvm.chart.Query;
+import ch.ivyteam.ivy.visualvm.chart.QueryResult;
+import ch.ivyteam.ivy.visualvm.chart.data.request.SessionChartDataSource;
 import ch.ivyteam.ivy.visualvm.model.IvyJmxConstant;
 import ch.ivyteam.ivy.visualvm.test.data.model.MBeanTestData;
 import ch.ivyteam.ivy.visualvm.test.util.TestUtil;
@@ -65,10 +65,10 @@ public class SessionChartDataSourceTest extends AbstractTest {
       }
 
     };
-    MSessionChartDataSource sessionChartDataSource = new MSessionChartDataSource(provider, "", "", "");
-    MQuery query = new MQuery();
+    SessionChartDataSource sessionChartDataSource = new SessionChartDataSource(provider, "", "", "");
+    Query query = new Query();
     sessionChartDataSource.updateQuery(query);
-    MQueryResult result = query.execute(mockConnection);
+    QueryResult result = query.execute(mockConnection);
     long[] values = sessionChartDataSource.getValues(result);
 
     assertEquals(fHttp, values[0]);

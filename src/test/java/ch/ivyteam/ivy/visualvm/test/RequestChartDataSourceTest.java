@@ -1,8 +1,8 @@
 package ch.ivyteam.ivy.visualvm.test;
 
-import ch.ivyteam.ivy.visualvm.chart.MQuery;
-import ch.ivyteam.ivy.visualvm.chart.MQueryResult;
-import ch.ivyteam.ivy.visualvm.chart.data.MRequestChartDataSource;
+import ch.ivyteam.ivy.visualvm.chart.Query;
+import ch.ivyteam.ivy.visualvm.chart.QueryResult;
+import ch.ivyteam.ivy.visualvm.chart.data.request.RequestChartDataSource;
 import ch.ivyteam.ivy.visualvm.model.IvyJmxConstant;
 import ch.ivyteam.ivy.visualvm.test.data.model.MBeanTestData;
 import ch.ivyteam.ivy.visualvm.test.util.TestUtil;
@@ -65,10 +65,10 @@ public class RequestChartDataSourceTest extends AbstractTest {
       }
 
     };
-    MRequestChartDataSource requestChartDataSource = new MRequestChartDataSource(provider, "", "", "");
-    MQuery query = new MQuery();
+    RequestChartDataSource requestChartDataSource = new RequestChartDataSource(provider, "", "", "");
+    Query query = new Query();
     requestChartDataSource.updateQuery(query);
-    MQueryResult result = query.execute(mockConnection);
+    QueryResult result = query.execute(mockConnection);
     long[] values = requestChartDataSource.getValues(result);
 
     assertEquals(fAjp, values[0]);

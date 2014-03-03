@@ -1,7 +1,7 @@
 package ch.ivyteam.ivy.visualvm.view;
 
-import ch.ivyteam.ivy.visualvm.chart.MQuery;
-import ch.ivyteam.ivy.visualvm.chart.MQueryResult;
+import ch.ivyteam.ivy.visualvm.chart.Query;
+import ch.ivyteam.ivy.visualvm.chart.QueryResult;
 import com.sun.tools.visualvm.core.ui.components.DataViewComponent;
 import java.util.ArrayList;
 import java.util.List;
@@ -46,11 +46,11 @@ public class AbstractView {
 
   public void update() {
     MBeanServerConnection serverConnection = getDataBeanProvider().getMBeanServerConnection();
-    MQuery query = new MQuery();
+    Query query = new Query();
     for (IUpdatableUIObject updatableUIObj : fUpdatableUIObjects) {
       updatableUIObj.updateQuery(query);
     }
-    MQueryResult result = query.execute(serverConnection);
+    QueryResult result = query.execute(serverConnection);
     for (IUpdatableUIObject updatableUIObj : fUpdatableUIObjects) {
       updatableUIObj.updateValues(result);
     }

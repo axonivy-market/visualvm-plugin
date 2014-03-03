@@ -3,8 +3,8 @@
  */
 package ch.ivyteam.ivy.visualvm.chart;
 
-import ch.ivyteam.ivy.visualvm.chart.data.MChartDataSource;
-import ch.ivyteam.ivy.visualvm.chart.data.MGaugeDataSource;
+import ch.ivyteam.ivy.visualvm.chart.data.license.GaugeDataSource;
+import ch.ivyteam.ivy.visualvm.chart.data.XYChartDataSource;
 import ch.ivyteam.ivy.visualvm.view.IUpdatableUIObject;
 import java.awt.Color;
 import java.awt.GridLayout;
@@ -36,7 +36,7 @@ public class ChartsPanel implements IUpdatableUIObject {
     chartPanel.setBackground(Color.WHITE);
   }
 
-  public JComponent getUiComponent() {
+  public JComponent getUIComponent() {
     return chartPanel;
   }
 
@@ -53,14 +53,14 @@ public class ChartsPanel implements IUpdatableUIObject {
     setLayoutOrientation(layout.getRows() == 0);
   }
 
-  public void addChart(MChartDataSource dataSource) {
-    final MChart chart = new MChart(dataSource);
+  public void addChart(XYChartDataSource dataSource) {
+    final XYChartPanel chart = new XYChartPanel(dataSource);
     updatableObjects.add(chart);
-    chartPanel.add(chart.getUi());
+    chartPanel.add(chart.getUI());
   }
 
-  public void addChart2(MChartDataSource dataSource) {
-    final MChart chart = new MChart(dataSource) {
+  public void addChart2(XYChartDataSource dataSource) {
+    final XYChartPanel chart = new XYChartPanel(dataSource) {
       @Override
       public void updateChartDetails(long[] values) {
         super.updateChartDetails(getMaxValues());
@@ -68,30 +68,30 @@ public class ChartsPanel implements IUpdatableUIObject {
 
     };
     updatableObjects.add(chart);
-    chartPanel.add(chart.getUi());
+    chartPanel.add(chart.getUI());
   }
 
-  public void addGauge(MGaugeDataSource dataSource) {
-    final MGauge gauge = new MGauge(dataSource);
+  public void addGauge(GaugeDataSource dataSource) {
+    final RadialPanel gauge = new RadialPanel(dataSource);
     updatableObjects.add(gauge);
-    chartPanel.add(gauge.getUi());
+    chartPanel.add(gauge.getUI());
   }
 
-  public void addLinear(MGaugeDataSource dataSource) {
-    final MLinear linear = new MLinear(dataSource);
+  public void addLinear(GaugeDataSource dataSource) {
+    final LinearPanel linear = new LinearPanel(dataSource);
     updatableObjects.add(linear);
-    chartPanel.add(linear.getUi());
+    chartPanel.add(linear.getUI());
   }
 
   @Override
-  public void updateValues(MQueryResult result) {
+  public void updateValues(QueryResult result) {
     for (IUpdatableUIObject updatableObject : updatableObjects) {
       updatableObject.updateValues(result);
     }
   }
 
   @Override
-  public void updateQuery(MQuery query) {
+  public void updateQuery(Query query) {
     for (IUpdatableUIObject updatableObject : updatableObjects) {
       updatableObject.updateQuery(query);
     }

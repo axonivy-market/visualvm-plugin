@@ -1,10 +1,10 @@
 package ch.ivyteam.ivy.visualvm.view;
 
 import ch.ivyteam.ivy.visualvm.chart.ChartsPanel;
-import ch.ivyteam.ivy.visualvm.chart.data.MErrorChartDataSource;
-import ch.ivyteam.ivy.visualvm.chart.data.MProcessTimeChartDataSource;
-import ch.ivyteam.ivy.visualvm.chart.data.MRequestChartDataSource;
-import ch.ivyteam.ivy.visualvm.chart.data.MSessionChartDataSource;
+import ch.ivyteam.ivy.visualvm.chart.data.request.ErrorChartDataSource;
+import ch.ivyteam.ivy.visualvm.chart.data.request.ProcessingTimeChartDataSource;
+import ch.ivyteam.ivy.visualvm.chart.data.request.RequestChartDataSource;
+import ch.ivyteam.ivy.visualvm.chart.data.request.SessionChartDataSource;
 import com.sun.tools.visualvm.core.ui.components.DataViewComponent;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -30,13 +30,13 @@ public class RequestView extends AbstractView {
     final ChartsPanel requestPanel = new ChartsPanel(true);
     ChartsPanel sessionPanel = new ChartsPanel(true);
 
-    MRequestChartDataSource requestDataSource = new MRequestChartDataSource(
+    RequestChartDataSource requestDataSource = new RequestChartDataSource(
             getDataBeanProvider(), null, null, REQUESTS);
-    MErrorChartDataSource errorDataSource = new MErrorChartDataSource(
+    ErrorChartDataSource errorDataSource = new ErrorChartDataSource(
             getDataBeanProvider(), null, null, ERRORS);
-    MProcessTimeChartDataSource processingTimeDataSource = new MProcessTimeChartDataSource(
+    ProcessingTimeChartDataSource processingTimeDataSource = new ProcessingTimeChartDataSource(
             getDataBeanProvider(), null, null, TIME_MS);
-    MSessionChartDataSource sessionDataSource = new MSessionChartDataSource(
+    SessionChartDataSource sessionDataSource = new SessionChartDataSource(
             getDataBeanProvider(), null, null, SESSIONS);
 
     requestPanel.addChart(requestDataSource);
@@ -48,13 +48,13 @@ public class RequestView extends AbstractView {
             false), DataViewComponent.TOP_LEFT);
     // Add detail views to the component:
     super.getViewComponent().addDetailsView(new DataViewComponent.DetailsView(REQUESTS, null, 10,
-            requestPanel.getUiComponent(), null), DataViewComponent.TOP_LEFT);
+            requestPanel.getUIComponent(), null), DataViewComponent.TOP_LEFT);
     super.getViewComponent().addDetailsView(new DataViewComponent.DetailsView(SESSIONS, null, 10,
-            sessionPanel.getUiComponent(), null), DataViewComponent.TOP_LEFT);
+            sessionPanel.getUIComponent(), null), DataViewComponent.TOP_LEFT);
     registerScheduledUpdate(requestPanel);
     registerScheduledUpdate(sessionPanel);
 
-    requestPanel.getUiComponent().registerKeyboardAction(
+    requestPanel.getUIComponent().registerKeyboardAction(
             new ActionListener() {
               @Override
               public void actionPerformed(ActionEvent e) {

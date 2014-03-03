@@ -1,19 +1,19 @@
 package ch.ivyteam.ivy.visualvm.chart.data;
 
-import ch.ivyteam.ivy.visualvm.chart.MQueryResult;
+import ch.ivyteam.ivy.visualvm.chart.QueryResult;
 import ch.ivyteam.ivy.visualvm.chart.SerieStyle;
 import javax.management.ObjectName;
 
-public class MDeltaAttributeDataSource extends MAttributeDataSource {
+public class DeltaAttributeDataSource extends AttributeDataSource {
   private long lastValue = Long.MIN_VALUE;
 
-  public MDeltaAttributeDataSource(String serie, long scaleFactor, SerieStyle serieStyle,
+  public DeltaAttributeDataSource(String serie, long scaleFactor, SerieStyle serieStyle,
           ObjectName mBeanName, String attribute) {
     super(serie, scaleFactor, serieStyle, mBeanName, attribute);
   }
 
   @Override
-  long getValue(MQueryResult result) {
+  long getValue(QueryResult result) {
     return toDeltaValue(super.getValue(result));
   }
 

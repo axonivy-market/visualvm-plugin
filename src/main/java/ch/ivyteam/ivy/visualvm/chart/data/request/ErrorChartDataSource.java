@@ -1,5 +1,6 @@
-package ch.ivyteam.ivy.visualvm.chart.data;
+package ch.ivyteam.ivy.visualvm.chart.data.request;
 
+import ch.ivyteam.ivy.visualvm.chart.data.XYChartDataSource;
 import ch.ivyteam.ivy.visualvm.exception.IvyJmxDataCollectException;
 import ch.ivyteam.ivy.visualvm.model.IvyJmxConstant;
 import ch.ivyteam.ivy.visualvm.model.ServerConnectorInfo;
@@ -12,9 +13,9 @@ import javax.management.MBeanServerConnection;
 import javax.management.ObjectName;
 import org.openide.util.Exceptions;
 
-public class MRequestChartDataSource extends MChartDataSource {
-  public MRequestChartDataSource(IDataBeanProvider dataBeanProvider, String chartName,
-          String xAxisDescription, String yAxisDescription) {
+public class ErrorChartDataSource extends XYChartDataSource {
+  public ErrorChartDataSource(IDataBeanProvider dataBeanProvider, String chartName, String xAxisDescription,
+          String yAxisDescription) {
     super(dataBeanProvider, chartName, xAxisDescription, yAxisDescription);
     MBeanServerConnection mBeanServerConnection = getDataBeanProvider().getMBeanServerConnection();
     BasicIvyJmxDataCollector collector = new BasicIvyJmxDataCollector();
@@ -27,7 +28,7 @@ public class MRequestChartDataSource extends MChartDataSource {
     for (ObjectName processorName : collector.getTomcatRequestProcessors(mBeanServerConnection)) {
       String port = DataUtils.getPort(processorName);
       String protocol = DataUtils.findProtocol(mappedConnectors, port);
-      addDeltaSerie(protocol, processorName, IvyJmxConstant.Ivy.Processor.KEY_REQUEST_COUNT);
+      addDeltaSerie(protocol, processorName, IvyJmxConstant.Ivy.Processor.KEY_ERROR_COUNT);
     }
   }
 

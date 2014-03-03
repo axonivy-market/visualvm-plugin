@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<mBeanTestData>
+  <dataset> 
+    <property>
+      <name>Xpert.ivy Server:type=Security Manager</name>
+      <dataset>        
+        <property>
+          <name>licensedSessions</name>
+          <value type="java.lang.Long">0</value>
+        </property>
+      </dataset>
+    </property>        
+  </dataset>
+  
+  <dataset>       
+    <property>
+      <name>Xpert.ivy Server:type=Security Manager</name>
+      <dataset>
+        <property>
+          <name>sessions</name>
+          <value type="java.lang.Long">5</value>
+        </property>        
+      </dataset>
+    </property>
+  </dataset>
+  
+    <dataset>       
+    <property>
+      <name>Xpert.ivy Server:type=Security Manager</name>
+      <dataset>
+        <property>
+          <name>sessions</name>
+          <value type="java.lang.Long">500</value>
+        </property>        
+      </dataset>
+    </property>
+  </dataset>
+</mBeanTestData>

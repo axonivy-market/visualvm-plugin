@@ -1,8 +1,8 @@
 package ch.ivyteam.ivy.visualvm.view;
 
 import ch.ivyteam.ivy.visualvm.chart.ChartsPanel;
-import ch.ivyteam.ivy.visualvm.chart.data.MGaugeDataSource;
-import ch.ivyteam.ivy.visualvm.chart.data.MLicenseChartDataSource;
+import ch.ivyteam.ivy.visualvm.chart.data.license.GaugeDataSource;
+import ch.ivyteam.ivy.visualvm.chart.data.license.ConcurrentUsersChartDataSource;
 import ch.ivyteam.ivy.visualvm.exception.IvyJmxDataCollectException;
 import ch.ivyteam.ivy.visualvm.model.IvyJmxConstant;
 import ch.ivyteam.ivy.visualvm.model.IvyLicenseInfo;
@@ -56,7 +56,7 @@ public class LicenseView extends AbstractView {
 
   private void createSessionsView() {
     if (fLicenseInfo.getServerSessionsLimit() > 0) {
-      MLicenseChartDataSource sessionDataSource = new MLicenseChartDataSource(
+      ConcurrentUsersChartDataSource sessionDataSource = new ConcurrentUsersChartDataSource(
               getDataBeanProvider(), null, null, "Concurrent Users");
 
       List<Section> sections = new ArrayList<>();
@@ -69,7 +69,7 @@ public class LicenseView extends AbstractView {
       sections.add(greenSection);
       sections.add(orangeSection);
       sections.add(redSection);
-      MGaugeDataSource gaugeSessionsDataSource = new MGaugeDataSource(getDataBeanProvider(), sections,
+      GaugeDataSource gaugeSessionsDataSource = new GaugeDataSource(getDataBeanProvider(), sections,
               IvyJmxConstant.IvyServer.SecurityManager.NAME,
               IvyJmxConstant.IvyServer.SecurityManager.KEY_LICENSED_SESSIONS);
 
@@ -79,7 +79,7 @@ public class LicenseView extends AbstractView {
       registerScheduledUpdate(sessionsChart);
 
       super.getViewComponent().addDetailsView(new DataViewComponent.DetailsView("Concurrent Users",
-              null, 10, sessionsChart.getUiComponent(), null), DataViewComponent.BOTTOM_LEFT);
+              null, 10, sessionsChart.getUIComponent(), null), DataViewComponent.BOTTOM_LEFT);
     }
   }
 
@@ -94,7 +94,7 @@ public class LicenseView extends AbstractView {
       sections.add(greenSection);
       sections.add(orangeSection);
       sections.add(redSection);
-      MGaugeDataSource gaugeUsersDataSource = new MGaugeDataSource(getDataBeanProvider(), sections,
+      GaugeDataSource gaugeUsersDataSource = new GaugeDataSource(getDataBeanProvider(), sections,
               IvyJmxConstant.IvyServer.SecurityManager.NAME,
               IvyJmxConstant.IvyServer.SecurityManager.KEY_LICENSED_USERS);
       ChartsPanel userChart = new ChartsPanel(false);
@@ -102,7 +102,7 @@ public class LicenseView extends AbstractView {
       registerScheduledUpdate(userChart);
 
       super.getViewComponent().addDetailsView(new DataViewComponent.DetailsView("Named Users",
-              null, 10, userChart.getUiComponent(), null), DataViewComponent.TOP_RIGHT);
+              null, 10, userChart.getUIComponent(), null), DataViewComponent.TOP_RIGHT);
     }
   }
 

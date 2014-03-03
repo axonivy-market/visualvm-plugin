@@ -1,7 +1,7 @@
 package ch.ivyteam.ivy.visualvm.chart.data;
 
-import ch.ivyteam.ivy.visualvm.chart.MQuery;
-import ch.ivyteam.ivy.visualvm.chart.MQueryResult;
+import ch.ivyteam.ivy.visualvm.chart.Query;
+import ch.ivyteam.ivy.visualvm.chart.QueryResult;
 import ch.ivyteam.ivy.visualvm.chart.SerieStyle;
 import ch.ivyteam.ivy.visualvm.view.IDataBeanProvider;
 import com.sun.tools.visualvm.charts.SimpleXYChartDescriptor;
@@ -9,15 +9,15 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.management.ObjectName;
 
-public class MChartDataSource {
+public class XYChartDataSource {
 
   private final String fChartName;
   private final String fXAxisDescription;
   private final String fYAxisDescription;
   private final IDataBeanProvider fDataBeanProvider;
-  private final List<MSerieDataSource> serieDataSources = new ArrayList<>();
+  private final List<SerieDataSource> serieDataSources = new ArrayList<>();
 
-  public MChartDataSource(IDataBeanProvider dataBeanProvider, String chartName,
+  public XYChartDataSource(IDataBeanProvider dataBeanProvider, String chartName,
           String xAxisDescription, String yAxisDescription) {
     fDataBeanProvider = dataBeanProvider;
     fChartName = chartName;
@@ -25,28 +25,28 @@ public class MChartDataSource {
     fYAxisDescription = yAxisDescription;
   }
 
-  public long[] getValues(MQueryResult result) {
+  public long[] getValues(QueryResult result) {
     long[] values = new long[serieDataSources.size()];
     int pos = 0;
-    for (MSerieDataSource dataSource : serieDataSources) {
+    for (SerieDataSource dataSource : serieDataSources) {
       values[pos++] = dataSource.getValue(result);
     }
     return values;
   }
 
   public void addFixedSerie(String serie, long fixedValue) {
-    MSerieDataSource serieDataSource = new MAttributeDataSource(serie, 1L, SerieStyle.FILLED, fixedValue);
+    SerieDataSource serieDataSource = new AttributeDataSource(serie, 1L, SerieStyle.FILLED, fixedValue);
     serieDataSources.add(serieDataSource);
   }
 
   public void addSerie(String serie, SerieStyle style, ObjectName mBeanName, String attribute) {
-    MSerieDataSource serieDataSource = new MAttributeDataSource(serie, 1L,
+    SerieDataSource serieDataSource = new AttributeDataSource(serie, 1L,
             style, mBeanName, attribute);
     serieDataSources.add(serieDataSource);
   }
 
   public void addSerie(String serie, String label, SerieStyle style, ObjectName mBeanName, String attribute) {
-    MSerieDataSource serieDataSource = new MAttributeDataSource(serie, 1L,
+    SerieDataSource serieDataSource = new AttributeDataSource(serie, 1L,
             style, mBeanName, attribute);
     serieDataSource.setLabel(label);
     serieDataSources.add(serieDataSource);
@@ -57,7 +57,7 @@ public class MChartDataSource {
   }
 
   private void addDeltaSerie(String serie, SerieStyle style, ObjectName mBeanName, String attribute) {
-    MSerieDataSource serieDataSource = new MDeltaAttributeDataSource(serie, 1L, style, mBeanName, attribute);
+    SerieDataSource serieDataSource = new DeltaAttributeDataSource(serie, 1L, style, mBeanName, attribute);
     serieDataSources.add(serieDataSource);
   }
 
@@ -74,15 +74,15 @@ public class MChartDataSource {
 
     String[] details = new String[serieDataSources.size()];
     int index = 0;
-    for (MSerieDataSource dataSource : serieDataSources) {
+    for (SerieDataSource dataSource : serieDataSources) {
       dataSource.configureSerie(chartDescriptor);
       details[index++] = dataSource.getLabel();
     }
     chartDescriptor.setDetailsItems(details);
   }
 
-  public void updateQuery(MQuery query) {
-    for (MSerieDataSource dataSource : serieDataSources) {
+  public void updateQuery(Query query) {
+    for (SerieDataSource dataSource : serieDataSources) {
       dataSource.updateQuery(query);
     }
   }
@@ -91,7 +91,7 @@ public class MChartDataSource {
     return fDataBeanProvider;
   }
 
-  public List<MSerieDataSource> getSerieDataSources() {
+  public List<SerieDataSource> getSerieDataSources() {
     return serieDataSources;
   }
 

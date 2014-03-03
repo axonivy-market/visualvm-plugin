@@ -14,9 +14,9 @@ import javax.management.MBeanServerConnection;
 import javax.management.ObjectName;
 import javax.management.ReflectionException;
 
-public class MQuery {
+public class Query {
   private final Map<ObjectName, List<String>> queries = new HashMap<>();
-  private static final Logger LOGGER = Logger.getLogger(MQuery.class.getName());
+  private static final Logger LOGGER = Logger.getLogger(Query.class.getName());
 
   public void addSubQuery(ObjectName mBeanName, Set<String> attributesToAdd) {
     List<String> attributes = queries.get(mBeanName);
@@ -42,8 +42,8 @@ public class MQuery {
     }
   }
 
-  public MQueryResult execute(MBeanServerConnection serverConnection) {
-    MQueryResult result = new MQueryResult();
+  public QueryResult execute(MBeanServerConnection serverConnection) {
+    QueryResult result = new QueryResult();
     if (serverConnection == null) {
       throw new ClosedIvyServerConnectionException("");
     }

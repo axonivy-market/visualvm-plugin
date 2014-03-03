@@ -1,18 +1,18 @@
 package ch.ivyteam.ivy.visualvm.chart.data;
 
-import ch.ivyteam.ivy.visualvm.chart.MQuery;
-import ch.ivyteam.ivy.visualvm.chart.MQueryResult;
+import ch.ivyteam.ivy.visualvm.chart.Query;
+import ch.ivyteam.ivy.visualvm.chart.QueryResult;
 import ch.ivyteam.ivy.visualvm.chart.SerieStyle;
 import com.sun.tools.visualvm.charts.SimpleXYChartDescriptor;
 
-abstract class MSerieDataSource {
+abstract class SerieDataSource {
 
   private long fScaleFactor = 1L;
   private final String fSerie;
   private SerieStyle fStyle;
   private String fLabel;
 
-  MSerieDataSource(String serie, long scaleFactor, SerieStyle style) {
+  SerieDataSource(String serie, long scaleFactor, SerieStyle style) {
     fSerie = serie;
     fLabel = serie;
     fScaleFactor = scaleFactor;
@@ -30,9 +30,9 @@ abstract class MSerieDataSource {
     return fLabel;
   }
 
-  abstract void updateQuery(MQuery query);
+  abstract void updateQuery(Query query);
 
-  abstract long getValue(MQueryResult result);
+  abstract long getValue(QueryResult result);
 
   protected long toScaledLong(Object value) {
     if (value instanceof Number) {

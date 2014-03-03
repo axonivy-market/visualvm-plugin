@@ -1,8 +1,8 @@
 package ch.ivyteam.ivy.visualvm.test;
 
-import ch.ivyteam.ivy.visualvm.chart.MQuery;
-import ch.ivyteam.ivy.visualvm.chart.MQueryResult;
-import ch.ivyteam.ivy.visualvm.chart.data.MProcessTimeChartDataSource;
+import ch.ivyteam.ivy.visualvm.chart.Query;
+import ch.ivyteam.ivy.visualvm.chart.QueryResult;
+import ch.ivyteam.ivy.visualvm.chart.data.request.ProcessingTimeChartDataSource;
 import ch.ivyteam.ivy.visualvm.model.IvyJmxConstant;
 import ch.ivyteam.ivy.visualvm.test.data.model.MBeanTestData;
 import ch.ivyteam.ivy.visualvm.test.util.TestUtil;
@@ -65,11 +65,11 @@ public class ProcessTimeChartDataSourceTest extends AbstractTest {
       }
 
     };
-    MProcessTimeChartDataSource processTimeChartDataSource = new MProcessTimeChartDataSource(
+    ProcessingTimeChartDataSource processTimeChartDataSource = new ProcessingTimeChartDataSource(
             provider, "", "", "");
-    MQuery query = new MQuery();
+    Query query = new Query();
     processTimeChartDataSource.updateQuery(query);
-    MQueryResult result = query.execute(mockConnection);
+    QueryResult result = query.execute(mockConnection);
     long[] values = processTimeChartDataSource.getValues(result);
 
     assertEquals(fAjp, values[0]);

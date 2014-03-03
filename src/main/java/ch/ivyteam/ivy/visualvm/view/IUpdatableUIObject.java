@@ -1,11 +1,11 @@
 package ch.ivyteam.ivy.visualvm.view;
 
-import ch.ivyteam.ivy.visualvm.chart.MQuery;
-import ch.ivyteam.ivy.visualvm.chart.MQueryResult;
+import ch.ivyteam.ivy.visualvm.chart.Query;
+import ch.ivyteam.ivy.visualvm.chart.QueryResult;
 
 public interface IUpdatableUIObject {
-  void updateValues(MQueryResult result);
+  void updateValues(QueryResult result);
 
-  void updateQuery(MQuery query);
+  void updateQuery(Query query);
 
 }

@@ -1,6 +1,7 @@
-package ch.ivyteam.ivy.visualvm.chart.data;
+package ch.ivyteam.ivy.visualvm.chart.data.license;
 
 import ch.ivyteam.ivy.visualvm.chart.SerieStyle;
+import ch.ivyteam.ivy.visualvm.chart.data.XYChartDataSource;
 import ch.ivyteam.ivy.visualvm.exception.IvyJmxDataCollectException;
 import ch.ivyteam.ivy.visualvm.model.IvyJmxConstant;
 import ch.ivyteam.ivy.visualvm.view.IDataBeanProvider;
@@ -15,10 +16,10 @@ import javax.management.openmbean.CompositeDataSupport;
 import javax.management.openmbean.TabularDataSupport;
 import org.openide.util.Exceptions;
 
-public class MLicenseChartDataSource extends MChartDataSource {
+public class ConcurrentUsersChartDataSource extends XYChartDataSource {
   private int fServerSessionLimit;
 
-  public MLicenseChartDataSource(IDataBeanProvider dataBeanProvider, String chartName,
+  public ConcurrentUsersChartDataSource(IDataBeanProvider dataBeanProvider, String chartName,
           String xAxisDescription, String yAxisDescription) {
     super(dataBeanProvider, chartName, xAxisDescription, yAxisDescription);
     retrieveLicenseInfo();
@@ -42,8 +43,10 @@ public class MLicenseChartDataSource extends MChartDataSource {
     String attributeName = IvyJmxConstant.IvyServer.Server.KEY_LICENSE_PARAMETERS;
     try {
       TabularDataSupport tabular = (TabularDataSupport) connection.getAttribute(objectName, attributeName);
-      result = Integer.parseInt(getLicenseDetail(tabular,
-              IvyJmxConstant.IvyServer.Server.License.KEY_SERVER_SESSIONS_LIMIT));
+      if (tabular != null) {
+        result = Integer.parseInt(getLicenseDetail(tabular,
+                IvyJmxConstant.IvyServer.Server.License.KEY_SERVER_SESSIONS_LIMIT));
+      }
     } catch (MBeanException | AttributeNotFoundException | InstanceNotFoundException | ReflectionException |
             IOException ex) {
       throw new IvyJmxDataCollectException(ex);
@@ -52,11 +55,13 @@ public class MLicenseChartDataSource extends MChartDataSource {
   }
 
   private String getLicenseDetail(TabularDataSupport tabular, String keys) {
-    CompositeDataSupport data = (CompositeDataSupport) tabular.get(new String[]{keys});
-    if (data != null) {
-      return data.get("propertyValue").toString();
+    if (tabular != null) {
+      CompositeDataSupport data = (CompositeDataSupport) tabular.get(new String[]{keys});
+      if (data != null) {
+        return data.get("propertyValue").toString();
+      }
     }
-    return null;
+    return "0";
   }
 
 }

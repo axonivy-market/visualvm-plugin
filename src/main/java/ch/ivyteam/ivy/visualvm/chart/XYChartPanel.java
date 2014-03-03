@@ -1,6 +1,6 @@
 package ch.ivyteam.ivy.visualvm.chart;
 
-import ch.ivyteam.ivy.visualvm.chart.data.MChartDataSource;
+import ch.ivyteam.ivy.visualvm.chart.data.XYChartDataSource;
 import ch.ivyteam.ivy.visualvm.view.IUpdatableUIObject;
 import com.sun.tools.visualvm.charts.ChartFactory;
 import com.sun.tools.visualvm.charts.SimpleXYChartDescriptor;
@@ -14,14 +14,14 @@ import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JComponent;
 import javax.swing.JPopupMenu;
 
-class MChart implements IUpdatableUIObject {
+class XYChartPanel implements IUpdatableUIObject {
 
   private final SimpleXYChartSupport chart;
-  private final MChartDataSource fDataSource;
+  private final XYChartDataSource fDataSource;
   private final long[] fMaxValues;
   private final long[] fLatestValues;
 
-  MChart(MChartDataSource dataSource) {
+  XYChartPanel(XYChartDataSource dataSource) {
     fDataSource = dataSource;
     fLatestValues = new long[dataSource.getSerieDataSources().size()];
     fMaxValues = new long[dataSource.getSerieDataSources().size()];
@@ -35,12 +35,12 @@ class MChart implements IUpdatableUIObject {
     chart.getChart().setComponentPopupMenu(menu);
   }
 
-  JComponent getUi() {
+  JComponent getUI() {
     return chart.getChart();
   }
 
   @Override
-  public void updateValues(MQueryResult result) {
+  public void updateValues(QueryResult result) {
     long[] values = fDataSource.getValues(result);
     updateLatestValues(values);
     updateMaxValues(values);
@@ -69,7 +69,7 @@ class MChart implements IUpdatableUIObject {
   }
 
   @Override
-  public void updateQuery(MQuery query) {
+  public void updateQuery(Query query) {
     fDataSource.updateQuery(query);
   }
 

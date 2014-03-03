@@ -1,16 +1,16 @@
 package ch.ivyteam.ivy.visualvm.chart.data;
 
-import ch.ivyteam.ivy.visualvm.chart.MQuery;
-import ch.ivyteam.ivy.visualvm.chart.MQueryResult;
+import ch.ivyteam.ivy.visualvm.chart.Query;
+import ch.ivyteam.ivy.visualvm.chart.QueryResult;
 import ch.ivyteam.ivy.visualvm.chart.SerieStyle;
 import javax.management.ObjectName;
 
-class MAttributeDataSource extends MSerieDataSource {
+class AttributeDataSource extends SerieDataSource {
   private final String fAttribute;
   private final ObjectName fMBeanName;
   private final long fFixedValue;
 
-  MAttributeDataSource(String serie, long scaleFactor, SerieStyle serieStyle, ObjectName mBeanName,
+  AttributeDataSource(String serie, long scaleFactor, SerieStyle serieStyle, ObjectName mBeanName,
           String attribute) {
     super(serie, scaleFactor, serieStyle);
     fAttribute = attribute;
@@ -18,7 +18,7 @@ class MAttributeDataSource extends MSerieDataSource {
     fFixedValue = -1;
   }
 
-  MAttributeDataSource(String serie, long scaleFactor, SerieStyle serieStyle, long fixedValue) {
+  AttributeDataSource(String serie, long scaleFactor, SerieStyle serieStyle, long fixedValue) {
     super(serie, scaleFactor, serieStyle);
     fAttribute = null;
     fMBeanName = null;
@@ -26,14 +26,14 @@ class MAttributeDataSource extends MSerieDataSource {
   }
 
   @Override
-  void updateQuery(MQuery query) {
+  void updateQuery(Query query) {
     if (fFixedValue == -1) {
       query.addSubQuery(fMBeanName, fAttribute);
     }
   }
 
   @Override
-  long getValue(MQueryResult result) {
+  long getValue(QueryResult result) {
     long value;
     if (fFixedValue > -1) {
       value = fFixedValue;

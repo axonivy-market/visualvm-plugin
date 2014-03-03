@@ -1,5 +1,6 @@
-package ch.ivyteam.ivy.visualvm.chart.data;
+package ch.ivyteam.ivy.visualvm.chart.data.request;
 
+import ch.ivyteam.ivy.visualvm.chart.data.XYChartDataSource;
 import ch.ivyteam.ivy.visualvm.exception.IvyJmxDataCollectException;
 import ch.ivyteam.ivy.visualvm.model.IvyJmxConstant;
 import ch.ivyteam.ivy.visualvm.model.ServerConnectorInfo;
@@ -12,8 +13,9 @@ import javax.management.MBeanServerConnection;
 import javax.management.ObjectName;
 import org.openide.util.Exceptions;
 
-public class MProcessTimeChartDataSource extends MChartDataSource {
-  public MProcessTimeChartDataSource(IDataBeanProvider dataBeanProvider, String chartName,
+public class RequestChartDataSource extends XYChartDataSource {
+
+  public RequestChartDataSource(IDataBeanProvider dataBeanProvider, String chartName,
           String xAxisDescription, String yAxisDescription) {
     super(dataBeanProvider, chartName, xAxisDescription, yAxisDescription);
     MBeanServerConnection mBeanServerConnection = getDataBeanProvider().getMBeanServerConnection();
@@ -27,7 +29,7 @@ public class MProcessTimeChartDataSource extends MChartDataSource {
     for (ObjectName processorName : collector.getTomcatRequestProcessors(mBeanServerConnection)) {
       String port = DataUtils.getPort(processorName);
       String protocol = DataUtils.findProtocol(mappedConnectors, port);
-      addDeltaSerie(protocol, processorName, IvyJmxConstant.Ivy.Processor.KEY_PROCESS_TIME);
+      addDeltaSerie(protocol, processorName, IvyJmxConstant.Ivy.Processor.KEY_REQUEST_COUNT);
     }
   }
 
