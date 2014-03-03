@@ -29,8 +29,13 @@ public class IvyLicenseInfo {
   private Long fRemainingTime;
   private int fNamedUsers;
   private int fConcurrentUsers;
-  private static final String TD_TR_END_TAG = "</td></tr>";
-  private static final String TD_TAG = "<td>";
+  private static final String TABLE_START = "<table border='0' celspacing='5' celpadding='0'>";
+  private static final String TABLE_END = "</table>";
+  private static final String TR_TD_START = "<tr><td>";
+  private static final String TD_TR_END = "</td></tr>";
+  private static final String TD_START = "<td>";
+  private static final String TD_END = "</td>";
+
   private static final String EXPIRE_IN_30_DAYS_WARNING
           = "Your licence will expire on {0}. "
           + "If the licence is expired the server will no longer start. "
@@ -47,8 +52,6 @@ public class IvyLicenseInfo {
   private static final String SESSIONS_EXCEEDED_50_PERCENT_WARNING
           = "Cannot create session because the maximum session that are allowed by your licence has exceeded "
           + "by a factor of 50%.";
-  private static final String TABLE_BORDER_CELSPACING_PADDING
-          = "<table border='0' celspacing='10' celpadding='0'>";
 
   public IvyLicenseInfo() {
   }
@@ -114,11 +117,19 @@ public class IvyLicenseInfo {
     fRemainingTime = remainingTime;
   }
 
+  public void setNamedUsers(int namedUsers) {
+    fNamedUsers = namedUsers;
+  }
+
+  public void setConcurrentUsers(int concurrentUsers) {
+    fConcurrentUsers = concurrentUsers;
+  }
+
   public String toHTMLString() {
     StringBuilder html = new StringBuilder("<html><body style=\"font-family:tahoma;font-size:11\">");
-    appendExpireWarning(html);
-    appendUsersLimitWarning(html);
-    appendSessionsLimitWarning(html);
+    appendWarningMessage(html);
+
+    html.append(TABLE_START);
     appendLicenseeOrganisation(html);
     appendLicenseeIndividual(html);
     appendHostName(html);
@@ -130,136 +141,161 @@ public class IvyLicenseInfo {
     appendUsersLimit(html);
     appendSessionsLimit(html);
 
-    html.append("</table>");
+    html.append(TABLE_END);
     html.append("</body></html>");
     return html.toString();
   }
 
+  private void appendWarningMessage(StringBuilder html) {
+    html.append(TABLE_START);
+    appendWarningIcon(html);
+    appendExpireWarning(html);
+    appendUsersLimitWarning(html);
+    appendSessionsLimitWarning(html);
+    html.append(TABLE_END);
+  }
+
   private void appendSessionsLimit(StringBuilder html) {
     if (fServerSessionsLimit > 0) {
-      html.append("<tr><td>Concurrent Users Limit: <td>");
-      html.append(TD_TAG).append(fServerSessionsLimit);
-      html.append(TD_TR_END_TAG);
+      html.append(TR_TD_START);
+      html.append("Concurrent Users Limit: ").append(TD_END);
+      html.append(TD_START).append(fServerSessionsLimit);
+      html.append(TD_TR_END);
     }
   }
 
   private void appendUsersLimit(StringBuilder html) {
     if (fServerUsersLimit > 0) {
-      html.append("<tr><td>Named Users Limit: <td>");
-      html.append(TD_TAG).append(fServerUsersLimit);
-      html.append(TD_TR_END_TAG);
+      html.append(TR_TD_START);
+      html.append("Named Users Limit: ").append(TD_END);
+      html.append(TD_START).append(fServerUsersLimit);
+      html.append(TD_TR_END);
     }
   }
 
   private void appendElementsLimit(StringBuilder html) {
     if (fServerElementsLimit > 0) {
-      html.append("<tr><td>Elements Limit: <td>");
-      html.append(TD_TAG).append(fServerElementsLimit);
-      html.append(TD_TR_END_TAG);
+      html.append(TR_TD_START);
+      html.append("Elements Limit: ").append(TD_END);
+      html.append(TD_START).append(fServerElementsLimit);
+      html.append(TD_TR_END);
     }
   }
 
   private void appendSupportRIA(StringBuilder html) {
-    html.append("<tr><td>Supports RIA: <td>");
-    html.append(TD_TAG).append(fServerRIA ? "yes" : "no");
-    html.append(TD_TR_END_TAG);
+    html.append(TR_TD_START);
+    html.append("Supports RIA: ").append(TD_END);
+    html.append(TD_START).append(fServerRIA ? "yes" : "no");
+    html.append(TD_TR_END);
   }
 
   private void appendValidUntil(StringBuilder html) {
     if (fLicenseValidUntil != null) {
-      html.append("<tr><td>Expires: <td>");
-      html.append(TD_TAG).append(DataUtils.toDateString(fLicenseValidUntil));
-      html.append(TD_TR_END_TAG);
+      html.append(TR_TD_START);
+      html.append("Expires: ").append(TD_END);
+      html.append(TD_START).append(DataUtils.toDateString(fLicenseValidUntil));
+      html.append(TD_TR_END);
     }
   }
 
   private void appendValidFrom(StringBuilder html) {
     if (fLicenseValidFrom != null) {
-      html.append("<tr><td>Valid From: <td>");
-      html.append(TD_TAG).append(DataUtils.toDateString(fLicenseValidFrom));
-      html.append(TD_TR_END_TAG);
+      html.append(TR_TD_START);
+      html.append("Valid From: ").append(TD_END);
+      html.append(TD_START).append(DataUtils.toDateString(fLicenseValidFrom));
+      html.append(TD_TR_END);
     }
   }
 
   private void appendKeyVersion(StringBuilder html) {
     if (fLicenseKeyVersion != null) {
-      html.append("<tr><td>Version: <td>");
-      html.append(TD_TAG).append(fLicenseKeyVersion.replace("xpertline/", ""));
-      html.append(TD_TR_END_TAG);
+      html.append(TR_TD_START);
+      html.append("Version: ").append(TD_END);
+      html.append(TD_START).append(fLicenseKeyVersion.replace("xpertline/", ""));
+      html.append(TD_TR_END);
     }
   }
 
   private void appendHostName(StringBuilder html) {
     if (fHostName != null) {
-      html.append("<tr><td>Host Name: <td>");
-      html.append(TD_TAG).append(fHostName);
-      html.append(TD_TR_END_TAG);
+      html.append(TR_TD_START);
+      html.append("Host Name: ").append(TD_END);
+      html.append(TD_START).append(fHostName);
+      html.append(TD_TR_END);
     }
   }
 
   private void appendLicenseeIndividual(StringBuilder html) {
     if (fLicenseeIndividual != null) {
-      html.append("<tr><td>Individual: <td>");
-      html.append(TD_TAG).append(fLicenseeIndividual);
-      html.append(TD_TR_END_TAG);
+      html.append(TR_TD_START);
+      html.append("Individual: ").append(TD_END);
+      html.append(TD_START).append(fLicenseeIndividual);
+      html.append(TD_TR_END);
     }
   }
 
   private void appendLicenseeOrganisation(StringBuilder html) {
     if (fLicenseeOrganisation != null) {
-      html.append(TABLE_BORDER_CELSPACING_PADDING);
-      html.append("<tr><td>Organization: <td>");
-      html.append(TD_TAG).append(fLicenseeOrganisation);
-      html.append(TD_TR_END_TAG);
+      html.append(TR_TD_START);
+      html.append("Organization: ").append(TD_END);
+      html.append(TD_START).append(fLicenseeOrganisation);
+      html.append(TD_TR_END);
     }
   }
 
   private void appendSessionsLimitWarning(StringBuilder html) {
     if (fServerSessionsLimit > 0 && getConcurrentUserLimitWarningInHTML() != null) {
-      html.append(TABLE_BORDER_CELSPACING_PADDING);
-      html.append("<tr><td>").append(getConcurrentUserLimitWarningInHTML());
-      html.append("</td></tr></table>");
+      html.append(TR_TD_START).append(getConcurrentUserLimitWarningInHTML()).append(TD_TR_END);
     }
   }
 
   private void appendUsersLimitWarning(StringBuilder html) {
     if (fServerUsersLimit > 0 && getNamedUserLimitWarningInHTML() != null) {
-      html.append(TABLE_BORDER_CELSPACING_PADDING);
-      html.append("<tr><td>").append(getNamedUserLimitWarningInHTML());
-      html.append("</td></tr></table>");
+      html.append(TR_TD_START).append(getNamedUserLimitWarningInHTML()).append(TD_TR_END);
     }
   }
 
   private void appendExpireWarning(StringBuilder html) {
-    if (getExpireWarningInHTML() != null) {
-      html.append(TABLE_BORDER_CELSPACING_PADDING);
-      html.append("<tr><td>").append(getExpireWarningInHTML());
-      html.append("</td></tr></table>");
-    }
-  }
-
-  private String getExpireWarningInHTML() {
-    long delta = getRemainingTime();
-    String expireWarning = null, color = "#F38630";
+    String expireWarning = null;
+    String color = "#F38630"; //yellow
     String expireDateString = DataUtils.toDateString(fLicenseValidUntil);
-    if (delta <= 0) {
+
+    if (isLicenseError()) {
       expireWarning = MessageFormat.format(EXPIRED_WARNING, expireDateString);
       color = "red";
-    } else if (delta < 30 * LicenseInformationPanel.MILLISECONDS_IN_ONE_DAY) {
+    } else if (isLicenseWarning()) {
       expireWarning = MessageFormat.format(EXPIRE_IN_30_DAYS_WARNING, expireDateString);
     }
+
     if (expireWarning == null) {
-      return null;
+      return;
     }
-    return "<font color='" + color + "'>" + expireWarning + "</font> ";
+    String warningMsg = "<font color='" + color + "'>" + expireWarning + "</font> ";
+
+    html.append(TD_START).append(warningMsg).append(TD_END);
   }
 
-  public void setNamedUsers(int namedUsers) {
-    fNamedUsers = namedUsers;
+  private void appendWarningIcon(StringBuilder html) {
+    String iconPath = null;
+
+    if (isLicenseError()) {
+      iconPath = "/resources/icons/license_error.png";
+    } else if (isLicenseWarning()) {
+      iconPath = "/resources/icons/license_warning.png";
+    }
+    if (iconPath == null) {
+      return;
+    }
+    String icon = "<img src='" + getClass().getResource(iconPath) + "'>";
+    html.append("<td rowspan=3>").append(icon).append(TD_END);
   }
 
-  public void setConcurrentUsers(int concurrentUsers) {
-    fConcurrentUsers = concurrentUsers;
+  private boolean isLicenseWarning() {
+    return getRemainingTime() < 30 * LicenseInformationPanel.MILLISECONDS_IN_ONE_DAY;
+  }
+
+  private boolean isLicenseError() {
+    return getRemainingTime() <= 0;
   }
 
   private String getNamedUserLimitWarningInHTML() {
