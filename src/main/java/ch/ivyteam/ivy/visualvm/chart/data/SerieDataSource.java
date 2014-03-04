@@ -5,29 +5,19 @@ import ch.ivyteam.ivy.visualvm.chart.QueryResult;
 import ch.ivyteam.ivy.visualvm.chart.SerieStyle;
 import com.sun.tools.visualvm.charts.SimpleXYChartDescriptor;
 
-abstract class SerieDataSource {
+public abstract class SerieDataSource {
 
   private long fScaleFactor = 1L;
   private final String fSerie;
   private SerieStyle fStyle;
-  private String fLabel;
 
   SerieDataSource(String serie, long scaleFactor, SerieStyle style) {
     fSerie = serie;
-    fLabel = serie;
     fScaleFactor = scaleFactor;
     fStyle = style;
     if (fStyle == null) {
       fStyle = SerieStyle.LINE_FILLED;
     }
-  }
-
-  public void setLabel(String label) {
-    fLabel = label;
-  }
-
-  public String getLabel() {
-    return fLabel;
   }
 
   abstract void updateQuery(Query query);
@@ -41,7 +31,7 @@ abstract class SerieDataSource {
     return 0L;
   }
 
-  void configureSerie(SimpleXYChartDescriptor chartDescriptor) {
+  public void configureSerie(SimpleXYChartDescriptor chartDescriptor) {
     switch (fStyle) {
       case LINE_FILLED:
         chartDescriptor.addLineFillItems(fSerie);

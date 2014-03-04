@@ -2,6 +2,7 @@ package ch.ivyteam.ivy.visualvm.chart.data.request;
 
 import ch.ivyteam.ivy.visualvm.chart.SerieStyle;
 import ch.ivyteam.ivy.visualvm.chart.data.XYChartDataSource;
+import ch.ivyteam.ivy.visualvm.chart.data.support.LatestValueChartLabelCalcSupport;
 import ch.ivyteam.ivy.visualvm.model.IvyJmxConstant;
 import ch.ivyteam.ivy.visualvm.service.BasicIvyJmxDataCollector;
 import ch.ivyteam.ivy.visualvm.view.IDataBeanProvider;
@@ -17,13 +18,26 @@ public class SessionChartDataSource extends XYChartDataSource {
     ObjectName tomcatManager = collector.getTomcatManagerName(mBeanServerConnection);
     if (tomcatManager != null) {
       addSerie("HTTP", SerieStyle.LINE, tomcatManager, IvyJmxConstant.Ivy.Manager.KEY_SESSION_COUNTER);
+      addLabelCalcSupport(new LatestValueChartLabelCalcSupport("HTTP",
+              tomcatManager, IvyJmxConstant.Ivy.Manager.KEY_SESSION_COUNTER));
     }
     addSerie("Ivy", SerieStyle.LINE, IvyJmxConstant.IvyServer.SecurityManager.NAME,
             IvyJmxConstant.IvyServer.SecurityManager.KEY_SESSIONS);
+    addLabelCalcSupport(new LatestValueChartLabelCalcSupport("Ivy",
+            IvyJmxConstant.IvyServer.SecurityManager.NAME,
+            IvyJmxConstant.IvyServer.SecurityManager.KEY_SESSIONS));
+
     addSerie("Licensed", SerieStyle.LINE, IvyJmxConstant.IvyServer.SecurityManager.NAME,
             IvyJmxConstant.IvyServer.SecurityManager.KEY_LICENSED_SESSIONS);
+    addLabelCalcSupport(new LatestValueChartLabelCalcSupport("Licensed",
+            IvyJmxConstant.IvyServer.SecurityManager.NAME,
+            IvyJmxConstant.IvyServer.SecurityManager.KEY_LICENSED_SESSIONS));
+
     addSerie("RD", SerieStyle.LINE, IvyJmxConstant.IvyServer.RichDialogExecution.NAME,
             IvyJmxConstant.IvyServer.RichDialogExecution.KEY_RD_SESSIONS);
+    addLabelCalcSupport(new LatestValueChartLabelCalcSupport("RD",
+            IvyJmxConstant.IvyServer.RichDialogExecution.NAME,
+            IvyJmxConstant.IvyServer.RichDialogExecution.KEY_RD_SESSIONS));
   }
 
 }

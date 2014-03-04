@@ -1,6 +1,7 @@
 package ch.ivyteam.ivy.visualvm.chart.data.request;
 
 import ch.ivyteam.ivy.visualvm.chart.data.XYChartDataSource;
+import ch.ivyteam.ivy.visualvm.chart.data.support.DeltaValueChartLabelCalcSupport;
 import ch.ivyteam.ivy.visualvm.exception.IvyJmxDataCollectException;
 import ch.ivyteam.ivy.visualvm.model.IvyJmxConstant;
 import ch.ivyteam.ivy.visualvm.model.ServerConnectorInfo;
@@ -32,6 +33,8 @@ public class ProcessingTimeChartDataSource extends XYChartDataSource {
       String port = DataUtils.getPort(processorName);
       String protocol = DataUtils.findProtocol(mappedConnectors, port);
       addDeltaSerie(protocol, processorName, IvyJmxConstant.Ivy.Processor.KEY_PROCESS_TIME);
+      addLabelCalcSupport(new DeltaValueChartLabelCalcSupport(protocol,
+              processorName, IvyJmxConstant.Ivy.Processor.KEY_PROCESS_TIME));
     }
   }
 

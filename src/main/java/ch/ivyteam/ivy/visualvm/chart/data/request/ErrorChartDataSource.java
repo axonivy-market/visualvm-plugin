@@ -1,6 +1,7 @@
 package ch.ivyteam.ivy.visualvm.chart.data.request;
 
 import ch.ivyteam.ivy.visualvm.chart.data.XYChartDataSource;
+import ch.ivyteam.ivy.visualvm.chart.data.support.DeltaValueChartLabelCalcSupport;
 import ch.ivyteam.ivy.visualvm.exception.IvyJmxDataCollectException;
 import ch.ivyteam.ivy.visualvm.model.IvyJmxConstant;
 import ch.ivyteam.ivy.visualvm.model.ServerConnectorInfo;
@@ -14,9 +15,9 @@ import javax.management.MBeanServerConnection;
 import javax.management.ObjectName;
 
 public class ErrorChartDataSource extends XYChartDataSource {
-  
+
   private static final Logger LOGGER = Logger.getLogger(ErrorChartDataSource.class.getName());
-  
+
   public ErrorChartDataSource(IDataBeanProvider dataBeanProvider, String chartName, String xAxisDescription,
           String yAxisDescription) {
     super(dataBeanProvider, chartName, xAxisDescription, yAxisDescription);
@@ -32,7 +33,9 @@ public class ErrorChartDataSource extends XYChartDataSource {
       String port = DataUtils.getPort(processorName);
       String protocol = DataUtils.findProtocol(mappedConnectors, port);
       addDeltaSerie(protocol, processorName, IvyJmxConstant.Ivy.Processor.KEY_ERROR_COUNT);
+      addLabelCalcSupport(new DeltaValueChartLabelCalcSupport(protocol,
+              processorName, IvyJmxConstant.Ivy.Processor.KEY_ERROR_COUNT));
     }
   }
-  
+
 }

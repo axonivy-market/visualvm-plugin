@@ -25,9 +25,9 @@ public class ChartsPanel implements IUpdatableUIObject {
 
   /**
    * Constructor
-   * 
+   *
    * @param horizontalOrVertical <code>true</code> to lay charts horizontally, <code>false</code> to lay
-   *          charts vertically
+   *                             charts vertically
    */
   public ChartsPanel(boolean horizontalOrVertical) {
     LayoutManager layout;
@@ -61,25 +61,19 @@ public class ChartsPanel implements IUpdatableUIObject {
   public void addChart(XYChartDataSource dataSource) {
     final XYChartPanel chart = new XYChartPanel(dataSource);
     updatableObjects.add(chart);
-    chartPanel.add(chart.getUI());
+    chartPanel.add(chart);
   }
 
   public void addChart(XYChartDataSource dataSource, String yAxisMessage) {
     final XYChartPanel chart = new XYChartPanel(dataSource, yAxisMessage);
     updatableObjects.add(chart);
-    chartPanel.add(chart.getUI());
+    chartPanel.add(chart);
   }
 
   public void addChart2(XYChartDataSource dataSource) {
-    final XYChartPanel chart = new XYChartPanel(dataSource) {
-      @Override
-      public void updateChartDetails(long[] values) {
-        super.updateChartDetails(getMaxValues());
-      }
-
-    };
+    final XYChartPanel chart = new XYChartPanel(dataSource);
     updatableObjects.add(chart);
-    chartPanel.add(chart.getUI());
+    chartPanel.add(chart);
   }
 
   public void addGauge(GaugeDataSource dataSource) {
@@ -114,7 +108,7 @@ public class ChartsPanel implements IUpdatableUIObject {
       if (object instanceof XYChartPanel) {
         XYChartPanel chart = (XYChartPanel) object;
         chart.updateCachePeriod();
-        chartPanel.add(chart.getUI());
+        chartPanel.add(chart);
       } else if (object instanceof GaugePanel) {
         GaugePanel gaugePanel = (GaugePanel) object;
         chartPanel.add(gaugePanel.getUI());

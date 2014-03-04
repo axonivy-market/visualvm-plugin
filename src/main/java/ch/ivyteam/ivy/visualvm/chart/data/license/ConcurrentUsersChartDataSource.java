@@ -2,6 +2,7 @@ package ch.ivyteam.ivy.visualvm.chart.data.license;
 
 import ch.ivyteam.ivy.visualvm.chart.SerieStyle;
 import ch.ivyteam.ivy.visualvm.chart.data.XYChartDataSource;
+import ch.ivyteam.ivy.visualvm.chart.data.support.MaxValueChartLabelCalcSupport;
 import ch.ivyteam.ivy.visualvm.model.IvyJmxConstant;
 import ch.ivyteam.ivy.visualvm.view.IDataBeanProvider;
 import java.io.IOException;
@@ -22,8 +23,11 @@ public class ConcurrentUsersChartDataSource extends XYChartDataSource {
           String xAxisDescription, String yAxisDescription) {
     super(dataBeanProvider, chartName, xAxisDescription, yAxisDescription);
     addFixedSerie("Limit", getSessionLimit());
-    addSerie("Now", "Max Occurs", SerieStyle.LINE, IvyJmxConstant.IvyServer.SecurityManager.NAME,
+    addSerie("Now", SerieStyle.LINE, IvyJmxConstant.IvyServer.SecurityManager.NAME,
             IvyJmxConstant.IvyServer.SecurityManager.KEY_LICENSED_SESSIONS);
+    addLabelCalcSupport(new MaxValueChartLabelCalcSupport("Max Occurs",
+            IvyJmxConstant.IvyServer.SecurityManager.NAME,
+            IvyJmxConstant.IvyServer.SecurityManager.KEY_LICENSED_SESSIONS));
   }
 
   private int getSessionLimit() {

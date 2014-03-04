@@ -1,6 +1,8 @@
 package ch.ivyteam.ivy.visualvm.chart;
 
+import ch.ivyteam.ivy.visualvm.chart.data.SerieDataSource;
 import ch.ivyteam.ivy.visualvm.chart.data.XYChartDataSource;
+import ch.ivyteam.ivy.visualvm.chart.data.support.ChartLabelCalcSupport;
 import ch.ivyteam.ivy.visualvm.view.IUpdatableUIObject;
 import com.sun.tools.visualvm.charts.ChartFactory;
 import com.sun.tools.visualvm.charts.SimpleXYChartDescriptor;
@@ -10,6 +12,9 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Container;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
@@ -19,13 +24,12 @@ import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JCheckBoxMenuItem;
-import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
 import org.apache.commons.lang.StringUtils;
 
-class XYChartPanel implements IUpdatableUIObject {
+class XYChartPanel extends JPanel implements IUpdatableUIObject {
 
   private static final int CONTAINER_LABEL_INDEX = 0;
   private static final int CONTAINER_CHART_INDEX = 1;
@@ -35,8 +39,6 @@ class XYChartPanel implements IUpdatableUIObject {
 
   private SimpleXYChartSupport chart;
   private final XYChartDataSource fDataSource;
-  private final long[] fMaxValues;
-  private final long[] fLatestValues;
   private String fYAxisHelpMessage;
 
   private final List<StorageItem> fStorage;
@@ -47,8 +49,6 @@ class XYChartPanel implements IUpdatableUIObject {
 
   XYChartPanel(XYChartDataSource dataSource, String yAxisMessage) {
     fDataSource = dataSource;
-    fLatestValues = new long[dataSource.getSerieDataSources().size()];
-    fMaxValues = new long[dataSource.getSerieDataSources().size()];
     fStorage = new ArrayList<>();
     fYAxisHelpMessage = yAxisMessage;
     createChart();
@@ -59,41 +59,28 @@ class XYChartPanel implements IUpdatableUIObject {
     int monitoredDataCache = GlobalPreferences.sharedInstance().getMonitoredDataCache();
     SimpleXYChartDescriptor chartDescriptor = SimpleXYChartDescriptor.decimal(10, true,
             60 * monitoredDataCache);
-    fDataSource.configureChart(chartDescriptor);
+    configureChart(chartDescriptor);
     chart = ChartFactory.createSimpleXYChart(chartDescriptor);
     JPopupMenu menu = createLayoutMenu();
     chart.getChart().setComponentPopupMenu(menu);
-  }
 
-  JComponent getUI() {
-    return chart.getChart();
+    setLayout(new GridBagLayout());
+    setBackground(Color.WHITE);
+    add(chart.getChart(), new GridBagConstraints(
+            0, 0, 1, 1, 1, 1, GridBagConstraints.WEST, GridBagConstraints.BOTH,
+            new Insets(0, 0, 0, 0), 0, 0));
   }
 
   @Override
   public void updateValues(QueryResult result) {
     long[] values = fDataSource.getValues(result);
-    updateLatestValues(values);
-    updateMaxValues(values);
+    chart.addValues(System.currentTimeMillis(), values);
+
+    values = fDataSource.getLabels(result);
+    chart.updateDetails(convert(values));
+
     long currentTime = System.currentTimeMillis();
-    chart.addValues(currentTime, values);
-    updateChartDetails(values);
     addStorageItem(currentTime, values);
-  }
-
-  private void updateLatestValues(long[] values) {
-    System.arraycopy(values, 0, fLatestValues, 0,
-            Math.min(values.length, fLatestValues.length));
-  }
-
-  private void updateMaxValues(long[] values) {
-    for (int i = 0; i < getMaxValues().length; i++) {
-      if (i >= values.length) {
-        break;
-      }
-      if (values[i] > getMaxValues()[i]) {
-        fMaxValues[i] = values[i];
-      }
-    }
   }
 
   public void updateChartDetails(long[] values) {
@@ -147,14 +134,6 @@ class XYChartPanel implements IUpdatableUIObject {
     return fYAxisHelpMessage;
   }
 
-  protected long[] getMaxValues() {
-    return fMaxValues;
-  }
-
-  protected long[] getLatestValues() {
-    return fLatestValues;
-  }
-
   private Component getLabelComponent() {
     Container chartContainer = (Container) chart.getChart();
     Container labelPanel = (Container) chartContainer.getComponent(CONTAINER_LABEL_INDEX);
@@ -165,7 +144,7 @@ class XYChartPanel implements IUpdatableUIObject {
     if (StringUtils.isEmpty(message)) {
       return;
     }
-    Container container = (Container) getUI().getComponent(CONTAINER_CHART_INDEX);
+    Container container = (Container) getComponent(CONTAINER_CHART_INDEX);
     JLabel yAxisLabel = (JLabel) container.getComponent(COMPONENT_YAXIS_LABEL_INDEX);
     JPanel panel = createYaxisDescriptorPanel(createYAxisHelpLabel(message), yAxisLabel);
     container.add(panel, BorderLayout.WEST);
@@ -222,6 +201,29 @@ class XYChartPanel implements IUpdatableUIObject {
         break;
       }
     }
+  }
+
+  private void configureChart(SimpleXYChartDescriptor chartDescriptor) {
+    if (fDataSource.getChartName() != null) {
+      chartDescriptor.setChartTitle(fDataSource.getChartName());
+    }
+    if (fDataSource.getXAxisDescription() != null) {
+      chartDescriptor.setXAxisDescription(fDataSource.getXAxisDescription());
+    }
+    if (fDataSource.getYAxisDescription() != null) {
+      chartDescriptor.setYAxisDescription(fDataSource.getYAxisDescription());
+    }
+
+    for (SerieDataSource dataSource : fDataSource.getSerieDataSources()) {
+      dataSource.configureSerie(chartDescriptor);
+    }
+
+    String[] detailLabels = new String[fDataSource.getLabelCalcSupports().size()];
+    int index = 0;
+    for (ChartLabelCalcSupport support : fDataSource.getLabelCalcSupports()) {
+      detailLabels[index++] = support.getText();
+    }
+    chartDescriptor.setDetailsItems(detailLabels);
   }
 
   private class StorageItem {
