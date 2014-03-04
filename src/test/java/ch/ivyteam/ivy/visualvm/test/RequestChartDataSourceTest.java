@@ -24,13 +24,15 @@ import static org.mockito.Mockito.when;
 
 @RunWith(Parameterized.class)
 public class RequestChartDataSourceTest extends AbstractTest {
+  private static RequestChartDataSource requestChartDataSource;
+
   @Parameterized.Parameters(name = "{index}")
   public static Iterable<Object[]> data() throws JAXBException, URISyntaxException {
     return TestUtil.createTestData(
             "/ch/ivyteam/ivy/visualvm/test/RequestChartDataSourceTest.xml",
             new Object[]{0, 0, 0},
-            new Object[]{4, 11, 8},
-            new Object[]{400, 1100, 800}
+            new Object[]{7, 9, 8},
+            new Object[]{23, 21, 22}
     );
   }
 
@@ -65,7 +67,9 @@ public class RequestChartDataSourceTest extends AbstractTest {
       }
 
     };
-    RequestChartDataSource requestChartDataSource = new RequestChartDataSource(provider, "", "", "");
+    if (requestChartDataSource == null) {
+      requestChartDataSource = new RequestChartDataSource(provider, "", "", "");
+    }
     Query query = new Query();
     requestChartDataSource.updateQuery(query);
     QueryResult result = query.execute(mockConnection);

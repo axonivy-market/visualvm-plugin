@@ -12,7 +12,7 @@
         -->
         <property>
           <name>errorCount</name>
-          <value type="java.lang.Long">0</value>
+          <value type="java.lang.Long">10</value>
         </property>
         <!--
         <property>
@@ -34,7 +34,7 @@
         -->
         <property>
           <name>errorCount</name>
-          <value type="java.lang.Long">0</value>
+          <value type="java.lang.Long">30</value>
         </property>
         <!--
         <property>
@@ -56,7 +56,7 @@
         -->
         <property>
           <name>errorCount</name>
-          <value type="java.lang.Long">0</value>
+          <value type="java.lang.Long">20</value>
         </property>
         <!--
         <property>
@@ -80,7 +80,7 @@
         -->
         <property>
           <name>errorCount</name>
-          <value type="java.lang.Long">3</value>
+          <value type="java.lang.Long">16</value>
         </property>
         <!--
         <property>
@@ -102,7 +102,7 @@
         -->
         <property>
           <name>errorCount</name>
-          <value type="java.lang.Long">9</value>
+          <value type="java.lang.Long">38</value>
         </property>
         <!--
         <property>
@@ -124,7 +124,7 @@
         -->
         <property>
           <name>errorCount</name>
-          <value type="java.lang.Long">6</value>
+          <value type="java.lang.Long">27</value>
         </property>
         <!--
         <property>
@@ -148,7 +148,7 @@
         -->
         <property>
           <name>errorCount</name>
-          <value type="java.lang.Long">300</value>
+          <value type="java.lang.Long">30</value>
         </property>
         <!--
         <property>
@@ -170,7 +170,7 @@
         -->
         <property>
           <name>errorCount</name>
-          <value type="java.lang.Long">900</value>
+          <value type="java.lang.Long">50</value>
         </property>
         <!--
         <property>
@@ -192,7 +192,7 @@
         -->
         <property>
           <name>errorCount</name>
-          <value type="java.lang.Long">600</value>
+          <value type="java.lang.Long">40</value>
         </property>
         <!--
         <property>

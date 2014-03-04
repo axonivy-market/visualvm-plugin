@@ -24,13 +24,15 @@ import static org.mockito.Mockito.when;
 
 @RunWith(Parameterized.class)
 public class ProcessTimeChartDataSourceTest extends AbstractTest {
+  private static ProcessingTimeChartDataSource processTimeChartDataSource;
+
   @Parameterized.Parameters(name = "{index}")
   public static Iterable<Object[]> data() throws JAXBException, URISyntaxException {
     return TestUtil.createTestData(
             "/ch/ivyteam/ivy/visualvm/test/ProcessTimeChartDataSourceTest.xml",
             new Object[]{0, 0, 0},
-            new Object[]{34, 98, 72},
-            new Object[]{3400, 9800, 7200}
+            new Object[]{170, 560, 240},
+            new Object[]{130, 640, 270}
     );
   }
 
@@ -65,8 +67,9 @@ public class ProcessTimeChartDataSourceTest extends AbstractTest {
       }
 
     };
-    ProcessingTimeChartDataSource processTimeChartDataSource = new ProcessingTimeChartDataSource(
-            provider, "", "", "");
+    if (processTimeChartDataSource == null) {
+      processTimeChartDataSource = new ProcessingTimeChartDataSource(provider, "", "", "");
+    }
     Query query = new Query();
     processTimeChartDataSource.updateQuery(query);
     QueryResult result = query.execute(mockConnection);

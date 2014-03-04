@@ -25,7 +25,7 @@ public class DeltaAttributeDataSource extends AttributeDataSource {
       val = delta;
     } else {
       lastValue = val;
-      val = paramVal;
+      val = 0;
     }
     return val;
   }
