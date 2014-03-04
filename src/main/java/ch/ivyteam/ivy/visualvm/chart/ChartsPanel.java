@@ -4,7 +4,7 @@
 package ch.ivyteam.ivy.visualvm.chart;
 
 import ch.ivyteam.ivy.visualvm.chart.data.XYChartDataSource;
-import ch.ivyteam.ivy.visualvm.chart.data.license.GaugeDataSource;
+import ch.ivyteam.ivy.visualvm.chart.data.GaugeDataSource;
 import ch.ivyteam.ivy.visualvm.view.IUpdatableUIObject;
 import java.awt.Color;
 import java.awt.GridLayout;

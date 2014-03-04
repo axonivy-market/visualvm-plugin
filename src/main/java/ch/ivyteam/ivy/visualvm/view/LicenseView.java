@@ -1,18 +1,14 @@
 package ch.ivyteam.ivy.visualvm.view;
 
 import ch.ivyteam.ivy.visualvm.chart.ChartsPanel;
-import ch.ivyteam.ivy.visualvm.chart.data.license.GaugeDataSource;
 import ch.ivyteam.ivy.visualvm.chart.data.license.ConcurrentUsersChartDataSource;
+import ch.ivyteam.ivy.visualvm.chart.data.license.ConcurrentUsersGaugeDataSource;
+import ch.ivyteam.ivy.visualvm.chart.data.license.NamedUsersGaugeDataSource;
 import ch.ivyteam.ivy.visualvm.exception.IvyJmxDataCollectException;
-import ch.ivyteam.ivy.visualvm.model.IvyJmxConstant;
 import ch.ivyteam.ivy.visualvm.model.IvyLicenseInfo;
 import ch.ivyteam.ivy.visualvm.service.BasicIvyJmxDataCollector;
 import com.sun.tools.visualvm.core.ui.components.DataViewComponent;
-import eu.hansolo.steelseries.tools.Section;
-import java.awt.Color;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 import javax.management.MBeanServerConnection;
 import org.openide.util.Exceptions;
 
@@ -58,20 +54,8 @@ public class LicenseView extends AbstractView {
     if (fLicenseInfo.getServerSessionsLimit() > 0) {
       ConcurrentUsersChartDataSource sessionDataSource = new ConcurrentUsersChartDataSource(
               getDataBeanProvider(), null, null, "Concurrent Users");
-
-      List<Section> sections = new ArrayList<>();
-      int sessionsLimit = fLicenseInfo.getServerSessionsLimit();
-      Section greenSection = new Section(0, Math.round(sessionsLimit * 0.9), new Color(110, 184, 37));
-      Section orangeSection = new Section(Math.round(sessionsLimit * 0.9), sessionsLimit,
-              new Color(255, 210, 10));
-      Section redSection = new Section(sessionsLimit, Math.round(sessionsLimit * 1.5),
-              new Color(240, 40, 40));
-      sections.add(greenSection);
-      sections.add(orangeSection);
-      sections.add(redSection);
-      GaugeDataSource gaugeSessionsDataSource = new GaugeDataSource(getDataBeanProvider(), sections,
-              IvyJmxConstant.IvyServer.SecurityManager.NAME,
-              IvyJmxConstant.IvyServer.SecurityManager.KEY_LICENSED_SESSIONS);
+      ConcurrentUsersGaugeDataSource gaugeSessionsDataSource = new ConcurrentUsersGaugeDataSource(
+              getDataBeanProvider(), fLicenseInfo.getServerSessionsLimit());
 
       ChartsPanel sessionsChart = new ChartsPanel(true);
       sessionsChart.addChart2(sessionDataSource);
@@ -85,18 +69,8 @@ public class LicenseView extends AbstractView {
 
   private void createUsersView() {
     if (fLicenseInfo.getServerUsersLimit() > 0) {
-      List<Section> sections = new ArrayList<>();
-      int usersLimit = fLicenseInfo.getServerUsersLimit();
-      Section greenSection = new Section(0, Math.round(usersLimit * 0.9), Color.GREEN);
-      Section orangeSection = new Section(Math.round(usersLimit * 0.9), Math.round(usersLimit * 0.95),
-              Color.ORANGE);
-      Section redSection = new Section(Math.round(usersLimit * 0.95), usersLimit, Color.RED);
-      sections.add(greenSection);
-      sections.add(orangeSection);
-      sections.add(redSection);
-      GaugeDataSource gaugeUsersDataSource = new GaugeDataSource(getDataBeanProvider(), sections,
-              IvyJmxConstant.IvyServer.SecurityManager.NAME,
-              IvyJmxConstant.IvyServer.SecurityManager.KEY_LICENSED_USERS);
+      NamedUsersGaugeDataSource gaugeUsersDataSource = new NamedUsersGaugeDataSource(getDataBeanProvider(),
+              fLicenseInfo.getServerUsersLimit());
       ChartsPanel userChart = new ChartsPanel(false);
       userChart.addLinear(gaugeUsersDataSource);
       registerScheduledUpdate(userChart);
@@ -117,8 +91,8 @@ public class LicenseView extends AbstractView {
     }
   }
 
-  int storedNamedUsers, storedConUsers;
-  boolean nearlyExpiredUpdated, expiredUpdated;
+  private int fStoredNamedUsers, fStoredConUsers;
+  private boolean fNearlyExpiredUpdated, fExpiredUpdated;
 
   @Override
   public void update() {
@@ -136,22 +110,23 @@ public class LicenseView extends AbstractView {
     long remainingTime = fLicenseInfo.getLicenseValidUntil().getTime() - new Date().getTime();
     boolean nearlyExpired = remainingTime <= 30 * LicenseInformationPanel.MILISECONDS_IN_ONE_DAY;
     boolean expired = remainingTime <= 0;
-    boolean valueChanged = storedConUsers != concurrentUsers || storedNamedUsers != namedUsers;
+    boolean valueChanged = fStoredConUsers != concurrentUsers || fStoredNamedUsers != namedUsers;
 
     if (valueChanged) {
       fLicenseInformationPanel.setLicenseData(remainingTime, namedUsers, concurrentUsers);
-      storedNamedUsers = namedUsers;
-      storedConUsers = concurrentUsers;
+      fStoredNamedUsers = namedUsers;
+      fStoredConUsers = concurrentUsers;
     }
 
-    if (nearlyExpired && !nearlyExpiredUpdated) {
+    if (nearlyExpired && !fNearlyExpiredUpdated) {
       fLicenseInformationPanel.setLicenseData(remainingTime, namedUsers, concurrentUsers);
-      nearlyExpiredUpdated = true;
+      fNearlyExpiredUpdated = true;
     }
 
-    if (expired && !expiredUpdated) {
+    if (expired && !fExpiredUpdated) {
       fLicenseInformationPanel.setLicenseData(remainingTime, namedUsers, concurrentUsers);
-      expiredUpdated = true;
+      fExpiredUpdated = true;
     }
   }
+
 }

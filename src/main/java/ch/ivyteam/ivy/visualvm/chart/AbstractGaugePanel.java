@@ -1,6 +1,6 @@
 package ch.ivyteam.ivy.visualvm.chart;
 
-import ch.ivyteam.ivy.visualvm.chart.data.license.GaugeDataSource;
+import ch.ivyteam.ivy.visualvm.chart.data.GaugeDataSource;
 import ch.ivyteam.ivy.visualvm.view.IUpdatableUIObject;
 import eu.hansolo.steelseries.gauges.AbstractGauge;
 import eu.hansolo.steelseries.tools.BackgroundColor;

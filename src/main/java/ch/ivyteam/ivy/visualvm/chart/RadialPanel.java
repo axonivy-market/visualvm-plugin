@@ -5,7 +5,7 @@
  */
 package ch.ivyteam.ivy.visualvm.chart;
 
-import ch.ivyteam.ivy.visualvm.chart.data.license.GaugeDataSource;
+import ch.ivyteam.ivy.visualvm.chart.data.GaugeDataSource;
 import eu.hansolo.steelseries.gauges.Radial;
 import eu.hansolo.steelseries.tools.ColorDef;
 import eu.hansolo.steelseries.tools.KnobStyle;

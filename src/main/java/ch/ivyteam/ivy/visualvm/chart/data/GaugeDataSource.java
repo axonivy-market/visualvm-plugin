@@ -1,4 +1,4 @@
-package ch.ivyteam.ivy.visualvm.chart.data.license;
+package ch.ivyteam.ivy.visualvm.chart.data;
 
 import ch.ivyteam.ivy.visualvm.chart.Query;
 import ch.ivyteam.ivy.visualvm.chart.QueryResult;
@@ -9,16 +9,14 @@ import java.util.List;
 import javax.management.ObjectName;
 
 public class GaugeDataSource {
-  private List<Section> fSections = new ArrayList<>();
+  private final List<Section> fSections = new ArrayList<>();
   private final IDataBeanProvider fDataBeanProvider;
   private final String fAttribute;
   private final ObjectName fMBeanName;
   private static final double SCALE_FACTOR = 1D;
 
-  public GaugeDataSource(IDataBeanProvider dataBeanProvider, List<Section> sections,
-          ObjectName mBeanName, String attribute) {
+  public GaugeDataSource(IDataBeanProvider dataBeanProvider, ObjectName mBeanName, String attribute) {
     fDataBeanProvider = dataBeanProvider;
-    fSections = sections;
     fMBeanName = mBeanName;
     fAttribute = attribute;
   }
