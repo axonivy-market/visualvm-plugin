@@ -1,9 +1,10 @@
-package ch.ivyteam.ivy.visualvm.test;
+package ch.ivyteam.ivy.visualvm.test.datasource.request;
 
 import ch.ivyteam.ivy.visualvm.chart.Query;
 import ch.ivyteam.ivy.visualvm.chart.QueryResult;
 import ch.ivyteam.ivy.visualvm.chart.data.request.ErrorChartDataSource;
 import ch.ivyteam.ivy.visualvm.model.IvyJmxConstant;
+import ch.ivyteam.ivy.visualvm.test.AbstractTest;
 import ch.ivyteam.ivy.visualvm.test.data.model.MBeanTestData;
 import ch.ivyteam.ivy.visualvm.test.util.TestUtil;
 import ch.ivyteam.ivy.visualvm.view.IDataBeanProvider;
@@ -29,7 +30,7 @@ public class ErrorChartDataSourceTest extends AbstractTest {
   @Parameterized.Parameters(name = "{index}")
   public static Iterable<Object[]> data() throws JAXBException, URISyntaxException {
     return TestUtil.createTestData(
-            "/ch/ivyteam/ivy/visualvm/test/ErrorChartDataSourceTest.xml",
+            "/ch/ivyteam/ivy/visualvm/test/datasource/request/ErrorChartDataSourceTest.xml",
             new Object[]{0, 0, 0},
             new Object[]{6, 8, 7},
             new Object[]{14, 12, 13}

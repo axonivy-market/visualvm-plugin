@@ -1,9 +1,10 @@
-package ch.ivyteam.ivy.visualvm.test;
+package ch.ivyteam.ivy.visualvm.test.datasource.request;
 
 import ch.ivyteam.ivy.visualvm.chart.Query;
 import ch.ivyteam.ivy.visualvm.chart.QueryResult;
-import ch.ivyteam.ivy.visualvm.chart.data.request.RequestChartDataSource;
+import ch.ivyteam.ivy.visualvm.chart.data.request.ProcessingTimeChartDataSource;
 import ch.ivyteam.ivy.visualvm.model.IvyJmxConstant;
+import ch.ivyteam.ivy.visualvm.test.AbstractTest;
 import ch.ivyteam.ivy.visualvm.test.data.model.MBeanTestData;
 import ch.ivyteam.ivy.visualvm.test.util.TestUtil;
 import ch.ivyteam.ivy.visualvm.view.IDataBeanProvider;
@@ -23,16 +24,16 @@ import org.junit.runners.Parameterized;
 import static org.mockito.Mockito.when;
 
 @RunWith(Parameterized.class)
-public class RequestChartDataSourceTest extends AbstractTest {
-  private static RequestChartDataSource requestChartDataSource;
+public class ProcessingTimeChartDataSourceTest extends AbstractTest {
+  private static ProcessingTimeChartDataSource processTimeChartDataSource;
 
   @Parameterized.Parameters(name = "{index}")
   public static Iterable<Object[]> data() throws JAXBException, URISyntaxException {
     return TestUtil.createTestData(
-            "/ch/ivyteam/ivy/visualvm/test/RequestChartDataSourceTest.xml",
+            "/ch/ivyteam/ivy/visualvm/test/datasource/request/ProcessingTimeChartDataSourceTest.xml",
             new Object[]{0, 0, 0},
-            new Object[]{7, 9, 8},
-            new Object[]{23, 21, 22}
+            new Object[]{170, 560, 240},
+            new Object[]{130, 640, 270}
     );
   }
 
@@ -40,7 +41,7 @@ public class RequestChartDataSourceTest extends AbstractTest {
   private final long fHttp;
   private final long fHttps;
 
-  public RequestChartDataSourceTest(MBeanTestData.Dataset dataset,
+  public ProcessingTimeChartDataSourceTest(MBeanTestData.Dataset dataset,
           long ajp, long http, long https) {
     super(dataset);
     fAjp = ajp;
@@ -67,13 +68,13 @@ public class RequestChartDataSourceTest extends AbstractTest {
       }
 
     };
-    if (requestChartDataSource == null) {
-      requestChartDataSource = new RequestChartDataSource(provider, "", "", "");
+    if (processTimeChartDataSource == null) {
+      processTimeChartDataSource = new ProcessingTimeChartDataSource(provider, "", "", "");
     }
     Query query = new Query();
-    requestChartDataSource.updateQuery(query);
+    processTimeChartDataSource.updateQuery(query);
     QueryResult result = query.execute(mockConnection);
-    long[] values = requestChartDataSource.getValues(result);
+    long[] values = processTimeChartDataSource.getValues(result);
 
     assertEquals(fAjp, values[0]);
     assertEquals(fHttp, values[1]);
