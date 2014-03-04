@@ -6,7 +6,7 @@ import ch.ivyteam.ivy.visualvm.model.OSInfo;
 import ch.ivyteam.ivy.visualvm.model.ServerConnectorInfo;
 import ch.ivyteam.ivy.visualvm.model.SystemDatabaseInfo;
 import ch.ivyteam.ivy.visualvm.service.BasicIvyJmxDataCollector;
-import ch.ivyteam.ivy.visualvm.test.data.model.MBeanTestData;
+import ch.ivyteam.ivy.visualvm.test.data.model.BeanTestData;
 import ch.ivyteam.ivy.visualvm.test.util.TestUtil;
 import java.io.IOException;
 import java.net.URISyntaxException;
@@ -57,7 +57,7 @@ public class ServerInformationTest extends AbstractTest {
     return data;
   }
 
-  public ServerInformationTest(MBeanTestData.Dataset dataset) {
+  public ServerInformationTest(BeanTestData.Dataset dataset) {
     super(dataset);
   }
 

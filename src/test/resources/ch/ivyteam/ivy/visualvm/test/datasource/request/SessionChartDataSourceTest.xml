@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<mBeanTestData>
+<beanTestData>
   <dataset>
     <property>
       <name>ivy:type=Manager,context=/ivy,host=localhost</name>
@@ -107,4 +107,4 @@
       </dataset>
     </property>
   </dataset>
-</mBeanTestData>
+</beanTestData>

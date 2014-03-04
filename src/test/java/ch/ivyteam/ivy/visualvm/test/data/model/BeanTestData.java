@@ -15,8 +15,8 @@ import javax.xml.bind.annotation.XmlValue;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "", propOrder = {"dataset"})
-@XmlRootElement(name = "mBeanTestData")
-public class MBeanTestData {
+@XmlRootElement(name = "beanTestData")
+public class BeanTestData {
 
   @XmlElement(required = true)
   protected List<Dataset> dataset;

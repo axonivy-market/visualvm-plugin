@@ -5,7 +5,7 @@ import ch.ivyteam.ivy.visualvm.chart.QueryResult;
 import ch.ivyteam.ivy.visualvm.chart.data.request.ErrorChartDataSource;
 import ch.ivyteam.ivy.visualvm.model.IvyJmxConstant;
 import ch.ivyteam.ivy.visualvm.test.AbstractTest;
-import ch.ivyteam.ivy.visualvm.test.data.model.MBeanTestData;
+import ch.ivyteam.ivy.visualvm.test.data.model.BeanTestData;
 import ch.ivyteam.ivy.visualvm.test.util.TestUtil;
 import ch.ivyteam.ivy.visualvm.view.IDataBeanProvider;
 import java.io.IOException;
@@ -41,7 +41,7 @@ public class ErrorChartDataSourceTest extends AbstractTest {
   private final long fHttp;
   private final long fHttps;
 
-  public ErrorChartDataSourceTest(MBeanTestData.Dataset dataset,
+  public ErrorChartDataSourceTest(BeanTestData.Dataset dataset,
           long ajp, long http, long https) {
     super(dataset);
     fAjp = ajp;

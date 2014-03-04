@@ -5,7 +5,7 @@ import ch.ivyteam.ivy.visualvm.chart.QueryResult;
 import ch.ivyteam.ivy.visualvm.chart.data.request.SessionChartDataSource;
 import ch.ivyteam.ivy.visualvm.model.IvyJmxConstant;
 import ch.ivyteam.ivy.visualvm.test.AbstractTest;
-import ch.ivyteam.ivy.visualvm.test.data.model.MBeanTestData;
+import ch.ivyteam.ivy.visualvm.test.data.model.BeanTestData;
 import ch.ivyteam.ivy.visualvm.test.util.TestUtil;
 import ch.ivyteam.ivy.visualvm.view.IDataBeanProvider;
 import java.io.IOException;
@@ -40,7 +40,7 @@ public class SessionChartDataSourceTest extends AbstractTest {
   private final long fLicense;
   private final long fRD;
 
-  public SessionChartDataSourceTest(MBeanTestData.Dataset dataset,
+  public SessionChartDataSourceTest(BeanTestData.Dataset dataset,
           long http, long ivy, long license, long rd) {
     super(dataset);
     fHttp = http;

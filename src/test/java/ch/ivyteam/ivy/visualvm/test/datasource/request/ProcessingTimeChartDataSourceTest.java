@@ -5,7 +5,7 @@ import ch.ivyteam.ivy.visualvm.chart.QueryResult;
 import ch.ivyteam.ivy.visualvm.chart.data.request.ProcessingTimeChartDataSource;
 import ch.ivyteam.ivy.visualvm.model.IvyJmxConstant;
 import ch.ivyteam.ivy.visualvm.test.AbstractTest;
-import ch.ivyteam.ivy.visualvm.test.data.model.MBeanTestData;
+import ch.ivyteam.ivy.visualvm.test.data.model.BeanTestData;
 import ch.ivyteam.ivy.visualvm.test.util.TestUtil;
 import ch.ivyteam.ivy.visualvm.view.IDataBeanProvider;
 import java.io.IOException;
@@ -41,7 +41,7 @@ public class ProcessingTimeChartDataSourceTest extends AbstractTest {
   private final long fHttp;
   private final long fHttps;
 
-  public ProcessingTimeChartDataSourceTest(MBeanTestData.Dataset dataset,
+  public ProcessingTimeChartDataSourceTest(BeanTestData.Dataset dataset,
           long ajp, long http, long https) {
     super(dataset);
     fAjp = ajp;

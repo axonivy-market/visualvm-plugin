@@ -3,7 +3,7 @@ package ch.ivyteam.ivy.visualvm.test;
 import ch.ivyteam.ivy.visualvm.exception.IvyJmxDataCollectException;
 import ch.ivyteam.ivy.visualvm.model.IvyLicenseInfo;
 import ch.ivyteam.ivy.visualvm.service.BasicIvyJmxDataCollector;
-import ch.ivyteam.ivy.visualvm.test.data.model.MBeanTestData;
+import ch.ivyteam.ivy.visualvm.test.data.model.BeanTestData;
 import ch.ivyteam.ivy.visualvm.test.util.TestUtil;
 import ch.ivyteam.ivy.visualvm.view.LicenseInformationPanel;
 import java.net.URISyntaxException;
@@ -38,7 +38,7 @@ public class LicenseInfoTest extends AbstractTest {
 
   /* CHECKSTYLE:ON */
 
-  public LicenseInfoTest(MBeanTestData.Dataset dataset, String htmlLicenseInfo,
+  public LicenseInfoTest(BeanTestData.Dataset dataset, String htmlLicenseInfo,
           @SuppressWarnings("unused") String description) {
     super(dataset);
     fHtmlLicenseInfo = htmlLicenseInfo;

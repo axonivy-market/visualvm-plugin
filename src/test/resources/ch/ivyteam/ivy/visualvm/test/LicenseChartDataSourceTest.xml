@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<mBeanTestData>
+<beanTestData>
   <dataset> 
     <property>
       <name>Xpert.ivy Server:type=Security Manager</name>
@@ -35,4 +35,4 @@
       </dataset>
     </property>
   </dataset>
-</mBeanTestData>
+</beanTestData>

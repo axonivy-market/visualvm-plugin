@@ -1,7 +1,7 @@
 package ch.ivyteam.ivy.visualvm.test;
 
-import ch.ivyteam.ivy.visualvm.test.data.model.MBeanTestData;
-import ch.ivyteam.ivy.visualvm.test.data.model.MBeanTestData.Dataset.Property;
+import ch.ivyteam.ivy.visualvm.test.data.model.BeanTestData;
+import ch.ivyteam.ivy.visualvm.test.data.model.BeanTestData.Dataset.Property;
 import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -23,9 +23,9 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 public abstract class AbstractTest extends TestCase {
-  private final MBeanTestData.Dataset fDataset;
+  private final BeanTestData.Dataset fDataset;
 
-  public AbstractTest(MBeanTestData.Dataset dataset) {
+  public AbstractTest(BeanTestData.Dataset dataset) {
     this.fDataset = dataset;
   }
 
@@ -34,7 +34,7 @@ public abstract class AbstractTest extends TestCase {
     return connection;
   }
 
-  public static void addTestData(MBeanServerConnection mockConnection, MBeanTestData.Dataset dataset) {
+  public static void addTestData(MBeanServerConnection mockConnection, BeanTestData.Dataset dataset) {
     try {
       for (Property property : dataset.getProperty()) {
         List<Attribute> mockAttrs = new ArrayList<>();
@@ -91,7 +91,7 @@ public abstract class AbstractTest extends TestCase {
     }
   }
 
-  protected MBeanTestData.Dataset getDataset() {
+  protected BeanTestData.Dataset getDataset() {
     return fDataset;
   }
 
