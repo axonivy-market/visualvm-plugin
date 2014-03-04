@@ -15,6 +15,7 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.Set;
+import java.util.logging.Logger;
 import javax.management.Attribute;
 import javax.management.AttributeList;
 import javax.management.AttributeNotFoundException;
@@ -25,9 +26,10 @@ import javax.management.MalformedObjectNameException;
 import javax.management.ObjectName;
 import javax.management.ReflectionException;
 import javax.management.openmbean.TabularDataSupport;
-import org.openide.util.Exceptions;
 
 public class BasicIvyJmxDataCollector {
+
+  private static final Logger LOGGER = Logger.getLogger(BasicIvyJmxDataCollector.class.getName());
 
   public IvyApplicationInfo getApplicationInfo(
           MBeanServerConnection connection) throws IvyJmxDataCollectException {
@@ -242,7 +244,7 @@ public class BasicIvyJmxDataCollector {
     try {
       return serverConnection.queryNames(IvyJmxConstant.Ivy.Processor.PATTERN, null);
     } catch (IOException ex) {
-      Exceptions.printStackTrace(ex);
+      LOGGER.warning(ex.getMessage());
       return Collections.emptySet();
     }
   }

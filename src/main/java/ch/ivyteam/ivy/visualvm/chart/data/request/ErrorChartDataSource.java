@@ -9,11 +9,14 @@ import ch.ivyteam.ivy.visualvm.util.DataUtils;
 import ch.ivyteam.ivy.visualvm.view.IDataBeanProvider;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Logger;
 import javax.management.MBeanServerConnection;
 import javax.management.ObjectName;
-import org.openide.util.Exceptions;
 
 public class ErrorChartDataSource extends XYChartDataSource {
+  
+  private static final Logger LOGGER = Logger.getLogger(ErrorChartDataSource.class.getName());
+  
   public ErrorChartDataSource(IDataBeanProvider dataBeanProvider, String chartName, String xAxisDescription,
           String yAxisDescription) {
     super(dataBeanProvider, chartName, xAxisDescription, yAxisDescription);
@@ -23,7 +26,7 @@ public class ErrorChartDataSource extends XYChartDataSource {
     try {
       mappedConnectors = collector.getMappedConnectors(mBeanServerConnection);
     } catch (IvyJmxDataCollectException ex) {
-      Exceptions.printStackTrace(ex);
+      LOGGER.warning(ex.getMessage());
     }
     for (ObjectName processorName : collector.getTomcatRequestProcessors(mBeanServerConnection)) {
       String port = DataUtils.getPort(processorName);
@@ -31,5 +34,5 @@ public class ErrorChartDataSource extends XYChartDataSource {
       addDeltaSerie(protocol, processorName, IvyJmxConstant.Ivy.Processor.KEY_ERROR_COUNT);
     }
   }
-
+  
 }

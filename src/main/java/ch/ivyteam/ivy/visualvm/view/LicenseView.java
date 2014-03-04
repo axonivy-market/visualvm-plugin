@@ -9,11 +9,12 @@ import ch.ivyteam.ivy.visualvm.model.IvyLicenseInfo;
 import ch.ivyteam.ivy.visualvm.service.BasicIvyJmxDataCollector;
 import com.sun.tools.visualvm.core.ui.components.DataViewComponent;
 import java.util.Date;
+import java.util.logging.Logger;
 import javax.management.MBeanServerConnection;
-import org.openide.util.Exceptions;
 
 public class LicenseView extends AbstractView {
 
+  private static final Logger LOGGER = Logger.getLogger(LicenseView.class.getName());
   private boolean uiComplete;
   private IvyLicenseInfo fLicenseInfo;
   private final LicenseInformationPanel fLicenseInformationPanel;
@@ -87,7 +88,7 @@ public class LicenseView extends AbstractView {
       fLicenseInfo = collector.getLicenseInfo(connection);
     } catch (IvyJmxDataCollectException ex) {
       fLicenseInfo = null;
-      Exceptions.printStackTrace(ex);
+      LOGGER.warning(ex.getMessage());
     }
   }
 
@@ -105,7 +106,7 @@ public class LicenseView extends AbstractView {
       namedUsers = collector.getNamedUsers(connection);
       concurrentUsers = collector.getConcurrentUsers(connection);
     } catch (IvyJmxDataCollectException ex) {
-      Exceptions.printStackTrace(ex);
+      LOGGER.warning(ex.getMessage());
     }
     long remainingTime = fLicenseInfo.getLicenseValidUntil().getTime() - new Date().getTime();
     boolean nearlyExpired = remainingTime <= 30 * LicenseInformationPanel.MILISECONDS_IN_ONE_DAY;

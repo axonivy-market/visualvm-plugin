@@ -13,13 +13,13 @@ import ch.ivyteam.ivy.visualvm.util.DataUtils;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
 import java.util.List;
+import java.util.logging.Logger;
 import javax.management.MBeanServerConnection;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
 import org.netbeans.api.settings.ConvertAsProperties;
 import org.openide.awt.ActionID;
 import org.openide.awt.ActionReference;
-import org.openide.util.Exceptions;
 import org.openide.util.NbBundle.Messages;
 import org.openide.windows.TopComponent;
 
@@ -43,6 +43,7 @@ import org.openide.windows.TopComponent;
 @SuppressWarnings("PMD.SingularField")
 public final class InformationPanelTopComponent extends TopComponent {
 
+  private static final Logger LOGGER = Logger.getLogger(InformationPanelTopComponent.class.getName());
   private static final Insets LABEL_INSETS = new Insets(5, 5, 5, 5);
 
   public InformationPanelTopComponent() {
@@ -599,7 +600,7 @@ public final class InformationPanelTopComponent extends TopComponent {
       hideInfoLabels(versionLabel, version);
       hideInfoLabels(buildDateLabel, buildDate);
       hideInfoLabels(installDirLabel, installationDirectory);
-      Exceptions.printStackTrace(ex);
+      LOGGER.warning(ex.getMessage());
     }
 
     try {
@@ -607,7 +608,7 @@ public final class InformationPanelTopComponent extends TopComponent {
       setLabelText(operatingSystemLabel, operatingSystem, osInfo.getName());
     } catch (IvyJmxDataCollectException ex) {
       hideInfoLabels(operatingSystemLabel, operatingSystem);
-      Exceptions.printStackTrace(ex);
+      LOGGER.warning(ex.getMessage());
     }
 
     try {
@@ -639,7 +640,7 @@ public final class InformationPanelTopComponent extends TopComponent {
       hideInfoLabels(dbNameLabel, dbName);
       hideInfoLabels(dbConnectionUrlLabel, dbConnectionUrl);
       hideInfoLabels(dbCredentialUsernameLabel, dbCredentialUsername);
-      Exceptions.printStackTrace(ex);
+      LOGGER.warning(ex.getMessage());
     }
 
     try {
@@ -658,14 +659,14 @@ public final class InformationPanelTopComponent extends TopComponent {
                 GridBagConstraints.NONE, LABEL_INSETS, 0, 0));
       }
     } catch (IvyJmxDataCollectException ex) {
-      Exceptions.printStackTrace(ex);
+      LOGGER.warning(ex.getMessage());
     }
 
     try {
       String hostInfo = collector.getHostInfo(connection);
       setLabelText(hostNameLabel, hostNameValue, hostInfo);
     } catch (IvyJmxDataCollectException ex) {
-      Exceptions.printStackTrace(ex);
+      LOGGER.warning(ex.getMessage());
     }
   }
 

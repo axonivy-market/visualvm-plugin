@@ -8,11 +8,12 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
+import java.util.logging.Logger;
 import javax.management.ObjectName;
-import org.openide.util.Exceptions;
 
 public final class DataUtils {
 
+  private static final Logger LOGGER = Logger.getLogger(DataUtils.class.getName());
   private static final String[] DATABASE_PREFIXES = new String[]{
     "database=", "databasename=", "schema="};
 
@@ -25,7 +26,7 @@ public final class DataUtils {
       try {
         return format.parse(dateString);
       } catch (ParseException ex) {
-        Exceptions.printStackTrace(ex);
+        LOGGER.warning(ex.getMessage());
       }
     }
     return new Date();
