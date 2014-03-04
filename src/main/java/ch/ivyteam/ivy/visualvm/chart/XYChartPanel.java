@@ -12,6 +12,9 @@ import java.awt.Component;
 import java.awt.Container;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
@@ -20,6 +23,7 @@ import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
+import org.apache.commons.lang.StringUtils;
 
 class XYChartPanel implements IUpdatableUIObject {
 
@@ -29,21 +33,33 @@ class XYChartPanel implements IUpdatableUIObject {
   private static final int COMPONENT_YAXIS_LABEL_INDEX = 0;
   private static final String ICON_HELP_URL = "/resources/icons/question16.png";
 
-  private final SimpleXYChartSupport chart;
+  private SimpleXYChartSupport chart;
   private final XYChartDataSource fDataSource;
   private final long[] fMaxValues;
   private final long[] fLatestValues;
-  private JLabel yAxisHelpLabel = null;
+  private String fYAxisHelpMessage;
+
+  private final List<StorageItem> fStorage;
 
   XYChartPanel(XYChartDataSource dataSource) {
+    this(dataSource, null);
+  }
+
+  XYChartPanel(XYChartDataSource dataSource, String yAxisMessage) {
     fDataSource = dataSource;
     fLatestValues = new long[dataSource.getSerieDataSources().size()];
     fMaxValues = new long[dataSource.getSerieDataSources().size()];
+    fStorage = new ArrayList<>();
+    fYAxisHelpMessage = yAxisMessage;
+    createChart();
+    createYAxisHelpMessage(yAxisMessage);
+  }
 
+  private void createChart() {
     int monitoredDataCache = GlobalPreferences.sharedInstance().getMonitoredDataCache();
     SimpleXYChartDescriptor chartDescriptor = SimpleXYChartDescriptor.decimal(10, true,
             60 * monitoredDataCache);
-    dataSource.configureChart(chartDescriptor);
+    fDataSource.configureChart(chartDescriptor);
     chart = ChartFactory.createSimpleXYChart(chartDescriptor);
     JPopupMenu menu = createLayoutMenu();
     chart.getChart().setComponentPopupMenu(menu);
@@ -58,8 +74,10 @@ class XYChartPanel implements IUpdatableUIObject {
     long[] values = fDataSource.getValues(result);
     updateLatestValues(values);
     updateMaxValues(values);
-    chart.addValues(System.currentTimeMillis(), values);
+    long currentTime = System.currentTimeMillis();
+    chart.addValues(currentTime, values);
     updateChartDetails(values);
+    addStorageItem(currentTime, values);
   }
 
   private void updateLatestValues(long[] values) {
@@ -125,6 +143,10 @@ class XYChartPanel implements IUpdatableUIObject {
     return menu;
   }
 
+  public String getYAxisHelpMessage() {
+    return fYAxisHelpMessage;
+  }
+
   protected long[] getMaxValues() {
     return fMaxValues;
   }
@@ -139,16 +161,14 @@ class XYChartPanel implements IUpdatableUIObject {
     return labelPanel.getComponent(COMPONENT_TOP_LABEL_INDEX);
   }
 
-  public void setYaxisHelpMessage(String message) {
-    if (yAxisHelpLabel == null) {
-      yAxisHelpLabel = createYAxisHelpLabel(message);
-      Container container = (Container) getUI().getComponent(CONTAINER_CHART_INDEX);
-      JLabel yAxisLabel = (JLabel) container.getComponent(COMPONENT_YAXIS_LABEL_INDEX);
-      JPanel panel = createYaxisDescriptorPanel(yAxisHelpLabel, yAxisLabel);
-      container.add(panel, BorderLayout.WEST);
-    } else {
-      yAxisHelpLabel.setToolTipText(message);
+  public final void createYAxisHelpMessage(String message) {
+    if (StringUtils.isEmpty(message)) {
+      return;
     }
+    Container container = (Container) getUI().getComponent(CONTAINER_CHART_INDEX);
+    JLabel yAxisLabel = (JLabel) container.getComponent(COMPONENT_YAXIS_LABEL_INDEX);
+    JPanel panel = createYaxisDescriptorPanel(createYAxisHelpLabel(message), yAxisLabel);
+    container.add(panel, BorderLayout.WEST);
   }
 
   private JLabel createYAxisHelpLabel(final String message) {
@@ -169,6 +189,58 @@ class XYChartPanel implements IUpdatableUIObject {
     }
     yAxisDescriptorPanel.add(Box.createVerticalGlue());
     return yAxisDescriptorPanel;
+  }
+
+  public void updateCachePeriod() {
+    createChart();
+    createYAxisHelpMessage(fYAxisHelpMessage);
+    long buffer = GlobalPreferences.sharedInstance().getMonitoredDataCache() * 60 * 1000;
+    long currentTime = System.currentTimeMillis();
+    restoreDataFromStorage(buffer, currentTime);
+  }
+
+  private void restoreDataFromStorage(long cachePeriod, long currentTime) {
+    removeOutOfDateStorageItem(cachePeriod, currentTime);
+    for (StorageItem item : fStorage) {
+      chart.addValues(item.getTimestamp(), item.getValues());
+    }
+  }
+
+  private void addStorageItem(long currentTime, long[] values) {
+    long buffer = GlobalPreferences.sharedInstance().getMonitoredDataCache() * 60 * 1000;
+    fStorage.add(new StorageItem(currentTime, values));
+    removeOutOfDateStorageItem(buffer, currentTime);
+  }
+
+  private void removeOutOfDateStorageItem(long newCachePeriod, long currentTime) {
+    Iterator<StorageItem> iterator = fStorage.iterator();
+    while (iterator.hasNext()) {
+      StorageItem item = iterator.next();
+      if (item.getTimestamp() + newCachePeriod < currentTime) {
+        iterator.remove();
+      } else {
+        break;
+      }
+    }
+  }
+
+  private class StorageItem {
+    private final long fTimestamp;
+    private final long[] fValues;
+
+    public StorageItem(long time, long[] values) {
+      fTimestamp = time;
+      fValues = values;
+    }
+
+    public long getTimestamp() {
+      return fTimestamp;
+    }
+
+    public long[] getValues() {
+      return fValues;
+    }
+
   }
 
 }

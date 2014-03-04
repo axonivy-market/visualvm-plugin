@@ -3,14 +3,17 @@
  */
 package ch.ivyteam.ivy.visualvm.chart;
 
-import ch.ivyteam.ivy.visualvm.chart.data.XYChartDataSource;
 import ch.ivyteam.ivy.visualvm.chart.data.GaugeDataSource;
+import ch.ivyteam.ivy.visualvm.chart.data.XYChartDataSource;
 import ch.ivyteam.ivy.visualvm.view.IUpdatableUIObject;
+import com.sun.tools.visualvm.core.options.GlobalPreferences;
 import java.awt.Color;
 import java.awt.GridLayout;
 import java.awt.LayoutManager;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.prefs.PreferenceChangeEvent;
+import java.util.prefs.PreferenceChangeListener;
 import javax.swing.JComponent;
 import javax.swing.JPanel;
 
@@ -18,6 +21,7 @@ public class ChartsPanel implements IUpdatableUIObject {
 
   private final List<IUpdatableUIObject> updatableObjects = new ArrayList<>();
   private final JPanel chartPanel;
+  private final CacheSettingChangeListener cacheSettingChangeListener = new CacheSettingChangeListener();
 
   /**
    * Constructor
@@ -34,6 +38,7 @@ public class ChartsPanel implements IUpdatableUIObject {
     }
     chartPanel = new JPanel(layout);
     chartPanel.setBackground(Color.WHITE);
+    GlobalPreferences.sharedInstance().watchMonitoredDataCache(cacheSettingChangeListener);
   }
 
   public JComponent getUIComponent() {
@@ -60,10 +65,9 @@ public class ChartsPanel implements IUpdatableUIObject {
   }
 
   public void addChart(XYChartDataSource dataSource, String yAxisMessage) {
-    final XYChartPanel chart = new XYChartPanel(dataSource);
+    final XYChartPanel chart = new XYChartPanel(dataSource, yAxisMessage);
     updatableObjects.add(chart);
     chartPanel.add(chart.getUI());
-    chart.setYaxisHelpMessage(yAxisMessage);
   }
 
   public void addChart2(XYChartDataSource dataSource) {
@@ -104,4 +108,22 @@ public class ChartsPanel implements IUpdatableUIObject {
     }
   }
 
+  private void updateChartsCachePeriod() {
+    chartPanel.removeAll();
+    for (IUpdatableUIObject object : updatableObjects) {
+      if (object instanceof XYChartPanel) {
+        XYChartPanel chart = (XYChartPanel) object;
+        chart.updateCachePeriod();
+        chartPanel.add(chart.getUI());
+      }
+    }
+  }
+
+  private class CacheSettingChangeListener implements PreferenceChangeListener {
+    @Override
+    public void preferenceChange(PreferenceChangeEvent evt) {
+      updateChartsCachePeriod();
+    }
+
+  }
 }
