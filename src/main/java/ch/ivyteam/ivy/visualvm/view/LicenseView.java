@@ -7,11 +7,11 @@ import ch.ivyteam.ivy.visualvm.exception.IvyJmxDataCollectException;
 import ch.ivyteam.ivy.visualvm.model.IvyJmxConstant;
 import ch.ivyteam.ivy.visualvm.model.IvyLicenseInfo;
 import ch.ivyteam.ivy.visualvm.service.BasicIvyJmxDataCollector;
-import com.sun.tools.visualvm.core.options.GlobalPreferences;
 import com.sun.tools.visualvm.core.ui.components.DataViewComponent;
 import eu.hansolo.steelseries.tools.Section;
 import java.awt.Color;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import javax.management.MBeanServerConnection;
 import org.openide.util.Exceptions;
@@ -26,7 +26,7 @@ public class LicenseView extends AbstractView {
     super(dataBeanProvider);
     retrieveLicenseInfo();
     fLicenseInformationPanel = new LicenseInformationPanel(fLicenseInfo);
-    fLicenseInformationPanel.setLicenseData();
+    fLicenseInformationPanel.setLicenseData(Long.MAX_VALUE, 0, 0);
   }
 
   @Override
@@ -117,6 +117,9 @@ public class LicenseView extends AbstractView {
     }
   }
 
+  int storedNamedUsers, storedConUsers;
+  boolean nearlyExpiredUpdated, expiredUpdated;
+
   @Override
   public void update() {
     super.update();
@@ -130,11 +133,25 @@ public class LicenseView extends AbstractView {
     } catch (IvyJmxDataCollectException ex) {
       Exceptions.printStackTrace(ex);
     }
-    fLicenseInfo.setNamedUsers(namedUsers);
-    fLicenseInfo.setConcurrentUsers(concurrentUsers);
-    fLicenseInfo.setRemainingTime(fLicenseInfo.getRemainingTime() - 1000 * GlobalPreferences.sharedInstance().
-            getMonitoredDataPoll());
-    fLicenseInformationPanel.setLicenseData();
-  }
+    long remainingTime = fLicenseInfo.getLicenseValidUntil().getTime() - new Date().getTime();
+    boolean nearlyExpired = remainingTime <= 30 * LicenseInformationPanel.MILISECONDS_IN_ONE_DAY;
+    boolean expired = remainingTime <= 0;
+    boolean valueChanged = storedConUsers != concurrentUsers || storedNamedUsers != namedUsers;
 
+    if (valueChanged) {
+      fLicenseInformationPanel.setLicenseData(remainingTime, namedUsers, concurrentUsers);
+      storedNamedUsers = namedUsers;
+      storedConUsers = concurrentUsers;
+    }
+
+    if (nearlyExpired && !nearlyExpiredUpdated) {
+      fLicenseInformationPanel.setLicenseData(remainingTime, namedUsers, concurrentUsers);
+      nearlyExpiredUpdated = true;
+    }
+
+    if (expired && !expiredUpdated) {
+      fLicenseInformationPanel.setLicenseData(remainingTime, namedUsers, concurrentUsers);
+      expiredUpdated = true;
+    }
+  }
 }

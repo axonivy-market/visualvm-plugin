@@ -6,6 +6,8 @@
 package ch.ivyteam.ivy.visualvm.view;
 
 import ch.ivyteam.ivy.visualvm.model.IvyLicenseInfo;
+import ch.ivyteam.ivy.visualvm.util.DataUtils;
+import java.text.MessageFormat;
 
 /**
  *
@@ -15,10 +17,37 @@ import ch.ivyteam.ivy.visualvm.model.IvyLicenseInfo;
 public class LicenseInformationPanel extends javax.swing.JPanel {
 
   private final IvyLicenseInfo fLicenseInfo;
-  private static final long MILLISECONDS_IN_ONE_SECOND = 1000;
-  private static final long MILLISECONDS_IN_ONE_MINUTE = 60 * MILLISECONDS_IN_ONE_SECOND;
-  private static final long MILLISECONDS_IN_ONE_HOUR = 60 * MILLISECONDS_IN_ONE_MINUTE;
-  public static final long MILLISECONDS_IN_ONE_DAY = 24 * MILLISECONDS_IN_ONE_HOUR;
+  private static final long MILISECONDS_IN_ONE_SECOND = 1000;
+  private static final long MILISECONDS_IN_ONE_MINUTE = 60 * MILISECONDS_IN_ONE_SECOND;
+  private static final long MILISECONDS_IN_ONE_HOUR = 60 * MILISECONDS_IN_ONE_MINUTE;
+  public static final long MILISECONDS_IN_ONE_DAY = 24 * MILISECONDS_IN_ONE_HOUR;
+
+  private static final String TABLE_START = "<table border='0' celspacing='5' celpadding='0'>";
+  private static final String TABLE_END = "</table>";
+  private static final String TR_TD_START = "<tr><td>";
+  private static final String TD_TR_END = "</td></tr>";
+  private static final String TD_START = "<td>";
+  private static final String TD_END = "</td>";
+
+  private static final String EXPIRE_IN_30_DAYS_WARNING
+          = "Your licence will expire on {0}. "
+          + "If the licence is expired the server will no longer start. "
+          + "Please request a new licence now!";
+  private static final String EXPIRED_WARNING
+          = "Your licence has expired on {0}. "
+          + "You will not be able to restart your server. "
+          + "Please request a new licence now!";
+  private static final String USERS_EXCEEDED_WARNING
+          = "Cannot create more users because the maximum users that are allowed by your licence has "
+          + "exceeded";
+  private static final String SESSIONS_EXCEEDED_WARNING
+          = "The maximum sessions that are allowed by your licence has been reached.";
+  private static final String SESSIONS_EXCEEDED_50_PERCENT_WARNING
+          = "Cannot create session because the maximum session that are allowed by your licence has exceeded "
+          + "by a factor of 50%.";
+  private int fNamedUsers;
+  private int fConcurrentUsers;
+  private long fRemainingTime = Long.MAX_VALUE;
 
   /**
    * Creates new form LicenseInformationPanel
@@ -62,44 +91,197 @@ public class LicenseInformationPanel extends javax.swing.JPanel {
   // End of variables declaration//GEN-END:variables
   /* CHECKSTYLE:ON */
 
-  public void setLicenseData() {
+  public void setLicenseData(long remainingTime, int namedUsers, int concurrentUsers) {
+    fRemainingTime = remainingTime;
+    fNamedUsers = namedUsers;
+    fConcurrentUsers = concurrentUsers;
     if (fLicenseInfo != null) {
-      htmlLabelPanel1.setText(fLicenseInfo.toHTMLString());
+      htmlLabelPanel1.setText(toHTMLString());
     }
   }
 
-  public void setRemainingTimeInfo() {
-    StringBuilder licenseExpirationInfo = new StringBuilder();
-    licenseExpirationInfo.append("(in ");
-    long delta = fLicenseInfo.getRemainingTime();
-    if (delta > MILLISECONDS_IN_ONE_DAY) {
-      int day = (int) (delta / MILLISECONDS_IN_ONE_DAY);
-      licenseExpirationInfo.append(" ").append(day).append(" day");
-      appendPluralIndicator(licenseExpirationInfo, day);
-      delta = delta - day * MILLISECONDS_IN_ONE_DAY;
-    }
-    if (delta > MILLISECONDS_IN_ONE_HOUR) {
-      int hour = (int) (delta / MILLISECONDS_IN_ONE_HOUR);
-      licenseExpirationInfo.append(" ").append(hour).append(" hour");
-      appendPluralIndicator(licenseExpirationInfo, hour);
-      delta = delta - hour * MILLISECONDS_IN_ONE_HOUR;
-    }
-    if (delta > MILLISECONDS_IN_ONE_MINUTE) {
-      int minute = (int) (delta / MILLISECONDS_IN_ONE_MINUTE);
-      licenseExpirationInfo.append(" ").append(minute).append(" minute");
-      appendPluralIndicator(licenseExpirationInfo, minute);
-      delta = delta - minute * MILLISECONDS_IN_ONE_MINUTE;
-    }
-    delta = delta / MILLISECONDS_IN_ONE_SECOND;
-    licenseExpirationInfo.append(" ").append(delta).append(" second");
-    appendPluralIndicator(licenseExpirationInfo, (int) delta);
-    licenseExpirationInfo.append(" )");
+  public String toHTMLString() {
+    StringBuilder html = new StringBuilder("<html><body style=\"font-family:tahoma;font-size:11\">");
+    appendExpireWarning(html);
+    appendUsersLimitWarning(html);
+    appendSessionsLimitWarning(html);
+
+    html.append(TABLE_START);
+    appendLicenseeOrganisation(html);
+    appendLicenseeIndividual(html);
+    appendHostName(html);
+    appendKeyVersion(html);
+    appendValidFrom(html);
+    appendValidUntil(html);
+    appendSupportRIA(html);
+    appendElementsLimit(html);
+    appendUsersLimit(html);
+    appendSessionsLimit(html);
+
+    html.append(TABLE_END);
+    html.append("</body></html>");
+    return html.toString();
   }
 
-  private void appendPluralIndicator(StringBuilder licenseExpirationInfo, int amount) {
-    if (amount > 1) {
-      licenseExpirationInfo.append("s");
+  private void appendSessionsLimit(StringBuilder html) {
+    if (fLicenseInfo.getServerSessionsLimit() > 0) {
+      html.append(TR_TD_START);
+      html.append("Concurrent Users Limit: ").append(TD_END);
+      html.append(TD_START).append(fLicenseInfo.getServerSessionsLimit());
+      html.append(TD_TR_END);
     }
   }
 
+  private void appendUsersLimit(StringBuilder html) {
+    if (fLicenseInfo.getServerUsersLimit() > 0) {
+      html.append(TR_TD_START);
+      html.append("Named Users Limit: ").append(TD_END);
+      html.append(TD_START).append(fLicenseInfo.getServerUsersLimit());
+      html.append(TD_TR_END);
+    }
+  }
+
+  private void appendElementsLimit(StringBuilder html) {
+    if (fLicenseInfo.getServerElementsLimit() > 0) {
+      html.append(TR_TD_START);
+      html.append("Elements Limit: ").append(TD_END);
+      html.append(TD_START).append(fLicenseInfo.getServerElementsLimit());
+      html.append(TD_TR_END);
+    }
+  }
+
+  private void appendSupportRIA(StringBuilder html) {
+    html.append(TR_TD_START);
+    html.append("Supports RIA: ").append(TD_END);
+    html.append(TD_START).append(fLicenseInfo.isServerRIA() ? "Yes" : "No");
+    html.append(TD_TR_END);
+  }
+
+  private void appendValidUntil(StringBuilder html) {
+    if (fLicenseInfo.getLicenseValidUntil() != null) {
+      html.append(TR_TD_START);
+      html.append("Expires: ").append(TD_END);
+      html.append(TD_START).append(DataUtils.toDateString(fLicenseInfo.getLicenseValidUntil()));
+      html.append(TD_TR_END);
+    }
+  }
+
+  private void appendValidFrom(StringBuilder html) {
+    if (fLicenseInfo.getLicenseValidFrom() != null) {
+      html.append(TR_TD_START);
+      html.append("Valid From: ").append(TD_END);
+      html.append(TD_START).append(DataUtils.toDateString(fLicenseInfo.getLicenseValidFrom()));
+      html.append(TD_TR_END);
+    }
+  }
+
+  private void appendKeyVersion(StringBuilder html) {
+    if (fLicenseInfo.getLicenseKeyVersion() != null) {
+      html.append(TR_TD_START);
+      html.append("Version: ").append(TD_END);
+      html.append(TD_START).append(fLicenseInfo.getLicenseKeyVersion().replace("xpertline/", ""));
+      html.append(TD_TR_END);
+    }
+  }
+
+  private void appendHostName(StringBuilder html) {
+    if (fLicenseInfo.getHostName() != null) {
+      html.append(TR_TD_START);
+      html.append("Host Name: ").append(TD_END);
+      html.append(TD_START).append(fLicenseInfo.getHostName());
+      html.append(TD_TR_END);
+    }
+  }
+
+  private void appendLicenseeIndividual(StringBuilder html) {
+    if (fLicenseInfo.getLicenseeIndividual() != null) {
+      html.append(TR_TD_START);
+      html.append("Individual: ").append(TD_END);
+      html.append(TD_START).append(fLicenseInfo.getLicenseeIndividual());
+      html.append(TD_TR_END);
+    }
+  }
+
+  private void appendLicenseeOrganisation(StringBuilder html) {
+    if (fLicenseInfo.getLicenseeOrganisation() != null) {
+      html.append(TR_TD_START);
+      html.append("Organization: ").append(TD_END);
+      html.append(TD_START).append(fLicenseInfo.getLicenseeOrganisation());
+      html.append(TD_TR_END);
+    }
+  }
+
+  private void appendSessionsLimitWarning(StringBuilder html) {
+    if (fLicenseInfo.getServerSessionsLimit() > 0 && getConcurrentUserLimitWarningInHTML() != null) {
+      html.append(TABLE_START).append(TR_TD_START).append(getConcurrentUserLimitWarningInHTML())
+              .append(TD_TR_END).append(TABLE_END);
+    }
+  }
+
+  private void appendUsersLimitWarning(StringBuilder html) {
+    if (fLicenseInfo.getServerUsersLimit() > 0 && getNamedUserLimitWarningInHTML() != null) {
+      html.append(TABLE_START).append(TR_TD_START).append(getNamedUserLimitWarningInHTML())
+              .append(TD_TR_END).append(TABLE_END);
+    }
+  }
+
+  private void appendExpireWarning(StringBuilder html) {
+    String iconPath = null;
+    String expireWarning = null;
+    String color = "#F38630"; //yellow
+    String expireDateString = DataUtils.toDateString(fLicenseInfo.getLicenseValidUntil());
+
+    if (isLicenseError()) {
+      expireWarning = MessageFormat.format(EXPIRED_WARNING, expireDateString);
+      color = "red";
+      iconPath = "/resources/icons/license_error.png";
+    } else if (isLicenseWarning()) {
+      expireWarning = MessageFormat.format(EXPIRE_IN_30_DAYS_WARNING, expireDateString);
+      iconPath = "/resources/icons/license_warning.png";
+    }
+
+    if (expireWarning == null) {
+      return;
+    }
+
+    String icon = "<img src='" + getClass().getResource(iconPath) + "'>";
+    String warningMsg = "<font color='" + color + "'>" + expireWarning + "</font> ";
+    html.append(TABLE_START);
+    html.append(TR_TD_START).append(icon).append(TD_END);
+    html.append(TD_START).append(warningMsg).append(TD_TR_END);
+    html.append(TABLE_END);
+  }
+
+  private boolean isLicenseWarning() {
+    return fRemainingTime < 30 * LicenseInformationPanel.MILISECONDS_IN_ONE_DAY;
+  }
+
+  private boolean isLicenseError() {
+    return fRemainingTime <= 0;
+  }
+
+  private String getNamedUserLimitWarningInHTML() {
+    String warning = null, color = "red";
+    if (fNamedUsers >= fLicenseInfo.getServerUsersLimit()) {
+      warning = USERS_EXCEEDED_WARNING;
+    }
+    if (warning == null) {
+      return null;
+    }
+    return "<font color='" + color + "'>" + warning + "</font> ";
+  }
+
+  private String getConcurrentUserLimitWarningInHTML() {
+    String warning = null, color = "red";
+    double factor = fConcurrentUsers / fLicenseInfo.getServerSessionsLimit();
+    if (factor >= 1 && factor < 1.5) {
+      warning = SESSIONS_EXCEEDED_WARNING;
+    } else if (factor >= 1.5) {
+      warning = SESSIONS_EXCEEDED_50_PERCENT_WARNING;
+    }
+    if (warning == null) {
+      return null;
+    }
+    return "<font color='" + color + "'>" + warning + "</font> ";
+  }
 }
