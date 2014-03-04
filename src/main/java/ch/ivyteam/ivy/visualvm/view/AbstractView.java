@@ -33,9 +33,9 @@ public class AbstractView {
               "",
               getMasterViewComponent());
       // Configuration of master view:
-      DataViewComponent.MasterViewConfiguration masterConfiguration = new DataViewComponent.MasterViewConfiguration(
+      DataViewComponent.MasterViewConfiguration masterConfig = new DataViewComponent.MasterViewConfiguration(
               false);
-      fViewComponent = new DataViewComponent(masterView, masterConfiguration);
+      fViewComponent = new DataViewComponent(masterView, masterConfig);
     }
     return fViewComponent;
   }
