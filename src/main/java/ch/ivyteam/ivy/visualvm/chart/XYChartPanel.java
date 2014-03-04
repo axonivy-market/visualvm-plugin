@@ -230,7 +230,8 @@ class XYChartPanel implements IUpdatableUIObject {
 
     public StorageItem(long time, long[] values) {
       fTimestamp = time;
-      fValues = values;
+      fValues = new long[values.length];
+      System.arraycopy(values, 0, fValues, 0, values.length);
     }
 
     public long getTimestamp() {
