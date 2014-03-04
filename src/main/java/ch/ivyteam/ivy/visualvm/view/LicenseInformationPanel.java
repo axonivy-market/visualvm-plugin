@@ -7,7 +7,6 @@ package ch.ivyteam.ivy.visualvm.view;
 
 import ch.ivyteam.ivy.visualvm.model.IvyLicenseInfo;
 import ch.ivyteam.ivy.visualvm.util.DataUtils;
-import java.net.URL;
 import java.text.MessageFormat;
 
 /**
