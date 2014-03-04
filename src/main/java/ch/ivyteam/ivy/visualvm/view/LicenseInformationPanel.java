@@ -7,6 +7,7 @@ package ch.ivyteam.ivy.visualvm.view;
 
 import ch.ivyteam.ivy.visualvm.model.IvyLicenseInfo;
 import ch.ivyteam.ivy.visualvm.util.DataUtils;
+import java.net.URL;
 import java.text.MessageFormat;
 
 /**
@@ -22,6 +23,9 @@ public class LicenseInformationPanel extends javax.swing.JPanel {
   private static final long MILISECONDS_IN_ONE_HOUR = 60 * MILISECONDS_IN_ONE_MINUTE;
   public static final long MILISECONDS_IN_ONE_DAY = 24 * MILISECONDS_IN_ONE_HOUR;
 
+  private static final String WARNING_ICON_PATH = "/resources/icons/license_warning.png";
+  private static final String ERROR_ICON_PATH = "/resources/icons/license_error.png";
+  private static final String WARNING_COLOR = "#F38630";
   private static final String TABLE_START = "<table border='0' celspacing='5' celpadding='0'>";
   private static final String TABLE_END = "</table>";
   private static final String TR_TD_START = "<tr><td>";
@@ -213,39 +217,43 @@ public class LicenseInformationPanel extends javax.swing.JPanel {
 
   private void appendSessionsLimitWarning(StringBuilder html) {
     if (fLicenseInfo.getServerSessionsLimit() > 0 && getConcurrentUserLimitWarningInHTML() != null) {
-      html.append(TABLE_START).append(TR_TD_START).append(getConcurrentUserLimitWarningInHTML())
-              .append(TD_TR_END).append(TABLE_END);
+      html.append(TABLE_START).append(TR_TD_START);
+      html.append(createIconTag(WARNING_ICON_PATH)).append(TD_END);
+      html.append(TD_START).append(getConcurrentUserLimitWarningInHTML());
+      html.append(TD_TR_END).append(TABLE_END);
     }
   }
 
   private void appendUsersLimitWarning(StringBuilder html) {
     if (fLicenseInfo.getServerUsersLimit() > 0 && getNamedUserLimitWarningInHTML() != null) {
-      html.append(TABLE_START).append(TR_TD_START).append(getNamedUserLimitWarningInHTML())
-              .append(TD_TR_END).append(TABLE_END);
+      html.append(TABLE_START).append(TR_TD_START);
+      html.append(createIconTag(WARNING_ICON_PATH)).append(TD_END);
+      html.append(TD_START).append(getNamedUserLimitWarningInHTML());
+      html.append(TD_TR_END).append(TABLE_END);
     }
   }
 
   private void appendExpireWarning(StringBuilder html) {
     String iconPath = null;
     String expireWarning = null;
-    String color = "#F38630"; //yellow
+    String color = WARNING_COLOR; //yellow
     String expireDateString = DataUtils.toDateString(fLicenseInfo.getLicenseValidUntil());
 
     if (isLicenseError()) {
       expireWarning = MessageFormat.format(EXPIRED_WARNING, expireDateString);
       color = "red";
-      iconPath = "/resources/icons/license_error.png";
+      iconPath = ERROR_ICON_PATH;
     } else if (isLicenseWarning()) {
       expireWarning = MessageFormat.format(EXPIRE_IN_30_DAYS_WARNING, expireDateString);
-      iconPath = "/resources/icons/license_warning.png";
+      iconPath = WARNING_ICON_PATH;
     }
 
     if (expireWarning == null) {
       return;
     }
 
-    String icon = "<img src='" + getClass().getResource(iconPath) + "'>";
-    String warningMsg = "<font color='" + color + "'>" + expireWarning + "</font> ";
+    String icon = createIconTag(iconPath);
+    String warningMsg = createFontTag(expireWarning, color);
     html.append(TABLE_START);
     html.append(TR_TD_START).append(icon).append(TD_END);
     html.append(TD_START).append(warningMsg).append(TD_TR_END);
@@ -261,18 +269,18 @@ public class LicenseInformationPanel extends javax.swing.JPanel {
   }
 
   private String getNamedUserLimitWarningInHTML() {
-    String warning = null, color = "red";
+    String warning = null;
     if (fNamedUsers >= fLicenseInfo.getServerUsersLimit()) {
       warning = USERS_EXCEEDED_WARNING;
     }
     if (warning == null) {
       return null;
     }
-    return "<font color='" + color + "'>" + warning + "</font> ";
+    return createFontTag(warning, WARNING_COLOR);
   }
 
   private String getConcurrentUserLimitWarningInHTML() {
-    String warning = null, color = "red";
+    String warning = null;
     double factor = fConcurrentUsers / fLicenseInfo.getServerSessionsLimit();
     if (factor >= 1 && factor < 1.5) {
       warning = SESSIONS_EXCEEDED_WARNING;
@@ -282,6 +290,14 @@ public class LicenseInformationPanel extends javax.swing.JPanel {
     if (warning == null) {
       return null;
     }
-    return "<font color='" + color + "'>" + warning + "</font> ";
+    return createFontTag(warning, WARNING_COLOR);
+  }
+
+  private String createFontTag(String message, String color) {
+    return "<font color='" + color + "'>" + message + "</font>";
+  }
+
+  private String createIconTag(String iconPath) {
+    return "<img src='" + getClass().getResource(iconPath) + "'>";
   }
 }
