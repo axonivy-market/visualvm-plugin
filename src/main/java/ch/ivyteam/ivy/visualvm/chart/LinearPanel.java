@@ -10,7 +10,7 @@ import eu.hansolo.steelseries.gauges.Linear;
 import eu.hansolo.steelseries.tools.LcdColor;
 import java.awt.Color;
 
-public class LinearPanel extends AbstractGaugePanel {
+public class LinearPanel extends GaugePanel {
 
   public LinearPanel(GaugeDataSource dataSource) {
     super(dataSource, new Linear());

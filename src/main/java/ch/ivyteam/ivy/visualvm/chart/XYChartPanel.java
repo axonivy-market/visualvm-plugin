@@ -212,11 +212,11 @@ class XYChartPanel implements IUpdatableUIObject {
     removeOutOfDateStorageItem(buffer, currentTime);
   }
 
-  private void removeOutOfDateStorageItem(long newCachePeriod, long currentTime) {
+  private void removeOutOfDateStorageItem(long cachePeriod, long currentTime) {
     Iterator<StorageItem> iterator = fStorage.iterator();
     while (iterator.hasNext()) {
       StorageItem item = iterator.next();
-      if (item.getTimestamp() + newCachePeriod < currentTime) {
+      if (item.getTimestamp() + cachePeriod < currentTime) {
         iterator.remove();
       } else {
         break;

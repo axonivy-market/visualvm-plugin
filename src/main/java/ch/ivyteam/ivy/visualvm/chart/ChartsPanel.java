@@ -115,6 +115,9 @@ public class ChartsPanel implements IUpdatableUIObject {
         XYChartPanel chart = (XYChartPanel) object;
         chart.updateCachePeriod();
         chartPanel.add(chart.getUI());
+      } else if (object instanceof GaugePanel) {
+        GaugePanel gaugePanel = (GaugePanel) object;
+        chartPanel.add(gaugePanel.getUI());
       }
     }
   }

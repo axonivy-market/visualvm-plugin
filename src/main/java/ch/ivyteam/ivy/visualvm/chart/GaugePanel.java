@@ -7,12 +7,12 @@ import eu.hansolo.steelseries.tools.BackgroundColor;
 import eu.hansolo.steelseries.tools.Section;
 import java.util.List;
 
-public abstract class AbstractGaugePanel implements IUpdatableUIObject {
+public class GaugePanel implements IUpdatableUIObject {
   private final List<Section> fSections;
   private final GaugeDataSource fDataSource;
   private final AbstractGauge fGauge;
 
-  public AbstractGaugePanel(GaugeDataSource dataSource, AbstractGauge gauge) {
+  public GaugePanel(GaugeDataSource dataSource, AbstractGauge gauge) {
     fDataSource = dataSource;
     fSections = dataSource.getSections();
     fGauge = gauge;
