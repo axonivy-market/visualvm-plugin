@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<beanTestData>
+  <dataset>  
+    <property>
+      <name>Xpert.ivy Server:type=Server</name>
+      <dataset>
+        <property>
+          <name>licenceParameters</name>
+          <dataset type="javax.management.openmbean.TabularData">
+            <property>
+              <name>server.sessions.limit</name>
+              <value>6</value>
+            </property>
+          </dataset>
+        </property>
+      </dataset>
+    </property>
+    <property>
+      <name>Xpert.ivy Server:type=Security Manager</name>
+      <dataset>
+        <property>
+          <name>licensedSessions</name>
+          <value type="java.lang.Long">1</value>
+        </property>
+      </dataset>
+    </property>
+    
+  </dataset>
+  
+  <dataset>    
+    <property>
+      <name>Xpert.ivy Server:type=Server</name>
+      <dataset>
+        <property>
+          <name>licenceParameters</name>
+          <dataset type="javax.management.openmbean.TabularData">
+            <property>
+              <name>server.sessions.limit</name>
+              <value>6</value>
+            </property>
+          </dataset>
+        </property>
+      </dataset>
+    </property>
+    <property>
+      <name>Xpert.ivy Server:type=Security Manager</name>
+      <dataset>        
+        <property>
+          <name>licensedSessions</name>
+          <value type="java.lang.Long">6</value>
+        </property>
+      </dataset>
+    </property>        
+  </dataset>
+  
+  <dataset>
+    <property>
+      <name>Xpert.ivy Server:type=Server</name>
+      <dataset>
+        <property>
+          <name>licenceParameters</name>
+          <dataset type="javax.management.openmbean.TabularData">
+            <property>
+              <name>server.sessions.limit</name>
+              <value>6</value>
+            </property>
+          </dataset>
+        </property>
+      </dataset>
+    </property>
+    <property>
+      <name>Xpert.ivy Server:type=Security Manager</name>
+      <dataset>
+        <property>
+          <name>licensedSessions</name>
+          <value type="java.lang.Long">9</value>
+        </property>
+      </dataset>
+    </property>  
+  </dataset>
+</beanTestData>
