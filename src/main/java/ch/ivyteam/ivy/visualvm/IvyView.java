@@ -6,6 +6,7 @@ import ch.ivyteam.ivy.visualvm.view.IDataBeanProvider;
 import ch.ivyteam.ivy.visualvm.view.InformationView;
 import ch.ivyteam.ivy.visualvm.view.LicenseView;
 import ch.ivyteam.ivy.visualvm.view.RequestView;
+import ch.ivyteam.ivy.visualvm.view.SystemDbView;
 import com.sun.tools.visualvm.application.Application;
 import com.sun.tools.visualvm.core.options.GlobalPreferences;
 import com.sun.tools.visualvm.core.scheduler.Quantum;
@@ -88,6 +89,11 @@ class IvyView extends DataSourceView {
     tabbed.addTab("User Requests", (Icon) ImageUtilities.loadImage(USER_REQ_IMAGE_PATH, true),
             requestViewNew.getViewComponent());
 
+    SystemDbView systemDbView = new SystemDbView(dataBeanProvider);
+    views.add(systemDbView);
+    tabbed.addTab("System database", (Icon) ImageUtilities.loadImage(DBCON_IMAGE_PATH, true),
+            systemDbView.getViewComponent());
+
     // init scheduler
     updateTask = Scheduler.sharedInstance().schedule(new UpdateChartTask(),
             Quantum.seconds(GlobalPreferences.sharedInstance().getMonitoredDataPoll()));
@@ -103,9 +109,8 @@ class IvyView extends DataSourceView {
             masterViewTitle, "", comp);
 
     // Configuration of master view:
-    DataViewComponent.MasterViewConfiguration masterConfiguration
-            = new DataViewComponent.MasterViewConfiguration(
-                    false);
+    DataViewComponent.MasterViewConfiguration masterConfiguration = new DataViewComponent.MasterViewConfiguration(
+            false);
     return new DataViewComponent(masterView, masterConfiguration);
   }
 

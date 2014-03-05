@@ -18,6 +18,13 @@ public class XYChartDataSource {
   private final List<SerieDataSource> serieDataSources = new ArrayList<>();
   private final List<ChartLabelCalcSupport> fLabelCalcSupports = new ArrayList<>();
 
+  /**
+   * 
+   * @param dataBeanProvider provider of chart
+   * @param chartName name of chart
+   * @param xAxisDescription description of x axis
+   * @param yAxisDescription description of y axis
+   */
   public XYChartDataSource(IDataBeanProvider dataBeanProvider, String chartName,
           String xAxisDescription, String yAxisDescription) {
     fDataBeanProvider = dataBeanProvider;
