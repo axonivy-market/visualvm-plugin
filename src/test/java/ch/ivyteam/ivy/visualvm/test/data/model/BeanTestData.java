@@ -19,7 +19,7 @@ import javax.xml.bind.annotation.XmlValue;
 public class BeanTestData {
 
   @XmlElement(required = true)
-  protected List<Dataset> dataset;
+  private List<Dataset> dataset;
 
   public List<Dataset> getDataset() {
     if (dataset == null) {
@@ -28,17 +28,17 @@ public class BeanTestData {
     return dataset;
   }
 
-  public void setDataset(List<Dataset> dataset) {
-    this.dataset = dataset;
+  public void setDataset(List<Dataset> pDataset) {
+    this.dataset = pDataset;
   }
 
   @XmlAccessorType(XmlAccessType.FIELD)
   @XmlType(name = "", propOrder = {"property"})
   public static class Dataset {
     @XmlElement(required = true)
-    protected List<Property> property;
+    private List<Property> property;
     @XmlAttribute
-    protected String type;
+    private String type;
 
     public Dataset() {
     }
@@ -50,50 +50,50 @@ public class BeanTestData {
       return property;
     }
 
-    public void setProperty(List<Property> property) {
-      this.property = property;
+    public void setProperty(List<Property> pProperty) {
+      this.property = pProperty;
     }
 
     public String getType() {
       return type;
     }
 
-    public void setType(String type) {
-      this.type = type;
+    public void setType(String pType) {
+      this.type = pType;
     }
 
     @XmlAccessorType(XmlAccessType.FIELD)
     @XmlType(name = "", propOrder = {"name", "value", "dataset"})
     public static class Property {
       @XmlElement(required = true)
-      protected String name;
+      private String name;
       @XmlElement
-      protected Value value;
+      private Value value;
       @XmlElement
-      protected Dataset dataset;
+      private Dataset dataset;
 
       public String getName() {
         return name;
       }
 
-      public void setName(String name) {
-        this.name = name;
+      public void setName(String pName) {
+        this.name = pName;
       }
 
       public Value getValue() {
         return value;
       }
 
-      public void setValue(Value value) {
-        this.value = value;
+      public void setValue(Value pValue) {
+        this.value = pValue;
       }
 
       public Dataset getDataset() {
         return dataset;
       }
 
-      public void setDataset(Dataset dataset) {
-        this.dataset = dataset;
+      public void setDataset(Dataset pDataset) {
+        this.dataset = pDataset;
       }
 
       public Property() {
@@ -103,24 +103,24 @@ public class BeanTestData {
       @XmlAccessorType(XmlAccessType.FIELD)
       public static class Value {
         @XmlValue
-        protected String value;
+        private String value;
         @XmlAttribute
-        protected String type;
+        private String type;
 
         public String getValue() {
           return value;
         }
 
-        public void setValue(String value) {
-          this.value = value;
+        public void setValue(String pValue) {
+          this.value = pValue;
         }
 
         public String getType() {
           return type;
         }
 
-        public void setType(String type) {
-          this.type = type;
+        public void setType(String pType) {
+          this.type = pType;
         }
 
       }

@@ -1,5 +1,6 @@
 package ch.ivyteam.ivy.visualvm.test.data;
 
+import ch.ivyteam.ivy.visualvm.exception.IvyVisualVMRuntimeException;
 import ch.ivyteam.ivy.visualvm.test.data.model.BeanTestData;
 import java.io.File;
 import java.io.IOException;
@@ -44,7 +45,7 @@ public final class JAXBUtils {
       Source soureSchema = new SAXSource(new InputSource(inputStream));
       return schemaFactory.newSchema(soureSchema);
     } catch (SAXException | IOException e) {
-      throw new RuntimeException(e);
+      throw new IvyVisualVMRuntimeException(e);
     }
   }
 

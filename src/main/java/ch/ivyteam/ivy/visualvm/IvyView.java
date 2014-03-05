@@ -109,8 +109,9 @@ class IvyView extends DataSourceView {
             masterViewTitle, "", comp);
 
     // Configuration of master view:
-    DataViewComponent.MasterViewConfiguration masterConfiguration = new DataViewComponent.MasterViewConfiguration(
-            false);
+    DataViewComponent.MasterViewConfiguration masterConfiguration
+            = new DataViewComponent.MasterViewConfiguration(
+                    false);
     return new DataViewComponent(masterView, masterConfiguration);
   }
 

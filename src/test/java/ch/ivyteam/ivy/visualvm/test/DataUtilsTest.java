@@ -2,13 +2,13 @@ package ch.ivyteam.ivy.visualvm.test;
 
 import ch.ivyteam.ivy.visualvm.util.DataUtils;
 import java.util.Calendar;
-import java.util.logging.Logger;
 import static org.junit.Assert.assertEquals;
 import org.junit.Test;
 
 public class DataUtilsTest {
 
-  private static final Logger LOGGER = Logger.getLogger(DataUtilsTest.class.getName());
+//  private static final Logger LOGGER = Logger.getLogger(DataUtilsTest.class.getName());
+  private static final String XPERT_IVY_SYSTEM_DATABASE = "XpertIvySystemDatabase";
 
   public DataUtilsTest() {
   }
@@ -73,18 +73,18 @@ public class DataUtilsTest {
 
   @Test
   public void testGetSchemaFromConnectionUrl() {
-    assertEquals("XpertIvySystemDatabase", DataUtils.getSchemaFromConnectionUrl(
+    assertEquals(XPERT_IVY_SYSTEM_DATABASE, DataUtils.getSchemaFromConnectionUrl(
             "jdbc:mysql://localhost:5432/XpertIvySystemDatabase"));
-    assertEquals("XpertIvySystemDatabase", DataUtils.getSchemaFromConnectionUrl(
+    assertEquals(XPERT_IVY_SYSTEM_DATABASE, DataUtils.getSchemaFromConnectionUrl(
             "jdbc:oracle:thin:tam/thai@localhost:1521:XpertIvySystemDatabase"));
-    assertEquals("XpertIvySystemDatabase", DataUtils.getSchemaFromConnectionUrl(
+    assertEquals(XPERT_IVY_SYSTEM_DATABASE, DataUtils.getSchemaFromConnectionUrl(
             "jdbc:oracle:oci:@XpertIvySystemDatabase"));
-    assertEquals("XpertIvySystemDatabase", DataUtils.getSchemaFromConnectionUrl(
+    assertEquals(XPERT_IVY_SYSTEM_DATABASE, DataUtils.getSchemaFromConnectionUrl(
             "jdbc:db2:XpertIvySystemDatabase"));
-    assertEquals("XpertIvySystemDatabase", DataUtils.getSchemaFromConnectionUrl(
+    assertEquals(XPERT_IVY_SYSTEM_DATABASE, DataUtils.getSchemaFromConnectionUrl(
             "jdbc:microsoft:sqlserver://localhost:1443;databaseName=XpertIvySystemDatabase;"
             + "SelectMethod=cursor"));
-    assertEquals("XpertIvySystemDatabase", DataUtils.getSchemaFromConnectionUrl(
+    assertEquals(XPERT_IVY_SYSTEM_DATABASE, DataUtils.getSchemaFromConnectionUrl(
             "jdbc:hsqldb:mem:XpertIvySystemDatabase"));
   }
 

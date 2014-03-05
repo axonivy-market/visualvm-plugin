@@ -1,6 +1,7 @@
 package ch.ivyteam.ivy.visualvm.test;
 
 import ch.ivyteam.ivy.visualvm.exception.IvyJmxDataCollectException;
+import ch.ivyteam.ivy.visualvm.exception.IvyVisualVMRuntimeException;
 import ch.ivyteam.ivy.visualvm.model.IvyApplicationInfo;
 import ch.ivyteam.ivy.visualvm.model.OSInfo;
 import ch.ivyteam.ivy.visualvm.model.ServerConnectorInfo;
@@ -61,11 +62,6 @@ public class ServerInformationTest extends AbstractTest {
     super(dataset);
   }
 
-  @Override
-  protected void setUp() throws Exception {
-    super.setUp();
-  }
-
   /**
    * Test server, database and connectors info using mock
    *
@@ -77,8 +73,7 @@ public class ServerInformationTest extends AbstractTest {
    */
   @Test
   public void testServerInformation() throws MalformedObjectNameException,
-          IOException, IvyJmxDataCollectException, IOException,
-          InstanceNotFoundException, ReflectionException {
+          IOException, IvyJmxDataCollectException, InstanceNotFoundException, ReflectionException {
 
     MBeanServerConnection mockedMBeanServer = createMockConnection();
     addTestData(mockedMBeanServer, getDataset());
@@ -98,7 +93,7 @@ public class ServerInformationTest extends AbstractTest {
     try {
       assertEquals(new SimpleDateFormat("dd/MM/yyyy").parse("11/09/2014"), basicInformation.getBuildDate());
     } catch (ParseException ex) {
-      throw new RuntimeException(ex);
+      throw new IvyVisualVMRuntimeException(ex);
     }
     assertEquals(INSTALL_DIR, basicInformation.getInstallationDirectory());
     // verify os info

@@ -1,5 +1,6 @@
 package ch.ivyteam.ivy.visualvm.test;
 
+import ch.ivyteam.ivy.visualvm.exception.IvyVisualVMRuntimeException;
 import ch.ivyteam.ivy.visualvm.test.data.model.BeanTestData;
 import ch.ivyteam.ivy.visualvm.test.data.model.BeanTestData.Dataset.Property;
 import java.io.IOException;
@@ -30,8 +31,7 @@ public abstract class AbstractTest extends TestCase {
   }
 
   public static MBeanServerConnection createMockConnection() {
-    MBeanServerConnection connection = mock(MBeanServerConnection.class);
-    return connection;
+    return mock(MBeanServerConnection.class);
   }
 
   public static void addTestData(MBeanServerConnection mockConnection, BeanTestData.Dataset dataset) {
@@ -60,7 +60,7 @@ public abstract class AbstractTest extends TestCase {
     } catch (AttributeNotFoundException | InstanceNotFoundException |
             IOException | ReflectionException | MalformedObjectNameException |
             MBeanException e) {
-      throw new RuntimeException();
+      throw new IvyVisualVMRuntimeException(e);
     }
   }
 
@@ -76,7 +76,7 @@ public abstract class AbstractTest extends TestCase {
     }
   }
 
-  private static Object getConvertedValue(Property attr) throws RuntimeException {
+  private static Object getConvertedValue(Property attr) {
     if ("java.util.Date".equals(attr.getValue().getType())) {
       SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
       try {
