@@ -1,4 +1,4 @@
-package ch.ivyteam.ivy.visualvm.chart.data.license.systemdb;
+package ch.ivyteam.ivy.visualvm.chart.data.systemdb;
 
 import ch.ivyteam.ivy.visualvm.chart.SerieStyle;
 import ch.ivyteam.ivy.visualvm.chart.data.XYChartDataSource;

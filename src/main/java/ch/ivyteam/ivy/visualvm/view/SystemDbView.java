@@ -1,9 +1,9 @@
 package ch.ivyteam.ivy.visualvm.view;
 
 import ch.ivyteam.ivy.visualvm.chart.ChartsPanel;
-import ch.ivyteam.ivy.visualvm.chart.data.license.systemdb.ConnectionChartDataSource;
-import ch.ivyteam.ivy.visualvm.chart.data.license.systemdb.TransactionChartDataSource;
-import ch.ivyteam.ivy.visualvm.chart.data.license.systemdb.ProcessingTimeChartDataSource;
+import ch.ivyteam.ivy.visualvm.chart.data.systemdb.ConnectionChartDataSource;
+import ch.ivyteam.ivy.visualvm.chart.data.systemdb.TransactionChartDataSource;
+import ch.ivyteam.ivy.visualvm.chart.data.systemdb.ProcessingTimeChartDataSource;
 import com.sun.tools.visualvm.core.ui.components.DataViewComponent;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
