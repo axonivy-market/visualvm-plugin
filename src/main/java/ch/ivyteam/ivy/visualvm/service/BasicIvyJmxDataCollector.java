@@ -33,7 +33,8 @@ public class BasicIvyJmxDataCollector {
 
   public IvyApplicationInfo getApplicationInfo(
           MBeanServerConnection connection) throws IvyJmxDataCollectException {
-    IvyApplicationInfo result = new IvyApplicationInfo();
+
+    IvyApplicationInfo result;
     try {
       String[] attributeNames = new String[]{IvyJmxConstant.IvyServer.Server.KEY_VERSION,
         IvyJmxConstant.IvyServer.Server.KEY_BUILD_DATE,
@@ -44,37 +45,43 @@ public class BasicIvyJmxDataCollector {
 
       AttributeList attributes = connection.getAttributes(IvyJmxConstant.IvyServer.Server.NAME,
               attributeNames);
-      for (Attribute attribute : attributes.asList()) {
-        if (attribute.getValue() != null) {
-          switch (attribute.getName()) {
-            case IvyJmxConstant.IvyServer.Server.KEY_VERSION:
-              String version = DataUtils.getIvyServerVersion(attribute.getValue().toString());
-              result.setVersion(version);
-              break;
-            case IvyJmxConstant.IvyServer.Server.KEY_BUILD_DATE:
-              if (attribute.getValue() instanceof Date) {
-                result.setBuildDate((Date) attribute.getValue());
-              }
-              break;
-            case IvyJmxConstant.IvyServer.Server.KEY_APPLICATION_NAME:
-              result.setApplicationName(attribute.getValue().toString());
-              break;
-            case IvyJmxConstant.IvyServer.Server.KEY_INSTALLATION_DIRECTORY:
-              result.setInstallationDirectory(attribute.getValue().toString());
-              break;
-            case IvyJmxConstant.IvyServer.Server.KEY_DEVELOPER_MODE:
-              result.setDeveloperMode(Boolean.TRUE.equals(attribute.getValue()));
-              break;
-            case IvyJmxConstant.IvyServer.Server.KEY_RELEASE_CANDIDATE:
-              result.setReleaseCandidate(Boolean.TRUE.equals(attribute.getValue()));
-              break;
-          }
-        }
-      }
+      result = createApplicationInfo(attributes);
     } catch (InstanceNotFoundException | ReflectionException | IOException ex) {
       throw new IvyJmxDataCollectException(ex);
     }
     return result;
+  }
+
+  private IvyApplicationInfo createApplicationInfo(AttributeList attributes) {
+    IvyApplicationInfo applicationInfo = new IvyApplicationInfo();
+    for (Attribute attribute : attributes.asList()) {
+      if (attribute.getValue() != null) {
+        switch (attribute.getName()) {
+          case IvyJmxConstant.IvyServer.Server.KEY_VERSION:
+            String version = DataUtils.getIvyServerVersion(attribute.getValue().toString());
+            applicationInfo.setVersion(version);
+            break;
+          case IvyJmxConstant.IvyServer.Server.KEY_BUILD_DATE:
+            if (attribute.getValue() instanceof Date) {
+              applicationInfo.setBuildDate((Date) attribute.getValue());
+            }
+            break;
+          case IvyJmxConstant.IvyServer.Server.KEY_APPLICATION_NAME:
+            applicationInfo.setApplicationName(attribute.getValue().toString());
+            break;
+          case IvyJmxConstant.IvyServer.Server.KEY_INSTALLATION_DIRECTORY:
+            applicationInfo.setInstallationDirectory(attribute.getValue().toString());
+            break;
+          case IvyJmxConstant.IvyServer.Server.KEY_DEVELOPER_MODE:
+            applicationInfo.setDeveloperMode(Boolean.TRUE.equals(attribute.getValue()));
+            break;
+          case IvyJmxConstant.IvyServer.Server.KEY_RELEASE_CANDIDATE:
+            applicationInfo.setReleaseCandidate(Boolean.TRUE.equals(attribute.getValue()));
+            break;
+        }
+      }
+    }
+    return applicationInfo;
   }
 
   public String getHostInfo(MBeanServerConnection connection) throws IvyJmxDataCollectException {

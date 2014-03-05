@@ -160,12 +160,12 @@ public final class DataUtils {
   }
 
   public static String getHostFromConnectionUrl(String url) {
-    String temp = url.replaceAll(" ", "");
-    int index = findDatabasePrefixIndex(temp);
+    String compactedURL = url.replaceAll(" ", "");
+    int index = findDatabasePrefixIndex(compactedURL);
 
     int portIndex = -1;
     if (index > 0) {
-      String port = temp.substring(0, index);
+      String port = compactedURL.substring(0, index);
       int endIndex = firstDigitFromEnd(port);
       if (endIndex < 0) {
         return null;
@@ -181,13 +181,16 @@ public final class DataUtils {
       }
       portIndex = startIndex;
     }
+    return getHost(portIndex, compactedURL);
+  }
 
-    String host = null;
+  private static String getHost(int portIndex, String url) {
+    String tmpHost;
     if (portIndex > 0) {
-      host = temp.substring(0, portIndex);
+      tmpHost = url.substring(0, portIndex);
       int endIndex;
-      for (endIndex = host.length() - 1; endIndex >= 0; endIndex--) {
-        if (isValidCharForSchema(host.charAt(endIndex))) {
+      for (endIndex = tmpHost.length() - 1; endIndex >= 0; endIndex--) {
+        if (isValidCharForSchema(tmpHost.charAt(endIndex))) {
           break;
         }
       }
@@ -196,13 +199,15 @@ public final class DataUtils {
       }
       int startIndex;
       for (startIndex = endIndex; startIndex >= 0; startIndex--) {
-        if (!isValidCharForSchema(host.charAt(startIndex))) {
+        if (!isValidCharForSchema(tmpHost.charAt(startIndex))) {
           break;
         }
       }
-      host = host.substring(startIndex + 1, endIndex + 1);
+      tmpHost = tmpHost.substring(startIndex + 1, endIndex + 1);
+    } else {
+      tmpHost = null;
     }
-    return host;
+    return tmpHost;
   }
 
   private static int firstDigitFromEnd(String port) {
