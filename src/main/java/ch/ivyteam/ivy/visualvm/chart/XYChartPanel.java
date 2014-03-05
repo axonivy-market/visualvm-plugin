@@ -75,12 +75,12 @@ class XYChartPanel extends JPanel implements IUpdatableUIObject {
   @Override
   public void updateValues(QueryResult result) {
     long[] values = fDataSource.getValues(result);
-    chart.addValues(System.currentTimeMillis(), values);
-
-    values = fDataSource.getLabels(result);
-    chart.updateDetails(convert(values));
-
     long currentTime = System.currentTimeMillis();
+    chart.addValues(currentTime, values);
+
+    long[] labels = fDataSource.getLabels(result);
+    chart.updateDetails(convert(labels));
+
     addStorageItem(currentTime, values);
   }
 
