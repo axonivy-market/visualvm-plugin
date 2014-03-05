@@ -15,7 +15,7 @@ import eu.hansolo.steelseries.tools.PointerType;
 import java.awt.Color;
 import java.awt.geom.Rectangle2D;
 
-public class RadialPanel extends GaugePanel {
+public class RadialPanel extends AbstractGaugePanel {
 
   private static final Rectangle2D DEFAULT_LCD_RECTANGLE = new Rectangle2D.Double(0.27, 0.6, 0.27, 0.12);
 

@@ -66,6 +66,7 @@ class XYChartPanel extends JPanel implements IUpdatableUIObject {
 
     setLayout(new GridBagLayout());
     setBackground(Color.WHITE);
+    removeAll();
     add(chart.getChart(), new GridBagConstraints(
             0, 0, 1, 1, 1, 1, GridBagConstraints.WEST, GridBagConstraints.BOTH,
             new Insets(0, 0, 0, 0), 0, 0));

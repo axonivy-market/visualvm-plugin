@@ -25,9 +25,9 @@ public class ChartsPanel implements IUpdatableUIObject {
 
   /**
    * Constructor
-   *
+   * 
    * @param horizontalOrVertical <code>true</code> to lay charts horizontally, <code>false</code> to lay
-   *                             charts vertically
+   *          charts vertically
    */
   public ChartsPanel(boolean horizontalOrVertical) {
     LayoutManager layout;
@@ -103,15 +103,10 @@ public class ChartsPanel implements IUpdatableUIObject {
   }
 
   private void updateChartsCachePeriod() {
-    chartPanel.removeAll();
     for (IUpdatableUIObject object : updatableObjects) {
       if (object instanceof XYChartPanel) {
         XYChartPanel chart = (XYChartPanel) object;
         chart.updateCachePeriod();
-        chartPanel.add(chart);
-      } else if (object instanceof GaugePanel) {
-        GaugePanel gaugePanel = (GaugePanel) object;
-        chartPanel.add(gaugePanel.getUI());
       }
     }
   }
