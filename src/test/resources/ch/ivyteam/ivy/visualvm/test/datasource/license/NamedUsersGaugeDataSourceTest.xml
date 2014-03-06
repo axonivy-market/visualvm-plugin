@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<beanTestData>
+  <dataset>  
+    <property>
+      <name>Xpert.ivy Server:type=Security Manager</name>
+      <dataset>
+        <property>
+          <name>licensedUsers</name>
+          <value type="java.lang.Long">1</value>
+        </property>
+      </dataset>
+    </property>
+    
+  </dataset>
+  
+  <dataset>    
+    <property>
+      <name>Xpert.ivy Server:type=Security Manager</name>
+      <dataset>        
+        <property>
+          <name>licensedUsers</name>
+          <value type="java.lang.Long">6</value>
+        </property>
+      </dataset>
+    </property>        
+  </dataset>
+  
+  <dataset>
+    <property>
+      <name>Xpert.ivy Server:type=Security Manager</name>
+      <dataset>
+        <property>
+          <name>licensedUsers</name>
+          <value type="java.lang.Long">9</value>
+        </property>
+      </dataset>
+    </property>  
+  </dataset>
+</beanTestData>
