@@ -280,10 +280,11 @@ public class LicenseInformationPanel extends javax.swing.JPanel {
 
   private String getConcurrentUserLimitWarningInHTML() {
     String warning = null;
-    double factor = fConcurrentUsers / fLicenseInfo.getServerSessionsLimit();
+    double factor = (double) fConcurrentUsers / fLicenseInfo.getServerSessionsLimit();
     if (factor >= 1 && factor < 1.5) {
       warning = SESSIONS_EXCEEDED_WARNING;
-    } else if (factor >= 1.5) {
+    }
+    if (factor >= 1.5) {
       warning = SESSIONS_EXCEEDED_50_PERCENT_WARNING;
     }
     if (warning == null) {
@@ -299,4 +300,5 @@ public class LicenseInformationPanel extends javax.swing.JPanel {
   private String createIconTag(String iconPath) {
     return "<img src='" + getClass().getResource(iconPath) + "'>";
   }
+
 }

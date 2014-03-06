@@ -7,6 +7,7 @@ package ch.ivyteam.ivy.visualvm.util;
 
 import ch.ivyteam.ivy.visualvm.model.IvyJmxConstant;
 import ch.ivyteam.ivy.visualvm.model.IvyLicenseInfo;
+import java.util.logging.Logger;
 import javax.management.openmbean.CompositeDataSupport;
 import javax.management.openmbean.TabularDataSupport;
 
@@ -15,6 +16,8 @@ import javax.management.openmbean.TabularDataSupport;
  * @author thtam
  */
 public final class LicenseUtils {
+
+  private static final Logger LOGGER = Logger.getLogger(LicenseUtils.class.getName());
 
   private LicenseUtils() {
   }
@@ -33,10 +36,10 @@ public final class LicenseUtils {
             IvyJmxConstant.IvyServer.Server.License.KEY_LICENSE_VALID_FROM)));
     licenseInfo.setLicenseValidUntil(DataUtils.stringToDate(getLicenseDetail(tabular,
             IvyJmxConstant.IvyServer.Server.License.KEY_LICENSE_VALID_UNTIL)));
-    licenseInfo.setServerElementsLimit(Integer.parseInt(getLicenseDetail(tabular,
-            IvyJmxConstant.IvyServer.Server.License.KEY_SERVER_ELEMENTS_LIMIT)));
     licenseInfo.setServerRIA(Boolean.valueOf(getLicenseDetail(tabular,
             IvyJmxConstant.IvyServer.Server.License.KEY_SERVER_RIA)));
+    licenseInfo.setServerElementsLimit(Integer.parseInt(getLicenseDetail(tabular,
+            IvyJmxConstant.IvyServer.Server.License.KEY_SERVER_ELEMENTS_LIMIT)));
     licenseInfo.setServerSessionsLimit(Integer.parseInt(getLicenseDetail(tabular,
             IvyJmxConstant.IvyServer.Server.License.KEY_SERVER_SESSIONS_LIMIT)));
     licenseInfo.setServerUsersLimit(Integer.parseInt(getLicenseDetail(tabular,
