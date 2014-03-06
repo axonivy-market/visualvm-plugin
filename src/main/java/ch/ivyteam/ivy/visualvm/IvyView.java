@@ -1,5 +1,6 @@
 package ch.ivyteam.ivy.visualvm;
 
+import ch.ivyteam.ivy.visualvm.view.ExternalDbView;
 import ch.ivyteam.ivy.visualvm.exception.ClosedIvyServerConnectionException;
 import ch.ivyteam.ivy.visualvm.view.AbstractView;
 import ch.ivyteam.ivy.visualvm.view.IDataBeanProvider;
@@ -35,7 +36,8 @@ class IvyView extends DataSourceView {
 
   public static final String IVY_IMAGE_PATH = "resources/icons/ivy16.png";
   public static final String INFO_IMAGE_PATH = "resources/icons/info.png";
-  public static final String DBCON_IMAGE_PATH = "resources/icons/dbcon.png";
+  public static final String DB_ICON_IMAGE_PATH = "resources/icons/db_icon.png";
+  public static final String EXT_DB_ICON_IMAGE_PATH = "resources/icons/ext_db_icon.png";
   public static final String USER_REQ_IMAGE_PATH = "resources/icons/user_req.png";
   public static final String USER_DEF_IMAGE_PATH = "resources/icons/user_def.png";
   public static final String LICENSE_IMAGE_PATH = "resources/icons/licence.png";
@@ -70,37 +72,55 @@ class IvyView extends DataSourceView {
 
     };
 
-    // add information view tab
-    InformationView infoView = new InformationView(dataBeanProvider);
-    views.add(infoView);
-    tabbed.addTab("Information", (Icon) ImageUtilities.loadImage(INFO_IMAGE_PATH, true),
-            infoView.getViewComponent());
-
-    // add license view tab
-    if (fIsIvyServer) {
-      LicenseView licenseView = new LicenseView(dataBeanProvider);
-      views.add(licenseView);
-      tabbed.addTab("License", (Icon) ImageUtilities.loadImage(LICENSE_IMAGE_PATH, true),
-              licenseView.getViewComponent());
-    }
-    // add request view tab
-    RequestView requestViewNew = new RequestView(dataBeanProvider);
-    views.add(requestViewNew);
-    tabbed.addTab("User Requests", (Icon) ImageUtilities.loadImage(USER_REQ_IMAGE_PATH, true),
-            requestViewNew.getViewComponent());
-
-    SystemDbView systemDbView = new SystemDbView(dataBeanProvider);
-    views.add(systemDbView);
-    tabbed.addTab("System database", (Icon) ImageUtilities.loadImage(DBCON_IMAGE_PATH, true),
-            systemDbView.getViewComponent());
+    // add views
+    addInformationView(dataBeanProvider, tabbed);
+    addLicenceView(dataBeanProvider, tabbed);
+    addRequestView(dataBeanProvider, tabbed);
+    addSystemDBView(dataBeanProvider, tabbed);
+    addExternalDBView(dataBeanProvider, tabbed);
 
     // init scheduler
     updateTask = Scheduler.sharedInstance().schedule(new UpdateChartTask(),
             Quantum.seconds(GlobalPreferences.sharedInstance().getMonitoredDataPoll()));
-
     GlobalPreferences.sharedInstance().watchMonitoredDataPoll(pollSettingChangeListener);
-
     return dvcRoot;
+  }
+
+  private void addInformationView(IDataBeanProvider dataBeanProvider, JTabbedPane tabbed) {
+    InformationView infoView = new InformationView(dataBeanProvider);
+    views.add(infoView);
+    tabbed.addTab("Information", (Icon) ImageUtilities.loadImage(INFO_IMAGE_PATH, true),
+            infoView.getViewComponent());
+  }
+
+  private void addLicenceView(IDataBeanProvider dataBeanProvider, JTabbedPane tabbed) {
+    if (fIsIvyServer) {
+      LicenseView licenseView = new LicenseView(dataBeanProvider);
+      views.add(licenseView);
+      tabbed.addTab("Licence", (Icon) ImageUtilities.loadImage(LICENSE_IMAGE_PATH, true),
+              licenseView.getViewComponent());
+    }
+  }
+
+  private void addRequestView(IDataBeanProvider dataBeanProvider, JTabbedPane tabbed) {
+    RequestView requestViewNew = new RequestView(dataBeanProvider);
+    views.add(requestViewNew);
+    tabbed.addTab("User Requests", (Icon) ImageUtilities.loadImage(USER_REQ_IMAGE_PATH, true),
+            requestViewNew.getViewComponent());
+  }
+
+  private void addSystemDBView(IDataBeanProvider dataBeanProvider, JTabbedPane tabbed) {
+    SystemDbView systemDbView = new SystemDbView(dataBeanProvider);
+    views.add(systemDbView);
+    tabbed.addTab("System database", (Icon) ImageUtilities.loadImage(DB_ICON_IMAGE_PATH, true),
+            systemDbView.getViewComponent());
+  }
+
+  private void addExternalDBView(IDataBeanProvider dataBeanProvider, JTabbedPane tabbed) {
+    ExternalDbView extDbView = new ExternalDbView(dataBeanProvider);
+    views.add(extDbView);
+    tabbed.addTab("External database", (Icon) ImageUtilities.loadImage(EXT_DB_ICON_IMAGE_PATH, true),
+            extDbView.getViewComponent());
   }
 
   private DataViewComponent createDVC(String masterViewTitle, JComponent comp) {
@@ -109,9 +129,8 @@ class IvyView extends DataSourceView {
             masterViewTitle, "", comp);
 
     // Configuration of master view:
-    DataViewComponent.MasterViewConfiguration masterConfiguration
-            = new DataViewComponent.MasterViewConfiguration(
-                    false);
+    DataViewComponent.MasterViewConfiguration masterConfiguration = new DataViewComponent.MasterViewConfiguration(
+            false);
     return new DataViewComponent(masterView, masterConfiguration);
   }
 

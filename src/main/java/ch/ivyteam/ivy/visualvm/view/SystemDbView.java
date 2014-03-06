@@ -4,14 +4,10 @@ import ch.ivyteam.ivy.visualvm.chart.ChartsPanel;
 import ch.ivyteam.ivy.visualvm.chart.data.systemdb.ConnectionChartDataSource;
 import ch.ivyteam.ivy.visualvm.chart.data.systemdb.TransactionChartDataSource;
 import com.sun.tools.visualvm.core.ui.components.DataViewComponent;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.KeyEvent;
-import javax.swing.JComponent;
 import javax.swing.JPanel;
-import javax.swing.KeyStroke;
 
 public class SystemDbView extends AbstractView {
+
   private boolean uiComplete;
 
   public SystemDbView(IDataBeanProvider dataBeanProvider) {
@@ -38,17 +34,6 @@ public class SystemDbView extends AbstractView {
     super.getViewComponent().addDetailsView(new DataViewComponent.DetailsView(null, null, 10,
             systemDbPanel.getUIComponent(), null), DataViewComponent.TOP_LEFT);
     registerScheduledUpdate(systemDbPanel);
-
-    systemDbPanel.getUIComponent().registerKeyboardAction(
-            new ActionListener() {
-              @Override
-              public void actionPerformed(ActionEvent e) {
-                systemDbPanel.switchLayoutOrientation();
-              }
-
-            }, KeyStroke.getKeyStroke(KeyEvent.VK_W, KeyEvent.CTRL_MASK),
-            JComponent.WHEN_IN_FOCUSED_WINDOW
-    );
   }
 
   @Override
@@ -56,7 +41,8 @@ public class SystemDbView extends AbstractView {
     DataViewComponent viewComponent = super.getViewComponent();
     if (!uiComplete) {
       JPanel panel = (JPanel) viewComponent.getComponent(0);
-      panel.remove(0);
+      JPanel c = (JPanel) panel.getComponent(0);
+      c.remove(0);
       createRequestView();
       uiComplete = true;
     }
