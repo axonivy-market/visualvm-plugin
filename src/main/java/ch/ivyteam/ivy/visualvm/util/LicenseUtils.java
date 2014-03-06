@@ -7,7 +7,6 @@ package ch.ivyteam.ivy.visualvm.util;
 
 import ch.ivyteam.ivy.visualvm.model.IvyJmxConstant;
 import ch.ivyteam.ivy.visualvm.model.IvyLicenseInfo;
-import java.util.logging.Logger;
 import javax.management.openmbean.CompositeDataSupport;
 import javax.management.openmbean.TabularDataSupport;
 
@@ -16,8 +15,6 @@ import javax.management.openmbean.TabularDataSupport;
  * @author thtam
  */
 public final class LicenseUtils {
-
-  private static final Logger LOGGER = Logger.getLogger(LicenseUtils.class.getName());
 
   private LicenseUtils() {
   }

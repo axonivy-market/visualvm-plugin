@@ -1,8 +1,8 @@
 package ch.ivyteam.ivy.visualvm;
 
-import ch.ivyteam.ivy.visualvm.view.ExternalDbView;
 import ch.ivyteam.ivy.visualvm.exception.ClosedIvyServerConnectionException;
 import ch.ivyteam.ivy.visualvm.view.AbstractView;
+import ch.ivyteam.ivy.visualvm.view.ExternalDbView;
 import ch.ivyteam.ivy.visualvm.view.IDataBeanProvider;
 import ch.ivyteam.ivy.visualvm.view.InformationView;
 import ch.ivyteam.ivy.visualvm.view.LicenseView;
@@ -129,8 +129,8 @@ class IvyView extends DataSourceView {
             masterViewTitle, "", comp);
 
     // Configuration of master view:
-    DataViewComponent.MasterViewConfiguration masterConfiguration = new DataViewComponent.MasterViewConfiguration(
-            false);
+    DataViewComponent.MasterViewConfiguration masterConfiguration
+            = new DataViewComponent.MasterViewConfiguration(false);
     return new DataViewComponent(masterView, masterConfiguration);
   }
 
