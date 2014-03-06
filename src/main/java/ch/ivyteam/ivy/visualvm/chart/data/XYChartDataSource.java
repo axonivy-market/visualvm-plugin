@@ -19,9 +19,9 @@ public class XYChartDataSource {
   private final List<ChartLabelCalcSupport> fLabelCalcSupports = new ArrayList<>();
 
   /**
-   * 
+   *
    * @param dataBeanProvider provider of chart
-   * @param chartName name of chart
+   * @param chartName        name of chart
    * @param xAxisDescription description of x axis
    * @param yAxisDescription description of y axis
    */
@@ -42,13 +42,23 @@ public class XYChartDataSource {
     return values;
   }
 
-  public long[] getLabels(QueryResult result) {
+  public long[] calculateDetailValues(QueryResult result) {
     long[] values = new long[fLabelCalcSupports.size()];
     int pos = 0;
     for (ChartLabelCalcSupport support : fLabelCalcSupports) {
       values[pos++] = support.calculateValue(result);
     }
     return values;
+  }
+
+  public void setLabels(long[] labels) {
+    int index = 0;
+    for (ChartLabelCalcSupport labelSupport : fLabelCalcSupports) {
+      if (index >= labels.length) {
+        break;
+      }
+      labelSupport.setValue(labels[index++]);
+    }
   }
 
   public void addFixedSerie(String serie, long fixedValue) {
