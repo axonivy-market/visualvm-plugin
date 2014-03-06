@@ -64,4 +64,16 @@ public class AbstractView {
     fUpdatableUIObjects.add(updatableObject);
   }
 
+  /**
+   * Disable close ability for an area with specified position on viewer
+   * 
+   * @param viewer the viewer
+   * @param position the position on view
+   * @see DataViewComponent#configureDetailsArea(com.sun.tools.visualvm.core.ui.components.DataViewComponent.DetailsAreaConfiguration,
+   *      int)
+   */
+  public void disableCloseAbilityArea(DataViewComponent viewer, int position) {
+    viewer.configureDetailsArea(
+            new DataViewComponent.DetailsAreaConfiguration(null, false), position);
+  }
 }
