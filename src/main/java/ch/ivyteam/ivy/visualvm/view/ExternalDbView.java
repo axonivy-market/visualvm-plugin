@@ -6,9 +6,9 @@ package ch.ivyteam.ivy.visualvm.view;
 
 import ch.ivyteam.ivy.visualvm.chart.ChartsPanel;
 import ch.ivyteam.ivy.visualvm.chart.data.externaldb.AbstractEDBDataSource;
-import ch.ivyteam.ivy.visualvm.chart.data.externaldb.EDBConnectionChartDataSource;
-import ch.ivyteam.ivy.visualvm.chart.data.externaldb.EDBProcessingTimeChartDataSource;
-import ch.ivyteam.ivy.visualvm.chart.data.externaldb.EDBTransactionChartDataSource;
+import ch.ivyteam.ivy.visualvm.chart.data.externaldb.ExternalDbConnectionChartDataSource;
+import ch.ivyteam.ivy.visualvm.chart.data.externaldb.ExternalDbProcessingTimeChartDataSource;
+import ch.ivyteam.ivy.visualvm.chart.data.externaldb.ExternalDbTransactionChartDataSource;
 import ch.ivyteam.ivy.visualvm.util.DataUtils;
 import com.sun.tools.visualvm.application.Application;
 import com.sun.tools.visualvm.core.ui.components.DataViewComponent;
@@ -41,14 +41,15 @@ public class ExternalDbView extends AbstractView {
 // call when user select environment & db configuration
   private ChartsPanel createExternalDbChartPanel() {
     unregisterScheduledUpdate(fExternalDbChartPanel);
-    
+
     fExternalDbChartPanel = new ChartsPanel(false);
-    EDBConnectionChartDataSource connectionDataSource = new EDBConnectionChartDataSource(
+    ExternalDbConnectionChartDataSource connectionDataSource = new ExternalDbConnectionChartDataSource(
             getDataBeanProvider(), null, null, "Connections");
-    EDBTransactionChartDataSource transactionDataSource = new EDBTransactionChartDataSource(
+    ExternalDbTransactionChartDataSource transactionDataSource = new ExternalDbTransactionChartDataSource(
             getDataBeanProvider(), null, null, "Transactions");
-    EDBProcessingTimeChartDataSource transProcessTimeDataSource = new EDBProcessingTimeChartDataSource(
-            getDataBeanProvider(), null, null, "Processing Time [ms]");
+    ExternalDbProcessingTimeChartDataSource transProcessTimeDataSource
+            = new ExternalDbProcessingTimeChartDataSource(
+                    getDataBeanProvider(), null, null, "Processing Time [ms]");
 
     configDataSources(connectionDataSource, transactionDataSource, transProcessTimeDataSource);
     fExternalDbChartPanel.addChart(connectionDataSource);
@@ -125,4 +126,5 @@ public class ExternalDbView extends AbstractView {
     }
     return false;
   }
+
 }

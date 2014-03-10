@@ -101,6 +101,7 @@ public class IvyJmxConstant {
             public static final String KEY_MAX_CONNECTION = "maxConnections";
             public static final String KEY_OPEN_CONNECTION = "openConnections";
             public static final String KEY_TRANSACTION_NUMBER = "transactions";
+            public static final String KEY_ERROR_NUMBER = "errors";
             public static final String KEY_TRANSACTION_TOTAL_EXE_TIME_IN_MS
                     = "transactionsTotalExecutionTimeInMicroSeconds";
             public static final String KEY_TRANSACTION_MAX_EXE_TIME_IN_MS
