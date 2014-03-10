@@ -21,7 +21,7 @@ import javax.management.ObjectName;
 import org.apache.commons.lang.StringUtils;
 
 /**
- * 
+ *
  * @author htnam
  */
 public class ExternalDbView extends AbstractView {
@@ -51,9 +51,9 @@ public class ExternalDbView extends AbstractView {
             getDataBeanProvider(), null, null, "Connections");
     ExternalDbTransactionChartDataSource transactionDataSource = new ExternalDbTransactionChartDataSource(
             getDataBeanProvider(), null, null, "Transactions");
-    ExternalDbProcessingTimeChartDataSource transProcessTimeDataSource = new ExternalDbProcessingTimeChartDataSource(
-            getDataBeanProvider(), null, null,
-            "Processing Time [ms]");
+    ExternalDbProcessingTimeChartDataSource transProcessTimeDataSource
+            = new ExternalDbProcessingTimeChartDataSource(getDataBeanProvider(), null, null,
+                    "Processing Time [ms]");
 
     configDataSources(connectionDataSource, transactionDataSource, transProcessTimeDataSource);
     chartPanel.addChart(connectionDataSource);
