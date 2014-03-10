@@ -19,7 +19,8 @@ public class ErrorChartDataSource extends XYChartDataSource {
     BasicIvyJmxDataCollector collector = new BasicIvyJmxDataCollector();
     for (ObjectName processorName : collector.getTomcatRequestProcessors(mBeanServerConnection)) {
       String protocol = ProtocolCollector.getProtocol(mBeanServerConnection, processorName);
-      addDeltaSerie(protocol, processorName, IvyJmxConstant.Ivy.Processor.KEY_ERROR_COUNT);
+      addDeltaSerie(protocol, "Number of request that return status code from 400-599", processorName,
+              IvyJmxConstant.Ivy.Processor.KEY_ERROR_COUNT);
       addLabelCalcSupport(new DeltaValueChartLabelCalcSupport(protocol,
               processorName, IvyJmxConstant.Ivy.Processor.KEY_ERROR_COUNT));
     }

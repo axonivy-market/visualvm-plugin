@@ -20,9 +20,9 @@ public class ExternalDbTransactionChartDataSource extends AbstractEDBDataSource 
             IvyJmxConstant.IvyServer.ExternalDatabase.KEY_TRANSACTION_NUMBER));
     addLabelCalcSupport(new DeltaValueChartLabelCalcSupport(ERRORS_SERIE_TITLE, getObjectName(),
             IvyJmxConstant.IvyServer.ExternalDatabase.KEY_ERROR_NUMBER));
-    addDeltaSerie(TRANSACTION_SERIE_TITLE, getObjectName(),
+    addDeltaSerie(TRANSACTION_SERIE_TITLE, null, getObjectName(),
             IvyJmxConstant.IvyServer.ExternalDatabase.KEY_TRANSACTION_NUMBER);
-    addDeltaSerie(ERRORS_SERIE_TITLE, getObjectName(),
+    addDeltaSerie(ERRORS_SERIE_TITLE, null, getObjectName(),
             IvyJmxConstant.IvyServer.ExternalDatabase.KEY_ERROR_NUMBER);
   }
 

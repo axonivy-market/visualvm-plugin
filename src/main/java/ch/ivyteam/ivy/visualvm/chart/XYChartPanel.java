@@ -13,34 +13,35 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Container;
-import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import javax.swing.AbstractButton;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
-import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JPopupMenu;
 import org.apache.commons.lang.StringUtils;
 
-class XYChartPanel extends JPanel implements IUpdatableUIObject {
+public class XYChartPanel extends JPanel implements IUpdatableUIObject {
 
-  private static final int CONTAINER_LABEL_INDEX = 0;
   private static final int CONTAINER_CHART_INDEX = 1;
-  private static final int COMPONENT_TOP_LABEL_INDEX = 0;
-  private static final int COMPONENT_YAXIS_LABEL_INDEX = 0;
+  private static final int CHART_MAIN_AREA_INDEX = 1;
+  private static final int CHART_MAIN_AREA_YAXIS_INDEX = 2;
+  private static final int CHART_YAXIS_LABEL_INDEX = 0;
   private static final String ICON_HELP_URL = "/resources/icons/question16.png";
 
-  private SimpleXYChartSupport chart;
+  private SimpleXYChartSupport fChart;
   private JLabel fHtmlLabel;
+  private Component fYAxis;
+  private Component fXAxis;
+  private Component fYAxisDescription;
+  private Component fChartArea;
+  private Component fChartLegend;
   private final XYChartDataSource fDataSource;
   private String fYAxisHelpMessage;
   private String[] fDetailLabels;
@@ -64,30 +65,31 @@ class XYChartPanel extends JPanel implements IUpdatableUIObject {
     SimpleXYChartDescriptor chartDescriptor = SimpleXYChartDescriptor.decimal(10, true,
             60 * monitoredDataCache);
     configureChart(chartDescriptor);
-    chart = ChartFactory.createSimpleXYChart(chartDescriptor);
-
-    JPopupMenu menu = createLayoutMenu();
-    chart.getChart().setComponentPopupMenu(menu);
+    fChart = ChartFactory.createSimpleXYChart(chartDescriptor);
 
     setLayout(new GridBagLayout());
     setBackground(Color.WHITE);
     removeAll();
-    add(chart.getChart(), new GridBagConstraints(
+    add(fChart.getChart(), new GridBagConstraints(
             0, 0, 1, 1, 1, 1, GridBagConstraints.WEST, GridBagConstraints.BOTH,
             new Insets(0, 0, 0, 0), 0, 0));
     fHtmlLabel = new JLabel();
-    fHtmlLabel.setHorizontalAlignment(JLabel.RIGHT);
-    fHtmlLabel.setPreferredSize(new Dimension(100, 100));
     add(fHtmlLabel, new GridBagConstraints(
             1, 0, 0, 0, 0, 0, GridBagConstraints.WEST, GridBagConstraints.BOTH,
             new Insets(0, 0, 0, 0), 0, 0));
+    fYAxis = identifyYAxis();
+    fXAxis = identifyXAxis();
+    fChartArea = identifyChartMainArea();
+    fChartLegend = identifyLegend();
+
+    createLegendTooltips();
   }
 
   @Override
   public void updateValues(QueryResult result) {
     long[] values = fDataSource.getValues(result);
     long currentTime = System.currentTimeMillis();
-    chart.addValues(currentTime, values);
+    fChart.addValues(currentTime, values);
 
     long[] labels = fDataSource.calculateDetailValues(result);
     updateChartDetails(labels);
@@ -98,7 +100,7 @@ class XYChartPanel extends JPanel implements IUpdatableUIObject {
   public void updateChartDetails(long[] labels) {
     fDataSource.setLabels(labels);
     String text = HtmlSupport.toOneColumnHtmlTable(fDetailLabels, convert(labels));
-    fHtmlLabel.setText(text);
+    getHtmlLabel().setText(text);
   }
 
   @Override
@@ -115,53 +117,49 @@ class XYChartPanel extends JPanel implements IUpdatableUIObject {
     return result;
   }
 
-  private JPopupMenu createLayoutMenu() {
-    JPopupMenu menu = new JPopupMenu();
-    JCheckBoxMenuItem legendVisibleItem = new JCheckBoxMenuItem("Show legends");
-    legendVisibleItem.setSelected(true);
-    legendVisibleItem.addActionListener(new ActionListener() {
-      @Override
-      public void actionPerformed(ActionEvent e) {
-        JCheckBoxMenuItem control = (JCheckBoxMenuItem) e.getSource();
-        chart.setLegendVisible(control.isSelected());
-      }
+  private Component identifyYAxis() {
+    Container container = (Container) fChart.getChart().getComponent(CONTAINER_CHART_INDEX);
+    Container mainArea = (Container) container.getComponent(CHART_MAIN_AREA_INDEX);
+    return mainArea.getComponent(CHART_MAIN_AREA_YAXIS_INDEX);
+  }
 
-    });
+  private Component identifyXAxis() {
+    Container container = (Container) fChart.getChart().getComponent(CONTAINER_CHART_INDEX);
+    Container mainArea = (Container) container.getComponent(CHART_MAIN_AREA_INDEX);
+    return mainArea.getComponent(1);
+  }
 
-    JCheckBoxMenuItem labelVisibleItem = new JCheckBoxMenuItem("Show labels");
-    labelVisibleItem.setSelected(true);
-    labelVisibleItem.addActionListener(new ActionListener() {
-      @Override
-      public void actionPerformed(ActionEvent e) {
-        JCheckBoxMenuItem control = (JCheckBoxMenuItem) e.getSource();
-        getLabelComponent().setVisible(control.isSelected());
-      }
+  private Component identifyChartMainArea() {
+    Container container = (Container) fChart.getChart().getComponent(CONTAINER_CHART_INDEX);
+    Container mainArea = (Container) container.getComponent(CHART_MAIN_AREA_INDEX);
+    return mainArea.getComponent(0);
+  }
 
-    });
+  private Component identifyLegend() {
+    return fChart.getChart().getComponent(2);
+  }
 
-    menu.add(legendVisibleItem);
-    menu.add(labelVisibleItem);
-    return menu;
+  public Component getYAxis() {
+    return fYAxis;
+  }
+
+  public Component getXAxis() {
+    return fXAxis;
   }
 
   public String getYAxisHelpMessage() {
     return fYAxisHelpMessage;
   }
 
-  private Component getLabelComponent() {
-    Container chartContainer = (Container) chart.getChart();
-    Container labelPanel = (Container) chartContainer.getComponent(CONTAINER_LABEL_INDEX);
-    return labelPanel.getComponent(COMPONENT_TOP_LABEL_INDEX);
-  }
-
   public final void createYAxisHelpMessage(String message) {
+    Container container = (Container) fChart.getChart().getComponent(CONTAINER_CHART_INDEX);
+    JLabel yAxisLabel = (JLabel) container.getComponent(CHART_YAXIS_LABEL_INDEX);
     if (StringUtils.isEmpty(message)) {
+      fYAxisDescription = yAxisLabel;
       return;
     }
-    Container container = (Container) chart.getChart().getComponent(CONTAINER_CHART_INDEX);
-    JLabel yAxisLabel = (JLabel) container.getComponent(COMPONENT_YAXIS_LABEL_INDEX);
-    JPanel panel = createYaxisDescriptorPanel(createYAxisHelpLabel(message), yAxisLabel);
-    container.add(panel, BorderLayout.WEST);
+    fYAxisDescription = createYaxisDescriptorPanel(createYAxisHelpLabel(message), yAxisLabel);
+    container.add(getYAxisDescription(), BorderLayout.WEST);
   }
 
   private JLabel createYAxisHelpLabel(final String message) {
@@ -195,7 +193,7 @@ class XYChartPanel extends JPanel implements IUpdatableUIObject {
   private void restoreDataFromStorage(long cachePeriod, long currentTime) {
     removeOutOfDateStorageItem(cachePeriod, currentTime);
     for (StorageItem item : fStorage) {
-      chart.addValues(item.getTimestamp(), item.getValues());
+      fChart.addValues(item.getTimestamp(), item.getValues());
     }
   }
 
@@ -236,6 +234,33 @@ class XYChartPanel extends JPanel implements IUpdatableUIObject {
     int index = 0;
     for (ChartLabelCalcSupport support : fDataSource.getLabelCalcSupports()) {
       fDetailLabels[index++] = support.getText();
+    }
+  }
+
+  public Component getYAxisDescription() {
+    return fYAxisDescription;
+  }
+
+  public JLabel getHtmlLabel() {
+    return fHtmlLabel;
+  }
+
+  public Component getChartUI() {
+    return fChartArea;
+  }
+
+  public Component getLegend() {
+    return fChartLegend;
+  }
+
+  private void createLegendTooltips() {
+    Container legendContainer = (Container) ((Container) fChartLegend).getComponent(0);
+    int index = 0;
+    for (Component legend : legendContainer.getComponents()) {
+      AbstractButton legendButton = (AbstractButton) legend;
+      if (index < fDataSource.getSerieDataSources().size()) {
+        legendButton.setToolTipText(fDataSource.getSerieDataSources().get(index++).getDescription());
+      }
     }
   }
 

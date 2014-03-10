@@ -27,8 +27,8 @@ public class RequestView extends AbstractView {
   }
 
   private void createRequestView() {
-    final ChartsPanel requestPanel = new ChartsPanel(true);
-    ChartsPanel sessionPanel = new ChartsPanel(true);
+    final ChartsPanel requestPanel = new ChartsPanel(false);
+    ChartsPanel sessionPanel = new ChartsPanel(false);
 
     RequestChartDataSource requestDataSource = new RequestChartDataSource(
             getDataBeanProvider(), null, null, REQUESTS);
@@ -39,7 +39,7 @@ public class RequestView extends AbstractView {
     SessionChartDataSource sessionDataSource = new SessionChartDataSource(
             getDataBeanProvider(), null, null, SESSIONS);
 
-    requestPanel.addChart(requestDataSource);
+    requestPanel.addChart(requestDataSource, "request chart");
     requestPanel.addChart(errorDataSource);
     requestPanel.addChart(processingTimeDataSource);
     sessionPanel.addChart(sessionDataSource);

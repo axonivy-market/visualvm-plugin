@@ -22,8 +22,8 @@ public class ConcurrentUsersChartDataSource extends XYChartDataSource {
   public ConcurrentUsersChartDataSource(IDataBeanProvider dataBeanProvider, String chartName,
           String xAxisDescription, String yAxisDescription) {
     super(dataBeanProvider, chartName, xAxisDescription, yAxisDescription);
-    addFixedSerie("Limit", getSessionLimit());
-    addSerie("Now", SerieStyle.LINE, IvyJmxConstant.IvyServer.SecurityManager.NAME,
+    addFixedSerie("Limit", null, getSessionLimit());
+    addSerie("Now", null, SerieStyle.LINE, IvyJmxConstant.IvyServer.SecurityManager.NAME,
             IvyJmxConstant.IvyServer.SecurityManager.KEY_LICENSED_SESSIONS);
     addLabelCalcSupport(new MaxValueChartLabelCalcSupport("Max Occurs",
             IvyJmxConstant.IvyServer.SecurityManager.NAME,

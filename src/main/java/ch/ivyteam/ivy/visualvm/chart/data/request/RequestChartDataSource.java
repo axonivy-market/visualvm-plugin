@@ -19,10 +19,10 @@ public class RequestChartDataSource extends XYChartDataSource {
     BasicIvyJmxDataCollector collector = new BasicIvyJmxDataCollector();
     for (ObjectName processorName : collector.getTomcatRequestProcessors(mBeanServerConnection)) {
       String protocol = ProtocolCollector.getProtocol(mBeanServerConnection, processorName);
-      addDeltaSerie(protocol, processorName, IvyJmxConstant.Ivy.Processor.KEY_REQUEST_COUNT);
+      addDeltaSerie(protocol, null, processorName, IvyJmxConstant.Ivy.Processor.KEY_REQUEST_COUNT);
       addLabelCalcSupport(new DeltaValueChartLabelCalcSupport(protocol,
               processorName, IvyJmxConstant.Ivy.Processor.KEY_REQUEST_COUNT));
     }
   }
-  
+
 }

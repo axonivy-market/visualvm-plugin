@@ -17,23 +17,23 @@ public class SessionChartDataSource extends XYChartDataSource {
     BasicIvyJmxDataCollector collector = new BasicIvyJmxDataCollector();
     ObjectName tomcatManager = collector.getTomcatManagerName(mBeanServerConnection);
     if (tomcatManager != null) {
-      addSerie("HTTP", SerieStyle.LINE, tomcatManager, IvyJmxConstant.Ivy.Manager.KEY_SESSION_COUNTER);
+      addSerie("HTTP", null, SerieStyle.LINE, tomcatManager, IvyJmxConstant.Ivy.Manager.KEY_ACTIVE_SESSION);
       addLabelCalcSupport(new LatestValueChartLabelCalcSupport("HTTP",
-              tomcatManager, IvyJmxConstant.Ivy.Manager.KEY_SESSION_COUNTER));
+              tomcatManager, IvyJmxConstant.Ivy.Manager.KEY_ACTIVE_SESSION));
     }
-    addSerie("Ivy", SerieStyle.LINE, IvyJmxConstant.IvyServer.SecurityManager.NAME,
+    addSerie("Ivy", null, SerieStyle.LINE, IvyJmxConstant.IvyServer.SecurityManager.NAME,
             IvyJmxConstant.IvyServer.SecurityManager.KEY_SESSIONS);
     addLabelCalcSupport(new LatestValueChartLabelCalcSupport("Ivy",
             IvyJmxConstant.IvyServer.SecurityManager.NAME,
             IvyJmxConstant.IvyServer.SecurityManager.KEY_SESSIONS));
 
-    addSerie("Licensed", SerieStyle.LINE, IvyJmxConstant.IvyServer.SecurityManager.NAME,
+    addSerie("Licensed", null, SerieStyle.LINE, IvyJmxConstant.IvyServer.SecurityManager.NAME,
             IvyJmxConstant.IvyServer.SecurityManager.KEY_LICENSED_SESSIONS);
     addLabelCalcSupport(new LatestValueChartLabelCalcSupport("Licensed",
             IvyJmxConstant.IvyServer.SecurityManager.NAME,
             IvyJmxConstant.IvyServer.SecurityManager.KEY_LICENSED_SESSIONS));
 
-    addSerie("RD", SerieStyle.LINE, IvyJmxConstant.IvyServer.RichDialogExecution.NAME,
+    addSerie("RD", null, SerieStyle.LINE, IvyJmxConstant.IvyServer.RichDialogExecution.NAME,
             IvyJmxConstant.IvyServer.RichDialogExecution.KEY_RD_SESSIONS);
     addLabelCalcSupport(new LatestValueChartLabelCalcSupport("RD",
             IvyJmxConstant.IvyServer.RichDialogExecution.NAME,

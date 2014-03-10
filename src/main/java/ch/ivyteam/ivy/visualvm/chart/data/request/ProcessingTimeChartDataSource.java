@@ -19,7 +19,7 @@ public class ProcessingTimeChartDataSource extends XYChartDataSource {
     BasicIvyJmxDataCollector collector = new BasicIvyJmxDataCollector();
     for (ObjectName processorName : collector.getTomcatRequestProcessors(mBeanServerConnection)) {
       String protocol = ProtocolCollector.getProtocol(mBeanServerConnection, processorName);
-      addDeltaSerie(protocol, processorName, IvyJmxConstant.Ivy.Processor.KEY_PROCESS_TIME);
+      addDeltaSerie(protocol, null, processorName, IvyJmxConstant.Ivy.Processor.KEY_PROCESS_TIME);
       addLabelCalcSupport(new DeltaValueChartLabelCalcSupport(protocol,
               processorName, IvyJmxConstant.Ivy.Processor.KEY_PROCESS_TIME));
     }

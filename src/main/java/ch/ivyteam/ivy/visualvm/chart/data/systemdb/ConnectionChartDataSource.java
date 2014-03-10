@@ -31,7 +31,7 @@ public class ConnectionChartDataSource extends XYChartDataSource {
             IvyJmxConstant.IvyServer.DatabasePersistency.NAME,
             IvyJmxConstant.IvyServer.DatabasePersistency.KEY_USED_CONNECTION));
 
-    addSerie(OPEN_SERIE_TITLE, SerieStyle.LINE,
+    addSerie(OPEN_SERIE_TITLE, null, SerieStyle.LINE,
             IvyJmxConstant.IvyServer.DatabasePersistency.NAME,
             IvyJmxConstant.IvyServer.DatabasePersistency.KEY_OPEN_CONNECTION);
 
@@ -39,7 +39,7 @@ public class ConnectionChartDataSource extends XYChartDataSource {
             IvyJmxConstant.IvyServer.DatabasePersistency.NAME,
             IvyJmxConstant.IvyServer.DatabasePersistency.KEY_OPEN_CONNECTION));
 
-    addSerie(USED_SERIE_TITLE, SerieStyle.LINE,
+    addSerie(USED_SERIE_TITLE, null, SerieStyle.LINE,
             IvyJmxConstant.IvyServer.DatabasePersistency.NAME,
             IvyJmxConstant.IvyServer.DatabasePersistency.KEY_USED_CONNECTION);
   }
@@ -51,10 +51,11 @@ public class ConnectionChartDataSource extends XYChartDataSource {
       Object maxConnectionObject = connection.getAttribute(IvyJmxConstant.IvyServer.DatabasePersistency.NAME,
               IvyJmxConstant.IvyServer.DatabasePersistency.KEY_MAX_CONNECTION);
       maxConnection = NumberUtils.toLong(maxConnectionObject.toString(), 0);
-    } catch (MBeanException | AttributeNotFoundException | InstanceNotFoundException | ReflectionException
-            | IOException ex) {
+    } catch (MBeanException | AttributeNotFoundException | InstanceNotFoundException | ReflectionException |
+            IOException ex) {
       LOGGER.log(Level.WARNING, "Error when getting max connection", ex);
     }
     return maxConnection;
   }
+
 }

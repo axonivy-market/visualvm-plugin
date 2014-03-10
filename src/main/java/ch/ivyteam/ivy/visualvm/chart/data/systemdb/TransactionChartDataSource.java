@@ -11,7 +11,8 @@ public class TransactionChartDataSource extends XYChartDataSource {
   public TransactionChartDataSource(IDataBeanProvider dataBeanProvider, String chartName,
           String xAxisDescription, String yAxisDescription) {
     super(dataBeanProvider, chartName, xAxisDescription, yAxisDescription);
-    addSerie(TRANSACTION, SerieStyle.LINE, IvyJmxConstant.IvyServer.DatabasePersistency.NAME,
+    addSerie(TRANSACTION, null, SerieStyle.LINE, IvyJmxConstant.IvyServer.DatabasePersistency.NAME,
             IvyJmxConstant.IvyServer.DatabasePersistency.KEY_TRANSACTION_NUMBER);
   }
+
 }

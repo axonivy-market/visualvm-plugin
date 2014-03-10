@@ -37,10 +37,10 @@ public class ExternalDbConnectionChartDataSource extends AbstractEDBDataSource {
     addLabelCalcSupport(new LatestValueChartLabelCalcSupport(OPEN_SERIE_TITLE, getObjectName(),
             IvyJmxConstant.IvyServer.ExternalDatabase.KEY_OPEN_CONNECTION));
 
-    addSerie(OPEN_SERIE_TITLE, SerieStyle.LINE, getObjectName(),
+    addSerie(OPEN_SERIE_TITLE, null, SerieStyle.LINE, getObjectName(),
             IvyJmxConstant.IvyServer.ExternalDatabase.KEY_OPEN_CONNECTION);
 
-    addSerie(USED_SERIE_TITLE, SerieStyle.LINE, getObjectName(),
+    addSerie(USED_SERIE_TITLE, null, SerieStyle.LINE, getObjectName(),
             IvyJmxConstant.IvyServer.ExternalDatabase.KEY_USED_CONNECTION);
   }
 
@@ -58,4 +58,5 @@ public class ExternalDbConnectionChartDataSource extends AbstractEDBDataSource {
     }
     return maxConnection;
   }
+
 }

@@ -9,6 +9,7 @@ public abstract class SerieDataSource {
 
   private long fScaleFactor = 1L;
   private final String fSerie;
+  private String fDescription;
   private SerieStyle fStyle;
 
   SerieDataSource(String serie, long scaleFactor, SerieStyle style) {
@@ -45,17 +46,25 @@ public abstract class SerieDataSource {
     }
   }
 
-  String getSerie() {
+  public String getSerie() {
     return fSerie;
   }
 
-  SerieStyle getStyle() {
+  public SerieStyle getStyle() {
     return fStyle;
   }
 
   @Override
   public String toString() {
     return fSerie;
+  }
+
+  public String getDescription() {
+    return fDescription;
+  }
+
+  public void setDescription(String description) {
+    this.fDescription = description;
   }
 
 }

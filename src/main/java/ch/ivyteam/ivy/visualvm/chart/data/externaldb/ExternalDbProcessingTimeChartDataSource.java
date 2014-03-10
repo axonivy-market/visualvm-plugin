@@ -27,11 +27,11 @@ public class ExternalDbProcessingTimeChartDataSource extends AbstractEDBDataSour
     addLabelCalcSupport(new DeltaValueChartLabelCalcSupport(MEAN_SERIE_TITLE, getObjectName(),
             IvyJmxConstant.IvyServer.ExternalDatabase.KEY_TRANSACTION_TOTAL_EXE_TIME_IN_MS));
 
-    addSerie(MAX_SERIE_TITLE, SerieStyle.LINE, getObjectName(),
+    addSerie(MAX_SERIE_TITLE, null, SerieStyle.LINE, getObjectName(),
             IvyJmxConstant.IvyServer.ExternalDatabase.KEY_TRANSACTION_MAX_EXE_DELTA_TIME_IN_MS);
-    addSerie(MIN_SERIE_TITLE, SerieStyle.LINE, getObjectName(),
+    addSerie(MIN_SERIE_TITLE, null, SerieStyle.LINE, getObjectName(),
             IvyJmxConstant.IvyServer.ExternalDatabase.KEY_TRANSACTION_MIN_EXE_DELTA_TIME_IN_MS);
-    addDeltaSerie(MEAN_SERIE_TITLE, getObjectName(),
+    addDeltaSerie(MEAN_SERIE_TITLE, null, getObjectName(),
             IvyJmxConstant.IvyServer.ExternalDatabase.KEY_TRANSACTION_TOTAL_EXE_TIME_IN_MS);
 
   }

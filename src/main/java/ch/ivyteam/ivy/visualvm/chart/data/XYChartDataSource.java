@@ -61,23 +61,28 @@ public class XYChartDataSource {
     }
   }
 
-  public void addFixedSerie(String serie, long fixedValue) {
+  public void addFixedSerie(String serie, String description, long fixedValue) {
     SerieDataSource serieDataSource = new AttributeDataSource(serie, 1L, SerieStyle.FILLED, fixedValue);
+    serieDataSource.setDescription(description);
     serieDataSources.add(serieDataSource);
   }
 
-  public void addSerie(String serie, SerieStyle style, ObjectName mBeanName, String attribute) {
+  public void addSerie(String serie, String description, SerieStyle style, ObjectName mBeanName,
+          String attribute) {
     SerieDataSource serieDataSource = new AttributeDataSource(serie, 1L,
             style, mBeanName, attribute);
+    serieDataSource.setDescription(description);
     serieDataSources.add(serieDataSource);
   }
 
-  public void addDeltaSerie(String serie, ObjectName mBeanName, String attribute) {
-    addDeltaSerie(serie, null, mBeanName, attribute);
+  public void addDeltaSerie(String serie, String description, ObjectName mBeanName, String attribute) {
+    addDeltaSerie(serie, description, null, mBeanName, attribute);
   }
 
-  private void addDeltaSerie(String serie, SerieStyle style, ObjectName mBeanName, String attribute) {
+  private void addDeltaSerie(String serie, String description, SerieStyle style, ObjectName mBeanName,
+          String attribute) {
     SerieDataSource serieDataSource = new DeltaAttributeDataSource(serie, 1L, style, mBeanName, attribute);
+    serieDataSource.setDescription(description);
     serieDataSources.add(serieDataSource);
   }
 

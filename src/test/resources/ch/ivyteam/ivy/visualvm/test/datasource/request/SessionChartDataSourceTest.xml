@@ -5,7 +5,7 @@
       <name>ivy:type=Manager,context=/ivy,host=localhost</name>
       <dataset>
         <property>
-          <name>sessionCounter</name>
+          <name>activeSessions</name>
           <value type="java.lang.Long">0</value>
         </property>
       </dataset>
@@ -41,7 +41,7 @@
       <name>ivy:type=Manager,context=/ivy,host=localhost</name>
       <dataset>
         <property>
-          <name>sessionCounter</name>
+          <name>activeSessions</name>
           <value type="java.lang.Long">5</value>
         </property>
       </dataset>
@@ -77,7 +77,7 @@
       <name>ivy:type=Manager,context=/ivy,host=localhost</name>
       <dataset>
         <property>
-          <name>sessionCounter</name>
+          <name>activeSessions</name>
           <value type="java.lang.Long">500</value>
         </property>
       </dataset>
