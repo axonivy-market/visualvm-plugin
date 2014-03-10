@@ -58,7 +58,7 @@ public class ExternalDbPanel extends javax.swing.JPanel {
     fAppIcon = (Icon) ImageUtilities.loadImage(APP_ICON_PATH, true);
     fEnvIcon = (Icon) ImageUtilities.loadImage(ENV_ICON_PATH, true);
     fConfIcon = (Icon) ImageUtilities.loadImage(CONF_ICON_PATH, true);
-    // need to init data models before init the tree and the list
+    // need to init data models before initialization of the tree and the list
     fRootNode = new EnvironmentNode("", true);
     fEnvTreeModel = new DefaultTreeModel(fRootNode);
     fConfigListModel = new DefaultListModel<>();
@@ -67,6 +67,7 @@ public class ExternalDbPanel extends javax.swing.JPanel {
     initTree();
     initList();
     initSelectionListeners();
+    autoResizeSplitpanes();
   }
 
   // CHECKSTYLE:OFF
@@ -250,7 +251,6 @@ public class ExternalDbPanel extends javax.swing.JPanel {
 
     preventSelection();
     keepSelectionWhenCollapse();
-    addResizeSplitpanesListener();
   }
 
   private void preventSelection() {
@@ -294,7 +294,7 @@ public class ExternalDbPanel extends javax.swing.JPanel {
     }
   }
 
-  private void addResizeSplitpanesListener() {
+  private void autoResizeSplitpanes() {
     addComponentListener(new ComponentAdapter() {
       @Override
       public void componentResized(ComponentEvent e) {
@@ -348,9 +348,7 @@ public class ExternalDbPanel extends javax.swing.JPanel {
     envJTree.addTreeSelectionListener(new TreeSelectionListener() {
       @Override
       public void valueChanged(TreeSelectionEvent e) {
-        if (envJTree.getSelectionPath() != null) {
-          fireSelectedAction();
-        }
+        fireSelectedAction();
       }
 
     });
@@ -365,10 +363,12 @@ public class ExternalDbPanel extends javax.swing.JPanel {
   }
 
   private void fireSelectedAction() {
-    EnvironmentNode node = (EnvironmentNode) envJTree.getSelectionPath().getLastPathComponent();
-    if (node != null && dbConfJList.getSelectedValue() != null) {
-      fExternalDbView.fireCreateChartsAction(node.getParent().toString(), node.toString(),
-              dbConfJList.getSelectedValue().toString());
+    if (envJTree.getSelectionPath() != null) {
+      EnvironmentNode node = (EnvironmentNode) envJTree.getSelectionPath().getLastPathComponent();
+      if (node != null && dbConfJList.getSelectedValue() != null) {
+        fExternalDbView.fireCreateChartsAction(node.getParent().toString(), node.toString(),
+                dbConfJList.getSelectedValue().toString());
+      }
     }
   }
 
