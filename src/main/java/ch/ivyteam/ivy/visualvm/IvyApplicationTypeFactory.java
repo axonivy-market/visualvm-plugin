@@ -21,7 +21,7 @@ class IvyApplicationTypeFactory extends MainClassApplicationTypeFactory {
   @Override
   public ApplicationType createApplicationTypeFor(Application app, Jvm jvm,
           String mainClass) {
-    // TODO: Specify the name of the application's main class here:
+    // TO DO: Specify the name of the application's main class here:
     if (isIvyServer(mainClass)) {
       return new IvyApplicationType(app.getPid(), IvyView.IVY_SERVER_APP_NAME);
     } else if (isIvyDesigner(mainClass, jvm)) {

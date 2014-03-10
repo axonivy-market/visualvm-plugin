@@ -565,24 +565,24 @@ public final class InformationPanelTopComponent extends TopComponent {
   // End of variables declaration//GEN-END:variables
   @Override
   public void componentOpened() {
-    // TODO add custom code on component opening
+    // TO DO add custom code on component opening
   }
 
   @Override
   public void componentClosed() {
-    // TODO add custom code on component closing
+    // TO DO add custom code on component closing
   }
 
   void writeProperties(java.util.Properties p) {
     // better to version settings since initial version as advocated at
     // http://wiki.apidesign.org/wiki/PropertyFiles
     p.setProperty("version", "1.0");
-    // TODO store your settings
+    // TO DO store your settings
   }
 
   void readProperties(java.util.Properties p) {
     String version = p.getProperty("version"); // NOPMD
-    // TODO read your settings according to their version
+    // TO DO read your settings according to their version
   }
 
   /*

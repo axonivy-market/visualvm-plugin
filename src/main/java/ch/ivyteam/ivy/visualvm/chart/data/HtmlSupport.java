@@ -1,6 +1,6 @@
 package ch.ivyteam.ivy.visualvm.chart.data;
 
-public class HtmlSupport {
+public final class HtmlSupport {
   private static final String TAG_BODY_START = "<html><body style='font-family:tahoma;font-size:11'>";
   private static final String TAG_BODY_END = "</body></html>";
   private static final String TAG_TABLE_START = "<table>";
@@ -11,6 +11,9 @@ public class HtmlSupport {
   private static final String TAG_CELL_BOLD_START = "<td style='font-weight:bold'>";
   private static final String TAG_CELL_END = "</td>";
   private static final String CHAR_COLON = ":";
+
+  private HtmlSupport() {
+  }
 
   public static String toOneRowHtmlTable(String[] labels, String[] value) {
     StringBuilder sb = new StringBuilder(TAG_BODY_START);

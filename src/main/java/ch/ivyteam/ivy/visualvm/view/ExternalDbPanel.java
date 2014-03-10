@@ -61,7 +61,7 @@ public class ExternalDbPanel extends javax.swing.JPanel {
     // need to init data models before init the tree and the list
     fRootNode = new EnvironmentNode("", true);
     fEnvTreeModel = new DefaultTreeModel(fRootNode);
-    fConfigListModel = new DefaultListModel();
+    fConfigListModel = new DefaultListModel<>();
 
     initComponents();
     initTree();
@@ -269,6 +269,7 @@ public class ExternalDbPanel extends javax.swing.JPanel {
           }
         }
       }
+
     });
   }
 
@@ -283,6 +284,7 @@ public class ExternalDbPanel extends javax.swing.JPanel {
       public void treeWillCollapse(TreeExpansionEvent event) throws ExpandVetoException {
         fSelectedPath = envJTree.getSelectionPaths();
       }
+
     });
   }
 
@@ -299,6 +301,7 @@ public class ExternalDbPanel extends javax.swing.JPanel {
         leftSplitpane.setDividerLocation((int) getSize().getHeight() / 2);
         mainSplitpane.setDividerLocation((int) (getSize().getWidth() / 6));
       }
+
     });
   }
 
@@ -317,6 +320,7 @@ public class ExternalDbPanel extends javax.swing.JPanel {
         setIcon(fConfIcon);
         return this;
       }
+
     });
   }
 
@@ -348,6 +352,7 @@ public class ExternalDbPanel extends javax.swing.JPanel {
           fireSelectedAction();
         }
       }
+
     });
 
     dbConfJList.addListSelectionListener(new ListSelectionListener() {
@@ -355,6 +360,7 @@ public class ExternalDbPanel extends javax.swing.JPanel {
       public void valueChanged(ListSelectionEvent e) {
         fireSelectedAction();
       }
+
     });
   }
 
@@ -389,6 +395,7 @@ public class ExternalDbPanel extends javax.swing.JPanel {
     public boolean isAppNode() {
       return this.isAppNode;
     }
+
   }
 
   private class EnvCellRenderer extends DefaultTreeCellRenderer {
@@ -410,5 +417,6 @@ public class ExternalDbPanel extends javax.swing.JPanel {
       }
       return this;
     }
+
   }
 }

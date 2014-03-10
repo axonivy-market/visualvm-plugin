@@ -254,7 +254,7 @@ public final class DataUtils {
   }
 
   public static Set<ObjectName> getExternalDbConfigs(MBeanServerConnection connection) {
-    Set<ObjectName> externalDbConfigs = new TreeSet();
+    Set<ObjectName> externalDbConfigs = new TreeSet<>();
     try {
       String filterName = "Xpert.ivy Server:type=External Database,application=*,environment=*,name=*";
       ObjectName objName = new ObjectName(filterName);
@@ -264,4 +264,5 @@ public final class DataUtils {
     }
     return externalDbConfigs;
   }
+
 }
