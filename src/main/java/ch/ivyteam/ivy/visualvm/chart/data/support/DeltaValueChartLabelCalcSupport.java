@@ -9,7 +9,7 @@ public class DeltaValueChartLabelCalcSupport extends ChartLabelCalcSupport {
 
   public DeltaValueChartLabelCalcSupport(String text, ObjectName objName, String attrKey) {
     setText(text);
-    setValue(Long.MIN_VALUE);
+    super.setValue(Long.MIN_VALUE);
     fObjName = objName;
     fAttrKey = attrKey;
   }
@@ -17,23 +17,29 @@ public class DeltaValueChartLabelCalcSupport extends ChartLabelCalcSupport {
   @Override
   public long calculateValue(QueryResult queryResult) {
     Object value = queryResult.getValue(fObjName, fAttrKey);
-    long max = getValue();
+    long result = getValue();
     if (value instanceof Number) {
-      max = ((Number) value).longValue();
+      result = ((Number) value).longValue();
       if (isLastValueValid()) {
-        long delta = max - getValue();
-        setValue(max);
-        max = delta;
+        result = result - getValue();
       } else {
-        setValue(max);
-        max = 0;
+        result = 0;
       }
     }
-    return max;
+    return result;
   }
 
   private boolean isLastValueValid() {
     return getValue() != Long.MIN_VALUE;
+  }
+
+  @Override
+  public void setValue(long value) {
+    if (isLastValueValid()) {
+      super.setValue(getValue() + value);
+    } else {
+      super.setValue(value);
+    }
   }
 
 }
