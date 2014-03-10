@@ -3,17 +3,16 @@ package ch.ivyteam.ivy.visualvm.chart.data;
 import ch.ivyteam.ivy.visualvm.chart.Query;
 import ch.ivyteam.ivy.visualvm.chart.QueryResult;
 import ch.ivyteam.ivy.visualvm.view.IDataBeanProvider;
-import eu.hansolo.steelseries.tools.Section;
 import java.util.ArrayList;
 import java.util.List;
 import javax.management.ObjectName;
 
 public class GaugeDataSource {
-  private final List<Section> fSections = new ArrayList<>();
   private final IDataBeanProvider fDataBeanProvider;
   private final String fAttribute;
   private final ObjectName fMBeanName;
   private static final double SCALE_FACTOR = 1D;
+  private final List<Double> fThresHolds = new ArrayList<>();
 
   public GaugeDataSource(IDataBeanProvider dataBeanProvider, ObjectName mBeanName, String attribute) {
     fDataBeanProvider = dataBeanProvider;
@@ -21,8 +20,8 @@ public class GaugeDataSource {
     fAttribute = attribute;
   }
 
-  public List<Section> getSections() {
-    return fSections;
+  public List<Double> getThresHolds() {
+    return fThresHolds;
   }
 
   public IDataBeanProvider getDataBeanProvider() {

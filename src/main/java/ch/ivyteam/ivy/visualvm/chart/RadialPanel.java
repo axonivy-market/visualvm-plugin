@@ -39,45 +39,6 @@ public class RadialPanel extends AbstractGaugePanel {
     getUI().setPostsVisible(false);
     getUI().getGaugeType().LCD_FACTORS.setRect(DEFAULT_LCD_RECTANGLE);
 
-    configRadialSections();
-  }
-
-  private void configRadialSections() {
-    if (!getSections().isEmpty()) {
-      double delta = getSections().get(getSections().size() - 1).getStop() - getSections().get(0).getStart();
-      int digit = (int) Math.floor(Math.log10(delta));
-
-      double tickSpacing = chooseGaugeTickSpacing(Double.valueOf(delta), digit).doubleValue();
-      getUI().setMinorTickSpacing(tickSpacing / 10.0D);
-      getUI().setMajorTickSpacing(tickSpacing);
-    }
-  }
-
-  private Double chooseGaugeTickSpacing(Double range, int digit) {
-    double d = 1.0D;
-    if (digit == -2) {
-      d = 0.01D;
-    } else if (digit == -1) {
-      d = 0.1D;
-    } else if (digit == 0) {
-      d = 1.0D;
-    } else if (digit > 0) {
-      d = calculateGaugeTickSpacing(range, digit).doubleValue();
-    }
-    return Double.valueOf(d);
-  }
-
-  private Double calculateGaugeTickSpacing(Double range, int digit) {
-    double round = Math.round(range.doubleValue());
-    int tenPower = (int) Math.pow(10.0D, digit);
-    double fraction = round / tenPower;
-    double tickSpacing;
-    if (digit < 3) {
-      tickSpacing = Math.round(fraction) * tenPower / 10L;
-    } else {
-      tickSpacing = Math.ceil(fraction) * tenPower / 10.0D;
-    }
-    return Double.valueOf(tickSpacing);
   }
 
   @Override
