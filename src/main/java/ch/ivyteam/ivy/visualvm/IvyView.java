@@ -1,6 +1,7 @@
 package ch.ivyteam.ivy.visualvm;
 
 import ch.ivyteam.ivy.visualvm.exception.ClosedIvyServerConnectionException;
+import ch.ivyteam.ivy.visualvm.util.DataUtils;
 import ch.ivyteam.ivy.visualvm.view.AbstractView;
 import ch.ivyteam.ivy.visualvm.view.ExternalDbView;
 import ch.ivyteam.ivy.visualvm.view.IDataBeanProvider;
@@ -48,10 +49,12 @@ class IvyView extends DataSourceView {
   private final List<AbstractView> views = new ArrayList<>();
   private final DataPollSettingChangeListener pollSettingChangeListener = new DataPollSettingChangeListener();
   private final boolean fIsIvyServer;
+  private final Application fIvyApplication;
 
   public IvyView(Application application, boolean isServer) {
     super(application, "Xpert.ivy", new ImageIcon(ImageUtilities.loadImage(IVY_IMAGE_PATH, true)).
             getImage(), 60, false);
+    fIvyApplication = application;
     fIsIvyServer = isServer;
   }
 
@@ -117,10 +120,15 @@ class IvyView extends DataSourceView {
   }
 
   private void addExternalDBView(IDataBeanProvider dataBeanProvider, JTabbedPane tabbed) {
-    ExternalDbView extDbView = new ExternalDbView(dataBeanProvider);
-    views.add(extDbView);
-    tabbed.addTab("External database", (Icon) ImageUtilities.loadImage(EXT_DB_ICON_IMAGE_PATH, true),
-            extDbView.getViewComponent());
+    MBeanServerConnection mbeanConnection = DataUtils.getMBeanConnection(fIvyApplication);
+    List<String> configsList = DataUtils.getExternalDbConfigs(mbeanConnection);
+    boolean extDbAvailable = !configsList.isEmpty(); // list is not empty
+    if (extDbAvailable) {
+      ExternalDbView extDbView = new ExternalDbView(dataBeanProvider, fIvyApplication);
+      views.add(extDbView);
+      tabbed.addTab("External database", (Icon) ImageUtilities.loadImage(EXT_DB_ICON_IMAGE_PATH, true),
+              extDbView.getViewComponent());
+    }
   }
 
   private DataViewComponent createDVC(String masterViewTitle, JComponent comp) {

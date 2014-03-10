@@ -1,14 +1,21 @@
 package ch.ivyteam.ivy.visualvm.util;
 
 import ch.ivyteam.ivy.visualvm.model.ServerConnectorInfo;
+import com.sun.tools.visualvm.application.Application;
+import com.sun.tools.visualvm.tools.jmx.JmxModel;
+import com.sun.tools.visualvm.tools.jmx.JmxModelFactory;
+import java.io.IOException;
 import java.text.DateFormat;
 import java.text.MessageFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
+import java.util.Set;
 import java.util.logging.Logger;
+import javax.management.MBeanServerConnection;
 import javax.management.ObjectName;
 
 public final class DataUtils {
@@ -240,4 +247,30 @@ public final class DataUtils {
     return splits[1];
   }
 
+  public static MBeanServerConnection getMBeanConnection(Application app) {
+    JmxModel jmx = JmxModelFactory.getJmxModelFor(app);
+    return jmx.getMBeanServerConnection();
+  }
+
+  public static List<String> getExternalDbConfigs(MBeanServerConnection connection) {
+    List<String> externalDbConfigs = new ArrayList();
+    try {
+      Set<ObjectName> queryNames = connection.queryNames(null, null);
+      for (ObjectName objectName : queryNames) {
+        String type = objectName.getKeyProperty("type");
+        if (type != null && type.equals("External Database")) {
+          StringBuilder config = new StringBuilder();
+          config.append(objectName.getKeyProperty("application"));
+          config.append(":");
+          config.append(objectName.getKeyProperty("environment"));
+          config.append(":");
+          config.append(objectName.getKeyProperty("name"));
+          externalDbConfigs.add(config.toString());
+        }
+      }
+    } catch (IOException ex) {
+      // log something here
+    }
+    return externalDbConfigs;
+  }
 }
