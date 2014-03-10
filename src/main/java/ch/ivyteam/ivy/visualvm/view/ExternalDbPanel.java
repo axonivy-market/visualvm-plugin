@@ -301,7 +301,6 @@ public class ExternalDbPanel extends javax.swing.JPanel {
         leftSplitpane.setDividerLocation((int) getSize().getHeight() / 2);
         mainSplitpane.setDividerLocation((int) (getSize().getWidth() / 6));
       }
-
     });
   }
 
@@ -348,7 +347,7 @@ public class ExternalDbPanel extends javax.swing.JPanel {
     envJTree.addTreeSelectionListener(new TreeSelectionListener() {
       @Override
       public void valueChanged(TreeSelectionEvent e) {
-        fireSelectedAction();
+        handleSelectionAction();
       }
 
     });
@@ -356,19 +355,20 @@ public class ExternalDbPanel extends javax.swing.JPanel {
     dbConfJList.addListSelectionListener(new ListSelectionListener() {
       @Override
       public void valueChanged(ListSelectionEvent e) {
-        fireSelectedAction();
+        handleSelectionAction();
       }
-
     });
   }
 
-  private void fireSelectedAction() {
-    if (envJTree.getSelectionPath() != null) {
-      EnvironmentNode node = (EnvironmentNode) envJTree.getSelectionPath().getLastPathComponent();
-      if (node != null && dbConfJList.getSelectedValue() != null) {
-        fExternalDbView.fireCreateChartsAction(node.getParent().toString(), node.toString(),
-                dbConfJList.getSelectedValue().toString());
-      }
+  private void handleSelectionAction() {
+    if (envJTree.getSelectionPath() == null || dbConfJList.getSelectedValue() == null) {
+      return;
+    }
+    
+    EnvironmentNode node = (EnvironmentNode) envJTree.getSelectionPath().getLastPathComponent();
+    if (node != null) {
+      fExternalDbView.fireCreateChartsAction(node.getParent().toString(), node.toString(),
+              dbConfJList.getSelectedValue().toString());
     }
   }
 

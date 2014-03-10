@@ -34,7 +34,6 @@ public class ExternalDbView extends AbstractView {
   private final ExternalDbPanel fExternalDBPanel;
   private Set<ObjectName> fExternalDbConfigList;
   private String fCurrentAppName, fCurrentEnvName, fCurrentConfigName;
-  private ChartsPanel fExternalDbChartPanel;
   private final Map<String, ChartsPanel> createdCharts;
 
   public ExternalDbView(IDataBeanProvider dataBeanProvider, Application application) {
@@ -47,20 +46,21 @@ public class ExternalDbView extends AbstractView {
   // call when user select environment & db configuration
   private ChartsPanel createExternalDbChartPanel() {
 
-    fExternalDbChartPanel = new ChartsPanel(false);
+    ChartsPanel chartPanel = new ChartsPanel(false);
     ExternalDbConnectionChartDataSource connectionDataSource = new ExternalDbConnectionChartDataSource(
             getDataBeanProvider(), null, null, "Connections");
     ExternalDbTransactionChartDataSource transactionDataSource = new ExternalDbTransactionChartDataSource(
             getDataBeanProvider(), null, null, "Transactions");
     ExternalDbProcessingTimeChartDataSource transProcessTimeDataSource = new ExternalDbProcessingTimeChartDataSource(
-            getDataBeanProvider(), null, null, "Processing Time [ms]");
+            getDataBeanProvider(), null, null,
+            "Processing Time [ms]");
 
     configDataSources(connectionDataSource, transactionDataSource, transProcessTimeDataSource);
-    fExternalDbChartPanel.addChart(connectionDataSource);
-    fExternalDbChartPanel.addChart(transactionDataSource);
-    fExternalDbChartPanel.addChart(transProcessTimeDataSource);
-    registerScheduledUpdate(fExternalDbChartPanel);
-    return fExternalDbChartPanel;
+    chartPanel.addChart(connectionDataSource);
+    chartPanel.addChart(transactionDataSource);
+    chartPanel.addChart(transProcessTimeDataSource);
+    registerScheduledUpdate(chartPanel);
+    return chartPanel;
   }
 
   private void configDataSources(AbstractEDBDataSource... dataSources) {
