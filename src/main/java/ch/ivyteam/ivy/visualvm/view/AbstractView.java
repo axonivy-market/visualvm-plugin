@@ -64,10 +64,14 @@ public class AbstractView {
     fUpdatableUIObjects.add(updatableObject);
   }
 
+  public void unregisterScheduledUpdate(IUpdatableUIObject updatableObject) {
+    fUpdatableUIObjects.remove(updatableObject);
+  }
+
   /**
    * Disable close ability for an area with specified position on viewer
    *
-   * @param viewer   the viewer
+   * @param viewer the viewer
    * @param position the position on view
    * @see DataViewComponent#configureDetailsArea(
    * com.sun.tools.visualvm.core.ui.components.DataViewComponent.DetailsAreaConfiguration, int)

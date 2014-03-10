@@ -9,8 +9,16 @@ import ch.ivyteam.ivy.visualvm.chart.data.externaldb.AbstractEDBDataSource;
 import ch.ivyteam.ivy.visualvm.chart.data.externaldb.EDBConnectionChartDataSource;
 import ch.ivyteam.ivy.visualvm.chart.data.externaldb.EDBProcessingTimeChartDataSource;
 import ch.ivyteam.ivy.visualvm.chart.data.externaldb.EDBTransactionChartDataSource;
+import ch.ivyteam.ivy.visualvm.util.DataUtils;
 import com.sun.tools.visualvm.application.Application;
 import com.sun.tools.visualvm.core.ui.components.DataViewComponent;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Set;
+import java.util.TreeSet;
+import javax.management.MBeanServerConnection;
+import javax.management.ObjectName;
+import org.apache.commons.lang.StringUtils;
 
 /**
  *
@@ -19,15 +27,22 @@ import com.sun.tools.visualvm.core.ui.components.DataViewComponent;
 public class ExternalDbView extends AbstractView {
 
   private final Application fIvyApplication;
+  private final ExternalDbPanel fExternalDBPanel;
+  private Set<ObjectName> fExternalDbConfigList;
+  private String fCurrentAppName, fCurrentEnvName, fCurrentConfigName;
+  private ChartsPanel fExternalDbChartPanel;
 
   public ExternalDbView(IDataBeanProvider dataBeanProvider, Application application) {
     super(dataBeanProvider);
     fIvyApplication = application;
+    fExternalDBPanel = new ExternalDbPanel(this);
   }
 
 // call when user select environment & db configuration
-  private ChartsPanel createExternalDatabaseView() {
-    final ChartsPanel externalDbPanel = new ChartsPanel(false);
+  private ChartsPanel createExternalDbChartPanel() {
+    unregisterScheduledUpdate(fExternalDbChartPanel);
+    
+    fExternalDbChartPanel = new ChartsPanel(false);
     EDBConnectionChartDataSource connectionDataSource = new EDBConnectionChartDataSource(
             getDataBeanProvider(), null, null, "Connections");
     EDBTransactionChartDataSource transactionDataSource = new EDBTransactionChartDataSource(
@@ -36,18 +51,20 @@ public class ExternalDbView extends AbstractView {
             getDataBeanProvider(), null, null, "Processing Time [ms]");
 
     configDataSources(connectionDataSource, transactionDataSource, transProcessTimeDataSource);
-    externalDbPanel.addChart(connectionDataSource);
-    externalDbPanel.addChart(transactionDataSource);
-    externalDbPanel.addChart(transProcessTimeDataSource);
+    fExternalDbChartPanel.addChart(connectionDataSource);
+    fExternalDbChartPanel.addChart(transactionDataSource);
+    fExternalDbChartPanel.addChart(transProcessTimeDataSource);
 
-    return externalDbPanel;
+    registerScheduledUpdate(fExternalDbChartPanel);
+    return fExternalDbChartPanel;
   }
 
+  // String[] appEnvConf includes Application, Environment, Configuration
   private void configDataSources(AbstractEDBDataSource... dataSources) {
     for (AbstractEDBDataSource dataSource : dataSources) {
-      dataSource.setApplication("Test");
-//      dataSource.setEnvironment("Test");
-      dataSource.setConfigName("MySQL2");
+      dataSource.setApplication(fCurrentAppName);
+      dataSource.setEnvironment(fCurrentEnvName);
+      dataSource.setConfigName(fCurrentConfigName);
       dataSource.init();
     }
   }
@@ -55,9 +72,57 @@ public class ExternalDbView extends AbstractView {
   @Override
   public DataViewComponent getViewComponent() {
     DataViewComponent viewComponent = super.getViewComponent();
-    ExternalDbPanel fExternalDBPanel = new ExternalDbPanel(fIvyApplication);
-    fExternalDBPanel.addChartPanel(createExternalDatabaseView());
     viewComponent.add(fExternalDBPanel);
+    initExtDbData();
     return viewComponent;
+  }
+
+  private void initExtDbData() {
+    MBeanServerConnection mbeanConnection = DataUtils.getMBeanConnection(fIvyApplication);
+    // List<String> includes string with pattern ApplicationName:EvironmentName:ExtDBConfiguration
+    fExternalDbConfigList = DataUtils.getExternalDbConfigs(mbeanConnection);
+
+    Map<String, Set<String>> appEnvMap = new HashMap();
+    Set<String> configs = new TreeSet();
+    String appString = "application", envString = "environment", configString = "name";
+    for (ObjectName each : fExternalDbConfigList) {
+
+      if (appEnvMap.containsKey(each.getKeyProperty(appString))) {
+        Set<String> env = appEnvMap.get(each.getKeyProperty(appString));
+        env.add(each.getKeyProperty(envString));
+      } else {
+        Set<String> envList = new TreeSet();
+        envList.add(each.getKeyProperty(envString));
+        appEnvMap.put(each.getKeyProperty(appString), envList);
+      }
+
+      configs.add(each.getKeyProperty(configString)); // add all db configs into the list
+    }
+    fExternalDBPanel.initTreeData(appEnvMap);
+    fExternalDBPanel.initListData(configs);
+  }
+
+  void fireCreateChartsAction(String appName, String envName, String configName) {
+    if (checkCorrectSelection(appName, envName, configName)) {
+      fCurrentAppName = appName;
+      fCurrentEnvName = envName;
+      fCurrentConfigName = configName;
+      fExternalDBPanel.addChartPanel(createExternalDbChartPanel());
+    }
+  }
+
+  private boolean checkCorrectSelection(String appName, String envName, String confName) {
+    if (StringUtils.isEmpty(appName) || StringUtils.isEmpty(envName) || StringUtils.isEmpty(confName)) {
+      return false;
+    }
+
+    for (ObjectName appEnvConf : fExternalDbConfigList) {
+      if (appEnvConf.getKeyProperty("application").equals(appName)
+              && appEnvConf.getKeyProperty("environment").equals(envName)
+              && appEnvConf.getKeyProperty("name").equals(confName)) {
+        return true;
+      }
+    }
+    return false;
   }
 }

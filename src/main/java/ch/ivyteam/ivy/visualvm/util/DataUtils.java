@@ -9,13 +9,14 @@ import java.text.DateFormat;
 import java.text.MessageFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.Set;
+import java.util.TreeSet;
 import java.util.logging.Logger;
 import javax.management.MBeanServerConnection;
+import javax.management.MalformedObjectNameException;
 import javax.management.ObjectName;
 
 public final class DataUtils {
@@ -252,23 +253,13 @@ public final class DataUtils {
     return jmx.getMBeanServerConnection();
   }
 
-  public static List<String> getExternalDbConfigs(MBeanServerConnection connection) {
-    List<String> externalDbConfigs = new ArrayList();
+  public static Set<ObjectName> getExternalDbConfigs(MBeanServerConnection connection) {
+    Set<ObjectName> externalDbConfigs = new TreeSet();
     try {
-      Set<ObjectName> queryNames = connection.queryNames(null, null);
-      for (ObjectName objectName : queryNames) {
-        String type = objectName.getKeyProperty("type");
-        if (type != null && type.equals("External Database")) {
-          StringBuilder config = new StringBuilder();
-          config.append(objectName.getKeyProperty("application"));
-          config.append(":");
-          config.append(objectName.getKeyProperty("environment"));
-          config.append(":");
-          config.append(objectName.getKeyProperty("name"));
-          externalDbConfigs.add(config.toString());
-        }
-      }
-    } catch (IOException ex) {
+      String filterName = "Xpert.ivy Server:type=External Database,application=*,environment=*,name=*";
+      ObjectName objName = new ObjectName(filterName);
+      externalDbConfigs = connection.queryNames(objName, null);
+    } catch (IOException | MalformedObjectNameException ex) {
       // log something here
     }
     return externalDbConfigs;

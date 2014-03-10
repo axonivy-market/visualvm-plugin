@@ -5,25 +5,19 @@
 package ch.ivyteam.ivy.visualvm.view;
 
 import ch.ivyteam.ivy.visualvm.chart.ChartsPanel;
-import ch.ivyteam.ivy.visualvm.util.DataUtils;
-import com.sun.tools.visualvm.application.Application;
 import java.awt.Component;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.TreeSet;
-import javax.management.MBeanServerConnection;
 import javax.swing.DefaultListCellRenderer;
 import javax.swing.DefaultListModel;
 import javax.swing.Icon;
 import javax.swing.JList;
 import javax.swing.JTree;
 import javax.swing.ListSelectionModel;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import javax.swing.event.TreeExpansionEvent;
 import javax.swing.event.TreeSelectionEvent;
 import javax.swing.event.TreeSelectionListener;
@@ -37,42 +31,42 @@ import javax.swing.tree.TreeSelectionModel;
 import org.openide.util.ImageUtilities;
 
 /**
- * 
+ *
  * @author htnam
  */
-@SuppressWarnings("serial")
+@SuppressWarnings({"serial", "PMD.SingularField"})
 public class ExternalDbPanel extends javax.swing.JPanel {
 
   private static final String APP_ICON_PATH = "resources/icons/app_icon.png";
   private static final String ENV_ICON_PATH = "resources/icons/env_icon.png";
   private static final String CONF_ICON_PATH = "resources/icons/db_icon.png";
 
-  private final DefaultListModel<String> configListModel;
-  private final DefaultTreeModel envTreeModel;
-  private final Icon appIcon;
-  private final Icon envIcon;
-  private final Icon confIcon;
-  private TreePath[] selectedPath;
-  private final DefaultMutableTreeNode rootNode;
-  private final Application fIvyApplication;
+  private final DefaultListModel<String> fConfigListModel;
+  private final DefaultTreeModel fEnvTreeModel;
+  private final Icon fAppIcon;
+  private final Icon fEnvIcon;
+  private final Icon fConfIcon;
+  private TreePath[] fSelectedPath;
+  private final DefaultMutableTreeNode fRootNode;
+  private final ExternalDbView fExternalDbView;
 
   /**
    * Creates new form ExternalDbPanel
    */
-  public ExternalDbPanel(Application alication) {
-    fIvyApplication = alication;
-    appIcon = (Icon) ImageUtilities.loadImage(APP_ICON_PATH, true);
-    envIcon = (Icon) ImageUtilities.loadImage(ENV_ICON_PATH, true);
-    confIcon = (Icon) ImageUtilities.loadImage(CONF_ICON_PATH, true);
+  public ExternalDbPanel(ExternalDbView dbView) {
+    fExternalDbView = dbView;
+    fAppIcon = (Icon) ImageUtilities.loadImage(APP_ICON_PATH, true);
+    fEnvIcon = (Icon) ImageUtilities.loadImage(ENV_ICON_PATH, true);
+    fConfIcon = (Icon) ImageUtilities.loadImage(CONF_ICON_PATH, true);
     // need to init data models before init the tree and the list
-    rootNode = new EnvironmentNode("", true);
-    envTreeModel = new DefaultTreeModel(rootNode);
-    configListModel = new DefaultListModel();
+    fRootNode = new EnvironmentNode("", true);
+    fEnvTreeModel = new DefaultTreeModel(fRootNode);
+    fConfigListModel = new DefaultListModel();
 
     initComponents();
     initTree();
     initList();
-    initEnvironmentTreeData();
+    initSelectionListeners();
   }
 
   // CHECKSTYLE:OFF
@@ -89,7 +83,7 @@ public class ExternalDbPanel extends javax.swing.JPanel {
     leftSplitpane = new javax.swing.JSplitPane();
     jPanel1 = new javax.swing.JPanel();
     jScrollPane1 = new javax.swing.JScrollPane();
-    env_jtree = new javax.swing.JTree();
+    envJTree = new javax.swing.JTree();
     jPanel2 = new javax.swing.JPanel();
     jLabel1 = new javax.swing.JLabel();
     jSeparator1 = new javax.swing.JSeparator();
@@ -98,7 +92,7 @@ public class ExternalDbPanel extends javax.swing.JPanel {
     jLabel2 = new javax.swing.JLabel();
     jSeparator2 = new javax.swing.JSeparator();
     jScrollPane2 = new javax.swing.JScrollPane();
-    dbconfJList = new javax.swing.JList();
+    dbConfJList = new javax.swing.JList();
     jPanel5 = new javax.swing.JPanel();
 
     setLayout(new java.awt.GridBagLayout());
@@ -114,9 +108,9 @@ public class ExternalDbPanel extends javax.swing.JPanel {
 
     jScrollPane1.setBorder(null);
 
-    env_jtree.setModel(envTreeModel);
-    env_jtree.setRootVisible(false);
-    jScrollPane1.setViewportView(env_jtree);
+    envJTree.setModel(fEnvTreeModel);
+    envJTree.setRootVisible(false);
+    jScrollPane1.setViewportView(envJTree);
 
     gridBagConstraints = new java.awt.GridBagConstraints();
     gridBagConstraints.gridx = 0;
@@ -130,10 +124,8 @@ public class ExternalDbPanel extends javax.swing.JPanel {
     jPanel2.setBackground(new java.awt.Color(255, 255, 255));
     jPanel2.setLayout(new java.awt.GridBagLayout());
 
-    org.openide.awt.Mnemonics.setLocalizedText(jLabel1,
-            org.openide.util.NbBundle.getMessage(ExternalDbPanel.class, "ExternalDbPanel.jLabel1.text")); // NOI18N
-    jLabel1.setToolTipText(org.openide.util.NbBundle.getMessage(ExternalDbPanel.class,
-            "ExternalDbPanel.jLabel1.toolTipText")); // NOI18N
+    org.openide.awt.Mnemonics.setLocalizedText(jLabel1, org.openide.util.NbBundle.getMessage(ExternalDbPanel.class, "ExternalDbPanel.jLabel1.text")); // NOI18N
+    jLabel1.setToolTipText(org.openide.util.NbBundle.getMessage(ExternalDbPanel.class, "ExternalDbPanel.jLabel1.toolTipText")); // NOI18N
     jLabel1.setHorizontalTextPosition(javax.swing.SwingConstants.LEADING);
     gridBagConstraints = new java.awt.GridBagConstraints();
     gridBagConstraints.gridx = 0;
@@ -165,10 +157,8 @@ public class ExternalDbPanel extends javax.swing.JPanel {
     jPanel4.setBackground(new java.awt.Color(255, 255, 255));
     jPanel4.setLayout(new java.awt.GridBagLayout());
 
-    org.openide.awt.Mnemonics.setLocalizedText(jLabel2,
-            org.openide.util.NbBundle.getMessage(ExternalDbPanel.class, "ExternalDbPanel.jLabel2.text")); // NOI18N
-    jLabel2.setToolTipText(org.openide.util.NbBundle.getMessage(ExternalDbPanel.class,
-            "ExternalDbPanel.jLabel2.toolTipText")); // NOI18N
+    org.openide.awt.Mnemonics.setLocalizedText(jLabel2, org.openide.util.NbBundle.getMessage(ExternalDbPanel.class, "ExternalDbPanel.jLabel2.text")); // NOI18N
+    jLabel2.setToolTipText(org.openide.util.NbBundle.getMessage(ExternalDbPanel.class, "ExternalDbPanel.jLabel2.toolTipText")); // NOI18N
     jLabel2.setHorizontalTextPosition(javax.swing.SwingConstants.LEADING);
     gridBagConstraints = new java.awt.GridBagConstraints();
     gridBagConstraints.gridx = 0;
@@ -194,9 +184,9 @@ public class ExternalDbPanel extends javax.swing.JPanel {
 
     jScrollPane2.setBorder(null);
 
-    dbconfJList.setModel(configListModel);
-    dbconfJList.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_INTERVAL_SELECTION);
-    jScrollPane2.setViewportView(dbconfJList);
+    dbConfJList.setModel(fConfigListModel);
+    dbConfJList.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_INTERVAL_SELECTION);
+    jScrollPane2.setViewportView(dbConfJList);
 
     gridBagConstraints = new java.awt.GridBagConstraints();
     gridBagConstraints.gridx = 0;
@@ -216,13 +206,13 @@ public class ExternalDbPanel extends javax.swing.JPanel {
     javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
     jPanel5.setLayout(jPanel5Layout);
     jPanel5Layout.setHorizontalGroup(
-            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGap(0, 130, Short.MAX_VALUE)
-            );
+      jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+      .addGap(0, 130, Short.MAX_VALUE)
+    );
     jPanel5Layout.setVerticalGroup(
-            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGap(0, 298, Short.MAX_VALUE)
-            );
+      jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+      .addGap(0, 298, Short.MAX_VALUE)
+    );
 
     mainSplitpane.setRightComponent(jPanel5);
 
@@ -236,29 +226,27 @@ public class ExternalDbPanel extends javax.swing.JPanel {
   }// </editor-fold>//GEN-END:initComponents
 
   // Variables declaration - do not modify//GEN-BEGIN:variables
-  private javax.swing.JList<String> dbconfJList;
-  private javax.swing.JTree env_jtree;
-  private javax.swing.JLabel jLabel1;// NOPMD
-  private javax.swing.JLabel jLabel2;// NOPMD
-  private javax.swing.JPanel jPanel1;// NOPMD
-  private javax.swing.JPanel jPanel2;// NOPMD
-  private javax.swing.JPanel jPanel3;// NOPMD
-  private javax.swing.JPanel jPanel4;// NOPMD
-  private javax.swing.JPanel jPanel5;// NOPMD
-  private javax.swing.JScrollPane jScrollPane1;// NOPMD
-  private javax.swing.JScrollPane jScrollPane2;// NOPMD
-  private javax.swing.JSeparator jSeparator1;// NOPMD
-  private javax.swing.JSeparator jSeparator2;// NOPMD
+  private javax.swing.JList dbConfJList;
+  private javax.swing.JTree envJTree;
+  private javax.swing.JLabel jLabel1;
+  private javax.swing.JLabel jLabel2;
+  private javax.swing.JPanel jPanel1;
+  private javax.swing.JPanel jPanel2;
+  private javax.swing.JPanel jPanel3;
+  private javax.swing.JPanel jPanel4;
+  private javax.swing.JPanel jPanel5;
+  private javax.swing.JScrollPane jScrollPane1;
+  private javax.swing.JScrollPane jScrollPane2;
+  private javax.swing.JSeparator jSeparator1;
+  private javax.swing.JSeparator jSeparator2;
   private javax.swing.JSplitPane leftSplitpane;
   private javax.swing.JSplitPane mainSplitpane;
-
   // End of variables declaration//GEN-END:variables
   // CHECKSTYLE:ON
-
   private void initTree() {
-    env_jtree.setCellRenderer(new EnvCellRenderer());
-    env_jtree.getSelectionModel().setSelectionMode(TreeSelectionModel.SINGLE_TREE_SELECTION);
-    env_jtree.setToggleClickCount(1);
+    envJTree.setCellRenderer(new EnvCellRenderer());
+    envJTree.getSelectionModel().setSelectionMode(TreeSelectionModel.SINGLE_TREE_SELECTION);
+    envJTree.setToggleClickCount(1);
 
     preventSelection();
     keepSelectionWhenCollapse();
@@ -266,7 +254,7 @@ public class ExternalDbPanel extends javax.swing.JPanel {
   }
 
   private void preventSelection() {
-    env_jtree.addTreeSelectionListener(new TreeSelectionListener() {
+    envJTree.addTreeSelectionListener(new TreeSelectionListener() {
 
       @Override
       public void valueChanged(TreeSelectionEvent e) {
@@ -275,9 +263,9 @@ public class ExternalDbPanel extends javax.swing.JPanel {
         if (newPath != null) {
           EnvironmentNode node = (EnvironmentNode) newPath.getLastPathComponent();
           if (node.isAppNode()) {
-            env_jtree.setSelectionPath(oldPath);
+            envJTree.setSelectionPath(oldPath);
           } else {
-            env_jtree.setSelectionPath(newPath);
+            envJTree.setSelectionPath(newPath);
           }
         }
       }
@@ -285,22 +273,22 @@ public class ExternalDbPanel extends javax.swing.JPanel {
   }
 
   private void keepSelectionWhenCollapse() {
-    env_jtree.addTreeWillExpandListener(new TreeWillExpandListener() {
+    envJTree.addTreeWillExpandListener(new TreeWillExpandListener() {
       @Override
       public void treeWillExpand(TreeExpansionEvent event) throws ExpandVetoException {
-        env_jtree.setSelectionPaths(selectedPath);
+        envJTree.setSelectionPaths(fSelectedPath);
       }
 
       @Override
       public void treeWillCollapse(TreeExpansionEvent event) throws ExpandVetoException {
-        selectedPath = env_jtree.getSelectionPaths();
+        fSelectedPath = envJTree.getSelectionPaths();
       }
     });
   }
 
   private void expandAllNodes() {
-    for (int i = 0; i < env_jtree.getRowCount(); ++i) {
-      env_jtree.expandRow(i);
+    for (int i = 0; i < envJTree.getRowCount(); ++i) {
+      envJTree.expandRow(i);
     }
   }
 
@@ -309,27 +297,73 @@ public class ExternalDbPanel extends javax.swing.JPanel {
       @Override
       public void componentResized(ComponentEvent e) {
         leftSplitpane.setDividerLocation((int) getSize().getHeight() / 2);
-        mainSplitpane.setDividerLocation((int) (getSize().getWidth() / 5));
+        mainSplitpane.setDividerLocation((int) (getSize().getWidth() / 6));
       }
     });
   }
 
-  void addChartPanel(ChartsPanel createExternalDatabaseView) {
-    mainSplitpane.setRightComponent(createExternalDatabaseView.getUIComponent());
+  void addChartPanel(ChartsPanel externalDbChartPanel) {
+    mainSplitpane.setRightComponent(externalDbChartPanel.getUIComponent());
   }
 
   private void initList() {
-    dbconfJList.getSelectionModel().setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-    dbconfJList.setCellRenderer(new DefaultListCellRenderer() {
+    dbConfJList.getSelectionModel().setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+    dbConfJList.setCellRenderer(new DefaultListCellRenderer() {
 
       @Override
       public Component getListCellRendererComponent(JList list, Object value, int index, boolean isSelected,
               boolean cellHasFocus) {
         super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
-        setIcon(confIcon);
+        setIcon(fConfIcon);
         return this;
       }
     });
+  }
+
+  void initTreeData(Map<String, Set<String>> appEnvMap) {
+    int index = 0;
+    for (String appName : appEnvMap.keySet()) {
+      ExternalDbPanel.EnvironmentNode appNode = new ExternalDbPanel.EnvironmentNode(appName, true);
+      fEnvTreeModel.insertNodeInto(appNode, fRootNode, index++);
+      int envIndex = 0;
+      for (String env : appEnvMap.get(appName)) {
+        fEnvTreeModel.insertNodeInto(new ExternalDbPanel.EnvironmentNode(env, false), appNode, envIndex++);
+      }
+    }
+    fEnvTreeModel.reload();
+    expandAllNodes();
+  }
+
+  void initListData(Set<String> configs) {
+    for (String element : configs) {
+      fConfigListModel.addElement(element);
+    }
+  }
+
+  private void initSelectionListeners() {
+    envJTree.addTreeSelectionListener(new TreeSelectionListener() {
+      @Override
+      public void valueChanged(TreeSelectionEvent e) {
+        if (envJTree.getSelectionPath() != null) {
+          fireSelectedAction();
+        }
+      }
+    });
+
+    dbConfJList.addListSelectionListener(new ListSelectionListener() {
+      @Override
+      public void valueChanged(ListSelectionEvent e) {
+        fireSelectedAction();
+      }
+    });
+  }
+
+  private void fireSelectedAction() {
+    EnvironmentNode node = (EnvironmentNode) envJTree.getSelectionPath().getLastPathComponent();
+    if (node != null && dbConfJList.getSelectedValue() != null) {
+      fExternalDbView.fireCreateChartsAction(node.getParent().toString(), node.toString(),
+              dbConfJList.getSelectedValue().toString());
+    }
   }
 
   private class EnvironmentNode extends DefaultMutableTreeNode {
@@ -368,74 +402,13 @@ public class ExternalDbPanel extends javax.swing.JPanel {
         EnvironmentNode node = (EnvironmentNode) value;
         // set icon for normal case
         if (node.isAppNode()) {
-          setIcon(appIcon);
+          setIcon(fAppIcon);
         } else {
-          setIcon(envIcon);
+          setIcon(fEnvIcon);
         }
         setText((String) node.getUserObject());
       }
       return this;
     }
-
   }
-
-  private void initEnvironmentTreeData() {
-    MBeanServerConnection mbeanConnection = DataUtils.getMBeanConnection(fIvyApplication);
-    // List<String> includes string with pattern ApplicationName:EvironmentName:ExtDBConfiguration
-    List<String> configsList = DataUtils.getExternalDbConfigs(mbeanConnection);
-
-    Map<String, List<String>> appEnvMap = new HashMap();
-    Set<String> configs = new TreeSet();
-    for (String each : configsList) {
-      String[] splits = each.split(":");
-      configs.add(splits[2]); // add all db configs into the list
-
-      if (appEnvMap.containsKey(splits[0])) {
-        List<String> env = appEnvMap.get(splits[0]);
-        List<String> envList = new ArrayList(env);
-        envList.add(splits[1]);
-        appEnvMap.put(splits[0], envList);
-      } else {
-        appEnvMap.put(splits[0], Arrays.asList(new String[] {splits[1]}));
-      }
-    }
-
-    int index = 0;
-    for (String appName : appEnvMap.keySet()) {
-      EnvironmentNode appNode = new EnvironmentNode(appName, true);
-      envTreeModel.insertNodeInto(appNode, rootNode, index++);
-      int envIndex = 0;
-      for (String env : appEnvMap.get(appName)) {
-        envTreeModel.insertNodeInto(new EnvironmentNode(env, false), appNode, envIndex++);
-      }
-    }
-    envTreeModel.reload();
-
-    for (String element : configs) {
-      configListModel.addElement(element);
-    }
-    expandAllNodes();
-  }
-
-  // private void generateSampleDataForTree() {
-  // EnvironmentNode widget_app = new EnvironmentNode("Widget", true);
-  // EnvironmentNode portal_app = new EnvironmentNode("Portal", true);
-  //
-  // envTreeModel.insertNodeInto(widget_app, rootNode, 0);
-  // envTreeModel.insertNodeInto(portal_app, rootNode, 1);
-  //
-  // envTreeModel.insertNodeInto(new EnvironmentNode("Default", false), widget_app, 0);
-  // envTreeModel.insertNodeInto(new EnvironmentNode("Designer", false), widget_app, 1);
-  // envTreeModel.insertNodeInto(new EnvironmentNode("GreenIT", false), widget_app, 2);
-  //
-  // envTreeModel.insertNodeInto(new EnvironmentNode("RedIT", false), portal_app, 0);
-  // envTreeModel.insertNodeInto(new EnvironmentNode("Develop", false), portal_app, 1);
-  // envTreeModel.insertNodeInto(new EnvironmentNode("ShouldWork", false), portal_app, 2);
-  // envTreeModel.insertNodeInto(new EnvironmentNode("ShouldNotWork", false), portal_app, 3);
-  //
-  // }
-  // private void generateSampleDataForList() {
-  // configListModel.addElement("Config 1");
-  // configListModel.addElement("Config 1");
-  // }
 }

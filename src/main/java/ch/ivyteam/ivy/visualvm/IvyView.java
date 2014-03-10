@@ -21,10 +21,12 @@ import com.sun.tools.visualvm.tools.jmx.JmxModel;
 import com.sun.tools.visualvm.tools.jmx.JmxModelFactory;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 import java.util.logging.Logger;
 import java.util.prefs.PreferenceChangeEvent;
 import java.util.prefs.PreferenceChangeListener;
 import javax.management.MBeanServerConnection;
+import javax.management.ObjectName;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JComponent;
@@ -121,7 +123,7 @@ class IvyView extends DataSourceView {
 
   private void addExternalDBView(IDataBeanProvider dataBeanProvider, JTabbedPane tabbed) {
     MBeanServerConnection mbeanConnection = DataUtils.getMBeanConnection(fIvyApplication);
-    List<String> configsList = DataUtils.getExternalDbConfigs(mbeanConnection);
+    Set<ObjectName> configsList = DataUtils.getExternalDbConfigs(mbeanConnection);
     boolean extDbAvailable = !configsList.isEmpty(); // list is not empty
     if (extDbAvailable) {
       ExternalDbView extDbView = new ExternalDbView(dataBeanProvider, fIvyApplication);
