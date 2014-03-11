@@ -234,7 +234,8 @@ public class LicenseInformationPanel extends javax.swing.JPanel {
       int threshold150 = (int) Math.floor(fLicenseInfo.getServerSessionsLimit() * 1.5);
       if (fConcurrentUsers >= threshold90 && fConcurrentUsers < fLicenseInfo.getServerSessionsLimit()) {
         warningMsg = SESSIONS_90_PERCENT_EXCEEDED_WARNING;
-      } else if (fConcurrentUsers >= fLicenseInfo.getServerSessionsLimit() && fConcurrentUsers < threshold150) {
+      } else if (fConcurrentUsers >= fLicenseInfo.getServerSessionsLimit()
+              && fConcurrentUsers < threshold150) {
         warningMsg = SESSIONS_EXCEEDED_WARNING;
         color = ERROR_COLOR;
       } else if (fConcurrentUsers == threshold150) {

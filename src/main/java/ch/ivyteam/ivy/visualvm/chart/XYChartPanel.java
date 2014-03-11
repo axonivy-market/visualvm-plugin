@@ -156,7 +156,7 @@ public class XYChartPanel extends JPanel implements IUpdatableUIObject {
     return fYAxisHelpMessage;
   }
 
-  public final void createYAxisHelpMessage(String message) {
+  private void createYAxisHelpMessage(String message) {
     Container container = (Container) fChart.getChart().getComponent(CONTAINER_CHART_INDEX);
     JLabel yAxisLabel = (JLabel) container.getComponent(CHART_YAXIS_LABEL_INDEX);
     if (StringUtils.isEmpty(message)) {

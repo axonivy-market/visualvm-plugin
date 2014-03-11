@@ -69,7 +69,6 @@ public class LicenseInfoTest extends AbstractTest {
     LicenseInformationPanel infoPanel = new LicenseInformationPanel(licenseInfo);
     infoPanel.setLicenseData(remainingTime, 5, 9);
     String htmlLicenseInfo = infoPanel.toHTMLString();
-    System.out.println("xxx : " + htmlLicenseInfo);
     assertTrue(htmlLicenseInfo.contains(fHtmlLicenseInfo));
   }
 
