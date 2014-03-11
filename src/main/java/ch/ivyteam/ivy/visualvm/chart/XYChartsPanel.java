@@ -38,4 +38,10 @@ public class XYChartsPanel extends JPanel {
     fCharts.add(chart);
   }
 
+  @Override
+  public void removeAll() {
+    super.removeAll();
+    fCharts.clear();
+  }
+
 }

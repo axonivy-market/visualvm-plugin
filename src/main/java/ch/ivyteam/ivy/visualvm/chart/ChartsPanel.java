@@ -64,6 +64,10 @@ public class ChartsPanel implements IUpdatableUIObject {
 
   private void addXYChart(final XYChartPanel chart) {
     fUpdatableObjects.add(chart);
+    addXYChartInternal(chart);
+  }
+
+  private void addXYChartInternal(final XYChartPanel chart) {
     fXYChartsPanel.addChart(chart);
     if (!fChartPanel.isAncestorOf(fXYChartsPanel)) {
       fChartPanel.add(fXYChartsPanel);
@@ -107,10 +111,12 @@ public class ChartsPanel implements IUpdatableUIObject {
   }
 
   private void updateChartsCachePeriod() {
+    fXYChartsPanel.removeAll();
     for (IUpdatableUIObject object : fUpdatableObjects) {
       if (object instanceof XYChartPanel) {
         XYChartPanel chart = (XYChartPanel) object;
         chart.updateCachePeriod();
+        addXYChartInternal(chart);
       }
     }
   }
