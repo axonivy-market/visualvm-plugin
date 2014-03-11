@@ -25,7 +25,7 @@ public class ConcurrentUsersChartDataSource extends XYChartDataSource {
     addFixedSerie("Limit", null, getSessionLimit());
     addSerie("Now", null, SerieStyle.LINE, IvyJmxConstant.IvyServer.SecurityManager.NAME,
             IvyJmxConstant.IvyServer.SecurityManager.KEY_LICENSED_SESSIONS);
-    addLabelCalcSupport(new MaxValueChartLabelCalcSupport("Max Occurs",
+    addLabelCalcSupport(new MaxValueChartLabelCalcSupport("Max Now",
             IvyJmxConstant.IvyServer.SecurityManager.NAME,
             IvyJmxConstant.IvyServer.SecurityManager.KEY_LICENSED_SESSIONS));
   }
