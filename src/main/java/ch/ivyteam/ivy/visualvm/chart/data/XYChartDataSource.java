@@ -46,18 +46,15 @@ public class XYChartDataSource {
     long[] values = new long[fLabelCalcSupports.size()];
     int pos = 0;
     for (ChartLabelCalcSupport support : fLabelCalcSupports) {
-      values[pos++] = support.calculateValue(result);
+      support.updateValues(result);
+      values[pos++] = support.getValue();
     }
     return values;
   }
 
-  public void setLabels(long[] labels) {
-    int index = 0;
+  public void setLabels(QueryResult queryResult) {
     for (ChartLabelCalcSupport labelSupport : fLabelCalcSupports) {
-      if (index >= labels.length) {
-        break;
-      }
-      labelSupport.setValue(labels[index++]);
+      labelSupport.updateValues(queryResult);
     }
   }
 

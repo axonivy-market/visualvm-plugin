@@ -14,13 +14,13 @@ public class LatestValueChartLabelCalcSupport extends ChartLabelCalcSupport {
   }
 
   @Override
-  public long calculateValue(QueryResult queryResult) {
+  protected long calculateValue(QueryResult queryResult) {
     Object value = queryResult.getValue(fObjName, fAttrKey);
-    long max = getValue();
+    long current = getValue();
     if (value instanceof Number) {
-      max = ((Number) value).longValue();
+      current = ((Number) value).longValue();
     }
-    return max;
+    return current;
   }
 
 }

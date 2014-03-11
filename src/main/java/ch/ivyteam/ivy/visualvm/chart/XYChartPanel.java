@@ -13,6 +13,7 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Container;
+import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
@@ -25,6 +26,8 @@ import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.plaf.basic.BasicHTML;
+import javax.swing.text.View;
 import org.apache.commons.lang.StringUtils;
 
 public class XYChartPanel extends JPanel implements IUpdatableUIObject {
@@ -74,6 +77,7 @@ public class XYChartPanel extends JPanel implements IUpdatableUIObject {
             0, 0, 1, 1, 1, 1, GridBagConstraints.WEST, GridBagConstraints.BOTH,
             new Insets(0, 0, 0, 0), 0, 0));
     fHtmlLabel = new JLabel();
+    fHtmlLabel.setVerticalAlignment(JLabel.TOP);
     add(fHtmlLabel, new GridBagConstraints(
             1, 0, 0, 0, 0, 0, GridBagConstraints.WEST, GridBagConstraints.BOTH,
             new Insets(0, 0, 0, 0), 0, 0));
@@ -92,15 +96,16 @@ public class XYChartPanel extends JPanel implements IUpdatableUIObject {
     fChart.addValues(currentTime, values);
 
     long[] labels = fDataSource.calculateDetailValues(result);
-    updateChartDetails(labels);
+    fDataSource.setLabels(result);
+    String text = HtmlSupport.toOneColumnHtmlTable(fDetailLabels, convert(labels));
+    fHtmlLabel.setText(text);
+    View view = (View) fHtmlLabel.getClientProperty(BasicHTML.propertyKey);
+    if (view != null) {
+      int w = (int) view.getPreferredSpan(View.X_AXIS);
+      fHtmlLabel.setPreferredSize(new Dimension(w, 0));
+    }
 
     addStorageItem(currentTime, values);
-  }
-
-  public void updateChartDetails(long[] labels) {
-    fDataSource.setLabels(labels);
-    String text = HtmlSupport.toOneColumnHtmlTable(fDetailLabels, convert(labels));
-    getHtmlLabel().setText(text);
   }
 
   @Override

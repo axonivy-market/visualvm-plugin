@@ -69,6 +69,7 @@ class IvyView extends DataSourceView {
       public MBeanServerConnection getMBeanServerConnection() {
         return DataUtils.getMBeanServerConnection(fIvyApplication);
       }
+
     };
 
     // add views
@@ -80,7 +81,7 @@ class IvyView extends DataSourceView {
 
     // init scheduler
     updateTask = Scheduler.sharedInstance().schedule(new UpdateChartTask(),
-            Quantum.seconds(GlobalPreferences.sharedInstance().getMonitoredDataPoll()));
+            Quantum.seconds(GlobalPreferences.sharedInstance().getMonitoredDataPoll()), true);
     GlobalPreferences.sharedInstance().watchMonitoredDataPoll(pollSettingChangeListener);
     return dvcRoot;
   }
@@ -146,6 +147,7 @@ class IvyView extends DataSourceView {
         }
       }
     }
+
   }
 
   private class DataPollSettingChangeListener implements PreferenceChangeListener {

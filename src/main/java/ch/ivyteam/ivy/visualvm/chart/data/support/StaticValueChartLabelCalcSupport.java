@@ -6,12 +6,16 @@ public class StaticValueChartLabelCalcSupport extends ChartLabelCalcSupport {
 
   public StaticValueChartLabelCalcSupport(String text, long value) {
     setText(text);
-    setValue(value);
+    setValueInternal(value);
   }
 
   @Override
-  public long calculateValue(QueryResult queryResult) {
+  protected long calculateValue(QueryResult queryResult) {
     return getValue();
+  }
+
+  @Override
+  public void updateValues(QueryResult queryResult) {
   }
 
 }

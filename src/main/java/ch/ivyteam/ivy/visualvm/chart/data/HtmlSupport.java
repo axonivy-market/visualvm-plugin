@@ -3,13 +3,15 @@ package ch.ivyteam.ivy.visualvm.chart.data;
 public final class HtmlSupport {
   private static final String TAG_BODY_START = "<html><body style='font-family:tahoma;font-size:11'>";
   private static final String TAG_BODY_END = "</body></html>";
-  private static final String TAG_TABLE_START = "<table border='0' celspacing='0' celpadding='0'>";
+  private static final String TAG_TABLE_START
+          = "<table border='0' cellspacing='0' cellpadding='0'>";
   private static final String TAG_TABLE_END = "</table>";
   private static final String TAG_ROW_START = "<tr>";
   private static final String TAG_ROW_END = "</tr>";
 //  private static final String TAG_CELL_STATIC_WIDTH = "<td width='40'>";
 //  private static final String TAG_CELL_BOLD_START = "<td style='font-weight:bold'>";
-  private static final String TAG_CELL_START = "<td>";
+  private static final String TAG_CELL_START = "<td style='padding:0px 5px 0px 0px'>";
+  private static final String TAG_CELL_START2 = "<td style='padding:0px 0px 0px 5px'>";
   private static final String TAG_CELL_END = "</td>";
   private static final String CHAR_COLON = ":";
 
@@ -25,7 +27,7 @@ public final class HtmlSupport {
       sb.append(labels[i]);
       sb.append(CHAR_COLON);
       sb.append(TAG_CELL_END);
-      sb.append(TAG_CELL_START);
+      sb.append(TAG_CELL_START2);
       if (i < value.length) {
         sb.append(value[i]);
       }

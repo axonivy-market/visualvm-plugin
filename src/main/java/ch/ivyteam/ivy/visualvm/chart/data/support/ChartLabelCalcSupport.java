@@ -6,22 +6,26 @@ public abstract class ChartLabelCalcSupport {
   private String fText;
   private long fValue;
 
-  public abstract long calculateValue(QueryResult queryResult);
+  protected abstract long calculateValue(QueryResult queryResult);
 
   public String getText() {
     return fText;
   }
 
   public void setText(String text) {
-    this.fText = text;
+    fText = text;
+  }
+
+  public void updateValues(QueryResult queryResult) {
+    setValueInternal(calculateValue(queryResult));
+  }
+
+  protected void setValueInternal(long value) {
+    fValue = value;
   }
 
   public long getValue() {
     return fValue;
-  }
-
-  public void setValue(long value) {
-    this.fValue = value;
   }
 
 }

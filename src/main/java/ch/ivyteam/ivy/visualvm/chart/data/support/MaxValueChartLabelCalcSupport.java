@@ -14,7 +14,7 @@ public class MaxValueChartLabelCalcSupport extends ChartLabelCalcSupport {
   }
 
   @Override
-  public long calculateValue(QueryResult queryResult) {
+  protected long calculateValue(QueryResult queryResult) {
     Object value = queryResult.getValue(fObjName, fAttrKey);
     long max = getValue();
     if (value instanceof Number) {
