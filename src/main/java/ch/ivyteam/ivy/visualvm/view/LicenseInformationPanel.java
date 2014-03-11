@@ -35,11 +35,11 @@ public class LicenseInformationPanel extends javax.swing.JPanel {
   private static final String EXPIRE_IN_30_DAYS_WARNING
           = "Your licence will expire on {0}. "
           + "If the licence is expired the server will no longer start. "
-          + "Please request a new licence now!";
+          + "Please contact your sales representative to request a new license!";
   private static final String EXPIRED_WARNING
           = "Your licence has expired on {0}. "
           + "You will not be able to restart your server. "
-          + "Please request a new licence now!";
+          + "Please contact your sales representative to request a new license!";
   private static final String USERS_EXCEEDED_WARNING
           = "Cannot create more users because the maximum users that are allowed by your licence has "
           + "exceeded";

@@ -34,10 +34,10 @@ public class LicenseInfoTest extends AbstractTest {
               "<html><body style=\"font-family:tahoma;font-size:11\"><table border='0' celspacing='5' celpadding='0'><tr><td>Organization: </td><td>Axon Active Vietnam</td></tr><tr><td>Individual: </td><td>Tam Thai</td></tr><tr><td>Host Name: </td><td>aavn-ws-175</td></tr><tr><td>Version: </td><td>5000</td></tr><tr><td>Valid From: </td><td>Tuesday, June 4, 2013</td></tr><tr><td>Expires: </td><td>Monday, June 30, 2014</td></tr><tr><td>Supports RIA: </td><td>No</td></tr></table></body></html>",
               "Un-limitted license"},
             new Object[]{
-              "Your licence will expire on Tuesday, April 15, 2014. If the licence is expired the server will no longer start. Please request a new licence now!",
+              "Your licence will expire on Tuesday, April 15, 2014. If the licence is expired the server will no longer start. Please contact your sales representative to request a new license!",
               "Expired-in-30-days license"},
             new Object[]{
-              "Your licence has expired on Tuesday, March 25, 2014. You will not be able to restart your server. Please request a new licence now!",
+              "Your licence has expired on Tuesday, March 25, 2014. You will not be able to restart your server. Please contact your sales representative to request a new license!",
               "Expired license"},
             new Object[]{
               "Cannot create more users because the maximum users that are allowed by your licence has exceeded",

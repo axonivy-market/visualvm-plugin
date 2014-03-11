@@ -69,13 +69,14 @@ public class LicenseView extends AbstractView {
   }
 
   private String getConcurrentUsersChartDescription() {
-    StringBuilder description = new StringBuilder("<html><body style=\"font-family:tahoma;font-size:11\">");
+    StringBuilder description = new StringBuilder("<html><body>");
     description.append("This chart shows the information about the concurrent users. ")
             .append("They are the Ivy users that are logging in.<br/>")
             .append("If the user logs in multiple time, it is counted as one.<br/>")
             .append("The anonymous users are also counted as one.<br/><br/>")
             .append("<b>Limit: </b> shows the maximum number of the concurrent users<br/>")
-            .append("<b>Now: </b> shows the current number of the concurrent users<br/>");
+            .append("<b>Now: </b> shows the current number of the concurrent users<br/>")
+            .append("</body></html>");
     return description.toString();
   }
 
