@@ -13,10 +13,10 @@ public class ConcurrentUsersGaugeDataSource extends GaugeDataSource {
   public ConcurrentUsersGaugeDataSource(IDataBeanProvider dataBeanProvider, int serverSessionsLimit) {
     super(dataBeanProvider, IvyJmxConstant.IvyServer.SecurityManager.NAME,
             IvyJmxConstant.IvyServer.SecurityManager.KEY_LICENSED_SESSIONS);
-    getThresHolds().add(0.0);
-    getThresHolds().add(0.9 * serverSessionsLimit);
-    getThresHolds().add(1.0 * serverSessionsLimit);
-    getThresHolds().add(1.5 * serverSessionsLimit);
+    getThresholds().add(0.0);
+    getThresholds().add(Math.floor(0.9 * serverSessionsLimit));
+    getThresholds().add(1.0 * serverSessionsLimit);
+    getThresholds().add(Math.floor(1.5 * serverSessionsLimit));
   }
 
 }

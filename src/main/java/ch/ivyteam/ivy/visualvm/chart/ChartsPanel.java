@@ -79,21 +79,10 @@ public class ChartsPanel implements IUpdatableUIObject {
     addXYChart(chart);
   }
 
-  public void addChart2(XYChartDataSource dataSource) {
-    final XYChartPanel chart = new XYChartPanel(dataSource);
-    addXYChart(chart);
-  }
-
   public void addGauge(GaugeDataSource dataSource) {
     final RadialPanel gauge = new RadialPanel(dataSource);
     fUpdatableObjects.add(gauge);
     fChartPanel.add(gauge.getUI());
-  }
-
-  public void addLinear(GaugeDataSource dataSource) {
-    final LinearPanel linear = new LinearPanel(dataSource);
-    fUpdatableObjects.add(linear);
-    fChartPanel.add(linear.getUI());
   }
 
   @Override

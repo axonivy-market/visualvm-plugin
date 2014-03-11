@@ -5,8 +5,8 @@ import ch.ivyteam.ivy.visualvm.view.IUpdatableUIObject;
 import eu.hansolo.steelseries.gauges.AbstractGauge;
 import eu.hansolo.steelseries.tools.BackgroundColor;
 import eu.hansolo.steelseries.tools.Section;
-import eu.hansolo.steelseries.tools.TickmarkType;
 import java.awt.Color;
+import java.util.ArrayList;
 import java.util.List;
 
 public abstract class AbstractGaugePanel implements IUpdatableUIObject {
@@ -15,74 +15,53 @@ public abstract class AbstractGaugePanel implements IUpdatableUIObject {
   private static final Color[] SECTION_COLORS = new Color[]{new Color(58, 228, 103), new Color(225, 228, 90),
     new Color(255, 114, 102)};
   private static final Color DEFAULT_COLOR = Color.GRAY;
-  private final List<Double> fThresHolds;
+  private final List<Double> fThresholds;
+  private final List<Section> fSections = new ArrayList<>();
 
   public AbstractGaugePanel(GaugeDataSource dataSource, AbstractGauge gauge) {
     fDataSource = dataSource;
-    fThresHolds = dataSource.getThresHolds();
+    fThresholds = dataSource.getThresholds();
     fGauge = gauge;
+    initConfigs();
     initGauge();
   }
 
+  private void initConfigs() {
+    if (fThresholds.get(1) == fThresholds.get(2)) {
+      fSections.add(new Section(fThresholds.get(0), fThresholds.get(1), SECTION_COLORS[0]));
+      fSections.add(new Section(fThresholds.get(2), fThresholds.get(3), SECTION_COLORS[2]));
+    } else {
+      for (int i = 0; i < SECTION_COLORS.length; i++) {
+        Color sectionColor = SECTION_COLORS[i] == null ? DEFAULT_COLOR : SECTION_COLORS[i];
+        fSections.add(new Section(fThresholds.get(i), fThresholds.get(i + 1), sectionColor));
+      }
+    }
+  }
+
   private void initGauge() {
-    fGauge.setTitle("");
-    fGauge.setUnitString("");
     fGauge.setFrameVisible(false);
     fGauge.setBackgroundVisible(false);
     fGauge.setBackgroundColor(BackgroundColor.TRANSPARENT);
-    fGauge.setLedVisible(false);
-    setSections();
-  }
 
-  private void setSections() {
-    if (!fThresHolds.isEmpty()) {
-      fGauge.setMinValue(fThresHolds.get(0));
-      fGauge.setMaxValue(fThresHolds.get(fThresHolds.size() - 1));
-      for (int i = 0; i < fThresHolds.size() - 1; i++) {
-        Color sectionColor = SECTION_COLORS[i] != null ? SECTION_COLORS[i] : DEFAULT_COLOR;
-        fGauge.addSection(new Section(fThresHolds.get(i), fThresHolds.get(i + 1), sectionColor));
+    fGauge.setTitle("");
+    fGauge.setUnitString("");
+    fGauge.setLedVisible(false);
+
+    if (!fSections.isEmpty()) {
+      fGauge.setMinValue(((Section) fSections.get(0)).getStart());
+      fGauge.setMaxValue(((Section) fSections.get(fSections.size() - 1)).getStop());
+
+      for (Section section : fSections) {
+        fGauge.addSection(section);
       }
     }
+
     fGauge.setSectionsVisible(true);
-    fGauge.setNiceScale(false);
+    fGauge.setNiceScale(true);
+    fGauge.setAreas(fSections.toArray(new Section[fSections.size()]));
+    fGauge.setSectionTickmarksOnly(false);
+    fGauge.setMinorTickmarkVisible(false);
 
-    if (!getThresHolds().isEmpty()) {
-      double delta = getThresHolds().get(getThresHolds().size() - 1) - getThresHolds().get(0);
-      int digit = (int) Math.floor(Math.log10(delta));
-
-      double tickSpacing = chooseGaugeTickSpacing(Double.valueOf(delta), digit).doubleValue();
-      fGauge.setMinorTickSpacing(tickSpacing / 10.0D);
-      fGauge.setMinorTickmarkType(TickmarkType.LINE);
-      fGauge.setMajorTickSpacing(tickSpacing);
-      fGauge.setMajorTickmarkType(TickmarkType.TRIANGLE);
-    }
-  }
-
-  private Double chooseGaugeTickSpacing(Double range, int digit) {
-    double d = 1.0D;
-    if (digit == -2) {
-      d = 0.01D;
-    } else if (digit == -1) {
-      d = 0.1D;
-    } else if (digit == 0) {
-      d = 1.0D;
-    } else if (digit > 0) {
-      d = calculateGaugeTickSpacing(range, digit).doubleValue();
-    }
-    return Double.valueOf(d);
-  }
-
-  private Double calculateGaugeTickSpacing(Double range, int digit) {
-    double round = Math.round(range.doubleValue());
-    int tenPower = (int) Math.pow(10.0D, digit);
-    double fraction = round / tenPower;
-    double tickSpacing;
-    if (digit < 3) {
-      tickSpacing = Math.round(fraction) * tenPower / 10L;
-    } else {
-      tickSpacing = Math.ceil(fraction) * tenPower / 10.0D;
-    }
-    return Double.valueOf(tickSpacing);
   }
 
   @Override
@@ -100,8 +79,8 @@ public abstract class AbstractGaugePanel implements IUpdatableUIObject {
     return fGauge;
   }
 
-  public List<Double> getThresHolds() {
-    return fThresHolds;
+  public List<Double> getThresholds() {
+    return fThresholds;
   }
 
 }

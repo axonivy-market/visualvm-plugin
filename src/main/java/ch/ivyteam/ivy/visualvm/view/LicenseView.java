@@ -59,7 +59,7 @@ public class LicenseView extends AbstractView {
               getDataBeanProvider(), fLicenseInfo.getServerSessionsLimit());
 
       ChartsPanel sessionsChart = new ChartsPanel(true);
-      sessionsChart.addChart2(sessionDataSource);
+      sessionsChart.addChart(sessionDataSource);
       sessionsChart.addGauge(gaugeSessionsDataSource);
       registerScheduledUpdate(sessionsChart);
 
@@ -73,7 +73,7 @@ public class LicenseView extends AbstractView {
       NamedUsersGaugeDataSource gaugeUsersDataSource = new NamedUsersGaugeDataSource(getDataBeanProvider(),
               fLicenseInfo.getServerUsersLimit());
       ChartsPanel userChart = new ChartsPanel(false);
-      userChart.addLinear(gaugeUsersDataSource);
+      userChart.addGauge(gaugeUsersDataSource);
       registerScheduledUpdate(userChart);
 
       super.getViewComponent().addDetailsView(new DataViewComponent.DetailsView("Named Users",

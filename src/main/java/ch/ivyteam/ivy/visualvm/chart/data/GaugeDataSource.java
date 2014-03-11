@@ -12,7 +12,7 @@ public class GaugeDataSource {
   private final String fAttribute;
   private final ObjectName fMBeanName;
   private static final double SCALE_FACTOR = 1D;
-  private final List<Double> fThresHolds = new ArrayList<>();
+  private final List<Double> fThresholds = new ArrayList();
 
   public GaugeDataSource(IDataBeanProvider dataBeanProvider, ObjectName mBeanName, String attribute) {
     fDataBeanProvider = dataBeanProvider;
@@ -20,8 +20,8 @@ public class GaugeDataSource {
     fAttribute = attribute;
   }
 
-  public List<Double> getThresHolds() {
-    return fThresHolds;
+  public List<Double> getThresholds() {
+    return fThresholds;
   }
 
   public IDataBeanProvider getDataBeanProvider() {

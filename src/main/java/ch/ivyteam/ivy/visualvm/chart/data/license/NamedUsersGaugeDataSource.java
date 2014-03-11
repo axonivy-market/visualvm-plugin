@@ -13,10 +13,10 @@ public class NamedUsersGaugeDataSource extends GaugeDataSource {
   public NamedUsersGaugeDataSource(IDataBeanProvider dataBeanProvider, int namedUsersLimit) {
     super(dataBeanProvider, IvyJmxConstant.IvyServer.SecurityManager.NAME,
             IvyJmxConstant.IvyServer.SecurityManager.KEY_LICENSED_USERS);
-    getThresHolds().add(0.0);
-    getThresHolds().add(0.9 * namedUsersLimit);
-    getThresHolds().add(0.95 * namedUsersLimit);
-    getThresHolds().add(1.0 * namedUsersLimit);
+    getThresholds().add(0.0);
+    getThresholds().add(Math.floor(0.8 * namedUsersLimit));
+    getThresholds().add(Math.floor(0.9 * namedUsersLimit));
+    getThresholds().add(1.0 * namedUsersLimit);
   }
 
 }
