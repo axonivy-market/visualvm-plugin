@@ -28,7 +28,7 @@ public class LicenseInfoTest extends AbstractTest {
   public static Iterable<Object[]> data() throws JAXBException, URISyntaxException {
     Iterable<Object[]> data = TestUtil.createTestData("/ch/ivyteam/ivy/visualvm/test/LicenseInfoTest.xml",
             new Object[]{
-              "<html><body style=\"font-family:tahoma;font-size:11\"><table border='0' celspacing='5' celpadding='0'><tr><td>Organization: </td><td>Axon Active Vietnam</td></tr><tr><td>Individual: </td><td>Tung Le</td></tr><tr><td>Host Name: </td><td>aavn-ws-147</td></tr><tr><td>Version: </td><td>5000</td></tr><tr><td>Valid From: </td><td>Tuesday, June 4, 2013</td></tr><tr><td>Expires: </td><td>Monday, June 30, 2014</td></tr><tr><td>Supports RIA: </td><td>Yes</td></tr><tr><td>Elements Limit: </td><td>10</td></tr><tr><td>Named Users Limit: </td><td>10</td></tr><tr><td>Concurrent Users Limit: </td><td>10</td></tr></table></body></html>",
+              "<tr><td>Organization: </td><td>Axon Active Vietnam</td></tr><tr><td>Individual: </td><td>Tung Le</td></tr><tr><td>Host Name: </td><td>aavn-ws-147</td></tr><tr><td>Version: </td><td>5000</td></tr><tr><td>Valid From: </td><td>Tuesday, June 4, 2013</td></tr><tr><td>Expires: </td><td>Monday, June 30, 2014</td></tr><tr><td>Supports RIA: </td><td>Yes</td></tr><tr><td>Elements Limit: </td><td>10</td></tr><tr><td>Named Users Limit: </td><td>10</td></tr><tr><td>Concurrent Users Limit: </td><td>10</td></tr>",
               "Limitted license"},
             new Object[]{
               "<html><body style=\"font-family:tahoma;font-size:11\"><table border='0' celspacing='5' celpadding='0'><tr><td>Organization: </td><td>Axon Active Vietnam</td></tr><tr><td>Individual: </td><td>Tam Thai</td></tr><tr><td>Host Name: </td><td>aavn-ws-175</td></tr><tr><td>Version: </td><td>5000</td></tr><tr><td>Valid From: </td><td>Tuesday, June 4, 2013</td></tr><tr><td>Expires: </td><td>Monday, June 30, 2014</td></tr><tr><td>Supports RIA: </td><td>No</td></tr></table></body></html>",
@@ -69,6 +69,7 @@ public class LicenseInfoTest extends AbstractTest {
     LicenseInformationPanel infoPanel = new LicenseInformationPanel(licenseInfo);
     infoPanel.setLicenseData(remainingTime, 5, 9);
     String htmlLicenseInfo = infoPanel.toHTMLString();
+    System.out.println("xxx : " + htmlLicenseInfo);
     assertTrue(htmlLicenseInfo.contains(fHtmlLicenseInfo));
   }
 

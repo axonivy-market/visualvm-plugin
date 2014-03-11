@@ -25,6 +25,7 @@ public class LicenseInformationPanel extends javax.swing.JPanel {
   private static final String WARNING_ICON_PATH = "/resources/icons/license_warning.png";
   private static final String ERROR_ICON_PATH = "/resources/icons/license_error.png";
   private static final String WARNING_COLOR = "#F38630";
+  private static final String ERROR_COLOR = "#FF0000";
   private static final String TABLE_START = "<table border='0' celspacing='5' celpadding='0'>";
   private static final String TABLE_END = "</table>";
   private static final String TR_TD_START = "<tr><td>";
@@ -40,14 +41,24 @@ public class LicenseInformationPanel extends javax.swing.JPanel {
           = "Your licence has expired on {0}. "
           + "You will not be able to restart your server. "
           + "Please contact your sales representative to request a new license!";
+  private static final String USERS_80_PERCENT_EXCEEDED_WARNING
+          = "The number of users has neary reached the license limit. Please consider to contact your "
+          + "sales representative to request a new license!";
+  private static final String USERS_90_PERCENT_EXCEEDED_WARNING
+          = "The number of users has almost reached the license limit. Please consider to contact your "
+          + "sales representative to request a new license!";
   private static final String USERS_EXCEEDED_WARNING
           = "Cannot create more users because the maximum users that are allowed by your licence has "
-          + "exceeded";
+          + "exceeded. Please contact your sales representative to request a new license!";
+  private static final String SESSIONS_90_PERCENT_EXCEEDED_WARNING
+          = "The number of sessions has almost reached the license limit. Please consider to contact your "
+          + "sales representative to request a new license!";
   private static final String SESSIONS_EXCEEDED_WARNING
-          = "The maximum sessions that are allowed by your licence has been reached.";
-  private static final String SESSIONS_EXCEEDED_50_PERCENT_WARNING
+          = "The maximum sessions that are allowed by your licence has been reached. "
+          + "Please contact your sales representative to request a new license!";
+  private static final String SESSIONS_150_PERCENT_EXCEEDED_WARNING
           = "Cannot create session because the maximum session that are allowed by your licence has exceeded "
-          + "by a factor of 50%.";
+          + "by a factor of 50%. Please contact your sales representative to request a new license!";
   private int fNamedUsers;
   private int fConcurrentUsers;
   private long fRemainingTime = Long.MAX_VALUE;
@@ -215,48 +226,85 @@ public class LicenseInformationPanel extends javax.swing.JPanel {
   }
 
   private void appendSessionsLimitWarning(StringBuilder html) {
-    if (fLicenseInfo.getServerSessionsLimit() > 0 && getConcurrentUserLimitWarningInHTML() != null) {
-      html.append(TABLE_START).append(TR_TD_START);
-      html.append(createIconTag(WARNING_ICON_PATH)).append(TD_END);
-      html.append(TD_START).append(getConcurrentUserLimitWarningInHTML());
-      html.append(TD_TR_END).append(TABLE_END);
+    if (fLicenseInfo.getServerSessionsLimit() > 0) {
+      String warningMsg = null;
+      String iconPath = WARNING_ICON_PATH;
+      String color = WARNING_COLOR; //yellow
+      int threshold90 = (int) Math.floor(fLicenseInfo.getServerSessionsLimit() * 0.9);
+      int threshold150 = (int) Math.floor(fLicenseInfo.getServerSessionsLimit() * 1.5);
+      if (fConcurrentUsers >= threshold90 && fConcurrentUsers < fLicenseInfo.getServerSessionsLimit()) {
+        warningMsg = SESSIONS_90_PERCENT_EXCEEDED_WARNING;
+      } else if (fConcurrentUsers >= fLicenseInfo.getServerSessionsLimit() && fConcurrentUsers < threshold150) {
+        warningMsg = SESSIONS_EXCEEDED_WARNING;
+        color = ERROR_COLOR;
+      } else if (fConcurrentUsers == threshold150) {
+        warningMsg = SESSIONS_150_PERCENT_EXCEEDED_WARNING;
+        color = ERROR_COLOR;
+        iconPath = ERROR_ICON_PATH;
+      }
+      if (warningMsg == null) {
+        return;
+      }
+      appendWarning(iconPath, warningMsg, color, html);
     }
   }
 
   private void appendUsersLimitWarning(StringBuilder html) {
-    if (fLicenseInfo.getServerUsersLimit() > 0 && getNamedUserLimitWarningInHTML() != null) {
-      html.append(TABLE_START).append(TR_TD_START);
-      html.append(createIconTag(WARNING_ICON_PATH)).append(TD_END);
-      html.append(TD_START).append(getNamedUserLimitWarningInHTML());
-      html.append(TD_TR_END).append(TABLE_END);
+    if (fLicenseInfo.getServerUsersLimit() > 0) {
+      String warningMsg = null;
+      String iconPath = WARNING_ICON_PATH;
+      String color = WARNING_COLOR; //yellow
+      int threshold80 = (int) Math.floor(fLicenseInfo.getServerUsersLimit() * 0.8);
+      int threshold90 = (int) Math.floor(fLicenseInfo.getServerUsersLimit() * 0.9);
+      if (fNamedUsers >= threshold80 && fNamedUsers < threshold90) {
+        warningMsg = USERS_80_PERCENT_EXCEEDED_WARNING;
+      } else if (fNamedUsers >= threshold90 && fNamedUsers < fLicenseInfo.getServerUsersLimit()) {
+        warningMsg = USERS_90_PERCENT_EXCEEDED_WARNING;
+        color = ERROR_COLOR;
+      } else if (fNamedUsers == fLicenseInfo.getServerUsersLimit()) {
+        warningMsg = USERS_EXCEEDED_WARNING;
+        color = ERROR_COLOR;
+        iconPath = ERROR_ICON_PATH;
+      }
+      if (warningMsg == null) {
+        return;
+      }
+      appendWarning(iconPath, warningMsg, color, html);
     }
   }
 
   private void appendExpireWarning(StringBuilder html) {
     String iconPath = null;
-    String expireWarning = null;
+    String warningMsg = null;
     String color = WARNING_COLOR; //yellow
     String expireDateString = DataUtils.toDateString(fLicenseInfo.getLicenseValidUntil());
 
     if (isLicenseError()) {
-      expireWarning = MessageFormat.format(EXPIRED_WARNING, expireDateString);
-      color = "red";
+      warningMsg = MessageFormat.format(EXPIRED_WARNING, expireDateString);
+      color = ERROR_COLOR;
       iconPath = ERROR_ICON_PATH;
     } else if (isLicenseWarning()) {
-      expireWarning = MessageFormat.format(EXPIRE_IN_30_DAYS_WARNING, expireDateString);
+      warningMsg = MessageFormat.format(EXPIRE_IN_30_DAYS_WARNING, expireDateString);
       iconPath = WARNING_ICON_PATH;
     }
 
-    if (expireWarning == null) {
+    if (warningMsg == null) {
       return;
     }
+    appendWarning(iconPath, warningMsg, color, html);
+  }
 
-    String icon = createIconTag(iconPath);
-    String warningMsg = createFontTag(expireWarning, color);
-    html.append(TABLE_START);
-    html.append(TR_TD_START).append(icon).append(TD_END);
-    html.append(TD_START).append(warningMsg).append(TD_TR_END);
-    html.append(TABLE_END);
+  private void appendWarning(String iconPath, String warningMsg, String color, StringBuilder html) {
+    String iconTag = createIconTag(iconPath);
+    String htmlWarningMsg = createFontTag(warningMsg, color);
+    html.append(TABLE_START)
+            .append(TR_TD_START)
+            .append(iconTag)
+            .append(TD_END)
+            .append(TD_START)
+            .append(htmlWarningMsg)
+            .append(TD_TR_END)
+            .append(TABLE_END);
   }
 
   private boolean isLicenseWarning() {
@@ -265,32 +313,6 @@ public class LicenseInformationPanel extends javax.swing.JPanel {
 
   private boolean isLicenseError() {
     return fRemainingTime <= 0;
-  }
-
-  private String getNamedUserLimitWarningInHTML() {
-    String warning = null;
-    if (fNamedUsers >= fLicenseInfo.getServerUsersLimit()) {
-      warning = USERS_EXCEEDED_WARNING;
-    }
-    if (warning == null) {
-      return null;
-    }
-    return createFontTag(warning, WARNING_COLOR);
-  }
-
-  private String getConcurrentUserLimitWarningInHTML() {
-    String warning = null;
-    double factor = (double) fConcurrentUsers / fLicenseInfo.getServerSessionsLimit();
-    if (factor >= 1 && factor < 1.5) {
-      warning = SESSIONS_EXCEEDED_WARNING;
-    }
-    if (factor >= 1.5) {
-      warning = SESSIONS_EXCEEDED_50_PERCENT_WARNING;
-    }
-    if (warning == null) {
-      return null;
-    }
-    return createFontTag(warning, WARNING_COLOR);
   }
 
   private String createFontTag(String message, String color) {
