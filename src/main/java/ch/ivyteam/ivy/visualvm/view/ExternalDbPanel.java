@@ -49,6 +49,8 @@ public class ExternalDbPanel extends javax.swing.JPanel {
   private TreePath[] fSelectedPath;
   private final DefaultMutableTreeNode fRootNode;
   private final ExternalDbView fExternalDbView;
+  private boolean fResized;
+  private int fMainSplitSize, fLeftSplitSize;
 
   /**
    * Creates new form ExternalDbPanel
@@ -67,7 +69,7 @@ public class ExternalDbPanel extends javax.swing.JPanel {
     initTree();
     initList();
     initSelectionListeners();
-    autoResizeSplitpanes();
+    addResizeSplitpanesListener();
   }
 
   // CHECKSTYLE:OFF
@@ -98,8 +100,10 @@ public class ExternalDbPanel extends javax.swing.JPanel {
 
     setLayout(new java.awt.GridBagLayout());
 
+    mainSplitpane.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
     mainSplitpane.setDividerLocation(120);
 
+    leftSplitpane.setBorder(null);
     leftSplitpane.setDividerLocation(200);
     leftSplitpane.setOrientation(javax.swing.JSplitPane.VERTICAL_SPLIT);
     leftSplitpane.setResizeWeight(0.5);
@@ -119,10 +123,9 @@ public class ExternalDbPanel extends javax.swing.JPanel {
     gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
     gridBagConstraints.weightx = 1.0;
     gridBagConstraints.weighty = 1.0;
-    gridBagConstraints.insets = new java.awt.Insets(5, 5, 0, 0);
+    gridBagConstraints.insets = new java.awt.Insets(5, 5, 5, 5);
     jPanel1.add(jScrollPane1, gridBagConstraints);
 
-    jPanel2.setBackground(new java.awt.Color(255, 255, 255));
     jPanel2.setLayout(new java.awt.GridBagLayout());
 
     org.openide.awt.Mnemonics.setLocalizedText(jLabel1, org.openide.util.NbBundle.getMessage(ExternalDbPanel.class, "ExternalDbPanel.jLabel1.text")); // NOI18N
@@ -137,7 +140,7 @@ public class ExternalDbPanel extends javax.swing.JPanel {
     gridBagConstraints.insets = new java.awt.Insets(5, 5, 5, 0);
     jPanel2.add(jLabel1, gridBagConstraints);
 
-    jSeparator1.setForeground(new java.awt.Color(0, 0, 0));
+    jSeparator1.setForeground(new java.awt.Color(120, 120, 120));
     gridBagConstraints = new java.awt.GridBagConstraints();
     gridBagConstraints.gridx = 0;
     gridBagConstraints.gridy = 1;
@@ -155,7 +158,6 @@ public class ExternalDbPanel extends javax.swing.JPanel {
     jPanel3.setBackground(new java.awt.Color(255, 255, 255));
     jPanel3.setLayout(new java.awt.GridBagLayout());
 
-    jPanel4.setBackground(new java.awt.Color(255, 255, 255));
     jPanel4.setLayout(new java.awt.GridBagLayout());
 
     org.openide.awt.Mnemonics.setLocalizedText(jLabel2, org.openide.util.NbBundle.getMessage(ExternalDbPanel.class, "ExternalDbPanel.jLabel2.text")); // NOI18N
@@ -170,7 +172,7 @@ public class ExternalDbPanel extends javax.swing.JPanel {
     gridBagConstraints.insets = new java.awt.Insets(5, 5, 5, 0);
     jPanel4.add(jLabel2, gridBagConstraints);
 
-    jSeparator2.setForeground(new java.awt.Color(0, 0, 0));
+    jSeparator2.setForeground(new java.awt.Color(120, 120, 120));
     gridBagConstraints = new java.awt.GridBagConstraints();
     gridBagConstraints.gridx = 0;
     gridBagConstraints.gridy = 1;
@@ -195,7 +197,7 @@ public class ExternalDbPanel extends javax.swing.JPanel {
     gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
     gridBagConstraints.weightx = 1.0;
     gridBagConstraints.weighty = 1.0;
-    gridBagConstraints.insets = new java.awt.Insets(5, 5, 0, 0);
+    gridBagConstraints.insets = new java.awt.Insets(5, 5, 5, 5);
     jPanel3.add(jScrollPane2, gridBagConstraints);
 
     leftSplitpane.setRightComponent(jPanel3);
@@ -208,7 +210,7 @@ public class ExternalDbPanel extends javax.swing.JPanel {
     jPanel5.setLayout(jPanel5Layout);
     jPanel5Layout.setHorizontalGroup(
       jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-      .addGap(0, 130, Short.MAX_VALUE)
+      .addGap(0, 274, Short.MAX_VALUE)
     );
     jPanel5Layout.setVerticalGroup(
       jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -255,7 +257,6 @@ public class ExternalDbPanel extends javax.swing.JPanel {
 
   private void preventSelection() {
     envJTree.addTreeSelectionListener(new TreeSelectionListener() {
-
       @Override
       public void valueChanged(TreeSelectionEvent e) {
         TreePath oldPath = e.getOldLeadSelectionPath();
@@ -269,7 +270,6 @@ public class ExternalDbPanel extends javax.swing.JPanel {
           }
         }
       }
-
     });
   }
 
@@ -294,18 +294,28 @@ public class ExternalDbPanel extends javax.swing.JPanel {
     }
   }
 
-  private void autoResizeSplitpanes() {
+  private void addResizeSplitpanesListener() {
     addComponentListener(new ComponentAdapter() {
       @Override
       public void componentResized(ComponentEvent e) {
-        leftSplitpane.setDividerLocation((int) getSize().getHeight() / 2);
-        mainSplitpane.setDividerLocation((int) (getSize().getWidth() / 6));
+        if (!fResized) {
+          resizeSplitpanes((int) getSize().getHeight() / 2, (int) (getSize().getWidth() / 6));
+          fResized = true;
+        }
       }
     });
   }
 
-  void addChartPanel(ChartsPanel externalDbChartPanel) {
+  private void resizeSplitpanes(int main, int left) {
+    mainSplitpane.setDividerLocation(main);
+    leftSplitpane.setDividerLocation(left);
+  }
+
+  void setChartPanelToVisible(ChartsPanel externalDbChartPanel) {
+    fMainSplitSize = mainSplitpane.getDividerLocation();
+    fLeftSplitSize = leftSplitpane.getDividerLocation();
     mainSplitpane.setRightComponent(externalDbChartPanel.getUIComponent());
+    resizeSplitpanes(fMainSplitSize, fLeftSplitSize);
   }
 
   private void initList() {
@@ -364,7 +374,7 @@ public class ExternalDbPanel extends javax.swing.JPanel {
     if (envJTree.getSelectionPath() == null || dbConfJList.getSelectedValue() == null) {
       return;
     }
-    
+
     EnvironmentNode node = (EnvironmentNode) envJTree.getSelectionPath().getLastPathComponent();
     if (node != null) {
       fExternalDbView.fireCreateChartsAction(node.getParent().toString(), node.toString(),

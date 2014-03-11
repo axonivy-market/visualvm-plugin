@@ -5,7 +5,7 @@
 package ch.ivyteam.ivy.visualvm.view;
 
 import ch.ivyteam.ivy.visualvm.chart.ChartsPanel;
-import ch.ivyteam.ivy.visualvm.chart.data.externaldb.AbstractEDBDataSource;
+import ch.ivyteam.ivy.visualvm.chart.data.externaldb.AbstractExternalDbDataSource;
 import ch.ivyteam.ivy.visualvm.chart.data.externaldb.ExternalDbConnectionChartDataSource;
 import ch.ivyteam.ivy.visualvm.chart.data.externaldb.ExternalDbProcessingTimeChartDataSource;
 import ch.ivyteam.ivy.visualvm.chart.data.externaldb.ExternalDbTransactionChartDataSource;
@@ -63,8 +63,8 @@ public class ExternalDbView extends AbstractView {
     return chartPanel;
   }
 
-  private void configDataSources(AbstractEDBDataSource... dataSources) {
-    for (AbstractEDBDataSource dataSource : dataSources) {
+  private void configDataSources(AbstractExternalDbDataSource... dataSources) {
+    for (AbstractExternalDbDataSource dataSource : dataSources) {
       dataSource.setApplication(fCurrentAppName);
       dataSource.setEnvironment(fCurrentEnvName);
       dataSource.setConfigName(fCurrentConfigName);
@@ -76,12 +76,12 @@ public class ExternalDbView extends AbstractView {
   public DataViewComponent getViewComponent() {
     DataViewComponent viewComponent = super.getViewComponent();
     viewComponent.add(fExternalDBPanel);
-    initExtDbData();
+    initExternalDbData();
     return viewComponent;
   }
 
-  private void initExtDbData() {
-    MBeanServerConnection mbeanConnection = DataUtils.getMBeanConnection(fIvyApplication);
+  private void initExternalDbData() {
+    MBeanServerConnection mbeanConnection = DataUtils.getMBeanServerConnection(fIvyApplication);
     // List<String> includes string with pattern ApplicationName:EvironmentName:ExtDBConfiguration
     fExternalDbConfigList = DataUtils.getExternalDbConfigs(mbeanConnection);
 
@@ -111,10 +111,10 @@ public class ExternalDbView extends AbstractView {
       fCurrentConfigName = configName;
       String chartKey = appName + envName + configName;
       if (createdCharts.containsKey(chartKey)) {
-        fExternalDBPanel.addChartPanel(createdCharts.get(chartKey));
+        fExternalDBPanel.setChartPanelToVisible(createdCharts.get(chartKey));
       } else {
         ChartsPanel chart = createExternalDbChartPanel();
-        fExternalDBPanel.addChartPanel(chart);
+        fExternalDBPanel.setChartPanelToVisible(chart);
         createdCharts.put(chartKey, chart);
       }
     }

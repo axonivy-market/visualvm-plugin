@@ -6,7 +6,7 @@ import ch.ivyteam.ivy.visualvm.chart.data.support.LatestValueChartLabelCalcSuppo
 import ch.ivyteam.ivy.visualvm.model.IvyJmxConstant;
 import ch.ivyteam.ivy.visualvm.view.IDataBeanProvider;
 
-public class ExternalDbProcessingTimeChartDataSource extends AbstractEDBDataSource {
+public class ExternalDbProcessingTimeChartDataSource extends AbstractExternalDbDataSource {
   public static final String MIN_SERIE_TITLE = "Min";
   public static final String MAX_SERIE_TITLE = "Max";
   public static final String MEAN_SERIE_TITLE = "Mean";

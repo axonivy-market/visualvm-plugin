@@ -16,14 +16,14 @@ import javax.management.ObjectName;
  *
  * @author thnghia
  */
-public abstract class AbstractEDBDataSource extends XYChartDataSource {
-    private static final Logger LOGGER = Logger.getLogger(AbstractEDBDataSource.class.getName());
+public abstract class AbstractExternalDbDataSource extends XYChartDataSource {
+    private static final Logger LOGGER = Logger.getLogger(AbstractExternalDbDataSource.class.getName());
     private String fApplication = "*";
     private String fEnvironment = "Default";
     private String fConfigName = "*";
     private ObjectName fObjectName;
 
-    public AbstractEDBDataSource(IDataBeanProvider dataBeanProvider, String chartName,
+    public AbstractExternalDbDataSource(IDataBeanProvider dataBeanProvider, String chartName,
             String xAxisDescription,
             String yAxisDescription) {
         super(dataBeanProvider, chartName, xAxisDescription, yAxisDescription);

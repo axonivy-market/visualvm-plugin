@@ -15,7 +15,7 @@ import javax.management.MBeanServerConnection;
 import javax.management.ReflectionException;
 import org.apache.commons.lang.math.NumberUtils;
 
-public class ExternalDbConnectionChartDataSource extends AbstractEDBDataSource {
+public class ExternalDbConnectionChartDataSource extends AbstractExternalDbDataSource {
   private static final Logger LOGGER = Logger.getLogger(ExternalDbConnectionChartDataSource.class.getName());
   private static final String MAX_SERIE_TITLE = "Max";
   private static final String OPEN_SERIE_TITLE = "Open";

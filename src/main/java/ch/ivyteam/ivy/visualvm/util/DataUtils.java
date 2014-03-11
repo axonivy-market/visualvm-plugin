@@ -248,9 +248,13 @@ public final class DataUtils {
     return splits[1];
   }
 
-  public static MBeanServerConnection getMBeanConnection(Application app) {
+  public static MBeanServerConnection getMBeanServerConnection(Application app) {
     JmxModel jmx = JmxModelFactory.getJmxModelFor(app);
-    return jmx.getMBeanServerConnection();
+    if (jmx != null && jmx.getConnectionState() == JmxModel.ConnectionState.CONNECTED) {
+      return jmx.getMBeanServerConnection();
+    } else {
+      return null;
+    }
   }
 
   public static Set<ObjectName> getExternalDbConfigs(MBeanServerConnection connection) {

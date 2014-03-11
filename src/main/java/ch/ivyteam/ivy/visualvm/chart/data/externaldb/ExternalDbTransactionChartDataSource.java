@@ -4,7 +4,7 @@ import ch.ivyteam.ivy.visualvm.chart.data.support.DeltaValueChartLabelCalcSuppor
 import ch.ivyteam.ivy.visualvm.model.IvyJmxConstant;
 import ch.ivyteam.ivy.visualvm.view.IDataBeanProvider;
 
-public class ExternalDbTransactionChartDataSource extends AbstractEDBDataSource {
+public class ExternalDbTransactionChartDataSource extends AbstractExternalDbDataSource {
   private static final String TRANSACTION_SERIE_TITLE = "Transaction";
   private static final String ERRORS_SERIE_TITLE = "Errors";
 

@@ -17,16 +17,12 @@ import com.sun.tools.visualvm.core.scheduler.Scheduler;
 import com.sun.tools.visualvm.core.scheduler.SchedulerTask;
 import com.sun.tools.visualvm.core.ui.DataSourceView;
 import com.sun.tools.visualvm.core.ui.components.DataViewComponent;
-import com.sun.tools.visualvm.tools.jmx.JmxModel;
-import com.sun.tools.visualvm.tools.jmx.JmxModelFactory;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 import java.util.logging.Logger;
 import java.util.prefs.PreferenceChangeEvent;
 import java.util.prefs.PreferenceChangeListener;
 import javax.management.MBeanServerConnection;
-import javax.management.ObjectName;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JComponent;
@@ -68,13 +64,11 @@ class IvyView extends DataSourceView {
     // Add the master view and configuration view to the component:
     DataViewComponent dvcRoot = createDVC("", null);
     dvcRoot.add(tabbed);
-
     IDataBeanProvider dataBeanProvider = new IDataBeanProvider() {
       @Override
       public MBeanServerConnection getMBeanServerConnection() {
-        return IvyView.this.getMBeanServerConnection();
+        return DataUtils.getMBeanServerConnection(fIvyApplication);
       }
-
     };
 
     // add views
@@ -117,20 +111,15 @@ class IvyView extends DataSourceView {
   private void addSystemDBView(IDataBeanProvider dataBeanProvider, JTabbedPane tabbed) {
     SystemDbView systemDbView = new SystemDbView(dataBeanProvider);
     views.add(systemDbView);
-    tabbed.addTab("System database", (Icon) ImageUtilities.loadImage(DB_ICON_IMAGE_PATH, true),
+    tabbed.addTab("System Database", (Icon) ImageUtilities.loadImage(DB_ICON_IMAGE_PATH, true),
             systemDbView.getViewComponent());
   }
 
   private void addExternalDBView(IDataBeanProvider dataBeanProvider, JTabbedPane tabbed) {
-    MBeanServerConnection mbeanConnection = DataUtils.getMBeanConnection(fIvyApplication);
-    Set<ObjectName> configsList = DataUtils.getExternalDbConfigs(mbeanConnection);
-    boolean extDbAvailable = !configsList.isEmpty(); // list is not empty
-    if (extDbAvailable) {
-      ExternalDbView extDbView = new ExternalDbView(dataBeanProvider, fIvyApplication);
-      views.add(extDbView);
-      tabbed.addTab("External database", (Icon) ImageUtilities.loadImage(EXT_DB_ICON_IMAGE_PATH, true),
-              extDbView.getViewComponent());
-    }
+    ExternalDbView extDbView = new ExternalDbView(dataBeanProvider, fIvyApplication);
+    views.add(extDbView);
+    tabbed.addTab("External Database", (Icon) ImageUtilities.loadImage(EXT_DB_ICON_IMAGE_PATH, true),
+            extDbView.getViewComponent());
   }
 
   private DataViewComponent createDVC(String masterViewTitle, JComponent comp) {
@@ -144,17 +133,7 @@ class IvyView extends DataSourceView {
     return new DataViewComponent(masterView, masterConfiguration);
   }
 
-  MBeanServerConnection getMBeanServerConnection() {
-    JmxModel jmx = JmxModelFactory.getJmxModelFor((Application) getDataSource());
-    if (jmx != null && jmx.getConnectionState() == JmxModel.ConnectionState.CONNECTED) {
-      return jmx.getMBeanServerConnection();
-    } else {
-      return null;
-    }
-  }
-
   private class UpdateChartTask implements SchedulerTask {
-
     @Override
     public void onSchedule(long l) {
       for (AbstractView view : views) {
@@ -167,11 +146,9 @@ class IvyView extends DataSourceView {
         }
       }
     }
-
   }
 
   private class DataPollSettingChangeListener implements PreferenceChangeListener {
-
     @Override
     public void preferenceChange(PreferenceChangeEvent evt) {
       updateTask.setInterval(Quantum.seconds(GlobalPreferences.sharedInstance().
