@@ -19,9 +19,9 @@ public class XYChartDataSource {
   private final List<ChartLabelCalcSupport> fLabelCalcSupports = new ArrayList<>();
 
   /**
-   *
+   * 
    * @param dataBeanProvider provider of chart
-   * @param chartName        name of chart
+   * @param chartName name of chart
    * @param xAxisDescription description of x axis
    * @param yAxisDescription description of y axis
    */
@@ -76,10 +76,14 @@ public class XYChartDataSource {
     addDeltaSerie(serie, description, null, mBeanName, attribute);
   }
 
-  private void addDeltaSerie(String serie, String description, SerieStyle style, ObjectName mBeanName,
+  public void addDeltaSerie(String serie, String description, SerieStyle style, ObjectName mBeanName,
           String attribute) {
     SerieDataSource serieDataSource = new DeltaAttributeDataSource(serie, 1L, style, mBeanName, attribute);
     serieDataSource.setDescription(description);
+    serieDataSources.add(serieDataSource);
+  }
+
+  public void addSerie(SerieDataSource serieDataSource) {
     serieDataSources.add(serieDataSource);
   }
 

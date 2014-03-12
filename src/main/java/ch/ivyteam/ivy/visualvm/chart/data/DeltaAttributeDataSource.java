@@ -13,7 +13,7 @@ public class DeltaAttributeDataSource extends AttributeDataSource {
   }
 
   @Override
-  long getValue(QueryResult result) {
+  public long getValue(QueryResult result) {
     return toDeltaValue(super.getValue(result));
   }
 

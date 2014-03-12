@@ -72,25 +72,20 @@ public class IvyJmxConstant {
       public static final String KEY_CONNECTION_URL = "connectionUrl";
       public static final String KEY_DRIVER_NAME = "driverName";
       public static final String KEY_USERNAME = "userName";
+      public static final String KEY_ERROR = "errors";
       public static final String KEY_USED_CONNECTION = "usedConnections";
       public static final String KEY_MAX_CONNECTION = "maxConnections";
       public static final String KEY_OPEN_CONNECTION = "openConnections";
       public static final String KEY_TRANSACTION_NUMBER = "transactions";
-      public static final String KEY_TRANSACTION_TOTAL_EXE_TIME_IN_MS
-              = "transactionsTotalExecutionTimeInMicroSeconds";
-      public static final String KEY_TRANSACTION_MAX_EXE_TIME_IN_MS
-              = "transactionsMaxExecutionTimeInMicroSeconds";
-      public static final String KEY_TRANSACTION_MAX_EXE_DELTA_TIME_IN_MS
-              = "transactionsMaxExecutionTimeDeltaInMicroSeconds";
-      public static final String KEY_TRANSACTION_MIN_EXE_DELTA_TIME_IN_MS
-              = "transactionsMinExecutionTimeDeltaInMicroSeconds";
-      public static final String KEY_TRANSACTION_MIN_EXE_TIME_IN_MS
-              = "transactionsMinExecutionTimeInMicroSeconds";
+      public static final String KEY_TRANSACTION_TOTAL_EXE_TIME_IN_MS = "transactionsTotalExecutionTimeInMicroSeconds";
+      public static final String KEY_TRANSACTION_MAX_EXE_TIME_IN_MS = "transactionsMaxExecutionTimeInMicroSeconds";
+      public static final String KEY_TRANSACTION_MAX_EXE_DELTA_TIME_IN_MS = "transactionsMaxExecutionTimeDeltaInMicroSeconds";
+      public static final String KEY_TRANSACTION_MIN_EXE_DELTA_TIME_IN_MS = "transactionsMinExecutionTimeDeltaInMicroSeconds";
+      public static final String KEY_TRANSACTION_MIN_EXE_TIME_IN_MS = "transactionsMinExecutionTimeInMicroSeconds";
     }
 
     public static final class ExternalDatabase {
-      public static final String NAME_PATTERN
-              = "Xpert.ivy Server:type=External Database,application=%s,environment=%s,name=%s";
+      public static final String NAME_PATTERN = "Xpert.ivy Server:type=External Database,application=%s,environment=%s,name=%s";
       public static final String KEY_PRODUCT_NAME = "databaseProductName";
       public static final String KEY_PRODUCT_VERSION = "databaseProductVersion";
       public static final String KEY_IVY_SYSDB_VERSION = "version";
@@ -102,16 +97,11 @@ public class IvyJmxConstant {
       public static final String KEY_OPEN_CONNECTION = "openConnections";
       public static final String KEY_TRANSACTION_NUMBER = "transactions";
       public static final String KEY_ERROR_NUMBER = "errors";
-      public static final String KEY_TRANSACTION_TOTAL_EXE_TIME_IN_MS
-              = "transactionsTotalExecutionTimeInMicroSeconds";
-      public static final String KEY_TRANSACTION_MAX_EXE_TIME_IN_MS
-              = "transactionsMaxExecutionTimeInMicroSeconds";
-      public static final String KEY_TRANSACTION_MAX_EXE_DELTA_TIME_IN_MS
-              = "transactionsMaxExecutionTimeDeltaInMicroSeconds";
-      public static final String KEY_TRANSACTION_MIN_EXE_DELTA_TIME_IN_MS
-              = "transactionsMinExecutionTimeDeltaInMicroSeconds";
-      public static final String KEY_TRANSACTION_MIN_EXE_TIME_IN_MS
-              = "transactionsMinExecutionTimeInMicroSeconds";
+      public static final String KEY_TRANS_TOTAL_EXE_TIME = "transactionsTotalExecutionTimeInMicroSeconds";
+      public static final String KEY_TRANS_MAX_EXE_TIME = "transactionsMaxExecutionTimeInMicroSeconds";
+      public static final String KEY_TRANS_MAX_EXE_DEL_TIME = "transactionsMaxExecutionTimeDeltaInMicroSeconds";
+      public static final String KEY_TRANS_MIN_EXE_DEL_TIME = "transactionsMinExecutionTimeDeltaInMicroSeconds";
+      public static final String KEY_TRANS_MIN_EXE_TIME = "transactionsMinExecutionTimeInMicroSeconds";
     }
   }
 

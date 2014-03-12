@@ -21,18 +21,18 @@ public class ExternalDbProcessingTimeChartDataSource extends AbstractExternalDbD
   public void init() {
     super.init();
     addLabelCalcSupport(new LatestValueChartLabelCalcSupport(MAX_SERIE_TITLE, getObjectName(),
-            IvyJmxConstant.IvyServer.ExternalDatabase.KEY_TRANSACTION_MAX_EXE_DELTA_TIME_IN_MS));
+            IvyJmxConstant.IvyServer.ExternalDatabase.KEY_TRANS_MAX_EXE_DEL_TIME));
     addLabelCalcSupport(new LatestValueChartLabelCalcSupport(MIN_SERIE_TITLE, getObjectName(),
-            IvyJmxConstant.IvyServer.ExternalDatabase.KEY_TRANSACTION_MIN_EXE_DELTA_TIME_IN_MS));
+            IvyJmxConstant.IvyServer.ExternalDatabase.KEY_TRANS_MIN_EXE_DEL_TIME));
     addLabelCalcSupport(new DeltaValueChartLabelCalcSupport(MEAN_SERIE_TITLE, getObjectName(),
-            IvyJmxConstant.IvyServer.ExternalDatabase.KEY_TRANSACTION_TOTAL_EXE_TIME_IN_MS));
+            IvyJmxConstant.IvyServer.ExternalDatabase.KEY_TRANS_TOTAL_EXE_TIME));
 
     addSerie(MAX_SERIE_TITLE, null, SerieStyle.LINE, getObjectName(),
-            IvyJmxConstant.IvyServer.ExternalDatabase.KEY_TRANSACTION_MAX_EXE_DELTA_TIME_IN_MS);
+            IvyJmxConstant.IvyServer.ExternalDatabase.KEY_TRANS_MAX_EXE_DEL_TIME);
     addSerie(MIN_SERIE_TITLE, null, SerieStyle.LINE, getObjectName(),
-            IvyJmxConstant.IvyServer.ExternalDatabase.KEY_TRANSACTION_MIN_EXE_DELTA_TIME_IN_MS);
+            IvyJmxConstant.IvyServer.ExternalDatabase.KEY_TRANS_MIN_EXE_DEL_TIME);
     addDeltaSerie(MEAN_SERIE_TITLE, null, getObjectName(),
-            IvyJmxConstant.IvyServer.ExternalDatabase.KEY_TRANSACTION_TOTAL_EXE_TIME_IN_MS);
+            IvyJmxConstant.IvyServer.ExternalDatabase.KEY_TRANS_TOTAL_EXE_TIME);
 
   }
 

@@ -26,14 +26,14 @@ class AttributeDataSource extends SerieDataSource {
   }
 
   @Override
-  void updateQuery(Query query) {
+  public void updateQuery(Query query) {
     if (fFixedValue == -1) {
       query.addSubQuery(fMBeanName, fAttribute);
     }
   }
 
   @Override
-  long getValue(QueryResult result) {
+  public long getValue(QueryResult result) {
     long value;
     if (fFixedValue > -1) {
       value = fFixedValue;

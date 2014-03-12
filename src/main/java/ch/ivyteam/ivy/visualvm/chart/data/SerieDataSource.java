@@ -12,7 +12,7 @@ public abstract class SerieDataSource {
   private String fDescription;
   private SerieStyle fStyle;
 
-  SerieDataSource(String serie, long scaleFactor, SerieStyle style) {
+  public SerieDataSource(String serie, long scaleFactor, SerieStyle style) {
     fSerie = serie;
     fScaleFactor = scaleFactor;
     fStyle = style;
@@ -21,9 +21,9 @@ public abstract class SerieDataSource {
     }
   }
 
-  abstract void updateQuery(Query query);
+  public abstract void updateQuery(Query query);
 
-  abstract long getValue(QueryResult result);
+  public abstract long getValue(QueryResult result);
 
   protected long toScaledLong(Object value) {
     if (value instanceof Number) {
