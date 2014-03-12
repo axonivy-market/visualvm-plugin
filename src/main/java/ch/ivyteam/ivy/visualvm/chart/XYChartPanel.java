@@ -164,7 +164,7 @@ public class XYChartPanel extends JPanel implements IUpdatableUIObject {
       return;
     }
     fYAxisDescription = createYaxisDescriptorPanel(createYAxisHelpLabel(message), yAxisLabel);
-    container.add(getYAxisDescription(), BorderLayout.WEST);
+    container.add(fYAxisDescription, BorderLayout.WEST);
   }
 
   private JLabel createYAxisHelpLabel(final String message) {
