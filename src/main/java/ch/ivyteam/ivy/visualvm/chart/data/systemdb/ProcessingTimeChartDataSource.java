@@ -18,16 +18,16 @@ public class ProcessingTimeChartDataSource extends XYChartDataSource {
     super(dataBeanProvider, chartName, xAxisDescription, yAxisDescription);
 
     addLabelCalcSupport(new MaxValueChartLabelCalcSupport("Max of max",
-            DatabasePersistency.NAME, DatabasePersistency.KEY_TRANSACTION_MAX_EXE_TIME_IN_MS));
+            DatabasePersistency.NAME, DatabasePersistency.KEY_TRANS_MAX_EXE_TIME));
     addLabelCalcSupport(new ChartLabelDivideCalcSupport("Total mean", DatabasePersistency.NAME,
-            DatabasePersistency.KEY_TRANSACTION_TOTAL_EXE_TIME_IN_MS,
-            DatabasePersistency.KEY_TRANSACTION_NUMBER));
+            DatabasePersistency.KEY_TRANS_TOTAL_EXE_TIME,
+            DatabasePersistency.KEY_TRANS_NUMBER));
 
     addSerie(new MeanSerieDataSource());
     addSerie("Max", "The maximum time of all transactions that has finished in last poll", SerieStyle.LINE,
-            DatabasePersistency.NAME, DatabasePersistency.KEY_TRANSACTION_MAX_EXE_TIME_IN_MS);
+            DatabasePersistency.NAME, DatabasePersistency.KEY_TRANS_MAX_EXE_TIME);
     addSerie("Min", "The minimum time of all transactions that has finished in last poll", SerieStyle.LINE,
-            DatabasePersistency.NAME, DatabasePersistency.KEY_TRANSACTION_MIN_EXE_TIME_IN_MS);
+            DatabasePersistency.NAME, DatabasePersistency.KEY_TRANS_MIN_EXE_TIME);
   }
 
   class MeanSerieDataSource extends SerieDataSource {
@@ -43,9 +43,9 @@ public class ProcessingTimeChartDataSource extends XYChartDataSource {
     MeanSerieDataSource(String serie, long scaleFactor, SerieStyle style) {
       super(serie, scaleFactor, style);
       fDeltaTimeTransDataSource = new DeltaAttributeDataSource("", 1L, SerieStyle.LINE,
-              DatabasePersistency.NAME, DatabasePersistency.KEY_TRANSACTION_TOTAL_EXE_TIME_IN_MS);
+              DatabasePersistency.NAME, DatabasePersistency.KEY_TRANS_TOTAL_EXE_TIME);
       fDeltaNumberTransDataSource = new DeltaAttributeDataSource("", 1L, SerieStyle.LINE,
-              DatabasePersistency.NAME, DatabasePersistency.KEY_TRANSACTION_NUMBER);
+              DatabasePersistency.NAME, DatabasePersistency.KEY_TRANS_NUMBER);
     }
 
     @Override

@@ -18,12 +18,12 @@ public class TransactionChartDataSource extends XYChartDataSource {
           String xAxisDescription, String yAxisDescription) {
     super(dataBeanProvider, chartName, xAxisDescription, yAxisDescription);
     addLabelCalcSupport(new MaxDeltaValueChartLabelCalcSupport(TOTAL_TRANSACTION, DatabasePersistency.NAME,
-            DatabasePersistency.KEY_TRANSACTION_NUMBER));
+            DatabasePersistency.KEY_TRANS_NUMBER));
     addLabelCalcSupport(new MaxValueChartLabelCalcSupport(MAX_ERROR, DatabasePersistency.NAME,
             DatabasePersistency.KEY_ERROR));
     addDeltaSerie(TRANSACTION,
             "The number of system database transactions that have finished since the last poll",
-            SerieStyle.LINE, DatabasePersistency.NAME, DatabasePersistency.KEY_TRANSACTION_NUMBER);
+            SerieStyle.LINE, DatabasePersistency.NAME, DatabasePersistency.KEY_TRANS_NUMBER);
     addSerie(ERROR, "The number of system database transactions that finished since the last poll"
             + " and were erroneous.",
             SerieStyle.LINE, DatabasePersistency.NAME, DatabasePersistency.KEY_ERROR);
