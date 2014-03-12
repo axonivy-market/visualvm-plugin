@@ -17,17 +17,17 @@ public class ProcessingTimeChartDataSource extends XYChartDataSource {
           String xAxisDescription, String yAxisDescription) {
     super(dataBeanProvider, chartName, xAxisDescription, yAxisDescription);
 
-    addLabelCalcSupport(new MaxValueChartLabelCalcSupport("Max of max",
-            DatabasePersistency.NAME, DatabasePersistency.KEY_TRANS_MAX_EXE_TIME));
     addLabelCalcSupport(new ChartLabelDivideCalcSupport("Total mean", DatabasePersistency.NAME,
             DatabasePersistency.KEY_TRANS_TOTAL_EXE_TIME,
             DatabasePersistency.KEY_TRANS_NUMBER));
+    addLabelCalcSupport(new MaxValueChartLabelCalcSupport("Max of max",
+            DatabasePersistency.NAME, DatabasePersistency.KEY_TRANS_MAX_EXE_TIME));
 
     addSerie(new MeanSerieDataSource());
     addSerie("Max", "The maximum time of all transactions that has finished in last poll", SerieStyle.LINE,
-            DatabasePersistency.NAME, DatabasePersistency.KEY_TRANS_MAX_EXE_TIME);
+            DatabasePersistency.NAME, DatabasePersistency.KEY_TRANS_MAX_EXE_DELTA_TIME);
     addSerie("Min", "The minimum time of all transactions that has finished in last poll", SerieStyle.LINE,
-            DatabasePersistency.NAME, DatabasePersistency.KEY_TRANS_MIN_EXE_TIME);
+            DatabasePersistency.NAME, DatabasePersistency.KEY_TRANS_MIN_EXE_DELTA_TIME);
   }
 
   class MeanSerieDataSource extends SerieDataSource {
