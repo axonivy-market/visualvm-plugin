@@ -10,8 +10,8 @@ public final class HtmlSupport {
   private static final String TAG_ROW_END = "</tr>";
 //  private static final String TAG_CELL_STATIC_WIDTH = "<td width='40'>";
 //  private static final String TAG_CELL_BOLD_START = "<td style='font-weight:bold'>";
-  private static final String TAG_CELL_START = "<td style='padding:0px 5px 0px 0px'>";
-  private static final String TAG_CELL_START2 = "<td style='padding:0px 0px 0px 5px'>";
+  private static final String TAG_CELL_START = "<td>";
+  private static final String TAG_CELL_START2 = "<td style='margin-left:5px'>";
   private static final String TAG_CELL_END = "</td>";
   private static final String CHAR_COLON = ":";
 
@@ -48,7 +48,7 @@ public final class HtmlSupport {
       sb.append(labels[i]);
       sb.append(CHAR_COLON);
       sb.append(TAG_CELL_END);
-      sb.append(TAG_CELL_START);
+      sb.append(TAG_CELL_START2);
       if (i < value.length) {
         sb.append(value[i]);
       }

@@ -37,7 +37,7 @@ public class XYChartsPanel extends JPanel {
             new Insets(0, 0, 0, 0), 0, 0));
     super.add(chart.getHtmlLabel(), new GridBagConstraints(3, index * 3, 1, 1, 0, 0,
             GridBagConstraints.NORTHWEST, GridBagConstraints.BOTH,
-            new Insets(BASE_PADDING, 0, 0, 0), 0, 0));
+            new Insets(BASE_PADDING, BASE_PADDING, 0, BASE_PADDING), 0, 0));
     super.add(chart.getLegend(), new GridBagConstraints(2, index * 3 + 2, 1, 1, 0, 0,
             GridBagConstraints.WEST, GridBagConstraints.HORIZONTAL,
             new Insets(0, 0, 0, 0), 0, 0));

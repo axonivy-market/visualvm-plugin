@@ -17,6 +17,7 @@ import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
+import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -36,7 +37,7 @@ public class XYChartPanel extends JPanel implements IUpdatableUIObject {
   private static final int CHART_MAIN_AREA_INDEX = 1;
   private static final int CHART_MAIN_AREA_YAXIS_INDEX = 2;
   private static final int CHART_YAXIS_LABEL_INDEX = 0;
-  private static final String ICON_HELP_URL = "/resources/icons/question16.png";
+  private static final String ICON_HELP_URL = "/resources/icons/question16_with_padding.png";
 
   private SimpleXYChartSupport fChart;
   private JLabel fHtmlLabel;
@@ -46,6 +47,7 @@ public class XYChartPanel extends JPanel implements IUpdatableUIObject {
   private Component fChartArea;
   private Component fChartLegend;
   private final XYChartDataSource fDataSource;
+  private NumberFormat fNumberFormat;
   private String fYAxisHelpMessage;
   private String[] fDetailLabels;
 
@@ -58,6 +60,8 @@ public class XYChartPanel extends JPanel implements IUpdatableUIObject {
   XYChartPanel(XYChartDataSource dataSource, String yAxisMessage) {
     fDataSource = dataSource;
     fStorage = new ArrayList<>();
+    fNumberFormat = NumberFormat.getNumberInstance();
+
     fYAxisHelpMessage = yAxisMessage;
     createChart();
     createYAxisHelpMessage(yAxisMessage);
@@ -97,7 +101,7 @@ public class XYChartPanel extends JPanel implements IUpdatableUIObject {
 
     long[] labels = fDataSource.calculateDetailValues(result);
     fDataSource.setLabels(result);
-    String text = HtmlSupport.toOneColumnHtmlTable(fDetailLabels, convert(labels));
+    String text = HtmlSupport.toOneColumnHtmlTable(fDetailLabels, format(labels));
     fHtmlLabel.setText(text);
     View view = (View) fHtmlLabel.getClientProperty(BasicHTML.propertyKey);
     if (view != null) {
@@ -113,11 +117,11 @@ public class XYChartPanel extends JPanel implements IUpdatableUIObject {
     fDataSource.updateQuery(query);
   }
 
-  private String[] convert(long[] nums) {
+  private String[] format(long[] nums) {
     String[] result = new String[nums.length];
     int index = 0;
     for (long num : nums) {
-      result[index++] = Long.toString(num);
+      result[index++] = fNumberFormat.format(num);
     }
     return result;
   }
