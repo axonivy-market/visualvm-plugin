@@ -40,14 +40,23 @@ public class LicenseInfoTest extends AbstractTest {
               "Your licence has expired on Tuesday, March 25, 2014. You will not be able to restart your server. Please contact your sales representative to request a new license!",
               "Expired license"},
             new Object[]{
-              "Cannot create more users because the maximum users that are allowed by your licence has exceeded",
-              "Named users limit exceeded"},
+              "The number of users has neary reached the license limit. Please consider to contact your sales representative to request a new license!",
+              "Named users limit nearly exceeded (reach yellow area in the gauge)"},
             new Object[]{
-              "The maximum sessions that are allowed by your licence has been reached.",
-              "Concurrent users limit exceeded"},
+              "The number of users has almost reached the license limit. Please consider to contact your sales representative to request a new license!",
+              "Named users limit almost exceeded (reach red area in the gauge)"},
             new Object[]{
-              "Cannot create session because the maximum session that are allowed by your licence has exceeded by a factor of 50%.",
-              "Concurrent users limit exceeded 50%"});
+              "Cannot create more users because the maximum users that are allowed by your licence has exceeded. Please contact your sales representative to request a new license!",
+              "Named users limit exceeded (reach the end of the the gauge)"},
+            new Object[]{
+              "The number of sessions has almost reached the license limit. Please consider to contact your sales representative to request a new license!",
+              "Concurrent users limit almost exceeded (reach yellow area in the gauge)"},
+            new Object[]{
+              "The maximum sessions that are allowed by your licence has been reached. Please contact your sales representative to request a new license!",
+              "Concurrent users limit exceeded (reach red area in the gauge)"},
+            new Object[]{
+              "Cannot create session because the maximum session that are allowed by your licence has exceeded by a factor of 50%. Please contact your sales representative to request a new license!",
+              "Concurrent users limit exceeded 50% (reach the end of the gauge)"});
     return data;
   }
 

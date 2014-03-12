@@ -189,7 +189,35 @@
             </property>
             <property>
               <name>server.users.limit</name>
-              <value>5</value>
+              <value>7</value>
+            </property>
+          </dataset>
+        </property>
+      </dataset>
+    </property>
+  </dataset>
+  <dataset>
+    <property>
+      <name>Xpert.ivy Server:type=Server</name>
+      <dataset>
+        <property>
+          <name>licenceParameters</name>
+          <dataset type="javax.management.openmbean.TabularData">        
+             <property>
+              <name>server.elements.limit</name>
+              <value>0</value>
+            </property>
+            <property>
+              <name>server.ria</name>
+              <value>false</value>
+            </property>
+            <property>
+              <name>server.sessions.limit</name>
+              <value>100</value>
+            </property>
+            <property>
+              <name>server.users.limit</name>
+              <value>6</value>
             </property>
           </dataset>
         </property>
@@ -203,6 +231,62 @@
         <property>
           <name>licenceParameters</name>
           <dataset type="javax.management.openmbean.TabularData">       
+             <property>
+              <name>server.elements.limit</name>
+              <value>0</value>
+            </property>
+            <property>
+              <name>server.ria</name>
+              <value>false</value>
+            </property>
+            <property>
+              <name>server.sessions.limit</name>
+              <value>100</value>
+            </property>
+            <property>
+              <name>server.users.limit</name>
+              <value>5</value>
+            </property>
+          </dataset>
+        </property>
+      </dataset>
+    </property>
+  </dataset>
+  <dataset>
+    <property>
+      <name>Xpert.ivy Server:type=Server</name>
+      <dataset>
+        <property>
+          <name>licenceParameters</name>
+          <dataset type="javax.management.openmbean.TabularData">        
+             <property>
+              <name>server.elements.limit</name>
+              <value>0</value>
+            </property>
+            <property>
+              <name>server.ria</name>
+              <value>false</value>
+            </property>
+            <property>
+              <name>server.sessions.limit</name>
+              <value>10</value>
+            </property>
+            <property>
+              <name>server.users.limit</name>
+              <value>5</value>
+            </property>
+          </dataset>
+        </property>
+      </dataset>
+    </property>
+  </dataset>
+  <dataset>
+    <property>
+      <name>Xpert.ivy Server:type=Server</name>
+      <dataset>
+        <property>
+          <name>licenceParameters</name>
+          <dataset type="javax.management.openmbean.TabularData">        
              <property>
               <name>server.elements.limit</name>
               <value>0</value>
