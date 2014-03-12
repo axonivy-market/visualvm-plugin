@@ -3,6 +3,9 @@ package ch.ivyteam.ivy.visualvm.test;
 import ch.ivyteam.ivy.visualvm.exception.IvyVisualVMRuntimeException;
 import ch.ivyteam.ivy.visualvm.test.data.model.BeanTestData;
 import ch.ivyteam.ivy.visualvm.test.data.model.BeanTestData.Dataset.Property;
+import ch.ivyteam.ivy.visualvm.view.CachedData;
+import ch.ivyteam.ivy.visualvm.view.DataBeanProvider;
+import ch.ivyteam.ivy.visualvm.view.IDataBeanProvider;
 import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -20,6 +23,7 @@ import javax.management.ReflectionException;
 import javax.management.openmbean.CompositeDataSupport;
 import javax.management.openmbean.TabularDataSupport;
 import junit.framework.TestCase;
+import org.mockito.Mockito;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -62,6 +66,13 @@ public abstract class AbstractTest extends TestCase {
             MBeanException e) {
       throw new IvyVisualVMRuntimeException(e);
     }
+  }
+
+  public IDataBeanProvider mockDataProvider(MBeanServerConnection connection) {
+    IDataBeanProvider provider = Mockito.mock(DataBeanProvider.class);
+    when(provider.getMBeanServerConnection()).thenReturn(connection);
+    when(provider.getCachedData()).thenReturn(new CachedData(connection));
+    return provider;
   }
 
   private static void handleTabularData(MBeanServerConnection mockConnection, ObjectName objectName,

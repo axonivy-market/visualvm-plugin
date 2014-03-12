@@ -59,13 +59,8 @@ public class SessionChartDataSourceTest extends AbstractTest {
     when(mockConnection.queryNames(IvyJmxConstant.Ivy.Manager.PATTERN, null))
             .thenReturn(connectorObjNames);
 
-    IDataBeanProvider provider = new IDataBeanProvider() {
-      @Override
-      public MBeanServerConnection getMBeanServerConnection() {
-        return mockConnection;
-      }
+    IDataBeanProvider provider = mockDataProvider(mockConnection);
 
-    };
     SessionChartDataSource sessionChartDataSource = new SessionChartDataSource(provider, "", "", "");
     Query query = new Query();
     sessionChartDataSource.updateQuery(query);

@@ -61,13 +61,8 @@ public class RequestChartDataSourceTest extends AbstractTest {
     when(mockConnection.queryNames(IvyJmxConstant.Ivy.Processor.PATTERN, null))
             .thenReturn(connectorObjNames);
 
-    IDataBeanProvider provider = new IDataBeanProvider() {
-      @Override
-      public MBeanServerConnection getMBeanServerConnection() {
-        return mockConnection;
-      }
+    IDataBeanProvider provider = mockDataProvider(mockConnection);
 
-    };
     if (requestChartDataSource == null) {
       requestChartDataSource = new RequestChartDataSource(provider, "", "", "");
     }

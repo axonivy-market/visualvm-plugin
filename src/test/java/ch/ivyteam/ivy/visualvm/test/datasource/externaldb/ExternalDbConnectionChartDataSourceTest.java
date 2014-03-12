@@ -62,13 +62,7 @@ public class ExternalDbConnectionChartDataSourceTest extends AbstractTest {
     when(mockConnection.getAttribute(objectName,
             IvyJmxConstant.IvyServer.ExternalDatabase.KEY_MAX_CONNECTION)).thenReturn(fMaxConnection);
 
-    IDataBeanProvider provider = new IDataBeanProvider() {
-      @Override
-      public MBeanServerConnection getMBeanServerConnection() {
-        return mockConnection;
-      }
-
-    };
+    IDataBeanProvider provider = mockDataProvider(mockConnection);
 
     ExternalDbConnectionChartDataSource dataSource = new ExternalDbConnectionChartDataSource(provider, "",
             "", "");

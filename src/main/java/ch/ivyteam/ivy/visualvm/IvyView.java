@@ -1,7 +1,7 @@
 package ch.ivyteam.ivy.visualvm;
 
+import ch.ivyteam.ivy.visualvm.view.DataBeanProvider;
 import ch.ivyteam.ivy.visualvm.exception.ClosedIvyServerConnectionException;
-import ch.ivyteam.ivy.visualvm.util.DataUtils;
 import ch.ivyteam.ivy.visualvm.view.AbstractView;
 import ch.ivyteam.ivy.visualvm.view.ExternalDbView;
 import ch.ivyteam.ivy.visualvm.view.IDataBeanProvider;
@@ -23,7 +23,6 @@ import java.util.List;
 import java.util.logging.Logger;
 import java.util.prefs.PreferenceChangeEvent;
 import java.util.prefs.PreferenceChangeListener;
-import javax.management.MBeanServerConnection;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JComponent;
@@ -66,13 +65,7 @@ class IvyView extends DataSourceView {
     // Add the master view and configuration view to the component:
     DataViewComponent dvcRoot = createDVC("", null);
     dvcRoot.add(tabbed);
-    IDataBeanProvider dataBeanProvider = new IDataBeanProvider() {
-      @Override
-      public MBeanServerConnection getMBeanServerConnection() {
-        return DataUtils.getMBeanServerConnection(fIvyApplication);
-      }
-
-    };
+    IDataBeanProvider dataBeanProvider = new DataBeanProvider(fIvyApplication);
 
     // add views
     addInformationView(dataBeanProvider, tabbed);

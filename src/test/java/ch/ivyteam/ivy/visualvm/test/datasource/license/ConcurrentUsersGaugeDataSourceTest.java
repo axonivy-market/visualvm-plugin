@@ -41,13 +41,7 @@ public class ConcurrentUsersGaugeDataSourceTest extends AbstractTest {
           MalformedObjectNameException {
     final MBeanServerConnection mockConnection = createMockConnection();
     addTestData(mockConnection, getDataset());
-    IDataBeanProvider provider = new IDataBeanProvider() {
-      @Override
-      public MBeanServerConnection getMBeanServerConnection() {
-        return mockConnection;
-      }
-
-    };
+    IDataBeanProvider provider = mockDataProvider(mockConnection);
     ConcurrentUsersGaugeDataSource concurrentUsersGaugeDataSource = new ConcurrentUsersGaugeDataSource(
             provider, 40);
     RadialPanel radialPanel = new RadialPanel(concurrentUsersGaugeDataSource);

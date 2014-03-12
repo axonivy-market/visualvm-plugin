@@ -41,13 +41,7 @@ public class NamedUsersGaugeDataSourceTest extends AbstractTest {
           MalformedObjectNameException {
     final MBeanServerConnection mockConnection = createMockConnection();
     addTestData(mockConnection, getDataset());
-    IDataBeanProvider provider = new IDataBeanProvider() {
-      @Override
-      public MBeanServerConnection getMBeanServerConnection() {
-        return mockConnection;
-      }
-
-    };
+    IDataBeanProvider provider = mockDataProvider(mockConnection);
     NamedUsersGaugeDataSource namedUsersGaugeDataSource = new NamedUsersGaugeDataSource(
             provider, 40);
     RadialPanel radialPanel = new RadialPanel(namedUsersGaugeDataSource);

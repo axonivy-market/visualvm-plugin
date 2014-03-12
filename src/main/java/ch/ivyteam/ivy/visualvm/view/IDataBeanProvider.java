@@ -5,4 +5,6 @@ import javax.management.MBeanServerConnection;
 public interface IDataBeanProvider {
   MBeanServerConnection getMBeanServerConnection();
 
+  CachedData getCachedData();
+
 }
