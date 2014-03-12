@@ -1,9 +1,10 @@
 package ch.ivyteam.ivy.visualvm.chart.data.externaldb;
 
 import ch.ivyteam.ivy.visualvm.chart.SerieStyle;
-import ch.ivyteam.ivy.visualvm.chart.data.support.LatestValueChartLabelCalcSupport;
+import ch.ivyteam.ivy.visualvm.chart.data.support.MaxValueChartLabelCalcSupport;
 import ch.ivyteam.ivy.visualvm.chart.data.support.StaticValueChartLabelCalcSupport;
 import ch.ivyteam.ivy.visualvm.model.IvyJmxConstant;
+import ch.ivyteam.ivy.visualvm.model.IvyJmxConstant.IvyServer.ExternalDatabase;
 import ch.ivyteam.ivy.visualvm.view.IDataBeanProvider;
 import java.io.IOException;
 import java.util.logging.Level;
@@ -16,10 +17,16 @@ import javax.management.ReflectionException;
 import org.apache.commons.lang.math.NumberUtils;
 
 public class ExternalDbConnectionChartDataSource extends AbstractExternalDbDataSource {
+
   private static final Logger LOGGER = Logger.getLogger(ExternalDbConnectionChartDataSource.class.getName());
   private static final String MAX_SERIE_TITLE = "Max";
   private static final String OPEN_SERIE_TITLE = "Open";
   private static final String USED_SERIE_TITLE = "Used";
+  private static final String MAX_OPEN_SERIE_TITLE = "Max open";
+  private static final String MAX_USED_SERIE_TITLE = "Max used";
+  public static final String OPEN_SERIE_DESC = "The number of open connection to the external database";
+  public static final String USED_SERIE_DESC = "The number of open connections to the external database for "
+          + "which at least one";
 
   public ExternalDbConnectionChartDataSource(IDataBeanProvider dataBeanProvider, String chartName,
           String xAxisDescription, String yAxisDescription) {
@@ -30,18 +37,15 @@ public class ExternalDbConnectionChartDataSource extends AbstractExternalDbDataS
   public void init() {
     super.init();
     addLabelCalcSupport(new StaticValueChartLabelCalcSupport(MAX_SERIE_TITLE, getMaxConnection()));
+    addLabelCalcSupport(new MaxValueChartLabelCalcSupport(MAX_USED_SERIE_TITLE, getObjectName(),
+            ExternalDatabase.KEY_USED_CONNECTION));
+    addLabelCalcSupport(new MaxValueChartLabelCalcSupport(MAX_OPEN_SERIE_TITLE, getObjectName(),
+            ExternalDatabase.KEY_OPEN_CONNECTION));
 
-    addLabelCalcSupport(new LatestValueChartLabelCalcSupport(USED_SERIE_TITLE, getObjectName(),
-            IvyJmxConstant.IvyServer.ExternalDatabase.KEY_USED_CONNECTION));
-
-    addLabelCalcSupport(new LatestValueChartLabelCalcSupport(OPEN_SERIE_TITLE, getObjectName(),
-            IvyJmxConstant.IvyServer.ExternalDatabase.KEY_OPEN_CONNECTION));
-
-    addSerie(OPEN_SERIE_TITLE, null, SerieStyle.LINE, getObjectName(),
-            IvyJmxConstant.IvyServer.ExternalDatabase.KEY_OPEN_CONNECTION);
-
-    addSerie(USED_SERIE_TITLE, null, SerieStyle.LINE, getObjectName(),
-            IvyJmxConstant.IvyServer.ExternalDatabase.KEY_USED_CONNECTION);
+    addSerie(OPEN_SERIE_TITLE, OPEN_SERIE_DESC, SerieStyle.LINE, getObjectName(),
+            ExternalDatabase.KEY_OPEN_CONNECTION);
+    addSerie(USED_SERIE_TITLE, USED_SERIE_DESC, SerieStyle.LINE, getObjectName(),
+            ExternalDatabase.KEY_USED_CONNECTION);
   }
 
   private long getMaxConnection() {

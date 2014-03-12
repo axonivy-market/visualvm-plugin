@@ -57,9 +57,9 @@ public class ExternalDbView extends AbstractView {
                     "Processing Time [µs]");
 
     configDataSources(connectionDataSource, transactionDataSource, transProcessTimeDataSource);
-    chartPanel.addChart(connectionDataSource);
-    chartPanel.addChart(transactionDataSource);
-    chartPanel.addChart(transProcessTimeDataSource);
+    chartPanel.addChart(connectionDataSource, generateDescriptionForConnectionChart());
+    chartPanel.addChart(transactionDataSource, generateDescriptionForTransactionChart());
+    chartPanel.addChart(transProcessTimeDataSource, generateDescriptionForProcessingTimeChart());
     registerScheduledUpdate(chartPanel);
     return chartPanel;
   }
@@ -142,5 +142,43 @@ public class ExternalDbView extends AbstractView {
       }
     }
     return false;
+  }
+
+  private String generateDescriptionForConnectionChart() {
+    StringBuilder builder = new StringBuilder();
+    builder.append("<html>");
+    builder.append("The chart shows the number of open and the number of used connections to the external ");
+    builder.append("database.<br><br>");
+    builder.append("<b>Open:</b>").append(ExternalDbConnectionChartDataSource.OPEN_SERIE_DESC).append("<br>");
+    builder.append("<b>Used:</b>").append(ExternalDbConnectionChartDataSource.USED_SERIE_DESC).append("<br>");
+    builder.append("</html>");
+    return builder.toString();
+  }
+
+  private String generateDescriptionForTransactionChart() {
+    StringBuilder builder = new StringBuilder();
+    builder.append("<html>");
+    builder.append("The chart shows the number of transactions to the external database and the number of ");
+    builder.append("them that were erroneous.<br><br>");
+    builder.append("<b>Transactions:</b>").append(ExternalDbTransactionChartDataSource.TRANSACTION_SERIE_DESC)
+            .append("<br>");
+    builder.append("<b>Errors:</b>").append(ExternalDbTransactionChartDataSource.ERRORS_SERIE_DESC);
+    builder.append("</html>");
+    return builder.toString();
+  }
+
+  private String generateDescriptionForProcessingTimeChart() {
+    StringBuilder builder = new StringBuilder();
+    builder.append("<html>");
+    builder.append("The chart shows the maximum and the minimum time needed to transaction a execute in ");
+    builder.append("last poll<br><br>");
+    builder.append("<b>Mean</b>: ").append(ExternalDbProcessingTimeChartDataSource.MEAN_SERIE_DESC)
+            .append("<br>");
+    builder.append("<b>Max</b>: ").append(ExternalDbProcessingTimeChartDataSource.MAX_SERIE_DESC)
+            .append("<br>");
+    builder.append("<b>Min</b>: ").append(ExternalDbProcessingTimeChartDataSource.MIN_SERIE_DESC)
+            .append("<br>");
+    builder.append("</html>");
+    return builder.toString();
   }
 }

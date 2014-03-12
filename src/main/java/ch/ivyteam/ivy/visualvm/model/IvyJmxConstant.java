@@ -102,9 +102,9 @@ public class IvyJmxConstant {
       public static final String KEY_ERROR_NUMBER = "errors";
       public static final String KEY_TRANS_TOTAL_EXE_TIME = "transactionsTotalExecutionTimeInMicroSeconds";
       public static final String KEY_TRANS_MAX_EXE_TIME = "transactionsMaxExecutionTimeInMicroSeconds";
-      public static final String KEY_TRANS_MAX_EXE_DEL_TIME = "transactionsMaxExecutionTimeDeltaInMicro"
+      public static final String KEY_TRANS_MAX_EXE_DELTA_TIME = "transactionsMaxExecutionTimeDeltaInMicro"
               + "Seconds";
-      public static final String KEY_TRANS_MIN_EXE_DEL_TIME = "transactionsMinExecutionTimeDeltaInMicro"
+      public static final String KEY_TRANS_MIN_EXE_DELTA_TIME = "transactionsMinExecutionTimeDeltaInMicro"
               + "Seconds";
       public static final String KEY_TRANS_MIN_EXE_TIME = "transactionsMinExecutionTimeInMicroSeconds";
     }
