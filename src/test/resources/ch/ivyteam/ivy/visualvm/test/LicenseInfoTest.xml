@@ -115,7 +115,7 @@
               <name>licence.valid.until</name>
               <value>2014-04-15</value>
             </property>   
-             <property>
+            <property>
               <name>server.elements.limit</name>
               <value>0</value>
             </property>
@@ -147,7 +147,7 @@
               <name>licence.valid.until</name>
               <value>2014-03-25</value>
             </property>   
-             <property>
+            <property>
               <name>server.elements.limit</name>
               <value>0</value>
             </property>
@@ -174,8 +174,8 @@
       <dataset>
         <property>
           <name>licenceParameters</name>
-          <dataset type="javax.management.openmbean.TabularData">        
-             <property>
+          <dataset type="javax.management.openmbean.TabularData">       
+            <property>
               <name>server.elements.limit</name>
               <value>0</value>
             </property>
@@ -203,7 +203,7 @@
         <property>
           <name>licenceParameters</name>
           <dataset type="javax.management.openmbean.TabularData">        
-             <property>
+            <property>
               <name>server.elements.limit</name>
               <value>0</value>
             </property>
@@ -231,7 +231,7 @@
         <property>
           <name>licenceParameters</name>
           <dataset type="javax.management.openmbean.TabularData">       
-             <property>
+            <property>
               <name>server.elements.limit</name>
               <value>0</value>
             </property>
@@ -259,7 +259,7 @@
         <property>
           <name>licenceParameters</name>
           <dataset type="javax.management.openmbean.TabularData">        
-             <property>
+            <property>
               <name>server.elements.limit</name>
               <value>0</value>
             </property>
@@ -287,7 +287,7 @@
         <property>
           <name>licenceParameters</name>
           <dataset type="javax.management.openmbean.TabularData">        
-             <property>
+            <property>
               <name>server.elements.limit</name>
               <value>0</value>
             </property>
@@ -315,10 +315,6 @@
         <property>
           <name>licenceParameters</name>
           <dataset type="javax.management.openmbean.TabularData">                        
-             <property>
-              <name>server.elements.limit</name>
-              <value>0</value>
-            </property>
             <property>
               <name>server.ria</name>
               <value>false</value>

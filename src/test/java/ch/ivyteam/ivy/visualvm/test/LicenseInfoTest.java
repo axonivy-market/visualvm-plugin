@@ -74,7 +74,10 @@ public class LicenseInfoTest extends AbstractTest {
     addTestData(mockedMBeanServer, getDataset());
     IvyLicenseInfo licenseInfo = new BasicIvyJmxDataCollector().getLicenseInfo(mockedMBeanServer);
     Date currentDate = DataUtils.stringToDate("2014-03-26");
-    long remainingTime = licenseInfo.getLicenseValidUntil().getTime() - currentDate.getTime();
+    long remainingTime = Long.MAX_VALUE;
+    if (licenseInfo.getLicenseValidUntil() != null) {
+      remainingTime = licenseInfo.getLicenseValidUntil().getTime() - currentDate.getTime();
+    }
     LicenseInformationPanel infoPanel = new LicenseInformationPanel(licenseInfo);
     infoPanel.setLicenseData(remainingTime, 5, 9);
     String htmlLicenseInfo = infoPanel.toHTMLString();

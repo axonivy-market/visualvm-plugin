@@ -37,12 +37,20 @@ public final class DataUtils {
         LOGGER.warning(ex.getMessage());
       }
     }
-    return new Date();
+    return null;
   }
 
-  public static String toDateString(Date date) {
+  public static String dateToString(Date date) {
     DateFormat localizedFormat = DateFormat.getDateInstance(DateFormat.FULL, Locale.getDefault());
     return localizedFormat.format(date);
+  }
+
+  public static Integer stringToInteger(String valueString) {
+    int result = 0;
+    if (valueString != null) {
+      result = Integer.parseInt(valueString);
+    }
+    return result;
   }
 
   public static String getIvyServerVersion(String versionData) {

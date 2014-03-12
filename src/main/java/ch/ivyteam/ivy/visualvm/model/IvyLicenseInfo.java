@@ -23,7 +23,7 @@ public class IvyLicenseInfo {
   private boolean fServerRIA;
   private int fServerUsersLimit;
   private int fServerSessionsLimit;
-  
+
   public IvyLicenseInfo() {
   }
 
@@ -32,7 +32,7 @@ public class IvyLicenseInfo {
   }
 
   public void setHostName(String hostName) {
-    this.fHostName = hostName;
+    fHostName = hostName;
   }
 
   public int getServerElementsLimit() {
@@ -40,7 +40,7 @@ public class IvyLicenseInfo {
   }
 
   public void setServerElementsLimit(int serverElementsLimit) {
-    this.fServerElementsLimit = serverElementsLimit;
+    fServerElementsLimit = serverElementsLimit;
   }
 
   public String getLicenseeOrganisation() {
@@ -48,7 +48,7 @@ public class IvyLicenseInfo {
   }
 
   public void setLicenseeOrganisation(String licenseeOrganisation) {
-    this.fLicenseeOrganisation = licenseeOrganisation;
+    fLicenseeOrganisation = licenseeOrganisation;
   }
 
   public Date getLicenseValidFrom() {
@@ -56,7 +56,7 @@ public class IvyLicenseInfo {
   }
 
   public void setLicenseValidFrom(Date licenseValidFrom) {
-    this.fLicenseValidFrom = licenseValidFrom;
+    fLicenseValidFrom = licenseValidFrom;
   }
 
   public String getLicenseKeyVersion() {
@@ -64,7 +64,7 @@ public class IvyLicenseInfo {
   }
 
   public void setLicenseKeyVersion(String licenseKeyVersion) {
-    this.fLicenseKeyVersion = licenseKeyVersion;
+    fLicenseKeyVersion = licenseKeyVersion;
   }
 
   public Date getLicenseValidUntil() {
@@ -72,7 +72,7 @@ public class IvyLicenseInfo {
   }
 
   public void setLicenseValidUntil(Date licenseValidUntil) {
-    this.fLicenseValidUntil = licenseValidUntil;
+    fLicenseValidUntil = licenseValidUntil;
   }
 
   public String getLicenseeIndividual() {
@@ -80,7 +80,7 @@ public class IvyLicenseInfo {
   }
 
   public void setLicenseeIndividual(String licenseeIndividual) {
-    this.fLicenseeIndividual = licenseeIndividual;
+    fLicenseeIndividual = licenseeIndividual;
   }
 
   public boolean isServerRIA() {
@@ -88,7 +88,7 @@ public class IvyLicenseInfo {
   }
 
   public void setServerRIA(boolean serverRIA) {
-    this.fServerRIA = serverRIA;
+    fServerRIA = serverRIA;
   }
 
   public int getServerUsersLimit() {
@@ -96,7 +96,7 @@ public class IvyLicenseInfo {
   }
 
   public void setServerUsersLimit(int serverUsersLimit) {
-    this.fServerUsersLimit = serverUsersLimit;
+    fServerUsersLimit = serverUsersLimit;
   }
 
   public int getServerSessionsLimit() {
@@ -104,7 +104,7 @@ public class IvyLicenseInfo {
   }
 
   public void setServerSessionsLimit(int serverSessionsLimit) {
-    this.fServerSessionsLimit = serverSessionsLimit;
+    fServerSessionsLimit = serverSessionsLimit;
   }
 
 }

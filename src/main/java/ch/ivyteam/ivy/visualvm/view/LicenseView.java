@@ -121,7 +121,10 @@ public class LicenseView extends AbstractView {
     } catch (IvyJmxDataCollectException ex) {
       LOGGER.warning(ex.getMessage());
     }
-    long remainingTime = fLicenseInfo.getLicenseValidUntil().getTime() - new Date().getTime();
+    long remainingTime = Long.MAX_VALUE;
+    if (fLicenseInfo.getLicenseValidUntil() != null) {
+      remainingTime = fLicenseInfo.getLicenseValidUntil().getTime() - new Date().getTime();
+    }
     boolean nearlyExpired = remainingTime <= 30 * LicenseInformationPanel.MILISECONDS_IN_ONE_DAY;
     boolean expired = remainingTime <= 0;
     boolean valueChanged = fStoredConUsers != concurrentUsers || fStoredNamedUsers != namedUsers;

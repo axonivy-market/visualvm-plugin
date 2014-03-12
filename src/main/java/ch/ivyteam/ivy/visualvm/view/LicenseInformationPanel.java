@@ -175,7 +175,7 @@ public class LicenseInformationPanel extends javax.swing.JPanel {
     if (fLicenseInfo.getLicenseValidUntil() != null) {
       html.append(TR_TD_START);
       html.append("Expires: ").append(TD_END);
-      html.append(TD_START).append(DataUtils.toDateString(fLicenseInfo.getLicenseValidUntil()));
+      html.append(TD_START).append(DataUtils.dateToString(fLicenseInfo.getLicenseValidUntil()));
       html.append(TD_TR_END);
     }
   }
@@ -184,7 +184,7 @@ public class LicenseInformationPanel extends javax.swing.JPanel {
     if (fLicenseInfo.getLicenseValidFrom() != null) {
       html.append(TR_TD_START);
       html.append("Valid From: ").append(TD_END);
-      html.append(TD_START).append(DataUtils.toDateString(fLicenseInfo.getLicenseValidFrom()));
+      html.append(TD_START).append(DataUtils.dateToString(fLicenseInfo.getLicenseValidFrom()));
       html.append(TD_TR_END);
     }
   }
@@ -275,24 +275,26 @@ public class LicenseInformationPanel extends javax.swing.JPanel {
   }
 
   private void appendExpireWarning(StringBuilder html) {
-    String iconPath = null;
-    String warningMsg = null;
-    String color = WARNING_COLOR; //yellow
-    String expireDateString = DataUtils.toDateString(fLicenseInfo.getLicenseValidUntil());
+    if (fLicenseInfo.getLicenseValidUntil() != null) {
+      String iconPath = null;
+      String warningMsg = null;
+      String color = WARNING_COLOR; //yellow
+      String expireDateString = DataUtils.dateToString(fLicenseInfo.getLicenseValidUntil());
 
-    if (isLicenseError()) {
-      warningMsg = MessageFormat.format(EXPIRED_WARNING, expireDateString);
-      color = ERROR_COLOR;
-      iconPath = ERROR_ICON_PATH;
-    } else if (isLicenseWarning()) {
-      warningMsg = MessageFormat.format(EXPIRE_IN_30_DAYS_WARNING, expireDateString);
-      iconPath = WARNING_ICON_PATH;
-    }
+      if (isLicenseError()) {
+        warningMsg = MessageFormat.format(EXPIRED_WARNING, expireDateString);
+        color = ERROR_COLOR;
+        iconPath = ERROR_ICON_PATH;
+      } else if (isLicenseWarning()) {
+        warningMsg = MessageFormat.format(EXPIRE_IN_30_DAYS_WARNING, expireDateString);
+        iconPath = WARNING_ICON_PATH;
+      }
 
-    if (warningMsg == null) {
-      return;
+      if (warningMsg == null) {
+        return;
+      }
+      appendWarning(iconPath, warningMsg, color, html);
     }
-    appendWarning(iconPath, warningMsg, color, html);
   }
 
   private void appendWarning(String iconPath, String warningMsg, String color, StringBuilder html) {

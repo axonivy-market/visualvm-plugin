@@ -8,7 +8,6 @@ import ch.ivyteam.ivy.visualvm.model.OSInfo;
 import ch.ivyteam.ivy.visualvm.model.ServerConnectorInfo;
 import ch.ivyteam.ivy.visualvm.model.SystemDatabaseInfo;
 import ch.ivyteam.ivy.visualvm.util.DataUtils;
-import ch.ivyteam.ivy.visualvm.util.LicenseUtils;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -214,7 +213,7 @@ public class BasicIvyJmxDataCollector {
     String attributeName = IvyJmxConstant.IvyServer.Server.KEY_LICENSE_PARAMETERS;
     try {
       TabularDataSupport tabular = (TabularDataSupport) connection.getAttribute(objectName, attributeName);
-      licenseInfo = LicenseUtils.getLisenseInfoData(tabular);
+      licenseInfo = LicenseInfoCollector.getLicenseInfo(tabular);
     } catch (MBeanException | AttributeNotFoundException | InstanceNotFoundException | ReflectionException |
             IOException ex) {
       throw new IvyJmxDataCollectException(ex);

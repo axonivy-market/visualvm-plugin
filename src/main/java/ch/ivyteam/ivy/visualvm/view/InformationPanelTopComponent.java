@@ -594,7 +594,7 @@ public final class InformationPanelTopComponent extends TopComponent {
     try {
       IvyApplicationInfo basicInfo = collector.getApplicationInfo(connection);
       setLabelText(versionLabel, version, basicInfo.getVersion());
-      setLabelText(buildDateLabel, buildDate, DataUtils.toDateString(basicInfo.getBuildDate()));
+      setLabelText(buildDateLabel, buildDate, DataUtils.dateToString(basicInfo.getBuildDate()));
       setLabelText(installDirLabel, installationDirectory, basicInfo.getInstallationDirectory());
     } catch (IvyJmxDataCollectException ex) {
       hideInfoLabels(versionLabel, version);
