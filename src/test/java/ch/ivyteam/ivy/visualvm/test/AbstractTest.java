@@ -53,9 +53,9 @@ public abstract class AbstractTest extends TestCase {
           }
           mockAttrs.add(mockAttr);
         }
-        AttributeList mockAttrList = mock(AttributeList.class);
-        when(mockAttrList.asList()).thenReturn(mockAttrs);
-        when(mockConnection.getAttributes(objectName, attrNames)).thenReturn(mockAttrList);
+        AttributeList attrList = new AttributeList();
+        attrList.addAll(mockAttrs);
+        when(mockConnection.getAttributes(objectName, attrNames)).thenReturn(attrList);
       }
     } catch (AttributeNotFoundException | InstanceNotFoundException |
             IOException | ReflectionException | MalformedObjectNameException |
