@@ -107,7 +107,7 @@ public class WebServicesPanel extends javax.swing.JPanel {
     jLabel2 = new javax.swing.JLabel();
     jSeparator2 = new javax.swing.JSeparator();
     jScrollPane2 = new javax.swing.JScrollPane();
-    dbConfJList = new javax.swing.JList();
+    wsConfigJList = new javax.swing.JList();
     jPanel5 = new javax.swing.JPanel();
 
     setLayout(new java.awt.GridBagLayout());
@@ -199,9 +199,9 @@ public class WebServicesPanel extends javax.swing.JPanel {
 
     jScrollPane2.setBorder(null);
 
-    dbConfJList.setModel(fConfigListModel);
-    dbConfJList.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_INTERVAL_SELECTION);
-    jScrollPane2.setViewportView(dbConfJList);
+    wsConfigJList.setModel(fConfigListModel);
+    wsConfigJList.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_INTERVAL_SELECTION);
+    jScrollPane2.setViewportView(wsConfigJList);
 
     gridBagConstraints = new java.awt.GridBagConstraints();
     gridBagConstraints.gridx = 0;
@@ -241,7 +241,6 @@ public class WebServicesPanel extends javax.swing.JPanel {
   }// </editor-fold>//GEN-END:initComponents
 
   // Variables declaration - do not modify//GEN-BEGIN:variables
-  private javax.swing.JList dbConfJList;
   private javax.swing.JTree envJTree;
   private javax.swing.JLabel jLabel1;
   private javax.swing.JLabel jLabel2;
@@ -256,6 +255,7 @@ public class WebServicesPanel extends javax.swing.JPanel {
   private javax.swing.JSeparator jSeparator2;
   private javax.swing.JSplitPane leftSplitpane;
   private javax.swing.JSplitPane mainSplitpane;
+  private javax.swing.JList wsConfigJList;
   // End of variables declaration//GEN-END:variables
   // CHECKSTYLE:ON
 
@@ -341,8 +341,8 @@ public class WebServicesPanel extends javax.swing.JPanel {
   }
 
   private void initList() {
-    dbConfJList.getSelectionModel().setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-    dbConfJList.setCellRenderer(new ConfigListCellRenderer());
+    wsConfigJList.getSelectionModel().setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+    wsConfigJList.setCellRenderer(new ConfigListCellRenderer());
   }
 
   private void initTreeData() {
@@ -376,7 +376,7 @@ public class WebServicesPanel extends javax.swing.JPanel {
         configs.addAll(fAppEnvConfigMap.get(app).get(env));
       }
     }
-    dbConfJList.setListData(configs.toArray());
+    wsConfigJList.setListData(configs.toArray());
   }
 
   /**
@@ -401,10 +401,10 @@ public class WebServicesPanel extends javax.swing.JPanel {
 
     });
 
-    dbConfJList.addListSelectionListener(new ListSelectionListener() {
+    wsConfigJList.addListSelectionListener(new ListSelectionListener() {
       @Override
       public void valueChanged(ListSelectionEvent e) {
-        Object selectedConfig = dbConfJList.getSelectedValue();
+        Object selectedConfig = wsConfigJList.getSelectedValue();
         if (selectedConfig == null) {
           return;
         }
@@ -425,24 +425,24 @@ public class WebServicesPanel extends javax.swing.JPanel {
   }
 
   private void createChartWhenSelectionCorrects() {
-    if (envJTree.getSelectionPath() == null || dbConfJList.getSelectedValue() == null) {
+    if (envJTree.getSelectionPath() == null || wsConfigJList.getSelectedValue() == null) {
       return;
     }
     AppEnvNode node = (AppEnvNode) envJTree.getSelectionPath().getLastPathComponent();
     if (node != null) {
       fWebServicesView.fireCreateChartsAction(node.getParent().toString(), node.toString(),
-              dbConfJList.getSelectedValue().toString());
+              wsConfigJList.getSelectedValue().toString());
     }
   }
 
   private void changeListItemStatus(String application, String environment) {
     Map<String, Set<String>> envConfMap = fAppEnvConfigMap.get(application);
     fAvailableConfigs = envConfMap.get(environment);
-    Object selected = dbConfJList.getSelectedValue();
+    Object selected = wsConfigJList.getSelectedValue();
     if (selected != null && !fAvailableConfigs.contains(selected.toString())) {
-      dbConfJList.clearSelection();
+      wsConfigJList.clearSelection();
     }
-    dbConfJList.repaint();
+    wsConfigJList.repaint();
   }
 
   private void changeTreeNodeStatus() {
