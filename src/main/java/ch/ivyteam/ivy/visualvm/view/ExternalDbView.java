@@ -5,20 +5,25 @@
 package ch.ivyteam.ivy.visualvm.view;
 
 import ch.ivyteam.ivy.visualvm.chart.ChartsPanel;
-import ch.ivyteam.ivy.visualvm.chart.data.externaldb.AbstractExternalDbDataSource;
+import ch.ivyteam.ivy.visualvm.chart.data.externaldb.AbstractDataSource;
 import ch.ivyteam.ivy.visualvm.chart.data.externaldb.ExternalDbConnectionChartDataSource;
 import ch.ivyteam.ivy.visualvm.chart.data.externaldb.ExternalDbProcessingTimeChartDataSource;
 import ch.ivyteam.ivy.visualvm.chart.data.externaldb.ExternalDbTransactionChartDataSource;
+import ch.ivyteam.ivy.visualvm.model.IvyJmxConstant;
 import ch.ivyteam.ivy.visualvm.util.DataUtils;
+
 import com.sun.tools.visualvm.application.Application;
 import com.sun.tools.visualvm.core.ui.components.DataViewComponent;
+
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 import java.util.TreeMap;
 import java.util.TreeSet;
+
 import javax.management.MBeanServerConnection;
 import javax.management.ObjectName;
+
 import org.apache.commons.lang.StringUtils;
 
 /**
@@ -64,8 +69,9 @@ public class ExternalDbView extends AbstractView {
     return chartPanel;
   }
 
-  private void configDataSources(AbstractExternalDbDataSource... dataSources) {
-    for (AbstractExternalDbDataSource dataSource : dataSources) {
+  private void configDataSources(AbstractDataSource... dataSources) {
+    for (AbstractDataSource dataSource : dataSources) {
+      dataSource.setNamePattern(IvyJmxConstant.IvyServer.ExternalDatabase.NAME_PATTERN);
       dataSource.setApplication(fCurrentAppName);
       dataSource.setEnvironment(fCurrentEnvName);
       dataSource.setConfigName(fCurrentConfigName);

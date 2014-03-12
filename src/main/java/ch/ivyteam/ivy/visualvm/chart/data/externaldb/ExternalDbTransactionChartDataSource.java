@@ -4,12 +4,12 @@ import ch.ivyteam.ivy.visualvm.chart.data.support.MaxDeltaValueChartLabelCalcSup
 import ch.ivyteam.ivy.visualvm.model.IvyJmxConstant.IvyServer.ExternalDatabase;
 import ch.ivyteam.ivy.visualvm.view.IDataBeanProvider;
 
-public class ExternalDbTransactionChartDataSource extends AbstractExternalDbDataSource {
+public class ExternalDbTransactionChartDataSource extends AbstractDataSource {
 
-  private static final String TRANSACTION_SERIE_TITLE = "Transaction";
+  private static final String TRANSACTION_SERIE_TITLE = "Transactions";
   private static final String ERRORS_SERIE_TITLE = "Errors";
-  private static final String MAX_TRANSACTION_SERIE_TITLE = "Max transaction";
-  private static final String MAX_ERRORS_SERIE_TITLE = "Max error";
+  private static final String MAX_TRANSACTION_TITLE = "Max transaction";
+  private static final String MAX_ERRORS_ITLE = "Max error";
   public static final String TRANSACTION_SERIE_DESC = "The number of database transactions that "
           + "have finished since the last poll";
   public static final String ERRORS_SERIE_DESC = "The number of database transactions that "
@@ -23,9 +23,9 @@ public class ExternalDbTransactionChartDataSource extends AbstractExternalDbData
   @Override
   public void init() {
     super.init();
-    addLabelCalcSupport(new MaxDeltaValueChartLabelCalcSupport(MAX_TRANSACTION_SERIE_TITLE, getObjectName(),
+    addLabelCalcSupport(new MaxDeltaValueChartLabelCalcSupport(MAX_TRANSACTION_TITLE, getObjectName(),
             ExternalDatabase.KEY_TRANS_NUMBER));
-    addLabelCalcSupport(new MaxDeltaValueChartLabelCalcSupport(MAX_ERRORS_SERIE_TITLE, getObjectName(),
+    addLabelCalcSupport(new MaxDeltaValueChartLabelCalcSupport(MAX_ERRORS_ITLE, getObjectName(),
             ExternalDatabase.KEY_ERROR_NUMBER));
     addDeltaSerie(TRANSACTION_SERIE_TITLE, TRANSACTION_SERIE_DESC, getObjectName(),
             ExternalDatabase.KEY_TRANS_NUMBER);

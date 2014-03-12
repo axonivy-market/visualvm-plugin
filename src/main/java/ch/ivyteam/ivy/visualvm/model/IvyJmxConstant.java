@@ -108,6 +108,24 @@ public class IvyJmxConstant {
               + "Seconds";
       public static final String KEY_TRANS_MIN_EXE_TIME = "transactionsMinExecutionTimeInMicroSeconds";
     }
+    
+    public static final class WebService {
+      public static final String NAME_PATTERN = "Xpert.ivy Server:type=External Web Service,application=%s,environment=%s,name=%s";
+      public static final String KEY_AUTHENTICATION_TYPE = "authenticationType";
+      public static final String KEY_CALLS = "calls";
+      public static final String KEY_DESCRIPTION = "description";
+      public static final String KEY_ENDPOINTS = "endpoints";
+      public static final String KEY_ERRORS = "errors";
+      public static final String KEY_NAME = "name";
+      public static final String KEY_PORT_TYPES = "portTypes";
+      public static final String KEY_FRAMEWORK = "webServiceFramework";
+      public static final String KEY_URL = "wsdlUrl";
+      public static final String KEY_CALL_TOTAL_EXE_TIME = "callsTotalExecutionTimeInMicroSeconds";
+      public static final String KEY_CALL_MAX_EXE_TIME = "callsMaxExecutionTimeInMicroSeconds";
+      public static final String KEY_CALL_MAX_EXE_TIME_DELTA = "callsMaxExecutionTimeDeltaInMicroSeconds";
+      public static final String KEY_CALL_MIN_EXE_TIME = "callsMinExecutionTimeInMicroSeconds";
+      public static final String KEY_CALL_MIN_EXE_TIME_DELTA = "callsMinExecutionTimeDeltaInMicroSeconds";
+    }
   }
 
   public static final class JavaLang {

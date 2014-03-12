@@ -4,19 +4,26 @@
  */
 package ch.ivyteam.ivy.visualvm.view;
 
-import ch.ivyteam.ivy.visualvm.chart.ChartsPanel;
-import ch.ivyteam.ivy.visualvm.chart.data.externaldb.AbstractExternalDbDataSource;
-import ch.ivyteam.ivy.visualvm.util.DataUtils;
-import com.sun.tools.visualvm.application.Application;
-import com.sun.tools.visualvm.core.ui.components.DataViewComponent;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 import java.util.TreeMap;
 import java.util.TreeSet;
+
 import javax.management.MBeanServerConnection;
 import javax.management.ObjectName;
+
 import org.apache.commons.lang.StringUtils;
+
+import ch.ivyteam.ivy.visualvm.chart.ChartsPanel;
+import ch.ivyteam.ivy.visualvm.chart.data.externaldb.AbstractDataSource;
+import ch.ivyteam.ivy.visualvm.chart.data.webservice.WebServiceCallsChartDataSource;
+import ch.ivyteam.ivy.visualvm.chart.data.webservice.WebServiceProcessingTimeChartDataSource;
+import ch.ivyteam.ivy.visualvm.model.IvyJmxConstant;
+import ch.ivyteam.ivy.visualvm.util.DataUtils;
+
+import com.sun.tools.visualvm.application.Application;
+import com.sun.tools.visualvm.core.ui.components.DataViewComponent;
 
 /**
  *
@@ -45,29 +52,27 @@ public class WebServicesView extends AbstractView {
   private ChartsPanel createWebServicesChartPanel() {
 
     ChartsPanel chartPanel = new ChartsPanel(false);
-//    ExternalDbConnectionChartDataSource connectionDataSource = new ExternalDbConnectionChartDataSource(
-//            getDataBeanProvider(), null, null, "Connections");
-//    ExternalDbTransactionChartDataSource transactionDataSource = new ExternalDbTransactionChartDataSource(
-//            getDataBeanProvider(), null, null, "Transactions");
-//    ExternalDbProcessingTimeChartDataSource transProcessTimeDataSource
-//            = new ExternalDbProcessingTimeChartDataSource(getDataBeanProvider(), null, null,
-//                    "Processing Time [µs]");
-//
-//    configDataSources(connectionDataSource, transactionDataSource, transProcessTimeDataSource);
-//    chartPanel.addChart(connectionDataSource);
-//    chartPanel.addChart(transactionDataSource);
-//    chartPanel.addChart(transProcessTimeDataSource);
-//    registerScheduledUpdate(chartPanel);
+    WebServiceCallsChartDataSource callsDataSource = new WebServiceCallsChartDataSource(
+            getDataBeanProvider(), null, null, "Calls");
+    WebServiceProcessingTimeChartDataSource processTimeDataSource
+            = new WebServiceProcessingTimeChartDataSource(getDataBeanProvider(), null, null,
+                    "Processing Time [µs]");
+
+    configDataSources(callsDataSource, processTimeDataSource);
+    chartPanel.addChart(callsDataSource);
+    chartPanel.addChart(processTimeDataSource);
+    registerScheduledUpdate(chartPanel);
     return chartPanel;
   }
 
-  private void configDataSources(AbstractExternalDbDataSource... dataSources) {
-//    for (AbstractExternalDbDataSource dataSource : dataSources) {
-//      dataSource.setApplication(fCurrentAppName);
-//      dataSource.setEnvironment(fCurrentEnvName);
-//      dataSource.setConfigName(fCurrentConfigName);
-//      dataSource.init();
-//    }
+  private void configDataSources(AbstractDataSource... dataSources) {
+    for (AbstractDataSource dataSource : dataSources) {
+      dataSource.setNamePattern(IvyJmxConstant.IvyServer.WebService.NAME_PATTERN);
+      dataSource.setApplication(fCurrentAppName);
+      dataSource.setEnvironment(fCurrentEnvName);
+      dataSource.setConfigName(fCurrentConfigName);
+      dataSource.init();
+    }
   }
 
   @Override

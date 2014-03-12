@@ -16,14 +16,14 @@ import javax.management.MBeanServerConnection;
 import javax.management.ReflectionException;
 import org.apache.commons.lang.math.NumberUtils;
 
-public class ExternalDbConnectionChartDataSource extends AbstractExternalDbDataSource {
+public class ExternalDbConnectionChartDataSource extends AbstractDataSource {
 
   private static final Logger LOGGER = Logger.getLogger(ExternalDbConnectionChartDataSource.class.getName());
-  private static final String MAX_SERIE_TITLE = "Max";
+  private static final String MAX_TITLE = "Max";
   private static final String OPEN_SERIE_TITLE = "Open";
   private static final String USED_SERIE_TITLE = "Used";
-  private static final String MAX_OPEN_SERIE_TITLE = "Max open";
-  private static final String MAX_USED_SERIE_TITLE = "Max used";
+  private static final String MAX_OPEN_TITLE = "Max open";
+  private static final String MAX_USED_TITLE = "Max used";
   public static final String OPEN_SERIE_DESC = "The number of open connection to the external database";
   public static final String USED_SERIE_DESC = "The number of open connections to the external database for "
           + "which at least one";
@@ -36,10 +36,10 @@ public class ExternalDbConnectionChartDataSource extends AbstractExternalDbDataS
   @Override
   public void init() {
     super.init();
-    addLabelCalcSupport(new StaticValueChartLabelCalcSupport(MAX_SERIE_TITLE, getMaxConnection()));
-    addLabelCalcSupport(new MaxValueChartLabelCalcSupport(MAX_USED_SERIE_TITLE, getObjectName(),
+    addLabelCalcSupport(new StaticValueChartLabelCalcSupport(MAX_TITLE, getMaxConnection()));
+    addLabelCalcSupport(new MaxValueChartLabelCalcSupport(MAX_USED_TITLE, getObjectName(),
             ExternalDatabase.KEY_USED_CONNECTION));
-    addLabelCalcSupport(new MaxValueChartLabelCalcSupport(MAX_OPEN_SERIE_TITLE, getObjectName(),
+    addLabelCalcSupport(new MaxValueChartLabelCalcSupport(MAX_OPEN_TITLE, getObjectName(),
             ExternalDatabase.KEY_OPEN_CONNECTION));
 
     addSerie(OPEN_SERIE_TITLE, OPEN_SERIE_DESC, SerieStyle.LINE, getObjectName(),
