@@ -39,7 +39,7 @@ class IvyView extends DataSourceView {
   public static final String EXT_DB_ICON_IMAGE_PATH = "resources/icons/ext_db_icon.png";
   public static final String USER_REQ_IMAGE_PATH = "resources/icons/user_req.png";
   public static final String USER_DEF_IMAGE_PATH = "resources/icons/user_def.png";
-  public static final String LICENSE_IMAGE_PATH = "resources/icons/licence.png";
+  public static final String LICENSE_IMAGE_PATH = "resources/icons/license.png";
   public static final String IVY_SERVER_APP_NAME = "Xpert.ivy Server";
   public static final String IVY_DESIGNER_APP_NAME = "Xpert.ivy Designer";
 
@@ -74,7 +74,7 @@ class IvyView extends DataSourceView {
 
     // add views
     addInformationView(dataBeanProvider, tabbed);
-    addLicenceView(dataBeanProvider, tabbed);
+    addLicenseView(dataBeanProvider, tabbed);
     addRequestView(dataBeanProvider, tabbed);
     addSystemDBView(dataBeanProvider, tabbed);
     addExternalDBView(dataBeanProvider, tabbed);
@@ -93,11 +93,11 @@ class IvyView extends DataSourceView {
             infoView.getViewComponent());
   }
 
-  private void addLicenceView(IDataBeanProvider dataBeanProvider, JTabbedPane tabbed) {
+  private void addLicenseView(IDataBeanProvider dataBeanProvider, JTabbedPane tabbed) {
     if (fIsIvyServer) {
       LicenseView licenseView = new LicenseView(dataBeanProvider);
       views.add(licenseView);
-      tabbed.addTab("Licence", (Icon) ImageUtilities.loadImage(LICENSE_IMAGE_PATH, true),
+      tabbed.addTab("License", (Icon) ImageUtilities.loadImage(LICENSE_IMAGE_PATH, true),
               licenseView.getViewComponent());
     }
   }

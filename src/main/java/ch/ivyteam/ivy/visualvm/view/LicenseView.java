@@ -28,7 +28,7 @@ public class LicenseView extends AbstractView {
 
   @Override
   protected String getMasterViewTitle() {
-    return "License Information";
+    return "";
   }
 
   @Override
@@ -70,7 +70,7 @@ public class LicenseView extends AbstractView {
 
   private String getConcurrentUsersChartDescription() {
     StringBuilder description = new StringBuilder("<html><body>");
-    description.append("This chart shows the information about the concurrent users. ")
+    description.append("The chart shows the information about the concurrent users. ")
             .append("They are the Xpert.ivy users that are currently logged-in. <br/>")
             .append("Note that if the same user is logged in multiple times, ")
             .append("she is counted as one concurrent user.")

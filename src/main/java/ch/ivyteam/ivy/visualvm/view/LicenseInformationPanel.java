@@ -34,11 +34,11 @@ public class LicenseInformationPanel extends javax.swing.JPanel {
   private static final String TD_END = "</td>";
 
   private static final String EXPIRE_IN_30_DAYS_WARNING
-          = "Your licence will expire on {0}. "
-          + "If the licence is expired the server will no longer start. "
+          = "Your license will expire on {0}. "
+          + "If the license is expired the server will no longer start. "
           + "Please contact your sales representative to request a new license!";
   private static final String EXPIRED_WARNING
-          = "Your licence has expired on {0}. "
+          = "Your license has expired on {0}. "
           + "You will not be able to restart your server. "
           + "Please contact your sales representative to request a new license!";
   private static final String USERS_80_PERCENT_EXCEEDED_WARNING
@@ -48,16 +48,16 @@ public class LicenseInformationPanel extends javax.swing.JPanel {
           = "The number of users has almost reached the license limit. Please consider to contact your "
           + "sales representative to request a new license!";
   private static final String USERS_EXCEEDED_WARNING
-          = "Cannot create more users because the maximum users that are allowed by your licence has "
+          = "Cannot create more users because the maximum users that are allowed by your license has "
           + "exceeded. Please contact your sales representative to request a new license!";
   private static final String SESSIONS_90_PERCENT_EXCEEDED_WARNING
           = "The number of sessions has almost reached the license limit. Please consider to contact your "
           + "sales representative to request a new license!";
   private static final String SESSIONS_EXCEEDED_WARNING
-          = "The maximum sessions that are allowed by your licence has been reached. "
+          = "The maximum sessions that are allowed by your license has been reached. "
           + "Please contact your sales representative to request a new license!";
   private static final String SESSIONS_150_PERCENT_EXCEEDED_WARNING
-          = "Cannot create session because the maximum session that are allowed by your licence has exceeded "
+          = "Cannot create session because the maximum session that are allowed by your license has exceeded "
           + "by a factor of 50%. Please contact your sales representative to request a new license!";
   private int fNamedUsers;
   private int fConcurrentUsers;
