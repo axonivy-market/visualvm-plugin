@@ -264,9 +264,21 @@ public final class DataUtils {
       ObjectName objName = new ObjectName(filterName);
       externalDbConfigs = connection.queryNames(objName, null);
     } catch (IOException | MalformedObjectNameException ex) {
-      // log something here
+      LOGGER.warning(ex.getMessage());
     }
     return externalDbConfigs;
+  }
+
+  public static Set<ObjectName> getWebServicesConfigs(MBeanServerConnection connection) {
+    Set<ObjectName> webServicesConfigs = new TreeSet<>();
+    try {
+      String filterName = "Xpert.ivy Server:type=External Web Service,application=*,environment=*,name=*";
+      ObjectName objName = new ObjectName(filterName);
+      webServicesConfigs = connection.queryNames(objName, null);
+    } catch (IOException | MalformedObjectNameException ex) {
+      LOGGER.warning(ex.getMessage());
+    }
+    return webServicesConfigs;
   }
 
 }

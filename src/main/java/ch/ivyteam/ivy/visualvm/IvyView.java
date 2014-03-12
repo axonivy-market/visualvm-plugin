@@ -9,6 +9,7 @@ import ch.ivyteam.ivy.visualvm.view.InformationView;
 import ch.ivyteam.ivy.visualvm.view.LicenseView;
 import ch.ivyteam.ivy.visualvm.view.RequestView;
 import ch.ivyteam.ivy.visualvm.view.SystemDbView;
+import ch.ivyteam.ivy.visualvm.view.WebServicesView;
 import com.sun.tools.visualvm.application.Application;
 import com.sun.tools.visualvm.core.options.GlobalPreferences;
 import com.sun.tools.visualvm.core.scheduler.Quantum;
@@ -37,6 +38,7 @@ class IvyView extends DataSourceView {
   public static final String INFO_IMAGE_PATH = "resources/icons/info.png";
   public static final String DB_ICON_IMAGE_PATH = "resources/icons/db_icon.png";
   public static final String EXT_DB_ICON_IMAGE_PATH = "resources/icons/ext_db_icon.png";
+  public static final String WEB_SERVICE_ICON_IMAGE_PATH = "resources/icons/web_services_icon.png";
   public static final String USER_REQ_IMAGE_PATH = "resources/icons/user_req.png";
   public static final String USER_DEF_IMAGE_PATH = "resources/icons/user_def.png";
   public static final String LICENSE_IMAGE_PATH = "resources/icons/license.png";
@@ -78,6 +80,7 @@ class IvyView extends DataSourceView {
     addRequestView(dataBeanProvider, tabbed);
     addSystemDBView(dataBeanProvider, tabbed);
     addExternalDBView(dataBeanProvider, tabbed);
+    addWebServicesView(dataBeanProvider, tabbed);
 
     // init scheduler
     updateTask = Scheduler.sharedInstance().schedule(new UpdateChartTask(),
@@ -121,6 +124,13 @@ class IvyView extends DataSourceView {
     views.add(extDbView);
     tabbed.addTab("External Databases", (Icon) ImageUtilities.loadImage(EXT_DB_ICON_IMAGE_PATH, true),
             extDbView.getViewComponent());
+  }
+
+  private void addWebServicesView(IDataBeanProvider dataBeanProvider, JTabbedPane tabbed) {
+    WebServicesView wsView = new WebServicesView(dataBeanProvider, fIvyApplication);
+    views.add(wsView);
+    tabbed.addTab("Web Services", (Icon) ImageUtilities.loadImage(WEB_SERVICE_ICON_IMAGE_PATH, true),
+            wsView.getViewComponent());
   }
 
   private DataViewComponent createDVC(String masterViewTitle, JComponent comp) {
