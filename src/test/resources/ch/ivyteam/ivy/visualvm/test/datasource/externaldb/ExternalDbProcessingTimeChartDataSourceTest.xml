@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<beanTestData>
+  <dataset>
+    <property>
+      <name>Xpert.ivy Server:type=External Database,application=test,environment=enviroment1,name=DBConfig1</name>
+      <dataset>
+        <property>
+          <name>transactionsMaxExecutionTimeDeltaInMicroSeconds</name>
+          <value type="java.lang.Long">2122</value>
+        </property>
+        <property>
+          <name>transactionsMinExecutionTimeDeltaInMicroSeconds</name>
+          <value type="java.lang.Long">2122</value>
+        </property>
+        <property>
+          <name>transactionsTotalExecutionTimeInMicroSeconds</name>
+          <value type="java.lang.Long">3232</value>
+        </property>
+      </dataset>
+    </property>
+  </dataset>
+  
+  <dataset>
+    <property>
+      <name>Xpert.ivy Server:type=External Database,application=test,environment=enviroment1,name=DBConfig1</name>
+      <dataset>
+        <property>
+          <name>transactionsMaxExecutionTimeDeltaInMicroSeconds</name>
+          <value type="java.lang.Long">1343</value>
+        </property>
+        <property>
+          <name>transactionsMinExecutionTimeDeltaInMicroSeconds</name>
+          <value type="java.lang.Long">1343</value>
+        </property>
+        <property>
+          <name>transactionsTotalExecutionTimeInMicroSeconds</name>
+          <value type="java.lang.Long">4575</value>
+        </property>
+      </dataset>
+    </property>
+  </dataset>
+  
+  <dataset>
+    <property>
+      <name>Xpert.ivy Server:type=External Database,application=test,environment=enviroment1,name=DBConfig1</name>
+      <dataset>
+        <property>
+          <name>transactionsMaxExecutionTimeDeltaInMicroSeconds</name>
+          <value type="java.lang.Long">3344</value>
+        </property>
+        <property>
+          <name>transactionsMinExecutionTimeDeltaInMicroSeconds</name>
+          <value type="java.lang.Long">3344</value>
+        </property>
+        <property>
+          <name>transactionsTotalExecutionTimeInMicroSeconds</name>
+          <value type="java.lang.Long">7919</value>
+        </property>
+      </dataset>
+    </property>
+  </dataset>
+</beanTestData>
