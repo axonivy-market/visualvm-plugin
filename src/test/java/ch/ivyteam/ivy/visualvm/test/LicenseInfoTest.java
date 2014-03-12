@@ -40,7 +40,7 @@ public class LicenseInfoTest extends AbstractTest {
               "Your licence has expired on Tuesday, March 25, 2014. You will not be able to restart your server. Please contact your sales representative to request a new license!",
               "Expired license"},
             new Object[]{
-              "The number of users has neary reached the license limit. Please consider to contact your sales representative to request a new license!",
+              "The number of users has nearly reached the license limit. Please consider to contact your sales representative to request a new license!",
               "Named users limit nearly exceeded (reach yellow area in the gauge)"},
             new Object[]{
               "The number of users has almost reached the license limit. Please consider to contact your sales representative to request a new license!",

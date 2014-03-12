@@ -42,7 +42,7 @@ public class LicenseInformationPanel extends javax.swing.JPanel {
           + "You will not be able to restart your server. "
           + "Please contact your sales representative to request a new license!";
   private static final String USERS_80_PERCENT_EXCEEDED_WARNING
-          = "The number of users has neary reached the license limit. Please consider to contact your "
+          = "The number of users has nearly reached the license limit. Please consider to contact your "
           + "sales representative to request a new license!";
   private static final String USERS_90_PERCENT_EXCEEDED_WARNING
           = "The number of users has almost reached the license limit. Please consider to contact your "
