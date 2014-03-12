@@ -11,20 +11,15 @@ import ch.ivyteam.ivy.visualvm.chart.data.externaldb.ExternalDbProcessingTimeCha
 import ch.ivyteam.ivy.visualvm.chart.data.externaldb.ExternalDbTransactionChartDataSource;
 import ch.ivyteam.ivy.visualvm.model.IvyJmxConstant;
 import ch.ivyteam.ivy.visualvm.util.DataUtils;
-
 import com.sun.tools.visualvm.application.Application;
 import com.sun.tools.visualvm.core.ui.components.DataViewComponent;
-
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 import java.util.TreeMap;
 import java.util.TreeSet;
-
 import javax.management.MBeanServerConnection;
 import javax.management.ObjectName;
-
-import org.apache.commons.lang.StringUtils;
 
 /**
  * 
@@ -39,7 +34,6 @@ public class ExternalDbView extends AbstractView {
 
   private final Application fIvyApplication;
   private final ExternalDbPanel fExternalDBPanel;
-  private Set<ObjectName> fExternalDbConfigList;
   private String fCurrentAppName, fCurrentEnvName, fCurrentConfigName;
   private final Map<String, ChartsPanel> createdCharts;
 
@@ -91,10 +85,10 @@ public class ExternalDbView extends AbstractView {
   private void initExternalDbData() {
     MBeanServerConnection mbeanConnection = DataUtils.getMBeanServerConnection(fIvyApplication);
     // List<String> includes string with pattern ApplicationName:EvironmentName:ExtDBConfiguration
-    fExternalDbConfigList = DataUtils.getExternalDbConfigs(mbeanConnection);
+    Set<ObjectName> objectnames = DataUtils.getExternalDbConfigs(mbeanConnection);
 
     Map<String, Map<String, Set<String>>> appEnvConfMap = new TreeMap<>();
-    for (ObjectName each : fExternalDbConfigList) {
+    for (ObjectName each : objectnames) {
       String app = each.getKeyProperty(APP_STRING_KEY);
       String env = each.getKeyProperty(ENVIRONMENT_STRING_KEY);
       String conf = each.getKeyProperty(CONFIG_STRING_KEY);
@@ -105,7 +99,7 @@ public class ExternalDbView extends AbstractView {
           Set<String> confs = envConfMap.get(env);
           confs.add(conf);
         } else {
-          Set<String> confList = new TreeSet();
+          Set<String> confList = new TreeSet<>();
           confList.add(conf);
           envConfMap.put(env, confList);
         }
@@ -121,7 +115,6 @@ public class ExternalDbView extends AbstractView {
   }
 
   void fireCreateChartsAction(String appName, String envName, String configName) {
-    if (checkCorrectSelection(appName, envName, configName)) {
       fCurrentAppName = appName;
       fCurrentEnvName = envName;
       fCurrentConfigName = configName;
@@ -133,22 +126,6 @@ public class ExternalDbView extends AbstractView {
         fExternalDBPanel.setChartPanelToVisible(chart);
         createdCharts.put(chartKey, chart);
       }
-    }
-  }
-
-  private boolean checkCorrectSelection(String appName, String envName, String confName) {
-    if (StringUtils.isEmpty(appName) || StringUtils.isEmpty(envName) || StringUtils.isEmpty(confName)) {
-      return false;
-    }
-
-    for (ObjectName appEnvConf : fExternalDbConfigList) {
-      if (appEnvConf.getKeyProperty(APP_STRING_KEY).equals(appName)
-              && appEnvConf.getKeyProperty(ENVIRONMENT_STRING_KEY).equals(envName)
-              && appEnvConf.getKeyProperty(CONFIG_STRING_KEY).equals(confName)) {
-        return true;
-      }
-    }
-    return false;
   }
 
   private String generateDescriptionForConnectionChart() {
