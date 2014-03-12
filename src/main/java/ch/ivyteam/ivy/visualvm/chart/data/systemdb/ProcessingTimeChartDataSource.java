@@ -37,6 +37,7 @@ public class ProcessingTimeChartDataSource extends XYChartDataSource {
 
     MeanSerieDataSource() {
       this("Mean", 1L, SerieStyle.LINE);
+      setDescription("The mean time of all transactions that has finished in last poll");
     }
 
     MeanSerieDataSource(String serie, long scaleFactor, SerieStyle style) {
