@@ -15,6 +15,7 @@ import com.sun.tools.visualvm.core.ui.components.DataViewComponent;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
+import java.util.TreeMap;
 import java.util.TreeSet;
 import javax.management.MBeanServerConnection;
 import javax.management.ObjectName;
@@ -53,7 +54,7 @@ public class ExternalDbView extends AbstractView {
             getDataBeanProvider(), null, null, "Transactions");
     ExternalDbProcessingTimeChartDataSource transProcessTimeDataSource
             = new ExternalDbProcessingTimeChartDataSource(getDataBeanProvider(), null, null,
-                    "Processing Time [ms]");
+                    "Processing Time [µs]");
 
     configDataSources(connectionDataSource, transactionDataSource, transProcessTimeDataSource);
     chartPanel.addChart(connectionDataSource);
@@ -85,23 +86,31 @@ public class ExternalDbView extends AbstractView {
     // List<String> includes string with pattern ApplicationName:EvironmentName:ExtDBConfiguration
     fExternalDbConfigList = DataUtils.getExternalDbConfigs(mbeanConnection);
 
-    Map<String, Set<String>> appEnvMap = new HashMap<>();
-    Set<String> configs = new TreeSet<>();
+    Map<String, Map<String, Set<String>>> appEnvConfMap = new TreeMap<>();
     for (ObjectName each : fExternalDbConfigList) {
+      String app = each.getKeyProperty(APP_STRING_KEY);
+      String env = each.getKeyProperty(ENVIRONMENT_STRING_KEY);
+      String conf = each.getKeyProperty(CONFIG_STRING_KEY);
 
-      if (appEnvMap.containsKey(each.getKeyProperty(APP_STRING_KEY))) {
-        Set<String> env = appEnvMap.get(each.getKeyProperty(APP_STRING_KEY));
-        env.add(each.getKeyProperty(ENVIRONMENT_STRING_KEY));
+      if (appEnvConfMap.containsKey(app)) {
+        Map<String, Set<String>> envConfMap = appEnvConfMap.get(app);
+        if (envConfMap.containsKey(env)) {
+          Set<String> confs = envConfMap.get(env);
+          confs.add(conf);
+        } else {
+          Set<String> confList = new TreeSet();
+          confList.add(conf);
+          envConfMap.put(env, confList);
+        }
       } else {
-        Set<String> envList = new TreeSet();
-        envList.add(each.getKeyProperty(ENVIRONMENT_STRING_KEY));
-        appEnvMap.put(each.getKeyProperty(APP_STRING_KEY), envList);
+        Set<String> confs = new TreeSet<>();
+        confs.add(conf);
+        Map<String, Set<String>> envConfMap = new TreeMap<>();
+        envConfMap.put(env, confs);
+        appEnvConfMap.put(app, envConfMap);
       }
-
-      configs.add(each.getKeyProperty(CONFIG_STRING_KEY)); // add all db configs into the list
     }
-    fExternalDBPanel.initTreeData(appEnvMap);
-    fExternalDBPanel.initListData(configs);
+    fExternalDBPanel.setTreeListData(appEnvConfMap);
   }
 
   void fireCreateChartsAction(String appName, String envName, String configName) {

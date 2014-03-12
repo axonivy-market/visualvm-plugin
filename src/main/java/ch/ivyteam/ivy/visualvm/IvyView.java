@@ -119,7 +119,7 @@ class IvyView extends DataSourceView {
   private void addExternalDBView(IDataBeanProvider dataBeanProvider, JTabbedPane tabbed) {
     ExternalDbView extDbView = new ExternalDbView(dataBeanProvider, fIvyApplication);
     views.add(extDbView);
-    tabbed.addTab("External Database", (Icon) ImageUtilities.loadImage(EXT_DB_ICON_IMAGE_PATH, true),
+    tabbed.addTab("External Databases", (Icon) ImageUtilities.loadImage(EXT_DB_ICON_IMAGE_PATH, true),
             extDbView.getViewComponent());
   }
 
