@@ -20,18 +20,19 @@ import org.junit.runners.Parameterized;
 
 @RunWith(Parameterized.class)
 public class ConcurrentUsersChartDataSourceTest extends AbstractTest {
-  @Parameterized.Parameters(name = "{index}")
+  @Parameterized.Parameters(name = "{index}: {3}")
   public static Iterable<Object[]> data() throws JAXBException, URISyntaxException {
     return TestUtil.createTestData(
             "/ch/ivyteam/ivy/visualvm/test/datasource/license/ConcurrentUsersChartDataSourceTest.xml",
-            new Object[] {6, 1}, new Object[] {6, 6}, new Object[] {6, 9});
+            new Object[]{6, 1, "Now: 1, Limit: 6"}, new Object[]{6, 6, "Now: 6, Limit: 6"}, new Object[]{6, 9,
+              "Now: 9, Limit: 6"});
   }
 
   private final long fConcurrentUsers;
   private final long fConcurrentUsersLimit;
 
   public ConcurrentUsersChartDataSourceTest(BeanTestData.Dataset dataset, long concurrentUsersLimit,
-          long concurrentUsers) {
+          long concurrentUsers, @SuppressWarnings("unused") String description) {
     super(dataset);
     fConcurrentUsersLimit = concurrentUsersLimit;
     fConcurrentUsers = concurrentUsers;

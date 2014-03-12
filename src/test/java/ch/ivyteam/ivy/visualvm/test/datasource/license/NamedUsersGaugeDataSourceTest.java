@@ -21,16 +21,17 @@ import org.junit.runners.Parameterized;
 
 @RunWith(Parameterized.class)
 public class NamedUsersGaugeDataSourceTest extends AbstractTest {
-  @Parameterized.Parameters(name = "{index}")
+  @Parameterized.Parameters(name = "{index}: {1} user{2}")
   public static Iterable<Object[]> data() throws JAXBException, URISyntaxException {
     return TestUtil.createTestData(
             "/ch/ivyteam/ivy/visualvm/test/datasource/license/NamedUsersGaugeDataSourceTest.xml",
-            new Object[] {1}, new Object[] {6}, new Object[] {9});
+            new Object[]{1, ""}, new Object[]{6, "s"}, new Object[]{9, "s"});
   }
 
   private final long fConcurrentUsers;
 
-  public NamedUsersGaugeDataSourceTest(BeanTestData.Dataset dataset, long concurrentUsers) {
+  public NamedUsersGaugeDataSourceTest(BeanTestData.Dataset dataset, long concurrentUsers,
+          @SuppressWarnings("unused") String pluralIndicator) {
     super(dataset);
     fConcurrentUsers = concurrentUsers;
   }
