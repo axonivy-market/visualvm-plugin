@@ -6,6 +6,8 @@ import ch.ivyteam.ivy.visualvm.model.IvyJmxConstant.IvyServer.WebService;
 import ch.ivyteam.ivy.visualvm.view.IDataBeanProvider;
 
 public class WebServiceCallsChartDataSource extends AbstractDataSource {
+  private static final String CALLS_SERIE_DESCRIPTION = "The number of calls to the web service that have finished since the last poll";
+  private static final String ERRORS_SERIE_DESCRIPTION = "The number of calls to the web service that have finished since the last poll and were erroneous";
   private static final String CALLS_SERIE_TITLE = "Calls";
   private static final String ERRORS_SERIE_TITLE = "Errors";
   private static final String TOTAL_CALLS = "Total calls";
@@ -23,9 +25,14 @@ public class WebServiceCallsChartDataSource extends AbstractDataSource {
             WebService.KEY_CALLS));
     addLabelCalcSupport(new LatestValueChartLabelCalcSupport(TOTAL_ERRORS, getObjectName(),
             WebService.KEY_ERRORS));
-    
-    addDeltaSerie(CALLS_SERIE_TITLE, "The number of calls to the web service that have finished since the last poll", getObjectName(), WebService.KEY_CALLS);
-    addDeltaSerie(ERRORS_SERIE_TITLE, "The number of calls to the web service that have finished since the last poll and were erroneous", getObjectName(), WebService.KEY_ERRORS);
+
+    addDeltaSerie(CALLS_SERIE_TITLE,
+            CALLS_SERIE_DESCRIPTION, getObjectName(),
+            WebService.KEY_CALLS);
+    addDeltaSerie(
+            ERRORS_SERIE_TITLE,
+            ERRORS_SERIE_DESCRIPTION,
+            getObjectName(), WebService.KEY_ERRORS);
   }
 
 }

@@ -18,12 +18,12 @@ public class ExternalDbProcessingTimeChartDataSource extends AbstractDataSource 
   public static final String MEAN_SERIE_TITLE = "Mean";
   public static final String TOTAL_MEAN_TITLE = "Total mean";
   public static final String MAX_OF_MAX_TITLE = "Max of max";
-  public static final String MEAN_SERIE_DESC = "The mean time of all transactions that has finished in "
-          + "last poll";
-  public static final String MAX_SERIE_DESC = "The maximum time of all transactions that has finished in "
-          + "last poll";
-  public static final String MIN_SERIE_DESC = "The minimum time of all transactions that has finished in "
-          + "last poll";
+  public static final String MEAN_SERIE_DESC = "The mean time of all transactions that has finished since "
+          + "the last poll";
+  public static final String MAX_SERIE_DESC = "The maximum time of all transactions that has finished since "
+          + "the last poll";
+  public static final String MIN_SERIE_DESC = "The minimum time of all transactions that has finished since "
+          + "the last poll";
 
   public ExternalDbProcessingTimeChartDataSource(IDataBeanProvider dataBeanProvider, String chartName,
           String xAxisDescription, String yAxisDescription) {
