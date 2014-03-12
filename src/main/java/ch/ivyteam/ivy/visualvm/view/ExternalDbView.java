@@ -27,7 +27,7 @@ import javax.management.ObjectName;
 import org.apache.commons.lang.StringUtils;
 
 /**
- *
+ * 
  * @author htnam
  */
 public class ExternalDbView extends AbstractView {
@@ -35,6 +35,7 @@ public class ExternalDbView extends AbstractView {
   private static final String APP_STRING_KEY = "application";
   private static final String ENVIRONMENT_STRING_KEY = "environment";
   private static final String CONFIG_STRING_KEY = "name";
+  private static final String BR_TAG = "<br/>";
 
   private final Application fIvyApplication;
   private final ExternalDbPanel fExternalDBPanel;
@@ -57,8 +58,8 @@ public class ExternalDbView extends AbstractView {
             getDataBeanProvider(), null, null, "Connections");
     ExternalDbTransactionChartDataSource transactionDataSource = new ExternalDbTransactionChartDataSource(
             getDataBeanProvider(), null, null, "Transactions");
-    ExternalDbProcessingTimeChartDataSource transProcessTimeDataSource
-            = new ExternalDbProcessingTimeChartDataSource(getDataBeanProvider(), null, null,
+    ExternalDbProcessingTimeChartDataSource transProcessTimeDataSource =
+            new ExternalDbProcessingTimeChartDataSource(getDataBeanProvider(), null, null,
                     "Processing Time [µs]");
 
     configDataSources(connectionDataSource, transactionDataSource, transProcessTimeDataSource);
@@ -116,7 +117,7 @@ public class ExternalDbView extends AbstractView {
         appEnvConfMap.put(app, envConfMap);
       }
     }
-    fExternalDBPanel.setTreeListData(appEnvConfMap);
+    fExternalDBPanel.setTreeData(appEnvConfMap);
   }
 
   void fireCreateChartsAction(String appName, String envName, String configName) {
@@ -154,9 +155,9 @@ public class ExternalDbView extends AbstractView {
     StringBuilder builder = new StringBuilder();
     builder.append("<html>");
     builder.append("The chart shows the number of open and the number of used connections to the external ");
-    builder.append("database.<br><br>");
-    builder.append("<b>Open:</b>").append(ExternalDbConnectionChartDataSource.OPEN_SERIE_DESC).append("<br>");
-    builder.append("<b>Used:</b>").append(ExternalDbConnectionChartDataSource.USED_SERIE_DESC).append("<br>");
+    builder.append("database.").append(BR_TAG).append(BR_TAG);
+    builder.append("<b>Open:</b>").append(ExternalDbConnectionChartDataSource.OPEN_SERIE_DESC).append(BR_TAG);
+    builder.append("<b>Used:</b>").append(ExternalDbConnectionChartDataSource.USED_SERIE_DESC).append(BR_TAG);
     builder.append("</html>");
     return builder.toString();
   }
@@ -166,8 +167,9 @@ public class ExternalDbView extends AbstractView {
     builder.append("<html>");
     builder.append("The chart shows the number of transactions to the external database and the number of ");
     builder.append("them that were erroneous.<br><br>");
-    builder.append("<b>Transactions:</b>").append(ExternalDbTransactionChartDataSource.TRANSACTION_SERIE_DESC)
-            .append("<br>");
+    builder.append("<b>Transactions:</b>")
+            .append(ExternalDbTransactionChartDataSource.TRANSACTION_SERIE_DESC)
+            .append(BR_TAG);
     builder.append("<b>Errors:</b>").append(ExternalDbTransactionChartDataSource.ERRORS_SERIE_DESC);
     builder.append("</html>");
     return builder.toString();
@@ -179,11 +181,11 @@ public class ExternalDbView extends AbstractView {
     builder.append("The chart shows the maximum and the minimum time needed to transaction a execute in ");
     builder.append("last poll<br><br>");
     builder.append("<b>Mean</b>: ").append(ExternalDbProcessingTimeChartDataSource.MEAN_SERIE_DESC)
-            .append("<br>");
+            .append(BR_TAG);
     builder.append("<b>Max</b>: ").append(ExternalDbProcessingTimeChartDataSource.MAX_SERIE_DESC)
-            .append("<br>");
+            .append(BR_TAG);
     builder.append("<b>Min</b>: ").append(ExternalDbProcessingTimeChartDataSource.MIN_SERIE_DESC)
-            .append("<br>");
+            .append(BR_TAG);
     builder.append("</html>");
     return builder.toString();
   }

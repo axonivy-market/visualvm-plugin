@@ -79,10 +79,10 @@ public class IvyJmxConstant {
       public static final String KEY_TRANS_NUMBER = "transactions";
       public static final String KEY_TRANS_TOTAL_EXE_TIME = "transactionsTotalExecutionTimeInMicroSeconds";
       public static final String KEY_TRANS_MAX_EXE_TIME = "transactionsMaxExecutionTimeInMicroSeconds";
-      public static final String KEY_TRANS_MAX_EXE_DELTA_TIME = "transactionsMaxExecutionTimeDeltaInMicro"
-              + "Seconds";
-      public static final String KEY_TRANS_MIN_EXE_DELTA_TIME = "transactionsMinExecutionTimeDeltaInMicro"
-              + "Seconds";
+      public static final String KEY_TRANS_MAX_EXE_DELTA_TIME =
+              "transactionsMaxExecutionTimeDeltaInMicroSeconds";
+      public static final String KEY_TRANS_MIN_EXE_DELTA_TIME =
+              "transactionsMinExecutionTimeDeltaInMicroSeconds";
       public static final String KEY_TRANS_MIN_EXE_TIME = "transactionsMinExecutionTimeInMicroSeconds";
     }
 
@@ -102,15 +102,16 @@ public class IvyJmxConstant {
       public static final String KEY_ERROR_NUMBER = "errors";
       public static final String KEY_TRANS_TOTAL_EXE_TIME = "transactionsTotalExecutionTimeInMicroSeconds";
       public static final String KEY_TRANS_MAX_EXE_TIME = "transactionsMaxExecutionTimeInMicroSeconds";
-      public static final String KEY_TRANS_MAX_EXE_DELTA_TIME = "transactionsMaxExecutionTimeDeltaInMicro"
-              + "Seconds";
-      public static final String KEY_TRANS_MIN_EXE_DELTA_TIME = "transactionsMinExecutionTimeDeltaInMicro"
-              + "Seconds";
+      public static final String KEY_TRANS_MAX_EXE_DELTA_TIME =
+              "transactionsMaxExecutionTimeDeltaInMicroSeconds";
+      public static final String KEY_TRANS_MIN_EXE_DELTA_TIME =
+              "transactionsMinExecutionTimeDeltaInMicroSeconds";
       public static final String KEY_TRANS_MIN_EXE_TIME = "transactionsMinExecutionTimeInMicroSeconds";
     }
-    
+
     public static final class WebService {
-      public static final String NAME_PATTERN = "Xpert.ivy Server:type=External Web Service,application=%s,environment=%s,name=%s";
+      public static final String NAME_PATTERN = "Xpert.ivy Server:type=External Web Service,"
+              + "application=%s,environment=%s,name=%s";
       public static final String KEY_AUTHENTICATION_TYPE = "authenticationType";
       public static final String KEY_CALLS = "calls";
       public static final String KEY_DESCRIPTION = "description";

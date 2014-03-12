@@ -9,18 +9,10 @@ import java.awt.Color;
 import java.awt.Component;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
-import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
-import java.util.TreeSet;
-import javax.swing.DefaultListCellRenderer;
-import javax.swing.DefaultListModel;
 import javax.swing.Icon;
-import javax.swing.JList;
 import javax.swing.JTree;
-import javax.swing.ListSelectionModel;
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
 import javax.swing.event.TreeExpansionEvent;
 import javax.swing.event.TreeSelectionEvent;
 import javax.swing.event.TreeSelectionListener;
@@ -40,26 +32,21 @@ import org.openide.util.ImageUtilities;
  */
 @SuppressWarnings({"serial", "PMD.SingularField"})
 public class ExternalDbPanel extends javax.swing.JPanel {
-
+  
   private static final String APP_ICON_PATH = "resources/icons/app_icon.png";
   private static final String ENV_ICON_PATH = "resources/icons/env_icon.png";
   private static final String CONF_ICON_PATH = "resources/icons/db_icon.png";
-  private final Color disableColor = new Color(173, 173, 173);
-
-  private final DefaultListModel<String> fConfigListModel;
-  private final DefaultTreeModel fEnvTreeModel;
-  private final Icon fAppIcon;
-  private final Icon fEnvIcon;
-  private final Icon fConfIcon;
-  private final DefaultMutableTreeNode fRootNode;
-  private TreePath[] fSelectedPath;
-  private boolean fResized = false;
-  private int fMainSplitSize, fLeftSplitSize;
-  private Map<String, Map<String, Set<String>>> fAppEnvConfigMap;
-  private final Set<AppEnvNode> fEnvironmentNodes;
-  private Set<String> fAvailableConfigs;
-  private final Set<String> fAvailableEnvironments;
-  private final ExternalDbView fExternalDbView;
+  
+  private final Icon fAppIcon; // icon for application node
+  private final Icon fEnvIcon; // icon for environment node
+  private final Icon fConfIcon; // icon for configuration node
+  private final DefaultTreeModel fEnvTreeModel; // data model for the tree
+  private final AppEnvConfigNode fRootNode; // the root node
+  private final ExternalDbView fExternalDbView; // the main view to interact when selection changed
+  private TreePath[] fSelectedPath; // store the selected path when the tree collapses or expands
+  private boolean fResized = false; // resize to 20% the width of whole panel at init time
+  private int fMainSplitSize; // store the size of split pane to avoid flickering when change charts
+  private Map<String, Map<String, Set<String>>> fAppEnvConfigMap; // the tree data
 
   /**
    * Creates new form ExternalDbPanel
@@ -70,17 +57,10 @@ public class ExternalDbPanel extends javax.swing.JPanel {
     fEnvIcon = (Icon) ImageUtilities.loadImage(ENV_ICON_PATH, true);
     fConfIcon = (Icon) ImageUtilities.loadImage(CONF_ICON_PATH, true);
     // need to init data models before initialization of the tree and the list
-    fRootNode = new AppEnvNode("", true);
+    fRootNode = new AppEnvConfigNode("Server", fAppIcon);
     fEnvTreeModel = new DefaultTreeModel(fRootNode);
-    fConfigListModel = new DefaultListModel<>();
-    fEnvironmentNodes = new HashSet<>();
-    fAvailableConfigs = new HashSet<>();
-    fAvailableEnvironments = new HashSet<>();
-
     initComponents();
     initTree();
-    initList();
-    initSelectionListeners();
     addResizeSplitpanesListener();
   }
 
@@ -95,30 +75,33 @@ public class ExternalDbPanel extends javax.swing.JPanel {
     java.awt.GridBagConstraints gridBagConstraints;
 
     mainSplitpane = new javax.swing.JSplitPane();
-    leftSplitpane = new javax.swing.JSplitPane();
+    jPanel5 = new javax.swing.JPanel();
     jPanel1 = new javax.swing.JPanel();
     jScrollPane1 = new javax.swing.JScrollPane();
     envJTree = new javax.swing.JTree();
     jPanel2 = new javax.swing.JPanel();
     jLabel1 = new javax.swing.JLabel();
     jSeparator1 = new javax.swing.JSeparator();
-    jPanel3 = new javax.swing.JPanel();
-    jPanel4 = new javax.swing.JPanel();
-    jLabel2 = new javax.swing.JLabel();
-    jSeparator2 = new javax.swing.JSeparator();
-    jScrollPane2 = new javax.swing.JScrollPane();
-    dbConfJList = new javax.swing.JList();
-    jPanel5 = new javax.swing.JPanel();
 
     setLayout(new java.awt.GridBagLayout());
 
     mainSplitpane.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
     mainSplitpane.setDividerLocation(120);
 
-    leftSplitpane.setBorder(null);
-    leftSplitpane.setDividerLocation(200);
-    leftSplitpane.setOrientation(javax.swing.JSplitPane.VERTICAL_SPLIT);
-    leftSplitpane.setResizeWeight(0.5);
+    jPanel5.setBackground(new java.awt.Color(255, 255, 255));
+
+    javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
+    jPanel5.setLayout(jPanel5Layout);
+    jPanel5Layout.setHorizontalGroup(
+      jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+      .addGap(0, 310, Short.MAX_VALUE)
+    );
+    jPanel5Layout.setVerticalGroup(
+      jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+      .addGap(0, 298, Short.MAX_VALUE)
+    );
+
+    mainSplitpane.setRightComponent(jPanel5);
 
     jPanel1.setBackground(new java.awt.Color(255, 255, 255));
     jPanel1.setLayout(new java.awt.GridBagLayout());
@@ -140,6 +123,7 @@ public class ExternalDbPanel extends javax.swing.JPanel {
 
     jPanel2.setLayout(new java.awt.GridBagLayout());
 
+    jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
     org.openide.awt.Mnemonics.setLocalizedText(jLabel1, org.openide.util.NbBundle.getMessage(ExternalDbPanel.class, "ExternalDbPanel.jLabel1.text")); // NOI18N
     jLabel1.setToolTipText(org.openide.util.NbBundle.getMessage(ExternalDbPanel.class, "ExternalDbPanel.jLabel1.toolTipText")); // NOI18N
     jLabel1.setHorizontalTextPosition(javax.swing.SwingConstants.LEADING);
@@ -149,7 +133,7 @@ public class ExternalDbPanel extends javax.swing.JPanel {
     gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
     gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
     gridBagConstraints.weightx = 1.0;
-    gridBagConstraints.insets = new java.awt.Insets(5, 5, 5, 0);
+    gridBagConstraints.insets = new java.awt.Insets(5, 0, 5, 0);
     jPanel2.add(jLabel1, gridBagConstraints);
 
     jSeparator1.setForeground(new java.awt.Color(120, 120, 120));
@@ -165,71 +149,7 @@ public class ExternalDbPanel extends javax.swing.JPanel {
     gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
     jPanel1.add(jPanel2, gridBagConstraints);
 
-    leftSplitpane.setLeftComponent(jPanel1);
-
-    jPanel3.setBackground(new java.awt.Color(255, 255, 255));
-    jPanel3.setLayout(new java.awt.GridBagLayout());
-
-    jPanel4.setLayout(new java.awt.GridBagLayout());
-
-    org.openide.awt.Mnemonics.setLocalizedText(jLabel2, org.openide.util.NbBundle.getMessage(ExternalDbPanel.class, "ExternalDbPanel.jLabel2.text")); // NOI18N
-    jLabel2.setToolTipText(org.openide.util.NbBundle.getMessage(ExternalDbPanel.class, "ExternalDbPanel.jLabel2.toolTipText")); // NOI18N
-    jLabel2.setHorizontalTextPosition(javax.swing.SwingConstants.LEADING);
-    gridBagConstraints = new java.awt.GridBagConstraints();
-    gridBagConstraints.gridx = 0;
-    gridBagConstraints.gridy = 0;
-    gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-    gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
-    gridBagConstraints.weightx = 1.0;
-    gridBagConstraints.insets = new java.awt.Insets(5, 5, 5, 0);
-    jPanel4.add(jLabel2, gridBagConstraints);
-
-    jSeparator2.setForeground(new java.awt.Color(120, 120, 120));
-    gridBagConstraints = new java.awt.GridBagConstraints();
-    gridBagConstraints.gridx = 0;
-    gridBagConstraints.gridy = 1;
-    gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-    jPanel4.add(jSeparator2, gridBagConstraints);
-
-    gridBagConstraints = new java.awt.GridBagConstraints();
-    gridBagConstraints.gridx = 0;
-    gridBagConstraints.gridy = 0;
-    gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-    jPanel3.add(jPanel4, gridBagConstraints);
-
-    jScrollPane2.setBorder(null);
-
-    dbConfJList.setModel(fConfigListModel);
-    dbConfJList.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_INTERVAL_SELECTION);
-    jScrollPane2.setViewportView(dbConfJList);
-
-    gridBagConstraints = new java.awt.GridBagConstraints();
-    gridBagConstraints.gridx = 0;
-    gridBagConstraints.gridy = 1;
-    gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
-    gridBagConstraints.weightx = 1.0;
-    gridBagConstraints.weighty = 1.0;
-    gridBagConstraints.insets = new java.awt.Insets(5, 5, 5, 5);
-    jPanel3.add(jScrollPane2, gridBagConstraints);
-
-    leftSplitpane.setRightComponent(jPanel3);
-
-    mainSplitpane.setLeftComponent(leftSplitpane);
-
-    jPanel5.setBackground(new java.awt.Color(255, 255, 255));
-
-    javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
-    jPanel5.setLayout(jPanel5Layout);
-    jPanel5Layout.setHorizontalGroup(
-      jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-      .addGap(0, 274, Short.MAX_VALUE)
-    );
-    jPanel5Layout.setVerticalGroup(
-      jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-      .addGap(0, 298, Short.MAX_VALUE)
-    );
-
-    mainSplitpane.setRightComponent(jPanel5);
+    mainSplitpane.setLeftComponent(jPanel1);
 
     gridBagConstraints = new java.awt.GridBagConstraints();
     gridBagConstraints.gridx = 0;
@@ -241,286 +161,176 @@ public class ExternalDbPanel extends javax.swing.JPanel {
   }// </editor-fold>//GEN-END:initComponents
 
   // Variables declaration - do not modify//GEN-BEGIN:variables
-  private javax.swing.JList dbConfJList;
   private javax.swing.JTree envJTree;
   private javax.swing.JLabel jLabel1;
-  private javax.swing.JLabel jLabel2;
   private javax.swing.JPanel jPanel1;
   private javax.swing.JPanel jPanel2;
-  private javax.swing.JPanel jPanel3;
-  private javax.swing.JPanel jPanel4;
   private javax.swing.JPanel jPanel5;
   private javax.swing.JScrollPane jScrollPane1;
-  private javax.swing.JScrollPane jScrollPane2;
   private javax.swing.JSeparator jSeparator1;
-  private javax.swing.JSeparator jSeparator2;
-  private javax.swing.JSplitPane leftSplitpane;
   private javax.swing.JSplitPane mainSplitpane;
   // End of variables declaration//GEN-END:variables
   // CHECKSTYLE:ON
 
+  // the view will call this method to change the charts
   void setChartPanelToVisible(ChartsPanel externalDbChartPanel) {
     fMainSplitSize = mainSplitpane.getDividerLocation();
-    fLeftSplitSize = leftSplitpane.getDividerLocation();
     mainSplitpane.setRightComponent(externalDbChartPanel.getUIComponent());
-    resizeSplitpanes(fMainSplitSize, fLeftSplitSize);
+    mainSplitpane.setDividerLocation(fMainSplitSize);
   }
 
-  void setTreeListData(Map<String, Map<String, Set<String>>> appEnvConfMap) {
+  // init data for the tree
+  void setTreeData(Map<String, Map<String, Set<String>>> appEnvConfMap) {
     fAppEnvConfigMap = appEnvConfMap;
+    // reset the current tree
+    for (int i = 0; i < fRootNode.getChildCount(); i++) {
+      fEnvTreeModel.removeNodeFromParent((MutableTreeNode) fRootNode.getChildAt(i));
+    }
     initTreeData();
-    initListData();
     expandAllTreeNodes();
   }
-
+  
+  private void initTreeData() {
+    // update new data
+    int index = 0;
+    for (String appName : fAppEnvConfigMap.keySet()) {
+      AppEnvConfigNode appNode = new AppEnvConfigNode(appName, fAppIcon);
+      fEnvTreeModel.insertNodeInto(appNode, fRootNode, index++);
+      int envIndex = 0;
+      for (String env : fAppEnvConfigMap.get(appName).keySet()) {
+        AppEnvConfigNode envNode = new AppEnvConfigNode(env, fEnvIcon);
+        fEnvTreeModel.insertNodeInto(envNode, appNode, envIndex++);
+        int configIndex = 0;
+        for (String config : fAppEnvConfigMap.get(appName).get(env)) {
+          AppEnvConfigNode confNode = new AppEnvConfigNode(config, fConfIcon);
+          fEnvTreeModel.insertNodeInto(confNode, envNode, configIndex++);
+        }
+      }
+    }
+    fEnvTreeModel.reload();
+  }
+  
   private void initTree() {
     envJTree.setCellRenderer(new EnvTreeCellRenderer());
     envJTree.getSelectionModel().setSelectionMode(TreeSelectionModel.SINGLE_TREE_SELECTION);
     envJTree.setToggleClickCount(1);
-
-    preventSelection();
+    addSelectionListener();
     keepSelectionWhenCollapse();
   }
-
-  private void preventSelection() {
+  
+  private void addSelectionListener() {
     envJTree.addTreeSelectionListener(new TreeSelectionListener() {
       @Override
-      public void valueChanged(TreeSelectionEvent e) {
-        TreePath oldPath = e.getOldLeadSelectionPath();
-        TreePath newPath = e.getNewLeadSelectionPath();
-        if (newPath != null) {
-          AppEnvNode node = (AppEnvNode) newPath.getLastPathComponent();
-          if (node.isAppNode()) {
-            envJTree.setSelectionPath(oldPath);
-          } else {
-            envJTree.setSelectionPath(newPath);
-          }
-        }
+      public void valueChanged(TreeSelectionEvent selectionEvent) {
+        preventSelection(selectionEvent);
+        createChartsPanel();
       }
     });
   }
-
+  
+  private void preventSelection(TreeSelectionEvent e) {
+    TreePath oldPath = e.getOldLeadSelectionPath();
+    TreePath newPath = e.getNewLeadSelectionPath();
+    if (newPath != null) {
+      AppEnvConfigNode node = (AppEnvConfigNode) newPath.getLastPathComponent();
+      if (node.isConfigNode()) {
+        envJTree.setSelectionPath(newPath);
+      } else {
+        envJTree.setSelectionPath(oldPath);
+      }
+    }
+  }
+  
   private void keepSelectionWhenCollapse() {
     envJTree.addTreeWillExpandListener(new TreeWillExpandListener() {
       @Override
       public void treeWillExpand(TreeExpansionEvent event) throws ExpandVetoException {
         envJTree.setSelectionPaths(fSelectedPath);
       }
-
+      
       @Override
       public void treeWillCollapse(TreeExpansionEvent event) throws ExpandVetoException {
         fSelectedPath = envJTree.getSelectionPaths();
       }
-
+      
     });
   }
-
+  
   private void expandAllTreeNodes() {
     for (int i = 0; i < envJTree.getRowCount(); ++i) {
       envJTree.expandRow(i);
     }
   }
-
+  
   private void addResizeSplitpanesListener() {
     addComponentListener(new ComponentAdapter() {
       @Override
       public void componentResized(ComponentEvent e) {
         if (!fResized) {
-          resizeSplitpanes((int) (getSize().getWidth() / 7), (int) getSize().getHeight() / 2);
+          fMainSplitSize = (int) (getSize().getWidth() / 5);
+          mainSplitpane.setDividerLocation(fMainSplitSize);
           fResized = true;
         }
       }
     });
   }
-
-  private void resizeSplitpanes(int main, int left) {
-    mainSplitpane.setDividerLocation(main);
-    leftSplitpane.setDividerLocation(left);
-  }
-
-  private void initList() {
-    dbConfJList.getSelectionModel().setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-    dbConfJList.setCellRenderer(new ConfigListCellRenderer());
-  }
-
-  private void initTreeData() {
-    // reset the tree
-    fEnvironmentNodes.clear();
-    for (int i = 0; i < fRootNode.getChildCount(); i++) {
-      fEnvTreeModel.removeNodeFromParent((MutableTreeNode) fRootNode.getChildAt(i));
-    }
-
-    int index = 0;
-    for (String appName : fAppEnvConfigMap.keySet()) {
-      AppEnvNode appNode = new AppEnvNode(appName, true);
-      fEnvTreeModel.insertNodeInto(appNode, fRootNode, index++);
-      int envIndex = 0;
-      for (String env : fAppEnvConfigMap.get(appName).keySet()) {
-        AppEnvNode envNode = new AppEnvNode(env, false);
-        fEnvTreeModel.insertNodeInto(envNode, appNode, envIndex++);
-        fEnvironmentNodes.add(envNode);
-      }
-    }
-    fEnvTreeModel.reload();
-  }
-
-  private void initListData() {
-    // reset the list
-    fConfigListModel.clear();
-
-    Set<String> configs = new TreeSet<>();
-    for (String app : fAppEnvConfigMap.keySet()) {
-      for (String env : fAppEnvConfigMap.get(app).keySet()) {
-        configs.addAll(fAppEnvConfigMap.get(app).get(env));
-      }
-    }
-    dbConfJList.setListData(configs.toArray());
-  }
-
-  /**
-   * If user is selecting tree node: disable & enable elements in the list depends on selected node, if the
-   * current selection in the list is valid, still keep it, otherwise clear selection.<br/>
-   * If user is selecting list element: disable & enable nodes in the tree depends on selected item, if the
-   * current selection in the tree is valid, still keep it, otherwise clear selection.
-   */
-  private void initSelectionListeners() {
-    envJTree.addTreeSelectionListener(new TreeSelectionListener() {
-      @Override
-      public void valueChanged(TreeSelectionEvent treeSelEvent) {
-        if (envJTree.getSelectionPath() == null) {
-          return;
-        }
-        AppEnvNode node = (AppEnvNode) treeSelEvent.getPath().getLastPathComponent();
-        if (node != null && !node.isAppNode()) {
-          changeListItemStatus(node.getParent().toString(), node.toString());
-          createChartWhenSelectionCorrects();
-        }
-      }
-    });
-
-    dbConfJList.addListSelectionListener(new ListSelectionListener() {
-      @Override
-      public void valueChanged(ListSelectionEvent e) {
-        Object selectedConfig = dbConfJList.getSelectedValue();
-        if (selectedConfig == null) {
-          return;
-        }
-        fAvailableEnvironments.clear();
-        for (String app : fAppEnvConfigMap.keySet()) {
-          for (String env : fAppEnvConfigMap.get(app).keySet()) {
-            if (fAppEnvConfigMap.get(app).get(env).contains(selectedConfig.toString())) {
-              fAvailableEnvironments.add(env);
-            }
-          }
-        }
-        changeTreeNodeStatus();
-        createChartWhenSelectionCorrects();
-      }
-    });
-
-  }
-
-  private void createChartWhenSelectionCorrects() {
-    if (envJTree.getSelectionPath() == null || dbConfJList.getSelectedValue() == null) {
+  
+  private void createChartsPanel() {
+    TreePath selectedPath = envJTree.getSelectionPath();
+    if (selectedPath == null) {
       return;
     }
-    AppEnvNode node = (AppEnvNode) envJTree.getSelectionPath().getLastPathComponent();
-    if (node != null) {
-      fExternalDbView.fireCreateChartsAction(node.getParent().toString(), node.toString(),
-              dbConfJList.getSelectedValue().toString());
+    AppEnvConfigNode node = (AppEnvConfigNode) selectedPath.getLastPathComponent();
+    if (node != null && node.isConfigNode()) {
+      String appName = node.getParent().getParent().toString();
+      String envName = node.getParent().toString();
+      fExternalDbView.fireCreateChartsAction(appName, envName, node.toString());
+      node.setIsOpened(true);
     }
   }
-
-  private void changeListItemStatus(String application, String environment) {
-    Map<String, Set<String>> envConfMap = fAppEnvConfigMap.get(application);
-    fAvailableConfigs = envConfMap.get(environment);
-    Object selected = dbConfJList.getSelectedValue();
-    if (selected != null && !fAvailableConfigs.contains(selected.toString())) {
-      dbConfJList.clearSelection();
-    }
-    dbConfJList.repaint();
-  }
-
-  private void changeTreeNodeStatus() {
-    if (envJTree.getSelectionPath() != null) {
-      AppEnvNode node = (AppEnvNode) envJTree.getSelectionPath().getLastPathComponent();
-      if (node != null && !fAvailableEnvironments.contains(node.toString())) {
-        envJTree.clearSelection();
-      }
-    }
-    for (AppEnvNode envNode : fEnvironmentNodes) {
-      if (fAvailableEnvironments.contains(envNode.toString())) {
-        envNode.setEnable(true);
-      } else {
-        envNode.setEnable(false);
-      }
-    }
-    envJTree.repaint();
-  }
-
-  private class AppEnvNode extends DefaultMutableTreeNode {
-
-    private boolean enableStatus; // to disable or enable the node by changing its color
-    private final boolean isAppNode; // to distingues application node and environment node
-
-    public AppEnvNode(Object userObject, boolean appNode) {
+  
+  private class AppEnvConfigNode extends DefaultMutableTreeNode {
+    
+    private final Icon fNodeIcon;
+    private boolean fNodeOpened;
+    
+    public AppEnvConfigNode(Object userObject, Icon icon) {
       super(userObject);
-      enableStatus = true;
-      isAppNode = appNode;
+      fNodeIcon = icon;
       setAllowsChildren(true);
     }
-
-    public void setEnable(boolean enable) {
-      this.enableStatus = enable;
+    
+    public Icon getNodeIcon() {
+      return fNodeIcon;
     }
-
-    public boolean getStatus() {
-      return enableStatus;
+    
+    public boolean isConfigNode() {
+      return fNodeIcon.equals(fConfIcon);
     }
-
-    public boolean isAppNode() {
-      return this.isAppNode;
+    
+    private void setIsOpened(boolean opened) {
+      fNodeOpened = opened;
     }
-
+    
+    private boolean isNodeOpened() {
+      return fNodeOpened;
+    }
   }
-
+  
   private class EnvTreeCellRenderer extends DefaultTreeCellRenderer {
-
+    
     @Override
     public Component getTreeCellRendererComponent(JTree tree, Object value, boolean sel, boolean expanded,
             boolean leaf, int row, boolean hasFocus) {
       super.getTreeCellRendererComponent(tree, value, sel, expanded, leaf, row, hasFocus);
-
-      if (value instanceof AppEnvNode) {
-        AppEnvNode node = (AppEnvNode) value;
-        // set icon for normal case
-        if (node.isAppNode()) {
-          setIcon(fAppIcon);
-        } else {
-          setIcon(fEnvIcon);
-        }
-        if (node.getStatus()) {
-          setForeground(Color.black);
-        } else {
-          setForeground(disableColor);
-        }
+      
+      if (value instanceof AppEnvConfigNode) {
+        AppEnvConfigNode node = (AppEnvConfigNode) value;
+        setIcon(node.getNodeIcon());
         setText((String) node.getUserObject());
-      }
-      return this;
-    }
-  }
-
-  private class ConfigListCellRenderer extends DefaultListCellRenderer {
-
-    @Override
-    public Component getListCellRendererComponent(JList list, Object value, int index, boolean isSelected,
-            boolean cellHasFocus) {
-      super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
-      setIcon(fConfIcon);
-      if (fAvailableConfigs.contains(value.toString())) {
-        setForeground(Color.black);
-      } else {
-        setForeground(disableColor);
+        if (node.isNodeOpened()) {
+          setForeground(Color.blue);
+        }
       }
       return this;
     }
