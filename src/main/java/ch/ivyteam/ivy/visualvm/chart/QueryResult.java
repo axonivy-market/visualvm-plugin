@@ -10,7 +10,7 @@ import javax.management.ObjectName;
 public class QueryResult {
   private final Map<ObjectName, List<Attribute>> results = new HashMap<>();
 
-  void addSubResult(ObjectName mBeanName, AttributeList attributes) {
+  public void addSubResult(ObjectName mBeanName, AttributeList attributes) {
     results.put(mBeanName, attributes.asList());
   }
 

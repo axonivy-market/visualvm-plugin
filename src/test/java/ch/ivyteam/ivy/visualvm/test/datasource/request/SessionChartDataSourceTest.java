@@ -50,7 +50,7 @@ public class SessionChartDataSourceTest extends AbstractTest {
   }
 
   @Test
-  public void test1() throws InstanceNotFoundException, IOException, ReflectionException,
+  public void testCollectData() throws InstanceNotFoundException, IOException, ReflectionException,
           MalformedObjectNameException {
     final MBeanServerConnection mockConnection = createMockConnection();
     addTestData(mockConnection, getDataset());

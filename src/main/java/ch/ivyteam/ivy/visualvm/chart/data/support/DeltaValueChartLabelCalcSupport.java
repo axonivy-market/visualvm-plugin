@@ -22,7 +22,7 @@ public class DeltaValueChartLabelCalcSupport extends ChartLabelCalcSupport {
     if (value instanceof Number) {
       result = ((Number) value).longValue();
       if (isLastValueValid()) {
-        result = result - fLastValue;
+        result = Math.abs(result - fLastValue);
       } else {
         result = 0;
       }
