@@ -93,8 +93,10 @@ public class ExternalDbView extends AbstractView {
     builder.append("<html>");
     builder.append("The chart shows the number of open and the number of used connections to the external ");
     builder.append("database.").append(BR_TAG).append(BR_TAG);
-    builder.append("<b>Open:</b>").append(ExternalDbConnectionChartDataSource.OPEN_SERIE_DESC).append(BR_TAG);
-    builder.append("<b>Used:</b>").append(ExternalDbConnectionChartDataSource.USED_SERIE_DESC).append(BR_TAG);
+    builder.append("<b>Open: </b>").append(ExternalDbConnectionChartDataSource.OPEN_SERIE_DESC)
+            .append(BR_TAG);
+    builder.append("<b>Used: </b>").append(ExternalDbConnectionChartDataSource.USED_SERIE_DESC)
+            .append(BR_TAG);
     builder.append("</html>");
     return builder.toString();
   }
@@ -104,10 +106,10 @@ public class ExternalDbView extends AbstractView {
     builder.append("<html>");
     builder.append("The chart shows the number of transactions to the external database and the number of ");
     builder.append("them that were erroneous.<br><br>");
-    builder.append("<b>Transactions:</b>")
+    builder.append("<b>Transactions: </b>")
             .append(ExternalDbTransactionChartDataSource.TRANSACTION_SERIE_DESC)
             .append(BR_TAG);
-    builder.append("<b>Errors:</b>").append(ExternalDbTransactionChartDataSource.ERRORS_SERIE_DESC);
+    builder.append("<b>Errors: </b>").append(ExternalDbTransactionChartDataSource.ERRORS_SERIE_DESC);
     builder.append("</html>");
     return builder.toString();
   }
@@ -116,12 +118,12 @@ public class ExternalDbView extends AbstractView {
     StringBuilder builder = new StringBuilder();
     builder.append("<html>");
     builder.append("The chart shows the maximum and the minimum time needed to transaction a execute in ");
-    builder.append("last poll<br><br>");
-    builder.append("<b>Max</b>: ").append(ExternalDbProcessingTimeChartDataSource.MAX_SERIE_DESC)
+    builder.append("last poll.<br><br>");
+    builder.append("<b>Max: </b>").append(ExternalDbProcessingTimeChartDataSource.MAX_SERIE_DESC)
             .append(BR_TAG);
-    builder.append("<b>Mean</b>: ").append(ExternalDbProcessingTimeChartDataSource.MEAN_SERIE_DESC)
+    builder.append("<b>Mean: </b>").append(ExternalDbProcessingTimeChartDataSource.MEAN_SERIE_DESC)
             .append(BR_TAG);
-    builder.append("<b>Min</b>: ").append(ExternalDbProcessingTimeChartDataSource.MIN_SERIE_DESC)
+    builder.append("<b>Min: </b>").append(ExternalDbProcessingTimeChartDataSource.MIN_SERIE_DESC)
             .append(BR_TAG);
     builder.append("</html>");
     return builder.toString();

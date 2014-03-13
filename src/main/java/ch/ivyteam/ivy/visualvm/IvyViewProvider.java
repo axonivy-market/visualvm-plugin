@@ -21,22 +21,17 @@ class IvyViewProvider extends DataSourceViewProvider<Application> {
 
   @Override
   protected boolean supportsViewFor(Application application) {
-    JmxModel jmx = JmxModelFactory.getJmxModelFor(application);
-    MBeanServerConnection mbsc = jmx.getMBeanServerConnection();
     try {
+      JmxModel jmx = JmxModelFactory.getJmxModelFor(application);
+      MBeanServerConnection mbsc = jmx.getMBeanServerConnection();
       Object name = mbsc.getAttribute(IvyJmxConstant.IvyServer.Server.NAME,
               IvyJmxConstant.IvyServer.Server.KEY_APPLICATION_NAME);
-      if (name != null) {
-        boolean isIvyServer = name.toString().equals(IvyView.IVY_SERVER_APP_NAME);
-        boolean isIvyDesigner = name.toString().equals(IvyView.IVY_DESIGNER_APP_NAME);
-        
-        ivyView = new IvyView(application, isIvyServer);
-        return isIvyServer || isIvyDesigner;
-      } else {
-        return false;
-      }
+      boolean isIvyServer = name.toString().equals(IvyView.IVY_SERVER_APP_NAME);
+      boolean isIvyDesigner = name.toString().equals(IvyView.IVY_DESIGNER_APP_NAME);
+      ivyView = new IvyView(application, isIvyServer);
+      return isIvyServer || isIvyDesigner;
     } catch (AttributeNotFoundException | InstanceNotFoundException | MBeanException | ReflectionException |
-            IOException e) {
+            IOException | NullPointerException e) {
       return false;
     }
   }

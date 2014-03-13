@@ -36,10 +36,12 @@ public class ExternalDbPanel extends javax.swing.JPanel {
   private static final String APP_ICON_PATH = "resources/icons/app_icon.png";
   private static final String ENV_ICON_PATH = "resources/icons/env_icon.png";
   private static final String CONF_ICON_PATH = "resources/icons/db_icon.png";
+  private static final String RECORDING_ICON_PATH = "resources/icons/db_conf_recording_icon.png";
 
   private final Icon fAppIcon; // icon for application node
   private final Icon fEnvIcon; // icon for environment node
   private final Icon fConfIcon; // icon for configuration node
+  private final Icon fRecordingIcon;
   private final DefaultTreeModel fEnvTreeModel; // data model for the tree
   private final AppEnvConfigNode fRootNode; // the root node
   private final ExternalDbView fExternalDbView; // the main view to interact when selection changed
@@ -55,6 +57,7 @@ public class ExternalDbPanel extends javax.swing.JPanel {
     fAppIcon = (Icon) ImageUtilities.loadImage(APP_ICON_PATH, true);
     fEnvIcon = (Icon) ImageUtilities.loadImage(ENV_ICON_PATH, true);
     fConfIcon = (Icon) ImageUtilities.loadImage(CONF_ICON_PATH, true);
+    fRecordingIcon = (Icon) ImageUtilities.loadImage(RECORDING_ICON_PATH, true);
     // need to init data models before initialization of the tree and the list
     fRootNode = new AppEnvConfigNode("Server", fAppIcon);
     fEnvTreeModel = new DefaultTreeModel(fRootNode);
@@ -78,9 +81,6 @@ public class ExternalDbPanel extends javax.swing.JPanel {
     jPanel1 = new javax.swing.JPanel();
     jScrollPane1 = new javax.swing.JScrollPane();
     envJTree = new javax.swing.JTree();
-    jPanel2 = new javax.swing.JPanel();
-    jLabel1 = new javax.swing.JLabel();
-    jSeparator1 = new javax.swing.JSeparator();
 
     setLayout(new java.awt.GridBagLayout());
 
@@ -120,34 +120,6 @@ public class ExternalDbPanel extends javax.swing.JPanel {
     gridBagConstraints.insets = new java.awt.Insets(5, 5, 5, 5);
     jPanel1.add(jScrollPane1, gridBagConstraints);
 
-    jPanel2.setLayout(new java.awt.GridBagLayout());
-
-    jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-    org.openide.awt.Mnemonics.setLocalizedText(jLabel1, org.openide.util.NbBundle.getMessage(ExternalDbPanel.class, "ExternalDbPanel.jLabel1.text")); // NOI18N
-    jLabel1.setToolTipText(org.openide.util.NbBundle.getMessage(ExternalDbPanel.class, "ExternalDbPanel.jLabel1.toolTipText")); // NOI18N
-    jLabel1.setHorizontalTextPosition(javax.swing.SwingConstants.LEADING);
-    gridBagConstraints = new java.awt.GridBagConstraints();
-    gridBagConstraints.gridx = 0;
-    gridBagConstraints.gridy = 0;
-    gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-    gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
-    gridBagConstraints.weightx = 1.0;
-    gridBagConstraints.insets = new java.awt.Insets(5, 0, 5, 0);
-    jPanel2.add(jLabel1, gridBagConstraints);
-
-    jSeparator1.setForeground(new java.awt.Color(120, 120, 120));
-    gridBagConstraints = new java.awt.GridBagConstraints();
-    gridBagConstraints.gridx = 0;
-    gridBagConstraints.gridy = 1;
-    gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-    jPanel2.add(jSeparator1, gridBagConstraints);
-
-    gridBagConstraints = new java.awt.GridBagConstraints();
-    gridBagConstraints.gridx = 0;
-    gridBagConstraints.gridy = 0;
-    gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-    jPanel1.add(jPanel2, gridBagConstraints);
-
     mainSplitpane.setLeftComponent(jPanel1);
 
     gridBagConstraints = new java.awt.GridBagConstraints();
@@ -161,12 +133,9 @@ public class ExternalDbPanel extends javax.swing.JPanel {
 
   // Variables declaration - do not modify//GEN-BEGIN:variables
   private javax.swing.JTree envJTree;
-  private javax.swing.JLabel jLabel1;
   private javax.swing.JPanel jPanel1;
-  private javax.swing.JPanel jPanel2;
   private javax.swing.JPanel jPanel5;
   private javax.swing.JScrollPane jScrollPane1;
-  private javax.swing.JSeparator jSeparator1;
   private javax.swing.JSplitPane mainSplitpane;
   // End of variables declaration//GEN-END:variables
   // CHECKSTYLE:ON
@@ -324,6 +293,7 @@ public class ExternalDbPanel extends javax.swing.JPanel {
         setText((String) node.getUserObject());
         if (node.isNodeOpened()) {
           setForeground(Color.blue);
+          setIcon(fRecordingIcon);
         }
       }
       return this;

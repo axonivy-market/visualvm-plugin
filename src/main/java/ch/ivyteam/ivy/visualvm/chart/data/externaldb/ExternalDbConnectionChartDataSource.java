@@ -14,9 +14,9 @@ public class ExternalDbConnectionChartDataSource extends AbstractExternalDbAndWe
   private static final String USED_SERIE_TITLE = "Used";
   private static final String MAX_OPEN_TITLE = "Max open";
   private static final String MAX_USED_TITLE = "Max used";
-  public static final String OPEN_SERIE_DESC = "The number of open connections to the external database";
+  public static final String OPEN_SERIE_DESC = "The number of open connections to the external database.";
   public static final String USED_SERIE_DESC = "The number of open connections to the external database for "
-          + "which at least one";
+          + "which at least one.";
 
   public ExternalDbConnectionChartDataSource(IDataBeanProvider dataBeanProvider, String chartName,
           String xAxisDescription, String yAxisDescription) {
