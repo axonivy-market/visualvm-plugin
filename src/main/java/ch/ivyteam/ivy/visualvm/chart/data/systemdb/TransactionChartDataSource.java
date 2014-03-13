@@ -12,8 +12,8 @@ public class TransactionChartDataSource extends XYChartDataSource {
   private static final String MAX_ERROR = "Max errors";
   private static final String TRANSACTION = "Transactions";
   private static final String ERROR = "Errors";
-  public static final String ERROR_SERIE_DESC = "The number of system database transactions that have finished "
-          + "since the last poll and were erroneous.";
+  public static final String ERROR_SERIE_DESC = "The number of system database transactions that have "
+          + "finished since the last poll and were erroneous.";
   public static final String TRANSACTION_SERIE_DESC = "The number of system database transactions that have "
           + "finished since the last poll.";
 
@@ -25,8 +25,8 @@ public class TransactionChartDataSource extends XYChartDataSource {
     addLabelCalcSupport(new MaxDeltaValueChartLabelCalcSupport(MAX_ERROR, DatabasePersistency.NAME,
             DatabasePersistency.KEY_ERROR));
     addDeltaSerie(TRANSACTION, TRANSACTION_SERIE_DESC,
-            SerieStyle.LINE, DatabasePersistency.NAME, DatabasePersistency.KEY_TRANS_NUMBER);
+            SerieStyle.FILLED, DatabasePersistency.NAME, DatabasePersistency.KEY_TRANS_NUMBER);
     addDeltaSerie(ERROR, ERROR_SERIE_DESC,
-            SerieStyle.LINE, DatabasePersistency.NAME, DatabasePersistency.KEY_ERROR);
+            SerieStyle.FILLED, DatabasePersistency.NAME, DatabasePersistency.KEY_ERROR);
   }
 }

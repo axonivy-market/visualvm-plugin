@@ -20,7 +20,7 @@ public class SystemDbView extends AbstractView {
     TransactionChartDataSource transactionNumberDataSource = new TransactionChartDataSource(
             getDataBeanProvider(), null, null, "Transactions");
     ProcessingTimeChartDataSource processTimeDataSource = new ProcessingTimeChartDataSource(
-            getDataBeanProvider(), null, null, "Processing Time [ms]");
+            getDataBeanProvider(), null, null, "Processing Time [µs]");
 
     super.getViewComponent().configureDetailsArea(new DataViewComponent.DetailsAreaConfiguration(null,
             false), DataViewComponent.TOP_LEFT);
@@ -60,8 +60,8 @@ public class SystemDbView extends AbstractView {
   private String generateDescriptionForProcessingTimeChart() {
     StringBuilder builder = new StringBuilder();
     builder.append("<html>");
-    builder.append("The chart shows the maximum and the minimum time needed to transaction a execute in ");
-    builder.append("last poll.<br><br>");
+    builder.append("The chart shows the maximum, the mean and the minimum time needed to execute a ");
+    builder.append("transaction since the last poll.<br><br>");
     builder.append("<b>Max</b>: " + ProcessingTimeChartDataSource.MAX_SERIE_DESC + "<br>");
     builder.append("<b>Mean</b>: " + ProcessingTimeChartDataSource.MEAN_SERIE_DESC + "<br>");
     builder.append("<b>Min</b>: " + ProcessingTimeChartDataSource.MIN_SERIE_DESC);

@@ -120,18 +120,21 @@ public class XYChartDataSource {
 
   public void addDeltaMeanSerie(String serie, String description, ObjectName mBeanName,
           String totalValueAttribute, String countAttribute) {
+    addDeltaMeanSerie(serie, description, SerieStyle.LINE, mBeanName, totalValueAttribute, countAttribute);
+  }
+
+  public void addDeltaMeanSerie(String serie, String description, SerieStyle style, ObjectName mBeanName,
+          String totalValueAttribute, String countAttribute) {
     SerieDataSource totalValueDataSource = new DeltaAttributeDataSource(
             serie, 1L, SerieStyle.LINE, mBeanName, totalValueAttribute);
     SerieDataSource countDataSource = new DeltaAttributeDataSource(serie,
             1L, SerieStyle.LINE, mBeanName, countAttribute);
-    addMeanSerie(serie, description, SerieStyle.LINE, totalValueDataSource, countDataSource);
+    addMeanSerie(serie, description, style, totalValueDataSource, countDataSource);
   }
 
   private void addMeanSerie(String serie, String description, SerieStyle style,
-          SerieDataSource totalValueDataSource,
-          SerieDataSource countDataSource) {
-    MeanDataSource meanDataSource = new MeanDataSource(serie, style,
-            totalValueDataSource, countDataSource);
+          SerieDataSource totalValueDataSource, SerieDataSource countDataSource) {
+    MeanDataSource meanDataSource = new MeanDataSource(serie, style, totalValueDataSource, countDataSource);
     meanDataSource.setDescription(description);
     serieDataSources.add(meanDataSource);
   }

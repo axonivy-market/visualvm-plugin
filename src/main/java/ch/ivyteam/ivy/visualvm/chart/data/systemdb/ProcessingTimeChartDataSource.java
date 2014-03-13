@@ -30,12 +30,12 @@ public class ProcessingTimeChartDataSource extends XYChartDataSource {
     addLabelCalcSupport(new ChartLabelDivideCalcSupport(TOTAL_MEAN_TITLE, DatabasePersistency.NAME,
             DatabasePersistency.KEY_TRANS_TOTAL_EXE_TIME, DatabasePersistency.KEY_TRANS_NUMBER));
 
-    addSerie(MAX_SERIE_TITLE, MAX_SERIE_DESC, SerieStyle.LINE,
+    addSerie(MAX_SERIE_TITLE, MAX_SERIE_DESC, SerieStyle.FILLED,
             DatabasePersistency.NAME, DatabasePersistency.KEY_TRANS_MAX_EXE_DELTA_TIME);
-    addDeltaMeanSerie(MEAN_SERIE_TITLE, MEAN_SERIE_DESC,
+    addDeltaMeanSerie(MEAN_SERIE_TITLE, MEAN_SERIE_DESC, SerieStyle.FILLED,
             DatabasePersistency.NAME, DatabasePersistency.KEY_TRANS_TOTAL_EXE_TIME,
             DatabasePersistency.KEY_TRANS_NUMBER);
-    addSerie(MIN_SERIE_TITLE, MIN_SERIE_DESC, SerieStyle.LINE,
+    addSerie(MIN_SERIE_TITLE, MIN_SERIE_DESC, SerieStyle.FILLED,
             DatabasePersistency.NAME, DatabasePersistency.KEY_TRANS_MIN_EXE_DELTA_TIME);
   }
 }

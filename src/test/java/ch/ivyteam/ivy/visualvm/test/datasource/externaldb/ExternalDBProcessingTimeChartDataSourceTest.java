@@ -18,7 +18,7 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 /**
- *
+ * 
  * @author ntnam
  */
 @RunWith(Parameterized.class)
@@ -40,9 +40,9 @@ public class ExternalDBProcessingTimeChartDataSourceTest extends AbstractTest {
     return TestUtil
             .createTestData(
                     DATA_FILE_PATH,
-                    new Object[]{new String[]{"test", "enviroment1", "DBConfig1"}, 2122, 0, 2122},
-                    new Object[]{new String[]{"test", "enviroment1", "DBConfig1"}, 1343, 1343, 1343},
-                    new Object[]{new String[]{"test", "enviroment1", "DBConfig1"}, 3344, 3344, 3344}
+                    new Object[] {new String[] {"test", "enviroment1", "DBConfig1"}, 2122, 0, 2122},
+                    new Object[] {new String[] {"test", "enviroment1", "DBConfig1"}, 1343, 1343, 1343},
+                    new Object[] {new String[] {"test", "enviroment1", "DBConfig1"}, 3344, 3344, 3344}
             );
   }
 
@@ -84,5 +84,4 @@ public class ExternalDBProcessingTimeChartDataSourceTest extends AbstractTest {
     assertEquals(fMin, values[1]);
     assertEquals(fTotalDelta, values[2]);
   }
-
 }
