@@ -12,6 +12,10 @@
                     <name>usedConnections</name>
                     <value type="java.lang.Long">0</value>
                 </property>
+                <property>
+                    <name>maxConnections</name>
+                    <value type="java.lang.Long">5</value>
+                </property>
             </dataset>
         </property>
     </dataset>
@@ -27,6 +31,10 @@
                     <name>usedConnections</name>
                     <value type="java.lang.Long">1</value>
                 </property>
+                <property>
+                    <name>maxConnections</name>
+                    <value type="java.lang.Long">5</value>
+                </property>
             </dataset>
         </property>
     </dataset>
@@ -41,6 +49,10 @@
                 <property>
                     <name>usedConnections</name>
                     <value type="java.lang.Long">0</value>
+                </property>
+                <property>
+                    <name>maxConnections</name>
+                    <value type="java.lang.Long">5</value>
                 </property>
             </dataset>
         </property>
