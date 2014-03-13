@@ -1,27 +1,24 @@
 package ch.ivyteam.ivy.visualvm.test.datasource.externaldb;
 
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
-
-import java.net.URISyntaxException;
-
-import javax.management.MBeanServerConnection;
-import javax.xml.bind.JAXBException;
-
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
-
 import ch.ivyteam.ivy.visualvm.chart.Query;
 import ch.ivyteam.ivy.visualvm.chart.QueryResult;
 import ch.ivyteam.ivy.visualvm.chart.data.externaldb.ExternalDbProcessingTimeChartDataSource;
+import ch.ivyteam.ivy.visualvm.model.IvyJmxConstant;
 import ch.ivyteam.ivy.visualvm.test.AbstractTest;
 import ch.ivyteam.ivy.visualvm.test.data.model.BeanTestData;
 import ch.ivyteam.ivy.visualvm.test.util.TestUtil;
 import ch.ivyteam.ivy.visualvm.view.IDataBeanProvider;
+import java.net.URISyntaxException;
+import javax.management.MBeanServerConnection;
+import javax.xml.bind.JAXBException;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 /**
- * 
+ *
  * @author ntnam
  */
 @RunWith(Parameterized.class)
@@ -43,9 +40,9 @@ public class ExternalDBProcessingTimeChartDataSourceTest extends AbstractTest {
     return TestUtil
             .createTestData(
                     DATA_FILE_PATH,
-                    new Object[] {new String[] {"test", "enviroment1", "DBConfig1"}, 2122, 2122, 0},
-                    new Object[] {new String[] {"test", "enviroment1", "DBConfig1"}, 1343, 1343, 1343},
-                    new Object[] {new String[] {"test", "enviroment1", "DBConfig1"}, 3344, 3344, 3344}
+                    new Object[]{new String[]{"test", "enviroment1", "DBConfig1"}, 2122, 0, 2122},
+                    new Object[]{new String[]{"test", "enviroment1", "DBConfig1"}, 1343, 1343, 1343},
+                    new Object[]{new String[]{"test", "enviroment1", "DBConfig1"}, 3344, 3344, 3344}
             );
   }
 
@@ -72,6 +69,7 @@ public class ExternalDBProcessingTimeChartDataSourceTest extends AbstractTest {
     if (fDataSource == null) {
       fDataSource = new ExternalDbProcessingTimeChartDataSource(fProvider, "",
               "", "");
+      fDataSource.setNamePattern(IvyJmxConstant.IvyServer.ExternalDatabase.NAME_PATTERN);
       fDataSource.setApplication(fConfigs[0]);
       fDataSource.setEnvironment(fConfigs[1]);
       fDataSource.setConfigName(fConfigs[2]);
