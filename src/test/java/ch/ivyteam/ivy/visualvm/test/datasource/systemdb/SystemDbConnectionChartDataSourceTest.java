@@ -40,7 +40,6 @@ public class SystemDbConnectionChartDataSourceTest extends AbstractTest {
   public SystemDbConnectionChartDataSourceTest(BeanTestData.Dataset dataset,
           int maxConnection, int openConnection, int usedConnection) {
     super(dataset);
-    fMaxConnection = maxConnection;
     fOpenConnection = openConnection;
     fUsedConnection = usedConnection;
   }
