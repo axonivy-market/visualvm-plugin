@@ -1,8 +1,9 @@
 package ch.ivyteam.ivy.visualvm.chart.data.support;
 
+import ch.ivyteam.ivy.visualvm.chart.Query;
 import ch.ivyteam.ivy.visualvm.chart.QueryResult;
 
-public abstract class ChartLabelCalcSupport {
+public abstract class AbstractChartLabelCalcSupport {
   private String fText;
   private long fValue;
 
@@ -26,6 +27,9 @@ public abstract class ChartLabelCalcSupport {
 
   public long getValue() {
     return fValue;
+  }
+
+  public void updateQuery(Query query) {
   }
 
 }

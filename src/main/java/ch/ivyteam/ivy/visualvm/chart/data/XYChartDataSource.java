@@ -3,7 +3,7 @@ package ch.ivyteam.ivy.visualvm.chart.data;
 import ch.ivyteam.ivy.visualvm.chart.Query;
 import ch.ivyteam.ivy.visualvm.chart.QueryResult;
 import ch.ivyteam.ivy.visualvm.chart.SerieStyle;
-import ch.ivyteam.ivy.visualvm.chart.data.support.ChartLabelCalcSupport;
+import ch.ivyteam.ivy.visualvm.chart.data.support.AbstractChartLabelCalcSupport;
 import ch.ivyteam.ivy.visualvm.view.IDataBeanProvider;
 import java.util.ArrayList;
 import java.util.List;
@@ -16,7 +16,7 @@ public class XYChartDataSource {
   private final String fYAxisDescription;
   private final IDataBeanProvider fDataBeanProvider;
   private final List<SerieDataSource> serieDataSources = new ArrayList<>();
-  private final List<ChartLabelCalcSupport> fLabelCalcSupports = new ArrayList<>();
+  private final List<AbstractChartLabelCalcSupport> fLabelCalcSupports = new ArrayList<>();
 
   /**
    * 
@@ -45,7 +45,7 @@ public class XYChartDataSource {
   public long[] calculateDetailValues(QueryResult result) {
     long[] values = new long[fLabelCalcSupports.size()];
     int pos = 0;
-    for (ChartLabelCalcSupport support : fLabelCalcSupports) {
+    for (AbstractChartLabelCalcSupport support : fLabelCalcSupports) {
       support.updateValues(result);
       values[pos++] = support.getValue();
     }
@@ -53,7 +53,7 @@ public class XYChartDataSource {
   }
 
   public void setLabels(QueryResult queryResult) {
-    for (ChartLabelCalcSupport labelSupport : fLabelCalcSupports) {
+    for (AbstractChartLabelCalcSupport labelSupport : fLabelCalcSupports) {
       labelSupport.updateValues(queryResult);
     }
   }
@@ -91,6 +91,9 @@ public class XYChartDataSource {
     for (SerieDataSource dataSource : serieDataSources) {
       dataSource.updateQuery(query);
     }
+    for (AbstractChartLabelCalcSupport labelSupport : fLabelCalcSupports) {
+      labelSupport.updateQuery(query);
+    }
   }
 
   public IDataBeanProvider getDataBeanProvider() {
@@ -113,12 +116,29 @@ public class XYChartDataSource {
     return fChartName;
   }
 
-  public void addLabelCalcSupport(ChartLabelCalcSupport labelCalcSupport) {
+  public void addLabelCalcSupport(AbstractChartLabelCalcSupport labelCalcSupport) {
     getLabelCalcSupports().add(labelCalcSupport);
   }
 
-  public List<ChartLabelCalcSupport> getLabelCalcSupports() {
+  public List<AbstractChartLabelCalcSupport> getLabelCalcSupports() {
     return fLabelCalcSupports;
   }
 
+  public void addDeltaMeanSerie(String serie, String description, ObjectName mBeanName,
+          String totalValueAttribute, String countAttribute) {
+    SerieDataSource totalValueDataSource = new DeltaAttributeDataSource(
+            serie, 1L, SerieStyle.LINE, mBeanName, totalValueAttribute);
+    SerieDataSource countDataSource = new DeltaAttributeDataSource(serie,
+            1L, SerieStyle.LINE, mBeanName, countAttribute);
+    addMeanSerie(serie, description, SerieStyle.LINE, totalValueDataSource, countDataSource);
+  }
+
+  private void addMeanSerie(String serie, String description, SerieStyle style,
+          SerieDataSource totalValueDataSource,
+          SerieDataSource countDataSource) {
+    MeanDataSource meanDataSource = new MeanDataSource(serie, style,
+            totalValueDataSource, countDataSource);
+    meanDataSource.setDescription(description);
+    serieDataSources.add(meanDataSource);
+  }
 }

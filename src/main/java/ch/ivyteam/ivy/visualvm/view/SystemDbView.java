@@ -40,9 +40,8 @@ public class SystemDbView extends AbstractView {
     builder.append("<html>");
     builder.append("The chart shows the number of open and the number of used connections to the system ");
     builder.append("database.<br><br>");
-    builder.append("<b>Open:</b> The number of open connections to the system database.<br>");
-    builder.append("<b>Used:</b> The number of open connections to the system database for which at least ");
-    builder.append("one statement was executed since the last poll.<br>");
+    builder.append("<b>Open:</b> " + ConnectionChartDataSource.OPEN_SERIE_DESC + "<br>");
+    builder.append("<b>Used:</b> " + ConnectionChartDataSource.USED_SERIE_DESC);
     builder.append("</html>");
     return builder.toString();
   }
@@ -52,10 +51,8 @@ public class SystemDbView extends AbstractView {
     builder.append("<html>");
     builder.append("The chart shows the number of transactions to the system database and the number of ");
     builder.append("them that were erroneous.<br><br>");
-    builder.append("<b>Transactions:</b> The number of system database transactions that have finished ");
-    builder.append("since the last poll.<br>");
-    builder.append("<b>Errors:</b> The number of system database transactions that have finished since the");
-    builder.append(" last poll and were erroneous.");
+    builder.append("<b>Transactions:</b> " + TransactionChartDataSource.TRANSACTION_SERIE_DESC + "<br>");
+    builder.append("<b>Errors:</b> " + TransactionChartDataSource.ERROR_SERIE_DESC);
     builder.append("</html>");
     return builder.toString();
   }
@@ -65,12 +62,9 @@ public class SystemDbView extends AbstractView {
     builder.append("<html>");
     builder.append("The chart shows the maximum and the minimum time needed to transaction a execute in ");
     builder.append("last poll.<br><br>");
-    builder.append("<b>Mean</b>: The mean processing time of all system database transactions that have ");
-    builder.append("finished since the last poll.<br>");
-    builder.append("<b>Max</b>: The maximum processing time of all system database transactions that have ");
-    builder.append("finished since the last poll.<br>");
-    builder.append("<b>Min</b>: The minimum processing time of all system database transactions that have ");
-    builder.append("finished since the last poll.<br>");
+    builder.append("<b>Max</b>: " + ProcessingTimeChartDataSource.MAX_SERIE_DESC + "<br>");
+    builder.append("<b>Mean</b>: " + ProcessingTimeChartDataSource.MEAN_SERIE_DESC + "<br>");
+    builder.append("<b>Min</b>: " + ProcessingTimeChartDataSource.MIN_SERIE_DESC);
     builder.append("</html>");
     return builder.toString();
   }

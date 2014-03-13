@@ -3,7 +3,7 @@ package ch.ivyteam.ivy.visualvm.chart.data.support;
 import ch.ivyteam.ivy.visualvm.chart.QueryResult;
 import javax.management.ObjectName;
 
-public class LatestValueChartLabelCalcSupport extends ChartLabelCalcSupport {
+public class LatestValueChartLabelCalcSupport extends AbstractChartLabelCalcSupport {
   private final ObjectName fObjName;
   private final String fAttrKey;
 

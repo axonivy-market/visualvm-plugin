@@ -6,10 +6,11 @@
 
 package ch.ivyteam.ivy.visualvm.chart.data.support;
 
+import ch.ivyteam.ivy.visualvm.chart.Query;
 import ch.ivyteam.ivy.visualvm.chart.QueryResult;
 import javax.management.ObjectName;
 
-abstract class AbstractChartLabelActionCalcSupport extends ChartLabelCalcSupport {
+abstract class AbstractChartLabelActionCalcSupport extends AbstractChartLabelCalcSupport {
 
   private final ObjectName fObjectName;
   private final String fFirstAttribute;
@@ -39,4 +40,11 @@ abstract class AbstractChartLabelActionCalcSupport extends ChartLabelCalcSupport
     }
     return result;
   }
+
+  @Override
+  public void updateQuery(Query query) {
+    query.addSubQuery(fObjectName, fFirstAttribute);
+    query.addSubQuery(fObjectName, fSecondAttribute);
+  }
+
 }

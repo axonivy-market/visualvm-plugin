@@ -3,7 +3,7 @@ package ch.ivyteam.ivy.visualvm.chart;
 import ch.ivyteam.ivy.visualvm.chart.data.HtmlSupport;
 import ch.ivyteam.ivy.visualvm.chart.data.SerieDataSource;
 import ch.ivyteam.ivy.visualvm.chart.data.XYChartDataSource;
-import ch.ivyteam.ivy.visualvm.chart.data.support.ChartLabelCalcSupport;
+import ch.ivyteam.ivy.visualvm.chart.data.support.AbstractChartLabelCalcSupport;
 import ch.ivyteam.ivy.visualvm.view.IUpdatableUIObject;
 import com.sun.tools.visualvm.charts.ChartFactory;
 import com.sun.tools.visualvm.charts.SimpleXYChartDescriptor;
@@ -241,7 +241,7 @@ public class XYChartPanel extends JPanel implements IUpdatableUIObject {
 
     fDetailLabels = new String[fDataSource.getLabelCalcSupports().size()];
     int index = 0;
-    for (ChartLabelCalcSupport support : fDataSource.getLabelCalcSupports()) {
+    for (AbstractChartLabelCalcSupport support : fDataSource.getLabelCalcSupports()) {
       fDetailLabels[index++] = support.getText();
     }
   }
