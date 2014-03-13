@@ -2,6 +2,7 @@ package ch.ivyteam.ivy.visualvm.chart.data.request;
 
 import ch.ivyteam.ivy.visualvm.chart.data.XYChartDataSource;
 import ch.ivyteam.ivy.visualvm.chart.data.support.DeltaValueChartLabelCalcSupport;
+import ch.ivyteam.ivy.visualvm.chart.data.support.MaxDeltaValueChartLabelCalcSupport;
 import ch.ivyteam.ivy.visualvm.model.IvyJmxConstant;
 import ch.ivyteam.ivy.visualvm.service.BasicIvyJmxDataCollector;
 import ch.ivyteam.ivy.visualvm.view.IDataBeanProvider;
@@ -20,6 +21,8 @@ public class RequestChartDataSource extends XYChartDataSource {
       String protocol = dataBeanProvider.getCachedData().getProtocol(processorName);
       addDeltaSerie(protocol, null, processorName, IvyJmxConstant.Ivy.Processor.KEY_REQUEST_COUNT);
       addLabelCalcSupport(new DeltaValueChartLabelCalcSupport(protocol,
+              processorName, IvyJmxConstant.Ivy.Processor.KEY_REQUEST_COUNT));
+      addLabelCalcSupport(new MaxDeltaValueChartLabelCalcSupport(protocol + " max",
               processorName, IvyJmxConstant.Ivy.Processor.KEY_REQUEST_COUNT));
     }
   }

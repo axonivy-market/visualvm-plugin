@@ -100,7 +100,6 @@ public class XYChartPanel extends JPanel implements IUpdatableUIObject {
     fChart.addValues(currentTime, values);
 
     long[] labels = fDataSource.calculateDetailValues(result);
-    fDataSource.setLabels(result);
     String text = HtmlSupport.toOneColumnHtmlTable(fDetailLabels, format(labels));
     fHtmlLabel.setText(text);
     View view = (View) fHtmlLabel.getClientProperty(BasicHTML.propertyKey);

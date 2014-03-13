@@ -2,6 +2,7 @@ package ch.ivyteam.ivy.visualvm.chart.data.request;
 
 import ch.ivyteam.ivy.visualvm.chart.data.XYChartDataSource;
 import ch.ivyteam.ivy.visualvm.chart.data.support.DeltaValueChartLabelCalcSupport;
+import ch.ivyteam.ivy.visualvm.chart.data.support.MaxDeltaValueChartLabelCalcSupport;
 import ch.ivyteam.ivy.visualvm.model.IvyJmxConstant;
 import ch.ivyteam.ivy.visualvm.service.BasicIvyJmxDataCollector;
 import ch.ivyteam.ivy.visualvm.view.IDataBeanProvider;
@@ -18,9 +19,11 @@ public class ErrorChartDataSource extends XYChartDataSource {
     BasicIvyJmxDataCollector collector = new BasicIvyJmxDataCollector();
     for (ObjectName processorName : collector.getTomcatRequestProcessors(mBeanServerConnection)) {
       String protocol = dataBeanProvider.getCachedData().getProtocol(processorName);
-      addDeltaSerie(protocol, "Number of request that return status code from 400-599", processorName,
+      addDeltaSerie(protocol, null, processorName,
               IvyJmxConstant.Ivy.Processor.KEY_ERROR_COUNT);
       addLabelCalcSupport(new DeltaValueChartLabelCalcSupport(protocol,
+              processorName, IvyJmxConstant.Ivy.Processor.KEY_ERROR_COUNT));
+      addLabelCalcSupport(new MaxDeltaValueChartLabelCalcSupport(protocol + " max",
               processorName, IvyJmxConstant.Ivy.Processor.KEY_ERROR_COUNT));
     }
   }
