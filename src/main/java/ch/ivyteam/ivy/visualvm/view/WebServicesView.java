@@ -4,26 +4,18 @@
  */
 package ch.ivyteam.ivy.visualvm.view;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Set;
-import java.util.TreeMap;
-import java.util.TreeSet;
-
-import javax.management.MBeanServerConnection;
-import javax.management.ObjectName;
-
-import org.apache.commons.lang.StringUtils;
-
 import ch.ivyteam.ivy.visualvm.chart.ChartsPanel;
 import ch.ivyteam.ivy.visualvm.chart.data.AbstractExternalDbAndWebServiceDataSource;
 import ch.ivyteam.ivy.visualvm.chart.data.webservice.WebServiceCallsChartDataSource;
 import ch.ivyteam.ivy.visualvm.chart.data.webservice.WebServiceProcessingTimeChartDataSource;
 import ch.ivyteam.ivy.visualvm.model.IvyJmxConstant;
 import ch.ivyteam.ivy.visualvm.util.DataUtils;
-
 import com.sun.tools.visualvm.application.Application;
 import com.sun.tools.visualvm.core.ui.components.DataViewComponent;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Set;
+import javax.management.ObjectName;
 
 /**
  *
@@ -79,71 +71,23 @@ public class WebServicesView extends AbstractView {
   public DataViewComponent getViewComponent() {
     DataViewComponent viewComponent = super.getViewComponent();
     viewComponent.add(fWebServicesPanel);
-    initExternalDbData();
+    Map<String, Map<String, Set<String>>> appEnvWs = DataUtils.getWebServicesConfigs(getDataBeanProvider()
+            .getMBeanServerConnection());
+    fWebServicesPanel.setTreeData(appEnvWs);
     return viewComponent;
   }
 
-  private void initExternalDbData() {
-    MBeanServerConnection mbeanConnection = DataUtils.getMBeanServerConnection(fIvyApplication);
-    // List<String> includes string with pattern ApplicationName:EvironmentName:ExtDBConfiguration
-    fWebServicesConfigList = DataUtils.getWebServicesConfigs(mbeanConnection);
-
-    Map<String, Map<String, Set<String>>> appEnvConfMap = new TreeMap<>();
-    for (ObjectName each : fWebServicesConfigList) {
-      String app = each.getKeyProperty(APP_STRING_KEY);
-      String env = each.getKeyProperty(ENVIRONMENT_STRING_KEY);
-      String conf = each.getKeyProperty(CONFIG_STRING_KEY);
-
-      if (appEnvConfMap.containsKey(app)) {
-        Map<String, Set<String>> envConfMap = appEnvConfMap.get(app);
-        if (envConfMap.containsKey(env)) {
-          Set<String> confs = envConfMap.get(env);
-          confs.add(conf);
-        } else {
-          Set<String> confList = new TreeSet();
-          confList.add(conf);
-          envConfMap.put(env, confList);
-        }
-      } else {
-        Set<String> confs = new TreeSet<>();
-        confs.add(conf);
-        Map<String, Set<String>> envConfMap = new TreeMap<>();
-        envConfMap.put(env, confs);
-        appEnvConfMap.put(app, envConfMap);
-      }
-    }
-    fWebServicesPanel.setTreeListData(appEnvConfMap);
-  }
-
   void fireCreateChartsAction(String appName, String envName, String configName) {
-    if (checkCorrectSelection(appName, envName, configName)) {
-      fCurrentAppName = appName;
-      fCurrentEnvName = envName;
-      fCurrentConfigName = configName;
-      String chartKey = appName + envName + configName;
-      if (createdCharts.containsKey(chartKey)) {
-        fWebServicesPanel.setChartPanelToVisible(createdCharts.get(chartKey));
-      } else {
-        ChartsPanel chart = createWebServicesChartPanel();
-        fWebServicesPanel.setChartPanelToVisible(chart);
-        createdCharts.put(chartKey, chart);
-      }
+    fCurrentAppName = appName;
+    fCurrentEnvName = envName;
+    fCurrentConfigName = configName;
+    String chartKey = appName + envName + configName;
+    if (createdCharts.containsKey(chartKey)) {
+      fWebServicesPanel.setChartPanelToVisible(createdCharts.get(chartKey));
+    } else {
+      ChartsPanel chart = createWebServicesChartPanel();
+      fWebServicesPanel.setChartPanelToVisible(chart);
+      createdCharts.put(chartKey, chart);
     }
   }
-
-  private boolean checkCorrectSelection(String appName, String envName, String confName) {
-    if (StringUtils.isEmpty(appName) || StringUtils.isEmpty(envName) || StringUtils.isEmpty(confName)) {
-      return false;
-    }
-
-    for (ObjectName appEnvConf : fWebServicesConfigList) {
-      if (appEnvConf.getKeyProperty(APP_STRING_KEY).equals(appName)
-              && appEnvConf.getKeyProperty(ENVIRONMENT_STRING_KEY).equals(envName)
-              && appEnvConf.getKeyProperty(CONFIG_STRING_KEY).equals(confName)) {
-        return true;
-      }
-    }
-    return false;
-  }
-
 }

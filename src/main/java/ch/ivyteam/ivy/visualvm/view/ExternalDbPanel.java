@@ -32,11 +32,11 @@ import org.openide.util.ImageUtilities;
  */
 @SuppressWarnings({"serial", "PMD.SingularField"})
 public class ExternalDbPanel extends javax.swing.JPanel {
-  
+
   private static final String APP_ICON_PATH = "resources/icons/app_icon.png";
   private static final String ENV_ICON_PATH = "resources/icons/env_icon.png";
   private static final String CONF_ICON_PATH = "resources/icons/db_icon.png";
-  
+
   private final Icon fAppIcon; // icon for application node
   private final Icon fEnvIcon; // icon for environment node
   private final Icon fConfIcon; // icon for configuration node
@@ -45,7 +45,6 @@ public class ExternalDbPanel extends javax.swing.JPanel {
   private final ExternalDbView fExternalDbView; // the main view to interact when selection changed
   private TreePath[] fSelectedPath; // store the selected path when the tree collapses or expands
   private boolean fResized = false; // resize to 20% the width of whole panel at init time
-  private int fMainSplitSize; // store the size of split pane to avoid flickering when change charts
   private Map<String, Map<String, Set<String>>> fAppEnvConfigMap; // the tree data
 
   /**
@@ -174,9 +173,9 @@ public class ExternalDbPanel extends javax.swing.JPanel {
 
   // the view will call this method to change the charts
   void setChartPanelToVisible(ChartsPanel externalDbChartPanel) {
-    fMainSplitSize = mainSplitpane.getDividerLocation();
+    int oldDividerLoc = mainSplitpane.getDividerLocation();
     mainSplitpane.setRightComponent(externalDbChartPanel.getUIComponent());
-    mainSplitpane.setDividerLocation(fMainSplitSize);
+    mainSplitpane.setDividerLocation(oldDividerLoc);
   }
 
   // init data for the tree
@@ -189,7 +188,7 @@ public class ExternalDbPanel extends javax.swing.JPanel {
     initTreeData();
     expandAllTreeNodes();
   }
-  
+
   private void initTreeData() {
     // update new data
     int index = 0;
@@ -209,7 +208,7 @@ public class ExternalDbPanel extends javax.swing.JPanel {
     }
     fEnvTreeModel.reload();
   }
-  
+
   private void initTree() {
     envJTree.setCellRenderer(new EnvTreeCellRenderer());
     envJTree.getSelectionModel().setSelectionMode(TreeSelectionModel.SINGLE_TREE_SELECTION);
@@ -217,7 +216,7 @@ public class ExternalDbPanel extends javax.swing.JPanel {
     addSelectionListener();
     keepSelectionWhenCollapse();
   }
-  
+
   private void addSelectionListener() {
     envJTree.addTreeSelectionListener(new TreeSelectionListener() {
       @Override
@@ -227,103 +226,98 @@ public class ExternalDbPanel extends javax.swing.JPanel {
       }
     });
   }
-  
+
   private void preventSelection(TreeSelectionEvent e) {
     TreePath oldPath = e.getOldLeadSelectionPath();
     TreePath newPath = e.getNewLeadSelectionPath();
     if (newPath != null) {
       AppEnvConfigNode node = (AppEnvConfigNode) newPath.getLastPathComponent();
-      if (node.isConfigNode()) {
+      if (node.isLeaf()) {
         envJTree.setSelectionPath(newPath);
       } else {
         envJTree.setSelectionPath(oldPath);
       }
     }
   }
-  
+
   private void keepSelectionWhenCollapse() {
     envJTree.addTreeWillExpandListener(new TreeWillExpandListener() {
       @Override
       public void treeWillExpand(TreeExpansionEvent event) throws ExpandVetoException {
         envJTree.setSelectionPaths(fSelectedPath);
       }
-      
+
       @Override
       public void treeWillCollapse(TreeExpansionEvent event) throws ExpandVetoException {
         fSelectedPath = envJTree.getSelectionPaths();
       }
-      
+
     });
   }
-  
+
   private void expandAllTreeNodes() {
     for (int i = 0; i < envJTree.getRowCount(); ++i) {
       envJTree.expandRow(i);
     }
   }
-  
+
   private void addResizeSplitpanesListener() {
     addComponentListener(new ComponentAdapter() {
       @Override
       public void componentResized(ComponentEvent e) {
         if (!fResized) {
-          fMainSplitSize = (int) (getSize().getWidth() / 5);
-          mainSplitpane.setDividerLocation(fMainSplitSize);
+          mainSplitpane.setDividerLocation((int) (getSize().getWidth() / 5));
           fResized = true;
         }
       }
     });
   }
-  
+
   private void createChartsPanel() {
     TreePath selectedPath = envJTree.getSelectionPath();
     if (selectedPath == null) {
       return;
     }
     AppEnvConfigNode node = (AppEnvConfigNode) selectedPath.getLastPathComponent();
-    if (node != null && node.isConfigNode()) {
+    if (node != null && node.isLeaf()) {
       String appName = node.getParent().getParent().toString();
       String envName = node.getParent().toString();
       fExternalDbView.fireCreateChartsAction(appName, envName, node.toString());
       node.setIsOpened(true);
     }
   }
-  
+
   private class AppEnvConfigNode extends DefaultMutableTreeNode {
-    
+
     private final Icon fNodeIcon;
     private boolean fNodeOpened;
-    
+
     public AppEnvConfigNode(Object userObject, Icon icon) {
       super(userObject);
       fNodeIcon = icon;
       setAllowsChildren(true);
     }
-    
+
     public Icon getNodeIcon() {
       return fNodeIcon;
     }
-    
-    public boolean isConfigNode() {
-      return fNodeIcon.equals(fConfIcon);
-    }
-    
+
     private void setIsOpened(boolean opened) {
       fNodeOpened = opened;
     }
-    
+
     private boolean isNodeOpened() {
       return fNodeOpened;
     }
   }
-  
+
   private class EnvTreeCellRenderer extends DefaultTreeCellRenderer {
-    
+
     @Override
     public Component getTreeCellRendererComponent(JTree tree, Object value, boolean sel, boolean expanded,
             boolean leaf, int row, boolean hasFocus) {
       super.getTreeCellRendererComponent(tree, value, sel, expanded, leaf, row, hasFocus);
-      
+
       if (value instanceof AppEnvConfigNode) {
         AppEnvConfigNode node = (AppEnvConfigNode) value;
         setIcon(node.getNodeIcon());

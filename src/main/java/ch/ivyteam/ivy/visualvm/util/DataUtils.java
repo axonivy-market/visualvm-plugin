@@ -12,7 +12,9 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 import java.util.Set;
+import java.util.TreeMap;
 import java.util.TreeSet;
 import java.util.logging.Logger;
 import javax.management.MBeanServerConnection;
@@ -20,6 +22,13 @@ import javax.management.MalformedObjectNameException;
 import javax.management.ObjectName;
 
 public final class DataUtils {
+
+  private static final String APP_STRING_KEY = "application";
+  private static final String ENVIRONMENT_STRING_KEY = "environment";
+  private static final String CONFIG_STRING_KEY = "name";
+  private static final String FILTER_STRING = "Xpert.ivy Server:type={0},application=*,environment=*,name=*";
+  private static final String WS_FILTER_STRING = FILTER_STRING.replace("{0}", "External Web Service");
+  private static final String EXT_DB_FILTER_STRING = FILTER_STRING.replace("{0}", "External Database");
 
   private static final Logger LOGGER = Logger.getLogger(DataUtils.class.getName());
   private static final String[] DATABASE_PREFIXES = new String[]{
@@ -265,28 +274,53 @@ public final class DataUtils {
     }
   }
 
-  public static Set<ObjectName> getExternalDbConfigs(MBeanServerConnection connection) {
+  public static Map<String, Map<String, Set<String>>> getExternalDbConfigs(MBeanServerConnection conn) {
     Set<ObjectName> externalDbConfigs = new TreeSet<>();
     try {
-      String filterName = "Xpert.ivy Server:type=External Database,application=*,environment=*,name=*";
-      ObjectName objName = new ObjectName(filterName);
-      externalDbConfigs = connection.queryNames(objName, null);
+      ObjectName objName = new ObjectName(EXT_DB_FILTER_STRING);
+      externalDbConfigs = conn.queryNames(objName, null);
     } catch (IOException | MalformedObjectNameException ex) {
       LOGGER.warning(ex.getMessage());
     }
-    return externalDbConfigs;
+    return createDataMap(externalDbConfigs);
   }
 
-  public static Set<ObjectName> getWebServicesConfigs(MBeanServerConnection connection) {
+  public static Map<String, Map<String, Set<String>>> getWebServicesConfigs(MBeanServerConnection conn) {
     Set<ObjectName> webServicesConfigs = new TreeSet<>();
     try {
-      String filterName = "Xpert.ivy Server:type=External Web Service,application=*,environment=*,name=*";
-      ObjectName objName = new ObjectName(filterName);
-      webServicesConfigs = connection.queryNames(objName, null);
+      ObjectName objName = new ObjectName(WS_FILTER_STRING);
+      webServicesConfigs = conn.queryNames(objName, null);
     } catch (IOException | MalformedObjectNameException ex) {
       LOGGER.warning(ex.getMessage());
     }
-    return webServicesConfigs;
+    return createDataMap(webServicesConfigs);
   }
 
+  private static Map<String, Map<String, Set<String>>> createDataMap(Set<ObjectName> externalDbConfigs) {
+    Map<String, Map<String, Set<String>>> appEnvConfMap = new TreeMap<>();
+    for (ObjectName each : externalDbConfigs) {
+      String app = each.getKeyProperty(APP_STRING_KEY);
+      String env = each.getKeyProperty(ENVIRONMENT_STRING_KEY);
+      String conf = each.getKeyProperty(CONFIG_STRING_KEY);
+
+      if (appEnvConfMap.containsKey(app)) {
+        Map<String, Set<String>> envConfMap = appEnvConfMap.get(app);
+        if (envConfMap.containsKey(env)) {
+          Set<String> confs = envConfMap.get(env);
+          confs.add(conf);
+        } else {
+          Set<String> confList = new TreeSet<>();
+          confList.add(conf);
+          envConfMap.put(env, confList);
+        }
+      } else {
+        Set<String> confs = new TreeSet<>();
+        confs.add(conf);
+        Map<String, Set<String>> envConfMap = new TreeMap<>();
+        envConfMap.put(env, confs);
+        appEnvConfMap.put(app, envConfMap);
+      }
+    }
+    return appEnvConfMap;
+  }
 }

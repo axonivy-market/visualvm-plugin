@@ -9,12 +9,13 @@ public class ExternalDbTransactionChartDataSource extends AbstractExternalDbAndW
 
   private static final String TRANSACTION_SERIE_TITLE = "Transactions";
   private static final String ERRORS_SERIE_TITLE = "Errors";
-  private static final String MAX_TRANSACTION_TITLE = "Max transaction";
+  private static final String MAX_TRANSACTION_TITLE = "Max transactions";
   private static final String MAX_ERRORS_ITLE = "Max error";
-  public static final String TRANSACTION_SERIE_DESC = "The number of database transactions that "
-          + "have finished since the last poll";
-  public static final String ERRORS_SERIE_DESC = "The number of database transactions that "
-          + "finished since the last poll";
+
+  public static final String ERRORS_SERIE_DESC = "The number of external database transactions that "
+          + "have finished since the last poll and were erroneous.";
+  public static final String TRANSACTION_SERIE_DESC = "The number of external database transactions that "
+          + "have finished since the last poll.";
 
   public ExternalDbTransactionChartDataSource(IDataBeanProvider dataBeanProvider, String chartName,
           String xAxisDescription, String yAxisDescription) {

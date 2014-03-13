@@ -28,10 +28,10 @@ public class ExternalDbConnectionChartDataSource extends AbstractExternalDbAndWe
     super.init();
     addLabelCalcSupport(new StaticValueChartLabelCalcSupport(MAX_TITLE, getObjectName(),
             ExternalDatabase.KEY_MAX_CONNECTION));
-    addLabelCalcSupport(new MaxValueChartLabelCalcSupport(MAX_USED_TITLE, getObjectName(),
-            ExternalDatabase.KEY_USED_CONNECTION));
     addLabelCalcSupport(new MaxValueChartLabelCalcSupport(MAX_OPEN_TITLE, getObjectName(),
             ExternalDatabase.KEY_OPEN_CONNECTION));
+    addLabelCalcSupport(new MaxValueChartLabelCalcSupport(MAX_USED_TITLE, getObjectName(),
+            ExternalDatabase.KEY_USED_CONNECTION));
 
     addSerie(OPEN_SERIE_TITLE, OPEN_SERIE_DESC, SerieStyle.LINE, getObjectName(),
             ExternalDatabase.KEY_OPEN_CONNECTION);

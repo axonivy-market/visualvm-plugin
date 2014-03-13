@@ -1,7 +1,7 @@
 package ch.ivyteam.ivy.visualvm.chart.data.externaldb;
 
-import ch.ivyteam.ivy.visualvm.chart.data.AbstractExternalDbAndWebServiceDataSource;
 import ch.ivyteam.ivy.visualvm.chart.SerieStyle;
+import ch.ivyteam.ivy.visualvm.chart.data.AbstractExternalDbAndWebServiceDataSource;
 import ch.ivyteam.ivy.visualvm.chart.data.DeltaAttributeDataSource;
 import ch.ivyteam.ivy.visualvm.chart.data.MeanSerieDataSource;
 import ch.ivyteam.ivy.visualvm.chart.data.support.ChartLabelDivideCalcSupport;
@@ -16,12 +16,13 @@ public class ExternalDbProcessingTimeChartDataSource extends AbstractExternalDbA
   public static final String MEAN_SERIE_TITLE = "Mean";
   public static final String TOTAL_MEAN_TITLE = "Total mean";
   public static final String MAX_OF_MAX_TITLE = "Max of max";
-  public static final String MEAN_SERIE_DESC = "The mean time of all transactions that has finished since "
-          + "the last poll";
-  public static final String MAX_SERIE_DESC = "The maximum time of all transactions that has finished since "
-          + "the last poll";
-  public static final String MIN_SERIE_DESC = "The minimum time of all transactions that has finished since "
-          + "the last poll";
+
+  public static final String MAX_SERIE_DESC = "The maximum processing time of external database "
+          + "transactions that have finished since the last poll.";
+  public static final String MEAN_SERIE_DESC = "The mean processing time of external database "
+          + "transactions that have finished since the last poll.";
+  public static final String MIN_SERIE_DESC = "The minimum processing time of external database "
+          + "transactions that have finished since the last poll.";
 
   public ExternalDbProcessingTimeChartDataSource(IDataBeanProvider dataBeanProvider, String chartName,
           String xAxisDescription, String yAxisDescription) {
@@ -49,10 +50,10 @@ public class ExternalDbProcessingTimeChartDataSource extends AbstractExternalDbA
 
     addSerie(MAX_SERIE_TITLE, MAX_SERIE_DESC, SerieStyle.LINE, getObjectName(),
             ExternalDatabase.KEY_TRANS_MAX_EXE_DELTA_TIME);
-    addSerie(meanProcessingTimeDataSource);
+    addDeltaMeanSerie(MEAN_SERIE_TITLE, MEAN_SERIE_DESC, getObjectName(),
+            ExternalDatabase.KEY_TRANS_TOTAL_EXE_TIME, ExternalDatabase.KEY_TRANS_NUMBER);
     addSerie(MIN_SERIE_TITLE, MIN_SERIE_DESC, SerieStyle.LINE, getObjectName(),
             ExternalDatabase.KEY_TRANS_MIN_EXE_DELTA_TIME);
-
   }
 
 }

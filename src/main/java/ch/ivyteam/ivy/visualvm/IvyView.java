@@ -1,8 +1,8 @@
 package ch.ivyteam.ivy.visualvm;
 
-import ch.ivyteam.ivy.visualvm.view.DataBeanProvider;
 import ch.ivyteam.ivy.visualvm.exception.ClosedIvyServerConnectionException;
 import ch.ivyteam.ivy.visualvm.view.AbstractView;
+import ch.ivyteam.ivy.visualvm.view.DataBeanProvider;
 import ch.ivyteam.ivy.visualvm.view.ExternalDbView;
 import ch.ivyteam.ivy.visualvm.view.IDataBeanProvider;
 import ch.ivyteam.ivy.visualvm.view.InformationView;
@@ -113,7 +113,7 @@ class IvyView extends DataSourceView {
   }
 
   private void addExternalDBView(IDataBeanProvider dataBeanProvider, JTabbedPane tabbed) {
-    ExternalDbView extDbView = new ExternalDbView(dataBeanProvider, fIvyApplication);
+    ExternalDbView extDbView = new ExternalDbView(dataBeanProvider);
     views.add(extDbView);
     tabbed.addTab("External Databases", (Icon) ImageUtilities.loadImage(EXT_DB_ICON_IMAGE_PATH, true),
             extDbView.getViewComponent());
@@ -138,6 +138,7 @@ class IvyView extends DataSourceView {
   }
 
   private class UpdateChartTask implements SchedulerTask {
+
     @Override
     public void onSchedule(long l) {
       for (AbstractView view : views) {
@@ -154,6 +155,7 @@ class IvyView extends DataSourceView {
   }
 
   private class DataPollSettingChangeListener implements PreferenceChangeListener {
+
     @Override
     public void preferenceChange(PreferenceChangeEvent evt) {
       updateTask.setInterval(Quantum.seconds(GlobalPreferences.sharedInstance().

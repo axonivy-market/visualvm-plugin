@@ -14,7 +14,7 @@ public class ConnectionChartDataSource extends XYChartDataSource {
   private static final String OPEN_SERIE_TITLE = "Open";
   private static final String USED_SERIE_TITLE = "Used";
 
-  public static final String OPEN_SERIE_DESC = "The number of open connection to the system database";
+  public static final String OPEN_SERIE_DESC = "The number of open connections to the system database";
   public static final String USED_SERIE_DESC = "The number of open connections to the system database for "
           + "which at least one";
 
