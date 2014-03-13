@@ -1,10 +1,11 @@
 package ch.ivyteam.ivy.visualvm.chart.data.externaldb;
 
+import ch.ivyteam.ivy.visualvm.chart.data.AbstractExternalDbAndWebServiceDataSource;
 import ch.ivyteam.ivy.visualvm.chart.data.support.MaxDeltaValueChartLabelCalcSupport;
 import ch.ivyteam.ivy.visualvm.model.IvyJmxConstant.IvyServer.ExternalDatabase;
 import ch.ivyteam.ivy.visualvm.view.IDataBeanProvider;
 
-public class ExternalDbTransactionChartDataSource extends AbstractDataSource {
+public class ExternalDbTransactionChartDataSource extends AbstractExternalDbAndWebServiceDataSource {
 
   private static final String TRANSACTION_SERIE_TITLE = "Transactions";
   private static final String ERRORS_SERIE_TITLE = "Errors";

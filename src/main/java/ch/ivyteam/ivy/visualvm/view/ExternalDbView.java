@@ -5,7 +5,7 @@
 package ch.ivyteam.ivy.visualvm.view;
 
 import ch.ivyteam.ivy.visualvm.chart.ChartsPanel;
-import ch.ivyteam.ivy.visualvm.chart.data.externaldb.AbstractDataSource;
+import ch.ivyteam.ivy.visualvm.chart.data.AbstractExternalDbAndWebServiceDataSource;
 import ch.ivyteam.ivy.visualvm.chart.data.externaldb.ExternalDbConnectionChartDataSource;
 import ch.ivyteam.ivy.visualvm.chart.data.externaldb.ExternalDbProcessingTimeChartDataSource;
 import ch.ivyteam.ivy.visualvm.chart.data.externaldb.ExternalDbTransactionChartDataSource;
@@ -64,8 +64,8 @@ public class ExternalDbView extends AbstractView {
     return chartPanel;
   }
 
-  private void configDataSources(AbstractDataSource... dataSources) {
-    for (AbstractDataSource dataSource : dataSources) {
+  private void configDataSources(AbstractExternalDbAndWebServiceDataSource... dataSources) {
+    for (AbstractExternalDbAndWebServiceDataSource dataSource : dataSources) {
       dataSource.setNamePattern(IvyJmxConstant.IvyServer.ExternalDatabase.NAME_PATTERN);
       dataSource.setApplication(fCurrentAppName);
       dataSource.setEnvironment(fCurrentEnvName);

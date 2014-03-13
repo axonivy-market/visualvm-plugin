@@ -1,11 +1,11 @@
 package ch.ivyteam.ivy.visualvm.chart.data.webservice;
 
-import ch.ivyteam.ivy.visualvm.chart.data.externaldb.AbstractDataSource;
+import ch.ivyteam.ivy.visualvm.chart.data.AbstractExternalDbAndWebServiceDataSource;
 import ch.ivyteam.ivy.visualvm.chart.data.support.LatestValueChartLabelCalcSupport;
 import ch.ivyteam.ivy.visualvm.model.IvyJmxConstant.IvyServer.WebService;
 import ch.ivyteam.ivy.visualvm.view.IDataBeanProvider;
 
-public class WebServiceCallsChartDataSource extends AbstractDataSource {
+public class WebServiceCallsChartDataSource extends AbstractExternalDbAndWebServiceDataSource {
   private static final String CALLS_SERIE_DESCRIPTION = "The number of calls to the web service that have finished since the last poll";
   private static final String ERRORS_SERIE_DESCRIPTION = "The number of calls to the web service that have finished since the last poll and were erroneous";
   private static final String CALLS_SERIE_TITLE = "Calls";

@@ -16,7 +16,7 @@ import javax.management.ObjectName;
 import org.apache.commons.lang.StringUtils;
 
 import ch.ivyteam.ivy.visualvm.chart.ChartsPanel;
-import ch.ivyteam.ivy.visualvm.chart.data.externaldb.AbstractDataSource;
+import ch.ivyteam.ivy.visualvm.chart.data.AbstractExternalDbAndWebServiceDataSource;
 import ch.ivyteam.ivy.visualvm.chart.data.webservice.WebServiceCallsChartDataSource;
 import ch.ivyteam.ivy.visualvm.chart.data.webservice.WebServiceProcessingTimeChartDataSource;
 import ch.ivyteam.ivy.visualvm.model.IvyJmxConstant;
@@ -65,8 +65,8 @@ public class WebServicesView extends AbstractView {
     return chartPanel;
   }
 
-  private void configDataSources(AbstractDataSource... dataSources) {
-    for (AbstractDataSource dataSource : dataSources) {
+  private void configDataSources(AbstractExternalDbAndWebServiceDataSource... dataSources) {
+    for (AbstractExternalDbAndWebServiceDataSource dataSource : dataSources) {
       dataSource.setNamePattern(IvyJmxConstant.IvyServer.WebService.NAME_PATTERN);
       dataSource.setApplication(fCurrentAppName);
       dataSource.setEnvironment(fCurrentEnvName);

@@ -3,6 +3,7 @@ package ch.ivyteam.ivy.visualvm.test.datasource.externaldb;
 import ch.ivyteam.ivy.visualvm.chart.Query;
 import ch.ivyteam.ivy.visualvm.chart.QueryResult;
 import ch.ivyteam.ivy.visualvm.chart.data.externaldb.ExternalDbTransactionChartDataSource;
+import ch.ivyteam.ivy.visualvm.model.IvyJmxConstant;
 import ch.ivyteam.ivy.visualvm.test.AbstractTest;
 import static ch.ivyteam.ivy.visualvm.test.AbstractTest.addTestData;
 import static ch.ivyteam.ivy.visualvm.test.AbstractTest.createMockConnection;
@@ -67,6 +68,7 @@ public class ExternalDbTransactionChartDataSourceTest extends AbstractTest {
       fDataSource
               = new ExternalDbTransactionChartDataSource(fProvider, "",
                       "", "");
+      fDataSource.setNamePattern(IvyJmxConstant.IvyServer.ExternalDatabase.NAME_PATTERN);
       fDataSource.setApplication(fConfigs[0]);
       fDataSource.setEnvironment(fConfigs[1]);
       fDataSource.setConfigName(fConfigs[2]);

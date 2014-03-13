@@ -7,14 +7,14 @@ import ch.ivyteam.ivy.visualvm.chart.QueryResult;
 import ch.ivyteam.ivy.visualvm.chart.SerieStyle;
 import ch.ivyteam.ivy.visualvm.chart.data.DeltaAttributeDataSource;
 import ch.ivyteam.ivy.visualvm.chart.data.SerieDataSource;
-import ch.ivyteam.ivy.visualvm.chart.data.externaldb.AbstractDataSource;
+import ch.ivyteam.ivy.visualvm.chart.data.AbstractExternalDbAndWebServiceDataSource;
 import ch.ivyteam.ivy.visualvm.chart.data.support.ChartLabelDivideCalcSupport;
 import ch.ivyteam.ivy.visualvm.chart.data.support.MaxValueChartLabelCalcSupport;
 import ch.ivyteam.ivy.visualvm.model.IvyJmxConstant.IvyServer.DatabasePersistency;
 import ch.ivyteam.ivy.visualvm.model.IvyJmxConstant.IvyServer.WebService;
 import ch.ivyteam.ivy.visualvm.view.IDataBeanProvider;
 
-public class WebServiceProcessingTimeChartDataSource extends AbstractDataSource {
+public class WebServiceProcessingTimeChartDataSource extends AbstractExternalDbAndWebServiceDataSource {
   private static final String MIN_SERIE_DESCRIPTION = "The minimum time of all calls that has finished in last poll";
   private static final String MAX_SERIE_DESCRIPTION = "The maximum time of all calls that has finished in last poll";
   public static final String MIN_SERIE_TITLE = "Min";

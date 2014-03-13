@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package ch.ivyteam.ivy.visualvm.chart.data.externaldb;
+package ch.ivyteam.ivy.visualvm.chart.data;
 
 import ch.ivyteam.ivy.visualvm.chart.data.XYChartDataSource;
 import ch.ivyteam.ivy.visualvm.view.IDataBeanProvider;
@@ -15,15 +15,15 @@ import javax.management.ObjectName;
  *
  * @author thnghia
  */
-public abstract class AbstractDataSource extends XYChartDataSource {
-  private static final Logger LOGGER = Logger.getLogger(AbstractDataSource.class.getName());
+public abstract class AbstractExternalDbAndWebServiceDataSource extends XYChartDataSource {
+  private static final Logger LOGGER = Logger.getLogger(AbstractExternalDbAndWebServiceDataSource.class.getName());
   private String fApplication = "*";
   private String fEnvironment = "Default";
   private String fConfigName = "*";
   private ObjectName fObjectName;
   private String fNamePattern;
 
-  public AbstractDataSource(IDataBeanProvider dataBeanProvider, String chartName,
+  public AbstractExternalDbAndWebServiceDataSource(IDataBeanProvider dataBeanProvider, String chartName,
           String xAxisDescription,
           String yAxisDescription) {
     super(dataBeanProvider, chartName, xAxisDescription, yAxisDescription);

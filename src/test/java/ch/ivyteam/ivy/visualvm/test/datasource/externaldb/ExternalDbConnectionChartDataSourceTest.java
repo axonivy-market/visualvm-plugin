@@ -66,6 +66,7 @@ public class ExternalDbConnectionChartDataSourceTest extends AbstractTest {
 
     ExternalDbConnectionChartDataSource dataSource = new ExternalDbConnectionChartDataSource(provider, "",
             "", "");
+    dataSource.setNamePattern(IvyJmxConstant.IvyServer.ExternalDatabase.NAME_PATTERN);
     dataSource.setApplication(fConfigs[0]);
     dataSource.setEnvironment(fConfigs[1]);
     dataSource.setConfigName(fConfigs[2]);

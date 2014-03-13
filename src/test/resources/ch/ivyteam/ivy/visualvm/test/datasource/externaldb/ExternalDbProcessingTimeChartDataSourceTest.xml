@@ -16,6 +16,10 @@
           <name>transactionsTotalExecutionTimeInMicroSeconds</name>
           <value type="java.lang.Long">3232</value>
         </property>
+        <property>
+          <name>transactions</name>
+          <value type="java.lang.Long">1</value>
+        </property>
       </dataset>
     </property>
   </dataset>
@@ -36,6 +40,10 @@
           <name>transactionsTotalExecutionTimeInMicroSeconds</name>
           <value type="java.lang.Long">4575</value>
         </property>
+        <property>
+          <name>transactions</name>
+          <value type="java.lang.Long">1</value>
+        </property>
       </dataset>
     </property>
   </dataset>
@@ -55,6 +63,10 @@
         <property>
           <name>transactionsTotalExecutionTimeInMicroSeconds</name>
           <value type="java.lang.Long">7919</value>
+        </property>
+        <property>
+          <name>transactions</name>
+          <value type="java.lang.Long">1</value>
         </property>
       </dataset>
     </property>

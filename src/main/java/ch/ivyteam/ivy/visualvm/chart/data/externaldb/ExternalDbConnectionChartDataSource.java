@@ -1,5 +1,6 @@
 package ch.ivyteam.ivy.visualvm.chart.data.externaldb;
 
+import ch.ivyteam.ivy.visualvm.chart.data.AbstractExternalDbAndWebServiceDataSource;
 import ch.ivyteam.ivy.visualvm.chart.SerieStyle;
 import ch.ivyteam.ivy.visualvm.chart.data.support.MaxValueChartLabelCalcSupport;
 import ch.ivyteam.ivy.visualvm.chart.data.support.StaticValueChartLabelCalcSupport;
@@ -16,7 +17,7 @@ import javax.management.MBeanServerConnection;
 import javax.management.ReflectionException;
 import org.apache.commons.lang.math.NumberUtils;
 
-public class ExternalDbConnectionChartDataSource extends AbstractDataSource {
+public class ExternalDbConnectionChartDataSource extends AbstractExternalDbAndWebServiceDataSource {
 
   private static final Logger LOGGER = Logger.getLogger(ExternalDbConnectionChartDataSource.class.getName());
   private static final String MAX_TITLE = "Max";
@@ -24,7 +25,7 @@ public class ExternalDbConnectionChartDataSource extends AbstractDataSource {
   private static final String USED_SERIE_TITLE = "Used";
   private static final String MAX_OPEN_TITLE = "Max open";
   private static final String MAX_USED_TITLE = "Max used";
-  public static final String OPEN_SERIE_DESC = "The number of open connection to the external database";
+  public static final String OPEN_SERIE_DESC = "The number of open connections to the external database";
   public static final String USED_SERIE_DESC = "The number of open connections to the external database for "
           + "which at least one";
 
