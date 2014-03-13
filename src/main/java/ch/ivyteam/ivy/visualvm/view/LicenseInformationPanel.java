@@ -57,8 +57,8 @@ public class LicenseInformationPanel extends javax.swing.JPanel {
           = "The maximum sessions that are allowed by your license has been reached. "
           + "Contact your sales representative to request a new license!";
   private static final String SESSIONS_150_PERCENT_EXCEEDED_WARNING
-          = "Cannot create more sessions because the maximum session that are allowed by your license has exceeded "
-          + "by a factor of 50%. Contact your sales representative to request a new license!";
+          = "Cannot create more sessions because the maximum session that are allowed by your license has "
+          + "exceeded by a factor of 50%. Contact your sales representative to request a new license!";
   private int fNamedUsers;
   private int fConcurrentUsers;
   private long fRemainingTime = Long.MAX_VALUE;
