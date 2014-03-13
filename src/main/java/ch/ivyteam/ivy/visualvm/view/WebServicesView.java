@@ -10,12 +10,10 @@ import ch.ivyteam.ivy.visualvm.chart.data.webservice.WebServiceCallsChartDataSou
 import ch.ivyteam.ivy.visualvm.chart.data.webservice.WebServiceProcessingTimeChartDataSource;
 import ch.ivyteam.ivy.visualvm.model.IvyJmxConstant;
 import ch.ivyteam.ivy.visualvm.util.DataUtils;
-import com.sun.tools.visualvm.application.Application;
 import com.sun.tools.visualvm.core.ui.components.DataViewComponent;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
-import javax.management.ObjectName;
 
 /**
  *
@@ -23,19 +21,12 @@ import javax.management.ObjectName;
  */
 public class WebServicesView extends AbstractView {
 
-  private static final String APP_STRING_KEY = "application";
-  private static final String ENVIRONMENT_STRING_KEY = "environment";
-  private static final String CONFIG_STRING_KEY = "name";
-
-  private final Application fIvyApplication;
   private final WebServicesPanel fWebServicesPanel;
-  private Set<ObjectName> fWebServicesConfigList;
   private String fCurrentAppName, fCurrentEnvName, fCurrentConfigName;
   private final Map<String, ChartsPanel> createdCharts;
 
-  public WebServicesView(IDataBeanProvider dataBeanProvider, Application application) {
+  public WebServicesView(IDataBeanProvider dataBeanProvider) {
     super(dataBeanProvider);
-    fIvyApplication = application;
     createdCharts = new HashMap<>();
     fWebServicesPanel = new WebServicesPanel(this);
   }

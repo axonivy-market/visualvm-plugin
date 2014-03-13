@@ -120,7 +120,7 @@ class IvyView extends DataSourceView {
   }
 
   private void addWebServicesView(IDataBeanProvider dataBeanProvider, JTabbedPane tabbed) {
-    WebServicesView wsView = new WebServicesView(dataBeanProvider, fIvyApplication);
+    WebServicesView wsView = new WebServicesView(dataBeanProvider);
     views.add(wsView);
     tabbed.addTab("Web Services", (Icon) ImageUtilities.loadImage(WEB_SERVICE_ICON_IMAGE_PATH, true),
             wsView.getViewComponent());
