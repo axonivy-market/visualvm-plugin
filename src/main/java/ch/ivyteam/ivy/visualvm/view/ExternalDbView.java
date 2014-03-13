@@ -117,9 +117,9 @@ public class ExternalDbView extends AbstractView {
     builder.append("<html>");
     builder.append("The chart shows the maximum and the minimum time needed to transaction a execute in ");
     builder.append("last poll<br><br>");
-    builder.append("<b>Mean</b>: ").append(ExternalDbProcessingTimeChartDataSource.MEAN_SERIE_DESC)
-            .append(BR_TAG);
     builder.append("<b>Max</b>: ").append(ExternalDbProcessingTimeChartDataSource.MAX_SERIE_DESC)
+            .append(BR_TAG);
+    builder.append("<b>Mean</b>: ").append(ExternalDbProcessingTimeChartDataSource.MEAN_SERIE_DESC)
             .append(BR_TAG);
     builder.append("<b>Min</b>: ").append(ExternalDbProcessingTimeChartDataSource.MIN_SERIE_DESC)
             .append(BR_TAG);
