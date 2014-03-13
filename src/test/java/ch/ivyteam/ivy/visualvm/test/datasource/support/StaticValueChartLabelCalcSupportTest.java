@@ -12,19 +12,10 @@ public class StaticValueChartLabelCalcSupportTest extends AbstractChartLabelCalc
   public void testStaticValueCalc() {
     StaticValueChartLabelCalcSupport calcSupport = new StaticValueChartLabelCalcSupport("text",
             ObjectName.WILDCARD, ATTR_KEY);
-    assertEquals(100L, calcSupport.getValue());
-    calcSupport.updateValues(createQueryResult(1L));
-    assertEquals(100L, calcSupport.getValue());
-    calcSupport.updateValues(createQueryResult(3L));
-    assertEquals(100L, calcSupport.getValue());
-    calcSupport.updateValues(createQueryResult(10L));
-    assertEquals(100L, calcSupport.getValue());
-    calcSupport.updateValues(createQueryResult(8L));
-    assertEquals(100L, calcSupport.getValue());
-    calcSupport.updateValues(createQueryResult(18L));
-    assertEquals(100L, calcSupport.getValue());
-    calcSupport.updateValues(createQueryResult(1800L));
-    assertEquals(100L, calcSupport.getValue());
+    assertEquals(0L, calcSupport.getValue());
+    calcSupport.updateValues(createQueryResult(50L));
+    assertEquals(50L, calcSupport.getValue());
+    calcSupport.updateValues(createQueryResult(20L));
+    assertEquals(50L, calcSupport.getValue());
   }
-
 }
