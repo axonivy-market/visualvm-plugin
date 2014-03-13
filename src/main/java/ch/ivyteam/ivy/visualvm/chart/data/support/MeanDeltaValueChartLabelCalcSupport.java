@@ -26,7 +26,7 @@ public class MeanDeltaValueChartLabelCalcSupport extends AbstractChartLabelCalcS
     if (value instanceof Number) {
       if (isLastValueValid()) {
         long currentValue = ((Number) value).longValue();
-        long currentTotal = fTotal + Math.abs(currentValue - fLastValue);
+        long currentTotal = fTotal + ensurePositive(currentValue - fLastValue);
         long currentCount = fCount + 1;
         result = currentTotal / currentCount;
       } else {
@@ -47,7 +47,7 @@ public class MeanDeltaValueChartLabelCalcSupport extends AbstractChartLabelCalcS
     if (value instanceof Number) {
       long nextValue = ((Number) value).longValue();
       if (isLastValueValid()) {
-        fTotal = fTotal + Math.abs(nextValue - fLastValue);
+        fTotal = fTotal + ensurePositive(nextValue - fLastValue);
       }
       fLastValue = nextValue;
       fCount++;

@@ -32,4 +32,12 @@ public abstract class AbstractChartLabelCalcSupport {
   public void updateQuery(Query query) {
   }
 
+  public static long ensurePositive(long number) {
+    long positive = number;
+    if (number < 0L) {
+      positive = 0L;
+    }
+    return positive;
+  }
+
 }

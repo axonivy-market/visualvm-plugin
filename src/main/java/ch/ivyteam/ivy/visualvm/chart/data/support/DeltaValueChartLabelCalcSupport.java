@@ -22,7 +22,7 @@ public class DeltaValueChartLabelCalcSupport extends AbstractChartLabelCalcSuppo
     if (value instanceof Number) {
       result = ((Number) value).longValue();
       if (isLastValueValid()) {
-        result = Math.abs(result - fLastValue);
+        result = ensurePositive(result - fLastValue);
       } else {
         result = 0;
       }
