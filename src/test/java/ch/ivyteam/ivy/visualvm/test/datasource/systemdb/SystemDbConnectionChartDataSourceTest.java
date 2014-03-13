@@ -16,7 +16,6 @@ import javax.management.InstanceNotFoundException;
 import javax.management.MBeanException;
 import javax.management.MBeanServerConnection;
 import javax.management.MalformedObjectNameException;
-import javax.management.ObjectName;
 import javax.management.ReflectionException;
 import javax.xml.bind.JAXBException;
 import org.junit.Test;
@@ -35,7 +34,6 @@ public class SystemDbConnectionChartDataSourceTest extends AbstractTest {
     );
   }
 
-  private final int fMaxConnection;
   private final int fOpenConnection;
   private final int fUsedConnection;
 
@@ -52,10 +50,6 @@ public class SystemDbConnectionChartDataSourceTest extends AbstractTest {
           ReflectionException, MBeanException, AttributeNotFoundException, InstanceNotFoundException {
     final MBeanServerConnection mockConnection = createMockConnection();
     addTestData(mockConnection, getDataset());
-    ObjectName objectName = new ObjectName("Xpert.ivy Server:type=Database Persistency Service");
-//    when(mockConnection.getAttribute(objectName,
-//            IvyJmxConstant.IvyServer.DatabasePersistency.KEY_MAX_CONNECTION)).thenReturn(fMaxConnection);
-
     IDataBeanProvider provider = mockDataProvider(mockConnection);
 
     ConnectionChartDataSource dataSource = new ConnectionChartDataSource(provider, "",
