@@ -45,7 +45,7 @@ public class ConcurrentUsersChartDataSourceTest extends AbstractTest {
     addTestData(mockConnection, getDataset());
     IDataBeanProvider provider = mockDataProvider(mockConnection);
     ConcurrentUsersChartDataSource concurrentUsersChartDataSource = new ConcurrentUsersChartDataSource(
-            provider, "", "", "");
+            provider, "", 6);
     Query query = new Query();
     concurrentUsersChartDataSource.updateQuery(query);
     QueryResult result = query.execute(mockConnection);

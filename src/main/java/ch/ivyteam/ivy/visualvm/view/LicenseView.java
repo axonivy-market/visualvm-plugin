@@ -52,9 +52,10 @@ public class LicenseView extends AbstractView {
   }
 
   private void createSessionsView() {
-    if (fLicenseInfo.getServerSessionsLimit() > 0) {
+    int serverSessionsLimit = fLicenseInfo.getServerSessionsLimit();
+    if (serverSessionsLimit > 0) {
       ConcurrentUsersChartDataSource sessionDataSource = new ConcurrentUsersChartDataSource(
-              getDataBeanProvider(), null, null, "Concurrent Users");
+              getDataBeanProvider(), "Concurrent Users", serverSessionsLimit);
       ConcurrentUsersGaugeDataSource gaugeSessionsDataSource = new ConcurrentUsersGaugeDataSource(
               getDataBeanProvider(), fLicenseInfo.getServerSessionsLimit());
 
