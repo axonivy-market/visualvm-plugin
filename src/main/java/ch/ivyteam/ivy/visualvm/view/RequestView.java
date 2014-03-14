@@ -78,7 +78,7 @@ public class RequestView extends AbstractView {
   }
 
   private String getProcessTimeChartDescription() {
-    StringBuilder sb = new StringBuilder("The chart shows the total time to process all the new requests ");
+    StringBuilder sb = new StringBuilder("The chart shows the mean time to process a new request ");
     sb.append("served by each connector since the last poll");
     return sb.toString();
   }

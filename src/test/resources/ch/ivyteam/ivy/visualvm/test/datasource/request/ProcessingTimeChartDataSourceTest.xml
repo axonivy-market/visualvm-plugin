@@ -4,11 +4,11 @@
     <property>
       <name>ivy:type=GlobalRequestProcessor,name="ajp-bio-8009"</name>
       <dataset>
-        <!--
         <property>
           <name>requestCount</name>
-          <value type="java.lang.Long">0</value>
+          <value type="java.lang.Long">200</value>
         </property>
+        <!--
         <property>
           <name>errorCount</name>
           <value type="java.lang.Long">0</value>
@@ -24,11 +24,11 @@
     <property>
       <name>ivy:type=GlobalRequestProcessor,name="http-bio-8080"</name>
       <dataset>
-        <!--
         <property>
           <name>requestCount</name>
-          <value type="java.lang.Long">0</value>
+          <value type="java.lang.Long">600</value>
         </property>
+        <!--
         <property>
           <name>errorCount</name>
           <value type="java.lang.Long">0</value>
@@ -44,11 +44,11 @@
     <property>
       <name>ivy:type=GlobalRequestProcessor,name="http-bio-8443"</name>
       <dataset>
-        <!--
         <property>
           <name>requestCount</name>
-          <value type="java.lang.Long">0</value>
+          <value type="java.lang.Long">920</value>
         </property>
+        <!--
         <property>
           <name>errorCount</name>
           <value type="java.lang.Long">0</value>
@@ -56,7 +56,7 @@
         -->
         <property>
           <name>processingTime</name>
-          <value type="java.lang.Long">51000</value>
+          <value type="java.lang.Long">151000</value>
         </property>
       </dataset>
     </property>
@@ -66,11 +66,11 @@
     <property>
       <name>ivy:type=GlobalRequestProcessor,name="ajp-bio-8009"</name>
       <dataset>
-        <!--
         <property>
           <name>requestCount</name>
-          <value type="java.lang.Long">4</value>
+          <value type="java.lang.Long">204</value>
         </property>
+        <!--
         <property>
           <name>errorCount</name>
           <value type="java.lang.Long">3</value>
@@ -86,11 +86,11 @@
     <property>
       <name>ivy:type=GlobalRequestProcessor,name="http-bio-8080"</name>
       <dataset>
-        <!--
         <property>
           <name>requestCount</name>
-          <value type="java.lang.Long">11</value>
+          <value type="java.lang.Long">611</value>
         </property>
+        <!--
         <property>
           <name>errorCount</name>
           <value type="java.lang.Long">9</value>
@@ -106,11 +106,11 @@
     <property>
       <name>ivy:type=GlobalRequestProcessor,name="http-bio-8443"</name>
       <dataset>
-        <!--
         <property>
           <name>requestCount</name>
-          <value type="java.lang.Long">8</value>
+          <value type="java.lang.Long">1000</value>
         </property>
+        <!--
         <property>
           <name>errorCount</name>
           <value type="java.lang.Long">6</value>
@@ -118,7 +118,7 @@
         -->
         <property>
           <name>processingTime</name>
-          <value type="java.lang.Long">51240</value>
+          <value type="java.lang.Long">151240</value>
         </property>
       </dataset>
     </property>
@@ -128,11 +128,11 @@
     <property>
       <name>ivy:type=GlobalRequestProcessor,name="ajp-bio-8009"</name>
       <dataset>
-        <!--
         <property>
           <name>requestCount</name>
-          <value type="java.lang.Long">400</value>
+          <value type="java.lang.Long">250</value>
         </property>
+        <!--
         <property>
           <name>errorCount</name>
           <value type="java.lang.Long">300</value>
@@ -148,11 +148,11 @@
     <property>
       <name>ivy:type=GlobalRequestProcessor,name="http-bio-8080"</name>
       <dataset>
-        <!--
         <property>
           <name>requestCount</name>
-          <value type="java.lang.Long">1100</value>
+          <value type="java.lang.Long">690</value>
         </property>
+        <!--
         <property>
           <name>errorCount</name>
           <value type="java.lang.Long">900</value>
@@ -168,11 +168,11 @@
     <property>
       <name>ivy:type=GlobalRequestProcessor,name="http-bio-8443"</name>
       <dataset>
-        <!--
         <property>
           <name>requestCount</name>
-          <value type="java.lang.Long">800</value>
+          <value type="java.lang.Long">1080</value>
         </property>
+        <!--
         <property>
           <name>errorCount</name>
           <value type="java.lang.Long">600</value>
@@ -180,7 +180,7 @@
         -->
         <property>
           <name>processingTime</name>
-          <value type="java.lang.Long">51510</value>
+          <value type="java.lang.Long">151510</value>
         </property>
       </dataset>
     </property>

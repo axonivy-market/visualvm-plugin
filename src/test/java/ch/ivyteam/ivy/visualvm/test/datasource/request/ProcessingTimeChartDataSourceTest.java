@@ -32,8 +32,10 @@ public class ProcessingTimeChartDataSourceTest extends AbstractTest {
     return TestUtil.createTestData(
             "/ch/ivyteam/ivy/visualvm/test/datasource/request/ProcessingTimeChartDataSourceTest.xml",
             new Object[]{0, 0, 0},
-            new Object[]{170, 560, 240},
-            new Object[]{130, 640, 270}
+            new Object[]{42, 50, 3},
+            //(34170-34000):(204-200) | (98560-98000):(611-600) | (151240-151000):(1000-920)
+            new Object[]{2, 8, 3}
+    //(34300-34170):(250-204) | (99200-98560):(690-611) | (151510-151240):(1080-1000)
     );
   }
 

@@ -17,23 +17,27 @@ public class SessionChartDataSource extends XYChartDataSource {
     BasicIvyJmxDataCollector collector = new BasicIvyJmxDataCollector();
     ObjectName tomcatManager = collector.getTomcatManagerName(mBeanServerConnection);
     if (tomcatManager != null) {
-      addSerie("HTTP", null, SerieStyle.LINE, tomcatManager, IvyJmxConstant.Ivy.Manager.KEY_ACTIVE_SESSION);
+      addSerie("HTTP", "Number of HTTP sessions", SerieStyle.LINE, tomcatManager,
+              IvyJmxConstant.Ivy.Manager.KEY_ACTIVE_SESSION);
       addLabelCalcSupport(new LatestValueChartLabelCalcSupport("HTTP",
               tomcatManager, IvyJmxConstant.Ivy.Manager.KEY_ACTIVE_SESSION));
     }
-    addSerie("Ivy", null, SerieStyle.LINE, IvyJmxConstant.IvyServer.SecurityManager.NAME,
+    addSerie("Ivy", "Number of HTTP sessions that do request against Xpert.ivy core", SerieStyle.LINE,
+            IvyJmxConstant.IvyServer.SecurityManager.NAME,
             IvyJmxConstant.IvyServer.SecurityManager.KEY_SESSIONS);
     addLabelCalcSupport(new LatestValueChartLabelCalcSupport("Ivy",
             IvyJmxConstant.IvyServer.SecurityManager.NAME,
             IvyJmxConstant.IvyServer.SecurityManager.KEY_SESSIONS));
 
-    addSerie("Licensed", null, SerieStyle.LINE, IvyJmxConstant.IvyServer.SecurityManager.NAME,
+    addSerie("Concurrent Users", "Number of Xpert.ivy users that are currently logged-in", SerieStyle.LINE,
+            IvyJmxConstant.IvyServer.SecurityManager.NAME,
             IvyJmxConstant.IvyServer.SecurityManager.KEY_LICENSED_SESSIONS);
-    addLabelCalcSupport(new LatestValueChartLabelCalcSupport("Licensed",
+    addLabelCalcSupport(new LatestValueChartLabelCalcSupport("Concurrent Users",
             IvyJmxConstant.IvyServer.SecurityManager.NAME,
             IvyJmxConstant.IvyServer.SecurityManager.KEY_LICENSED_SESSIONS));
 
-    addSerie("RD", null, SerieStyle.LINE, IvyJmxConstant.IvyServer.RichDialogExecution.NAME,
+    addSerie("RD", "Number of Xpert.ivy sessions that use Rich Dialogs", SerieStyle.LINE,
+            IvyJmxConstant.IvyServer.RichDialogExecution.NAME,
             IvyJmxConstant.IvyServer.RichDialogExecution.KEY_RD_SESSIONS);
     addLabelCalcSupport(new LatestValueChartLabelCalcSupport("RD",
             IvyJmxConstant.IvyServer.RichDialogExecution.NAME,

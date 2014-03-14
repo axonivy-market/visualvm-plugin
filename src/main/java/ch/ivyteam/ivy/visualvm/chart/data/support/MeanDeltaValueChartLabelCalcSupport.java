@@ -1,57 +1,42 @@
 package ch.ivyteam.ivy.visualvm.chart.data.support;
 
+import ch.ivyteam.ivy.visualvm.chart.Query;
 import ch.ivyteam.ivy.visualvm.chart.QueryResult;
 import javax.management.ObjectName;
 
 public class MeanDeltaValueChartLabelCalcSupport extends AbstractChartLabelCalcSupport {
-  private final ObjectName fObjName;
-  private final String fAttrKey;
-  private long fLastValue;
-  private long fTotal;
-  private long fCount;
+  private DeltaValueChartLabelCalcSupport fDeltaOfTotal;
+  private DeltaValueChartLabelCalcSupport fDeltaOfCounter;
 
-  public MeanDeltaValueChartLabelCalcSupport(String text, ObjectName objName, String attrKey) {
+  public MeanDeltaValueChartLabelCalcSupport(String text, ObjectName objName,
+          String totalAttrKey, String counterAttrKey) {
     setText(text);
-    fObjName = objName;
-    fAttrKey = attrKey;
-    fLastValue = Long.MIN_VALUE;
-    fTotal = 0;
-    fCount = 0;
+    fDeltaOfTotal = new DeltaValueChartLabelCalcSupport("", objName, totalAttrKey);
+    fDeltaOfCounter = new DeltaValueChartLabelCalcSupport("", objName, counterAttrKey);
   }
 
   @Override
   protected long calculateValue(QueryResult queryResult) {
-    Object value = queryResult.getValue(fObjName, fAttrKey);
+    long total = fDeltaOfTotal.calculateValue(queryResult);
+    long count = fDeltaOfCounter.calculateValue(queryResult);
     long result = getValue();
-    if (value instanceof Number) {
-      if (isLastValueValid()) {
-        long currentValue = ((Number) value).longValue();
-        long currentTotal = fTotal + ensurePositive(currentValue - fLastValue);
-        long currentCount = fCount + 1;
-        result = currentTotal / currentCount;
-      } else {
-        result = 0;
-      }
+    if (count != 0) {
+      result = total / count;
     }
     return result;
   }
 
-  protected boolean isLastValueValid() {
-    return fLastValue != Long.MIN_VALUE;
+  @Override
+  public void updateQuery(Query query) {
+    fDeltaOfTotal.updateQuery(query);
+    fDeltaOfCounter.updateQuery(query);
   }
 
   @Override
   public void updateValues(QueryResult queryResult) {
     super.updateValues(queryResult);
-    Object value = queryResult.getValue(fObjName, fAttrKey);
-    if (value instanceof Number) {
-      long nextValue = ((Number) value).longValue();
-      if (isLastValueValid()) {
-        fTotal = fTotal + ensurePositive(nextValue - fLastValue);
-      }
-      fLastValue = nextValue;
-      fCount++;
-    }
+    fDeltaOfTotal.updateValues(queryResult);
+    fDeltaOfCounter.updateValues(queryResult);
   }
 
 }

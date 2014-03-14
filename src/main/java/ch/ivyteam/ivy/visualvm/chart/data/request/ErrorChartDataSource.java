@@ -1,11 +1,12 @@
 package ch.ivyteam.ivy.visualvm.chart.data.request;
 
+import ch.ivyteam.ivy.visualvm.chart.SerieStyle;
 import ch.ivyteam.ivy.visualvm.chart.data.XYChartDataSource;
-import ch.ivyteam.ivy.visualvm.chart.data.support.DeltaValueChartLabelCalcSupport;
 import ch.ivyteam.ivy.visualvm.chart.data.support.MaxDeltaValueChartLabelCalcSupport;
 import ch.ivyteam.ivy.visualvm.model.IvyJmxConstant;
 import ch.ivyteam.ivy.visualvm.service.BasicIvyJmxDataCollector;
 import ch.ivyteam.ivy.visualvm.view.IDataBeanProvider;
+import java.text.MessageFormat;
 import javax.management.MBeanServerConnection;
 import javax.management.ObjectName;
 
@@ -17,13 +18,12 @@ public class ErrorChartDataSource extends XYChartDataSource {
     super(dataBeanProvider, chartName, xAxisDescription, yAxisDescription);
     MBeanServerConnection mBeanServerConnection = getDataBeanProvider().getMBeanServerConnection();
     BasicIvyJmxDataCollector collector = new BasicIvyJmxDataCollector();
+    String legendDescription = "Number of new errors of requests served by {0} connector since the last poll";
     for (ObjectName processorName : collector.getTomcatRequestProcessors(mBeanServerConnection)) {
       String protocol = dataBeanProvider.getCachedData().getProtocol(processorName);
-      addDeltaSerie(protocol, null, processorName,
-              IvyJmxConstant.Ivy.Processor.KEY_ERROR_COUNT);
-      addLabelCalcSupport(new DeltaValueChartLabelCalcSupport(protocol,
-              processorName, IvyJmxConstant.Ivy.Processor.KEY_ERROR_COUNT));
-      addLabelCalcSupport(new MaxDeltaValueChartLabelCalcSupport(protocol + " max",
+      addDeltaSerie(protocol, MessageFormat.format(legendDescription, protocol), SerieStyle.LINE,
+              processorName, IvyJmxConstant.Ivy.Processor.KEY_ERROR_COUNT);
+      addLabelCalcSupport(new MaxDeltaValueChartLabelCalcSupport("Max " + protocol,
               processorName, IvyJmxConstant.Ivy.Processor.KEY_ERROR_COUNT));
     }
   }
