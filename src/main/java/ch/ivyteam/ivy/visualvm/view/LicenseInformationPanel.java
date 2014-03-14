@@ -226,15 +226,16 @@ public class LicenseInformationPanel extends javax.swing.JPanel {
   }
 
   private void appendSessionsLimitWarning(StringBuilder html) {
-    if (fLicenseInfo.getServerSessionsLimit() > 0) {
+    final int serverSessionsLimit = fLicenseInfo.getServerSessionsLimit();
+    if (serverSessionsLimit > 0) {
       String warningMsg = null;
       String iconPath = WARNING_ICON_PATH;
       String color = WARNING_COLOR; //yellow
-      int threshold90 = (int) Math.floor(fLicenseInfo.getServerSessionsLimit() * 0.9);
-      int threshold150 = (int) Math.floor(fLicenseInfo.getServerSessionsLimit() * 1.5);
-      if (fConcurrentUsers >= threshold90 && fConcurrentUsers < fLicenseInfo.getServerSessionsLimit()) {
+      int threshold90 = (int) Math.floor(serverSessionsLimit * 0.9);
+      int threshold150 = (int) Math.floor(serverSessionsLimit * 1.5);
+      if (fConcurrentUsers >= threshold90 && fConcurrentUsers < serverSessionsLimit) {
         warningMsg = SESSIONS_90_PERCENT_EXCEEDED_WARNING;
-      } else if (fConcurrentUsers >= fLicenseInfo.getServerSessionsLimit()
+      } else if (fConcurrentUsers >= serverSessionsLimit
               && fConcurrentUsers < threshold150) {
         warningMsg = SESSIONS_EXCEEDED_WARNING;
         color = ERROR_COLOR;
@@ -251,18 +252,20 @@ public class LicenseInformationPanel extends javax.swing.JPanel {
   }
 
   private void appendUsersLimitWarning(StringBuilder html) {
-    if (fLicenseInfo.getServerUsersLimit() > 0) {
+    final int serverUsersLimit = fLicenseInfo.getServerUsersLimit();
+    if (serverUsersLimit > 0) {
       String warningMsg = null;
       String iconPath = WARNING_ICON_PATH;
       String color = WARNING_COLOR; //yellow
-      int threshold80 = (int) Math.floor(fLicenseInfo.getServerUsersLimit() * 0.8);
-      int threshold90 = (int) Math.floor(fLicenseInfo.getServerUsersLimit() * 0.9);
+      int threshold80 = (int) Math.floor(serverUsersLimit * 0.8);
+      int threshold90 = (int) Math.floor(serverUsersLimit * 0.9);
       if (fNamedUsers >= threshold80 && fNamedUsers < threshold90) {
         warningMsg = USERS_80_PERCENT_EXCEEDED_WARNING;
-      } else if (fNamedUsers >= threshold90 && fNamedUsers < fLicenseInfo.getServerUsersLimit()) {
+      } else if (fNamedUsers >= threshold90 && fNamedUsers < serverUsersLimit) {
         warningMsg = USERS_90_PERCENT_EXCEEDED_WARNING;
         color = ERROR_COLOR;
-      } else if (fNamedUsers == fLicenseInfo.getServerUsersLimit()) {
+        iconPath = ERROR_ICON_PATH;
+      } else if (fNamedUsers == serverUsersLimit) {
         warningMsg = USERS_EXCEEDED_WARNING;
         color = ERROR_COLOR;
         iconPath = ERROR_ICON_PATH;
