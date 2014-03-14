@@ -23,9 +23,13 @@ import javax.management.ReflectionException;
 import javax.management.openmbean.CompositeDataSupport;
 import javax.management.openmbean.TabularDataSupport;
 import junit.framework.TestCase;
+import static org.mockito.Matchers.anyObject;
+import static org.mockito.Matchers.eq;
 import org.mockito.Mockito;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
+import org.mockito.invocation.InvocationOnMock;
+import org.mockito.stubbing.Answer;
 
 public abstract class AbstractTest extends TestCase {
   private final BeanTestData.Dataset fDataset;
@@ -44,10 +48,7 @@ public abstract class AbstractTest extends TestCase {
         List<Attribute> mockAttrs = new ArrayList<>();
         ObjectName objectName = new ObjectName(property.getName());
 
-        String[] attrNames = new String[property.getDataset().getProperty().size()];
-        int index = 0;
         for (Property attr : property.getDataset().getProperty()) {
-          attrNames[index++] = attr.getName();
           Attribute mockAttr = mock(Attribute.class);
           when(mockAttr.getName()).thenReturn(attr.getName());
           if (attr.getValue() != null) {
@@ -57,9 +58,25 @@ public abstract class AbstractTest extends TestCase {
           }
           mockAttrs.add(mockAttr);
         }
-        AttributeList attrList = new AttributeList();
+        final AttributeList attrList = new AttributeList();
         attrList.addAll(mockAttrs);
-        when(mockConnection.getAttributes(objectName, attrNames)).thenReturn(attrList);
+        when(mockConnection.getAttributes(eq(objectName), (String[]) anyObject())).then(
+                new Answer<AttributeList>() {
+                  @Override
+                  public AttributeList answer(InvocationOnMock invocation) {
+                    String[] attribListString = (String[]) invocation.getArguments()[1];
+                    AttributeList result = new AttributeList();
+                    for (String attribString : attribListString) {
+                      for (Attribute attrib : attrList.asList()) {
+                        if (attrib.getName().equals(attribString)) {
+                          result.add(attrib);
+                        }
+                      }
+                    }
+                    return result;
+                  }
+
+                });
       }
     } catch (AttributeNotFoundException | InstanceNotFoundException |
             IOException | ReflectionException | MalformedObjectNameException |
