@@ -1,6 +1,7 @@
 package ch.ivyteam.ivy.visualvm.view;
 
 import ch.ivyteam.ivy.visualvm.chart.ChartsPanel;
+import ch.ivyteam.ivy.visualvm.chart.data.DbChartTitleConstant;
 import ch.ivyteam.ivy.visualvm.chart.data.systemdb.ConnectionChartDataSource;
 import ch.ivyteam.ivy.visualvm.chart.data.systemdb.ProcessingTimeChartDataSource;
 import ch.ivyteam.ivy.visualvm.chart.data.systemdb.TransactionChartDataSource;
@@ -40,8 +41,8 @@ public class SystemDbView extends AbstractView {
     builder.append("<html>");
     builder.append("The chart shows the number of open and the number of used connections to the system ");
     builder.append("database.<br><br>");
-    builder.append("<b>Open:</b> " + ConnectionChartDataSource.OPEN_SERIE_DESC + "<br>");
-    builder.append("<b>Used:</b> " + ConnectionChartDataSource.USED_SERIE_DESC);
+    builder.append("<b>Open:</b> ").append(DbChartTitleConstant.OPEN_SERIE_DESC).append("<br>");
+    builder.append("<b>Used:</b> ").append(DbChartTitleConstant.USED_SERIE_DESC);
     builder.append("</html>");
     return builder.toString();
   }
@@ -51,8 +52,9 @@ public class SystemDbView extends AbstractView {
     builder.append("<html>");
     builder.append("The chart shows the number of transactions to the system database and the number of ");
     builder.append("them that were erroneous.<br><br>");
-    builder.append("<b>Transactions:</b> " + TransactionChartDataSource.TRANSACTION_SERIE_DESC + "<br>");
-    builder.append("<b>Errors:</b> " + TransactionChartDataSource.ERROR_SERIE_DESC);
+    builder.append("<b>Transactions:</b> ").append(DbChartTitleConstant.TRANSACTION_SERIE_DESC)
+            .append("<br>");
+    builder.append("<b>Errors:</b> ").append(DbChartTitleConstant.TRANSACTION_ERROR_SERIE_DESC);
     builder.append("</html>");
     return builder.toString();
   }
@@ -62,9 +64,9 @@ public class SystemDbView extends AbstractView {
     builder.append("<html>");
     builder.append("The chart shows the maximum, the mean and the minimum time needed to execute a ");
     builder.append("transaction since the last poll.<br><br>");
-    builder.append("<b>Max</b>: " + ProcessingTimeChartDataSource.MAX_SERIE_DESC + "<br>");
-    builder.append("<b>Mean</b>: " + ProcessingTimeChartDataSource.MEAN_SERIE_DESC + "<br>");
-    builder.append("<b>Min</b>: " + ProcessingTimeChartDataSource.MIN_SERIE_DESC);
+    builder.append("<b>Max</b>: ").append(DbChartTitleConstant.MAX_SERIE_DESC).append("<br>");
+    builder.append("<b>Mean</b>: ").append(DbChartTitleConstant.MEAN_SERIE_DESC).append("<br>");
+    builder.append("<b>Min</b>: ").append(DbChartTitleConstant.MIN_SERIE_DESC);
     builder.append("</html>");
     return builder.toString();
   }

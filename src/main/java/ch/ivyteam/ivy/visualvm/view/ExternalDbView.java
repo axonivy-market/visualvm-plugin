@@ -106,10 +106,10 @@ public class ExternalDbView extends AbstractView {
     builder.append("<html>");
     builder.append("The chart shows the number of transactions to the external database and the number of ");
     builder.append("them that were erroneous.<br><br>");
-    builder.append("<b>Transactions: </b>")
-            .append(ExternalDbTransactionChartDataSource.TRANSACTION_SERIE_DESC)
-            .append(BR_TAG);
-    builder.append("<b>Errors: </b>").append(ExternalDbTransactionChartDataSource.ERRORS_SERIE_DESC);
+    builder.append("<b>Transactions: </b>").
+            append(ExternalDbTransactionChartDataSource.TRANSACTION_SERIE_DESC).append(BR_TAG);
+    builder.append("<b>Errors: </b>").
+            append(ExternalDbTransactionChartDataSource.TRANSACTION_ERROR_SERIE_DESC);
     builder.append("</html>");
     return builder.toString();
   }

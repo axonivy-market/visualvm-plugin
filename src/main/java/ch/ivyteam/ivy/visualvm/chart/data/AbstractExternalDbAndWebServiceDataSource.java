@@ -5,7 +5,6 @@
  */
 package ch.ivyteam.ivy.visualvm.chart.data;
 
-import ch.ivyteam.ivy.visualvm.chart.data.XYChartDataSource;
 import ch.ivyteam.ivy.visualvm.view.IDataBeanProvider;
 import java.util.logging.Logger;
 import javax.management.MalformedObjectNameException;
