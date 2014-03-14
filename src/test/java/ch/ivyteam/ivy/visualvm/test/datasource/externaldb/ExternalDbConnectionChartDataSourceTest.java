@@ -3,6 +3,7 @@ package ch.ivyteam.ivy.visualvm.test.datasource.externaldb;
 import ch.ivyteam.ivy.visualvm.chart.Query;
 import ch.ivyteam.ivy.visualvm.chart.QueryResult;
 import ch.ivyteam.ivy.visualvm.chart.data.externaldb.ExternalDbConnectionChartDataSource;
+import ch.ivyteam.ivy.visualvm.chart.data.support.AbstractChartLabelCalcSupport;
 import ch.ivyteam.ivy.visualvm.model.IvyJmxConstant;
 import ch.ivyteam.ivy.visualvm.test.AbstractTest;
 import static ch.ivyteam.ivy.visualvm.test.AbstractTest.addTestData;
@@ -12,6 +13,7 @@ import ch.ivyteam.ivy.visualvm.test.util.TestUtil;
 import ch.ivyteam.ivy.visualvm.view.IDataBeanProvider;
 import java.io.IOException;
 import java.net.URISyntaxException;
+import java.util.List;
 import javax.management.AttributeNotFoundException;
 import javax.management.InstanceNotFoundException;
 import javax.management.MBeanException;
@@ -76,8 +78,22 @@ public class ExternalDbConnectionChartDataSourceTest extends AbstractTest {
     dataSource.updateQuery(query);
     QueryResult result = query.execute(mockConnection);
     long[] values = dataSource.getValues(result);
+    List<AbstractChartLabelCalcSupport> labelCalcSupports = dataSource.getLabelCalcSupports();
+    for (AbstractChartLabelCalcSupport labelCal : labelCalcSupports) {
+      labelCal.updateValues(result);
+    }
+    //Check series value
     assertEquals(fOpenConnection, values[0]);
     assertEquals(fUsedConnection, values[1]);
+
+    //Check label  calculation support
+    assertEquals("Limit", labelCalcSupports.get(0).getText());
+    assertEquals(fMaxConnection, labelCalcSupports.get(0).getValue());
+    assertEquals("Max open", labelCalcSupports.get(1).getText());
+    assertEquals(fOpenConnection, labelCalcSupports.get(1).getValue());
+    assertEquals("Max used", labelCalcSupports.get(2).getText());
+    assertEquals(fUsedConnection, labelCalcSupports.get(2).getValue());
+
   }
 
 }
