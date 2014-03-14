@@ -6,8 +6,10 @@ import ch.ivyteam.ivy.visualvm.model.IvyJmxConstant.IvyServer.WebService;
 import ch.ivyteam.ivy.visualvm.view.IDataBeanProvider;
 
 public class WebServiceCallsChartDataSource extends AbstractExternalDbAndWebServiceDataSource {
-  private static final String CALLS_SERIE_DESCRIPTION = "The number of calls to the web service that have finished since the last poll";
-  private static final String ERRORS_SERIE_DESCRIPTION = "The number of calls to the web service that have finished since the last poll and were erroneous";
+  private static final String CALLS_SERIE_DESCRIPTION = "The number of calls to the web service that have "
+          + "finished since the last poll";
+  private static final String ERRORS_SERIE_DESCRIPTION = "The number of calls to the web service that have "
+          + "finished since the last poll and were erroneous";
   private static final String CALLS_SERIE_TITLE = "Calls";
   private static final String ERRORS_SERIE_TITLE = "Errors";
   private static final String TOTAL_CALLS = "Total calls";
