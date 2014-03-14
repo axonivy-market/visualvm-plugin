@@ -31,22 +31,30 @@ public class ErrorChartDataSourceTest extends AbstractTest {
   public static Iterable<Object[]> data() throws JAXBException, URISyntaxException {
     return TestUtil.createTestData(
             "/ch/ivyteam/ivy/visualvm/test/datasource/request/ErrorChartDataSourceTest.xml",
-            new Object[]{0, 0, 0},
-            new Object[]{6, 8, 7},
-            new Object[]{14, 12, 13}
+            new Object[]{0, 0, 0, 0, 0, 0},
+            new Object[]{6, 8, 7, 6, 8, 7},
+            new Object[]{14, 12, 13, 14, 12, 13},
+            new Object[]{8, 8, 8, 14, 12, 13},
+            new Object[]{0, 0, 0, 14, 12, 13}
     );
   }
 
   private final long fAjp;
   private final long fHttp;
   private final long fHttps;
+  private final long fMaxAjp;
+  private final long fMaxHttp;
+  private final long fMaxHttps;
 
   public ErrorChartDataSourceTest(BeanTestData.Dataset dataset,
-          long ajp, long http, long https) {
+          long ajp, long http, long https, long maxAjp, long maxHttp, long maxHttps) {
     super(dataset);
     fAjp = ajp;
     fHttp = http;
     fHttps = https;
+    fMaxAjp = maxAjp;
+    fMaxHttp = maxHttp;
+    fMaxHttps = maxHttps;
   }
 
   @Test
@@ -70,10 +78,14 @@ public class ErrorChartDataSourceTest extends AbstractTest {
     errorChartDataSource.updateQuery(query);
     QueryResult result = query.execute(mockConnection);
     long[] values = errorChartDataSource.getValues(result);
+    long[] labels = errorChartDataSource.calculateDetailValues(result);
 
     assertEquals(fAjp, values[0]);
     assertEquals(fHttp, values[1]);
     assertEquals(fHttps, values[2]);
+    assertEquals(fMaxAjp, labels[0]);
+    assertEquals(fMaxHttp, labels[1]);
+    assertEquals(fMaxHttps, labels[2]);
   }
 
 }

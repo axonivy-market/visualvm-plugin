@@ -21,6 +21,7 @@ public class DeltaAttributeDataSource extends AttributeDataSource {
     long val = paramVal;
     if (isLastValueValid()) {
       long delta = val - lastValue;
+      delta = (delta < 0) ? 0 : delta;
       lastValue = val;
       val = delta;
     } else {
