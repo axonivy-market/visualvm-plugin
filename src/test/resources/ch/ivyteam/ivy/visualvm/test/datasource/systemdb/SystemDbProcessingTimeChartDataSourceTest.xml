@@ -6,67 +6,67 @@
       <dataset>
         <property>
           <name>transactionsMaxExecutionTimeDeltaInMicroSeconds</name>
-          <value type="java.lang.Long">2122</value>
+          <value type="java.lang.Long">5</value>
         </property>
         <property>
           <name>transactionsTotalExecutionTimeInMicroSeconds</name>
-          <value type="java.lang.Long">3232</value>
+          <value type="java.lang.Long">15</value>
         </property>
         <property>
           <name>transactions</name>
-          <value type="java.lang.Long">1</value>
+          <value type="java.lang.Long">5</value>
         </property>
         <property>
           <name>transactionsMinExecutionTimeDeltaInMicroSeconds</name>
-          <value type="java.lang.Long">2122</value>
-        </property>
-      </dataset>
-    </property>
-  </dataset>
-  
-  <dataset>
-    <property>
-      <name>Xpert.ivy Server:type=Database Persistency Service</name>
-      <dataset>
-        <property>
-          <name>transactionsMaxExecutionTimeDeltaInMicroSeconds</name>
-          <value type="java.lang.Long">1343</value>
-        </property>
-        <property>
-          <name>transactionsTotalExecutionTimeInMicroSeconds</name>
-          <value type="java.lang.Long">4575</value>
-        </property>
-        <property>
-          <name>transactions</name>
-          <value type="java.lang.Long">2</value>
-        </property>
-        <property>
-          <name>transactionsMinExecutionTimeDeltaInMicroSeconds</name>
-          <value type="java.lang.Long">1343</value>
-        </property>
-      </dataset>
-    </property>
-  </dataset>
-  
-  <dataset>
-    <property>
-      <name>Xpert.ivy Server:type=Database Persistency Service</name>
-      <dataset>
-        <property>
-          <name>transactionsMaxExecutionTimeDeltaInMicroSeconds</name>
-          <value type="java.lang.Long">3344</value>
-        </property>
-        <property>
-          <name>transactionsTotalExecutionTimeInMicroSeconds</name>
-          <value type="java.lang.Long">7919</value>
-        </property>
-        <property>
-          <name>transactions</name>
           <value type="java.lang.Long">3</value>
         </property>
+      </dataset>
+    </property>
+  </dataset>
+  
+  <dataset>
+    <property>
+      <name>Xpert.ivy Server:type=Database Persistency Service</name>
+      <dataset>
+        <property>
+          <name>transactionsMaxExecutionTimeDeltaInMicroSeconds</name>
+          <value type="java.lang.Long">5</value>
+        </property>
+        <property>
+          <name>transactionsTotalExecutionTimeInMicroSeconds</name>
+          <value type="java.lang.Long">21</value>
+        </property>
+        <property>
+          <name>transactions</name>
+          <value type="java.lang.Long">7</value>
+        </property>
         <property>
           <name>transactionsMinExecutionTimeDeltaInMicroSeconds</name>
-          <value type="java.lang.Long">3344</value>
+          <value type="java.lang.Long">2</value>
+        </property>
+      </dataset>
+    </property>
+  </dataset>
+  
+  <dataset>
+    <property>
+      <name>Xpert.ivy Server:type=Database Persistency Service</name>
+      <dataset>
+        <property>
+          <name>transactionsMaxExecutionTimeDeltaInMicroSeconds</name>
+          <value type="java.lang.Long">6</value>
+        </property>
+        <property>
+          <name>transactionsTotalExecutionTimeInMicroSeconds</name>
+          <value type="java.lang.Long">24</value>
+        </property>
+        <property>
+          <name>transactions</name>
+          <value type="java.lang.Long">8</value>
+        </property>
+        <property>
+          <name>transactionsMinExecutionTimeDeltaInMicroSeconds</name>
+          <value type="java.lang.Long">2</value>
         </property>
       </dataset>
     </property>

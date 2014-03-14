@@ -2,6 +2,7 @@ package ch.ivyteam.ivy.visualvm.test.datasource.systemdb;
 
 import ch.ivyteam.ivy.visualvm.chart.Query;
 import ch.ivyteam.ivy.visualvm.chart.QueryResult;
+import ch.ivyteam.ivy.visualvm.chart.data.support.AbstractChartLabelCalcSupport;
 import ch.ivyteam.ivy.visualvm.chart.data.systemdb.TransactionChartDataSource;
 import ch.ivyteam.ivy.visualvm.test.AbstractTest;
 import static ch.ivyteam.ivy.visualvm.test.AbstractTest.addTestData;
@@ -11,6 +12,7 @@ import ch.ivyteam.ivy.visualvm.test.util.TestUtil;
 import ch.ivyteam.ivy.visualvm.view.IDataBeanProvider;
 import java.io.IOException;
 import java.net.URISyntaxException;
+import java.util.List;
 import javax.management.AttributeNotFoundException;
 import javax.management.InstanceNotFoundException;
 import javax.management.MBeanException;
@@ -30,24 +32,29 @@ public class SystemDbTransactionChartDataSourceTest extends AbstractTest {
   public static Iterable<Object[]> data() throws JAXBException, URISyntaxException {
     return TestUtil.createTestData(
             "/ch/ivyteam/ivy/visualvm/test/datasource/systemdb/SystemDbTransChartDataSourceTest.xml",
-            new Object[]{0, 0},
-            new Object[]{2, 1},
-            new Object[]{1, 0}
+            new Object[]{0, 0, 0, 0},
+            new Object[]{2, 1, 2, 1},
+            new Object[]{1, 0, 2, 1}
     );
   }
 
   private static IDataBeanProvider fProvider;
   private static Query fQuery;
   private static TransactionChartDataSource fDataSource;
+  private static List<AbstractChartLabelCalcSupport> fLabelCalcSupports;
 
   private final int fTransactions;
   private final int fErrors;
+  private final int fMaxTransaction;
+  private final int fMaxError;
 
   public SystemDbTransactionChartDataSourceTest(BeanTestData.Dataset dataset,
-          int transactions, int errors) {
+          int transactions, int errors, int maxTrans, int maxError) {
     super(dataset);
     fTransactions = transactions;
     fErrors = errors;
+    fMaxTransaction = maxTrans;
+    fMaxError = maxError;
   }
 
   @Test
@@ -62,14 +69,24 @@ public class SystemDbTransactionChartDataSourceTest extends AbstractTest {
 
     if (fDataSource == null) {
       fDataSource = new TransactionChartDataSource(fProvider, "", "", "");
-
+      fLabelCalcSupports = fDataSource.getLabelCalcSupports();
       fQuery = new Query();
       fDataSource.updateQuery(fQuery);
     }
     QueryResult result = fQuery.execute(mockConnection);
     long[] values = fDataSource.getValues(result);
+    for (AbstractChartLabelCalcSupport labelCal : fLabelCalcSupports) {
+      labelCal.updateValues(result);
+    }
+
     assertEquals(fTransactions, values[0]);
     assertEquals(fErrors, values[1]);
+    //Check label  calculation support
+    assertEquals("Max transactions", fLabelCalcSupports.get(0).getText());
+    assertEquals(fMaxTransaction, fLabelCalcSupports.get(0).getValue());
+    assertEquals("Max errors", fLabelCalcSupports.get(1).getText());
+    assertEquals(fMaxError, fLabelCalcSupports.get(1).getValue());
+
   }
 
 }

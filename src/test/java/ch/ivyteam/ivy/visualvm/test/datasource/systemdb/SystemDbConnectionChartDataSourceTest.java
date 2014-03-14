@@ -2,6 +2,7 @@ package ch.ivyteam.ivy.visualvm.test.datasource.systemdb;
 
 import ch.ivyteam.ivy.visualvm.chart.Query;
 import ch.ivyteam.ivy.visualvm.chart.QueryResult;
+import ch.ivyteam.ivy.visualvm.chart.data.support.AbstractChartLabelCalcSupport;
 import ch.ivyteam.ivy.visualvm.chart.data.systemdb.ConnectionChartDataSource;
 import ch.ivyteam.ivy.visualvm.test.AbstractTest;
 import static ch.ivyteam.ivy.visualvm.test.AbstractTest.addTestData;
@@ -11,6 +12,7 @@ import ch.ivyteam.ivy.visualvm.test.util.TestUtil;
 import ch.ivyteam.ivy.visualvm.view.IDataBeanProvider;
 import java.io.IOException;
 import java.net.URISyntaxException;
+import java.util.List;
 import javax.management.AttributeNotFoundException;
 import javax.management.InstanceNotFoundException;
 import javax.management.MBeanException;
@@ -36,10 +38,12 @@ public class SystemDbConnectionChartDataSourceTest extends AbstractTest {
 
   private final int fOpenConnection;
   private final int fUsedConnection;
+  private final int fMaxConnection;
 
   public SystemDbConnectionChartDataSourceTest(BeanTestData.Dataset dataset,
           int maxConnection, int openConnection, int usedConnection) {
     super(dataset);
+    fMaxConnection = maxConnection;
     fOpenConnection = openConnection;
     fUsedConnection = usedConnection;
   }
@@ -52,7 +56,7 @@ public class SystemDbConnectionChartDataSourceTest extends AbstractTest {
     IDataBeanProvider provider = mockDataProvider(mockConnection);
 
     ConnectionChartDataSource dataSource = new ConnectionChartDataSource(provider, "",
-            "", "");
+                                                                         "", "");
 
     Query query = new Query();
     dataSource.updateQuery(query);
@@ -60,6 +64,17 @@ public class SystemDbConnectionChartDataSourceTest extends AbstractTest {
     long[] values = dataSource.getValues(result);
     assertEquals(fOpenConnection, values[0]);
     assertEquals(fUsedConnection, values[1]);
+    List<AbstractChartLabelCalcSupport> labelCalcSupports = dataSource.getLabelCalcSupports();
+    for (AbstractChartLabelCalcSupport labelCal : labelCalcSupports) {
+      labelCal.updateValues(result);
+    }
+    assertEquals("Limit", labelCalcSupports.get(0).getText());
+    assertEquals(fMaxConnection, labelCalcSupports.get(0).getValue());
+    assertEquals("Max open", labelCalcSupports.get(1).getText());
+    assertEquals(fOpenConnection, labelCalcSupports.get(1).getValue());
+    assertEquals("Max used", labelCalcSupports.get(2).getText());
+    assertEquals(fUsedConnection, labelCalcSupports.get(2).getValue());
+
   }
 
 }

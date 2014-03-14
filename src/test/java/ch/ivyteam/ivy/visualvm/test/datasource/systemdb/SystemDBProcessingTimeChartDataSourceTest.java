@@ -2,12 +2,14 @@ package ch.ivyteam.ivy.visualvm.test.datasource.systemdb;
 
 import ch.ivyteam.ivy.visualvm.chart.Query;
 import ch.ivyteam.ivy.visualvm.chart.QueryResult;
+import ch.ivyteam.ivy.visualvm.chart.data.support.AbstractChartLabelCalcSupport;
 import ch.ivyteam.ivy.visualvm.chart.data.systemdb.ProcessingTimeChartDataSource;
 import ch.ivyteam.ivy.visualvm.test.AbstractTest;
 import ch.ivyteam.ivy.visualvm.test.data.model.BeanTestData;
 import ch.ivyteam.ivy.visualvm.test.util.TestUtil;
 import ch.ivyteam.ivy.visualvm.view.IDataBeanProvider;
 import java.net.URISyntaxException;
+import java.util.List;
 import javax.management.MBeanServerConnection;
 import javax.xml.bind.JAXBException;
 import org.junit.Test;
@@ -24,32 +26,37 @@ import static org.mockito.Mockito.when;
 public class SystemDBProcessingTimeChartDataSourceTest extends AbstractTest {
 
   private static final String DATA_FILE_PATH = "/ch/ivyteam/ivy/visualvm/test/datasource/systemdb/"
-          + "SystemDbProcessingTimeChartDataSourceTest.xml";
+                                               + "SystemDbProcessingTimeChartDataSourceTest.xml";
   private final long fMax;
   private final long fMin;
-  private final long fTotalDelta;
+  private final long fMean;
+  private final long fMaxOfMax;
+  private final long fTotalMean;
 
   private static IDataBeanProvider fProvider;
   private static Query fQuery;
   private static ProcessingTimeChartDataSource fDataSource;
+  private static List<AbstractChartLabelCalcSupport> fLabelCalcSupports;
 
   @Parameterized.Parameters(name = "{index}")
   public static Iterable<Object[]> data() throws JAXBException, URISyntaxException {
     return TestUtil
             .createTestData(
                     DATA_FILE_PATH,
-                    new Object[]{2122, 0, 2122},
-                    new Object[]{1343, 1343, 1343},
-                    new Object[]{3344, 3344, 3344}
+                    new Object[]{5, 0, 3, 5, 3},
+                    new Object[]{5, 3, 2, 5, 3},
+                    new Object[]{6, 3, 2, 6, 3}
             );
   }
 
   public SystemDBProcessingTimeChartDataSourceTest(BeanTestData.Dataset dataset,
-          long max, long min, long total) {
+          long max, long mean, long min, long maxOfMax, long totalMean) {
     super(dataset);
     fMax = max;
     fMin = min;
-    fTotalDelta = total;
+    fMean = mean;
+    fMaxOfMax = maxOfMax;
+    fTotalMean = totalMean;
   }
 
   @Test
@@ -64,16 +71,24 @@ public class SystemDBProcessingTimeChartDataSourceTest extends AbstractTest {
 
     if (fDataSource == null) {
       fDataSource = new ProcessingTimeChartDataSource(fProvider, "",
-              "", "");
-
+                                                      "", "");
+      fLabelCalcSupports = fDataSource.getLabelCalcSupports();
       fQuery = new Query();
       fDataSource.updateQuery(fQuery);
     }
     QueryResult result = fQuery.execute(mockConnection);
     long[] values = fDataSource.getValues(result);
+    for (AbstractChartLabelCalcSupport labelCal : fLabelCalcSupports) {
+      labelCal.updateValues(result);
+    }
     assertEquals(fMax, values[0]);
-    assertEquals(fMin, values[1]);
-    assertEquals(fTotalDelta, values[2]);
+    assertEquals(fMean, values[1]);
+    assertEquals(fMin, values[2]);
+    //Check label  calculation support
+    assertEquals("Max of max", fLabelCalcSupports.get(0).getText());
+    assertEquals(fMaxOfMax, fLabelCalcSupports.get(0).getValue());
+    assertEquals("Total mean", fLabelCalcSupports.get(1).getText());
+    assertEquals(fTotalMean, fLabelCalcSupports.get(1).getValue());
   }
 
 }
