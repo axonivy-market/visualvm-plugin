@@ -3,8 +3,6 @@ package ch.ivyteam.ivy.visualvm.chart.data.externaldb;
 import ch.ivyteam.ivy.visualvm.chart.SerieStyle;
 import ch.ivyteam.ivy.visualvm.chart.data.AbstractExternalDbAndWebServiceDataSource;
 import ch.ivyteam.ivy.visualvm.chart.data.DbChartTitleConstant;
-import ch.ivyteam.ivy.visualvm.chart.data.DeltaAttributeDataSource;
-import ch.ivyteam.ivy.visualvm.chart.data.MeanSerieDataSource;
 import ch.ivyteam.ivy.visualvm.chart.data.support.ChartLabelDivideCalcSupport;
 import ch.ivyteam.ivy.visualvm.chart.data.support.MaxValueChartLabelCalcSupport;
 import ch.ivyteam.ivy.visualvm.model.IvyJmxConstant.IvyServer.ExternalDatabase;
@@ -32,15 +30,6 @@ public class ExternalDbProcessingTimeChartDataSource extends AbstractExternalDbA
     addLabelCalcSupport(new ChartLabelDivideCalcSupport(DbChartTitleConstant.TOTAL_MEAN_TITLE,
             getObjectName(), ExternalDatabase.KEY_TRANS_TOTAL_EXE_TIME, ExternalDatabase.KEY_TRANS_NUMBER));
 
-    DeltaAttributeDataSource totalProcessingTimeDataSource = new DeltaAttributeDataSource("",
-            1L, SerieStyle.LINE, getObjectName(), ExternalDatabase.KEY_TRANS_TOTAL_EXE_TIME);
-    DeltaAttributeDataSource numTransDataSource = new DeltaAttributeDataSource("", 1L,
-            SerieStyle.LINE, getObjectName(), ExternalDatabase.KEY_TRANS_NUMBER);
-    MeanSerieDataSource meanProcessingTimeDataSource = new MeanSerieDataSource(
-            DbChartTitleConstant.MEAN_SERIE_TITLE, SerieStyle.LINE, totalProcessingTimeDataSource,
-            numTransDataSource);
-    meanProcessingTimeDataSource.setDescription(MEAN_SERIE_DESC);
-    
     addSerie(DbChartTitleConstant.MAX_SERIE_TITLE, MAX_SERIE_DESC, SerieStyle.LINE_FILLED, getObjectName(),
             ExternalDatabase.KEY_TRANS_MAX_EXE_DELTA_TIME);
     addDeltaMeanSerie(DbChartTitleConstant.MEAN_SERIE_TITLE, MEAN_SERIE_DESC, SerieStyle.LINE_FILLED,
