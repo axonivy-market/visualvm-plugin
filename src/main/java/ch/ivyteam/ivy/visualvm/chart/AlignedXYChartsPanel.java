@@ -9,11 +9,11 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JPanel;
 
-public class XYChartsPanel extends JPanel {
+public class AlignedXYChartsPanel extends JPanel {
   private static final int BASE_PADDING = 10;
   private final List<XYChartPanel> fCharts;
 
-  public XYChartsPanel() {
+  public AlignedXYChartsPanel() {
     super();
     setLayout(new GridBagLayout());
     fCharts = new ArrayList<>();

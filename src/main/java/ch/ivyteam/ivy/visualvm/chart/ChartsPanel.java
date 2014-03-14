@@ -18,7 +18,7 @@ public class ChartsPanel implements IUpdatableUIObject {
 
   private final List<IUpdatableUIObject> fUpdatableObjects = new ArrayList<>();
   private final JPanel fChartPanel;
-  private final XYChartsPanel fXYChartsPanel;
+  private final AlignedXYChartsPanel fAlignedXYChartsPanel;
   private final CacheSettingChangeListener fCacheSettingChangeListener = new CacheSettingChangeListener();
 
   /**
@@ -36,7 +36,7 @@ public class ChartsPanel implements IUpdatableUIObject {
     }
     fChartPanel = new JPanel(layout);
     fChartPanel.setBackground(Color.WHITE);
-    fXYChartsPanel = new XYChartsPanel();
+    fAlignedXYChartsPanel = new AlignedXYChartsPanel();
     GlobalPreferences.sharedInstance().watchMonitoredDataCache(fCacheSettingChangeListener);
   }
 
@@ -58,25 +58,20 @@ public class ChartsPanel implements IUpdatableUIObject {
   }
 
   public void addChart(XYChartDataSource dataSource) {
-    final XYChartPanel chart = new XYChartPanel(dataSource);
-    addXYChart(chart);
-  }
-
-  private void addXYChart(final XYChartPanel chart) {
-    fUpdatableObjects.add(chart);
-    addXYChartInternal(chart);
-  }
-
-  private void addXYChartInternal(final XYChartPanel chart) {
-    fXYChartsPanel.addChart(chart);
-    if (!fChartPanel.isAncestorOf(fXYChartsPanel)) {
-      fChartPanel.add(fXYChartsPanel);
-    }
+    addChart(dataSource, null);
   }
 
   public void addChart(XYChartDataSource dataSource, String yAxisMessage) {
     final XYChartPanel chart = new XYChartPanel(dataSource, yAxisMessage);
-    addXYChart(chart);
+    fUpdatableObjects.add(chart);
+    addXYChartToAlignedXYChartsPanel(chart);
+  }
+
+  private void addXYChartToAlignedXYChartsPanel(final XYChartPanel chart) {
+    fAlignedXYChartsPanel.addChart(chart);
+    if (!fChartPanel.isAncestorOf(fAlignedXYChartsPanel)) {
+      fChartPanel.add(fAlignedXYChartsPanel);
+    }
   }
 
   public void addGauge(GaugeDataSource dataSource) {
@@ -100,12 +95,12 @@ public class ChartsPanel implements IUpdatableUIObject {
   }
 
   private void updateChartsCachePeriod() {
-    fXYChartsPanel.removeAll();
+    fAlignedXYChartsPanel.removeAll();
     for (IUpdatableUIObject object : fUpdatableObjects) {
       if (object instanceof XYChartPanel) {
         XYChartPanel chart = (XYChartPanel) object;
         chart.updateCachePeriod();
-        addXYChartInternal(chart);
+        addXYChartToAlignedXYChartsPanel(chart);
       }
     }
   }
