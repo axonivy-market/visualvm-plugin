@@ -15,7 +15,9 @@ import javax.management.ObjectName;
  * @author thnghia
  */
 public abstract class AbstractExternalDbAndWebServiceDataSource extends XYChartDataSource {
-  private static final Logger LOGGER = Logger.getLogger(AbstractExternalDbAndWebServiceDataSource.class.getName());
+
+  private static final Logger LOGGER
+          = Logger.getLogger(AbstractExternalDbAndWebServiceDataSource.class.getName());
   private String fApplication = "*";
   private String fEnvironment = "Default";
   private String fConfigName = "*";

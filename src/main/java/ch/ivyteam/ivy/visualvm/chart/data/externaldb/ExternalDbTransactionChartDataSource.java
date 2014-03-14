@@ -21,10 +21,10 @@ public class ExternalDbTransactionChartDataSource extends AbstractExternalDbAndW
   @Override
   public void init() {
     super.init();
-    addLabelCalcSupport(new MaxDeltaValueChartLabelCalcSupport(DbChartTitleConstant.MAX_TRANSACTION_TITLE, getObjectName(),
-            ExternalDatabase.KEY_TRANS_NUMBER));
-    addLabelCalcSupport(new MaxDeltaValueChartLabelCalcSupport(DbChartTitleConstant.MAX_ERROR_TITLE, getObjectName(),
-            ExternalDatabase.KEY_ERROR_NUMBER));
+    addLabelCalcSupport(new MaxDeltaValueChartLabelCalcSupport(DbChartTitleConstant.MAX_TRANSACTION_TITLE,
+            getObjectName(), ExternalDatabase.KEY_TRANS_NUMBER));
+    addLabelCalcSupport(new MaxDeltaValueChartLabelCalcSupport(DbChartTitleConstant.MAX_ERROR_TITLE,
+            getObjectName(), ExternalDatabase.KEY_ERROR_NUMBER));
     addDeltaSerie(DbChartTitleConstant.TRANSACTION_TITLE, TRANSACTION_SERIE_DESC,
             SerieStyle.LINE_FILLED, getObjectName(), ExternalDatabase.KEY_TRANS_NUMBER);
     addDeltaSerie(DbChartTitleConstant.ERROR_TITLE, TRANSACTION_ERROR_SERIE_DESC,

@@ -12,10 +12,10 @@ public class TransactionChartDataSource extends XYChartDataSource {
   public TransactionChartDataSource(IDataBeanProvider dataBeanProvider, String chartName,
           String xAxisDescription, String yAxisDescription) {
     super(dataBeanProvider, chartName, xAxisDescription, yAxisDescription);
-    addLabelCalcSupport(new MaxDeltaValueChartLabelCalcSupport(DbChartTitleConstant.MAX_TRANSACTION_TITLE, DatabasePersistency.NAME,
-            DatabasePersistency.KEY_TRANS_NUMBER));
-    addLabelCalcSupport(new MaxDeltaValueChartLabelCalcSupport(DbChartTitleConstant.MAX_ERROR_TITLE, DatabasePersistency.NAME,
-            DatabasePersistency.KEY_ERROR));
+    addLabelCalcSupport(new MaxDeltaValueChartLabelCalcSupport(DbChartTitleConstant.MAX_TRANSACTION_TITLE,
+            DatabasePersistency.NAME, DatabasePersistency.KEY_TRANS_NUMBER));
+    addLabelCalcSupport(new MaxDeltaValueChartLabelCalcSupport(DbChartTitleConstant.MAX_ERROR_TITLE, 
+            DatabasePersistency.NAME, DatabasePersistency.KEY_ERROR));
     addDeltaSerie(DbChartTitleConstant.TRANSACTION_TITLE, DbChartTitleConstant.TRANSACTION_SERIE_DESC,
             SerieStyle.LINE_FILLED, DatabasePersistency.NAME, DatabasePersistency.KEY_TRANS_NUMBER);
     addDeltaSerie(DbChartTitleConstant.ERROR_TITLE, DbChartTitleConstant.TRANSACTION_ERROR_SERIE_DESC,
