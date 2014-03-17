@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<beanTestData>
+  <dataset>
+    <property>
+      <name>Xpert.ivy Server:type=External Web Service,application=test,environment=enviroment1,name=WSConfig1</name>
+      <dataset>
+        <property>
+          <name>callsMaxExecutionTimeDeltaInMicroSeconds</name>
+          <value type="java.lang.Long">5000</value>
+        </property>
+        <property>
+          <name>callsTotalExecutionTimeInMicroSeconds</name>
+          <value type="java.lang.Long">15000</value>
+        </property>
+        <property>
+          <name>calls</name>
+          <value type="java.lang.Long">5</value>
+        </property>
+        <property>
+          <name>callsMinExecutionTimeDeltaInMicroSeconds</name>
+          <value type="java.lang.Long">3000</value>
+        </property>
+        
+      </dataset>
+    </property>
+  </dataset>
+  
+  <dataset>
+    <property>
+      <name>Xpert.ivy Server:type=External Web Service,application=test,environment=enviroment1,name=WSConfig1</name>
+      <dataset>
+        <property>
+          <name>callsMaxExecutionTimeDeltaInMicroSeconds</name>
+          <value type="java.lang.Long">5000</value>
+        </property>
+        <property>
+          <name>callsTotalExecutionTimeInMicroSeconds</name>
+          <value type="java.lang.Long">21000</value>
+        </property>
+        <property>
+          <name>calls</name>
+          <value type="java.lang.Long">6</value>
+        </property>
+        <property>
+          <name>callsMinExecutionTimeDeltaInMicroSeconds</name>
+          <value type="java.lang.Long">2000</value>
+        </property>
+        
+      </dataset>
+    </property>
+  </dataset>
+  
+  <dataset>
+    <property>
+      <name>Xpert.ivy Server:type=External Web Service,application=test,environment=enviroment1,name=WSConfig1</name>
+      <dataset>
+        <property>
+          <name>callsMaxExecutionTimeDeltaInMicroSeconds</name>
+          <value type="java.lang.Long">6000</value>
+        </property>
+        <property>
+          <name>callsTotalExecutionTimeInMicroSeconds</name>
+          <value type="java.lang.Long">24000</value>
+        </property>
+        <property>
+          <name>calls</name>
+          <value type="java.lang.Long">7</value>
+        </property>
+        <property>
+          <name>callsMinExecutionTimeDeltaInMicroSeconds</name>
+          <value type="java.lang.Long">2000</value>
+        </property>
+        
+      </dataset>
+    </property>
+  </dataset>
+</beanTestData>

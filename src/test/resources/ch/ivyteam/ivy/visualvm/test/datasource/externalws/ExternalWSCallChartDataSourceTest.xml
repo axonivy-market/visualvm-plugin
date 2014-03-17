@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<beanTestData>
+  <dataset>
+    <property>
+      <name>Xpert.ivy Server:type=External Web Service,application=test,environment=enviroment1,name=WSConfig1</name>
+      <dataset>
+        <property>
+          <name>calls</name>
+          <value type="java.lang.Long">1</value>
+        </property>
+        <property>
+          <name>errors</name>
+          <value type="java.lang.Long">0</value>
+        </property>
+      </dataset>
+    </property>
+  </dataset>
+  
+  <dataset>
+    <property>
+      <name>Xpert.ivy Server:type=External Web Service,application=test,environment=enviroment1,name=WSConfig1</name>
+      <dataset>
+        <property>
+          <name>calls</name>
+          <value type="java.lang.Long">3</value>
+        </property>
+        <property>
+          <name>errors</name>
+          <value type="java.lang.Long">1</value>
+        </property>
+      </dataset>
+    </property>
+  </dataset>
+  
+  <dataset>
+    <property>
+      <name>Xpert.ivy Server:type=External Web Service,application=test,environment=enviroment1,name=WSConfig1</name>
+      <dataset>
+        <property>
+          <name>calls</name>
+          <value type="java.lang.Long">4</value>
+        </property>
+        <property>
+          <name>errors</name>
+          <value type="java.lang.Long">1</value>
+        </property>
+      </dataset>
+    </property>
+  </dataset>
+</beanTestData>
