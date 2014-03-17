@@ -239,7 +239,7 @@ public class LicenseInformationPanel extends javax.swing.JPanel {
               && fConcurrentUsers < threshold150) {
         warningMsg = SESSIONS_EXCEEDED_WARNING;
         color = ERROR_COLOR;
-      } else if (fConcurrentUsers == threshold150) {
+      } else if (fConcurrentUsers >= threshold150) {
         warningMsg = SESSIONS_150_PERCENT_EXCEEDED_WARNING;
         color = ERROR_COLOR;
         iconPath = ERROR_ICON_PATH;
@@ -265,7 +265,7 @@ public class LicenseInformationPanel extends javax.swing.JPanel {
         warningMsg = USERS_90_PERCENT_EXCEEDED_WARNING;
         color = ERROR_COLOR;
         iconPath = ERROR_ICON_PATH;
-      } else if (fNamedUsers == serverUsersLimit) {
+      } else if (fNamedUsers >= serverUsersLimit) {
         warningMsg = USERS_EXCEEDED_WARNING;
         color = ERROR_COLOR;
         iconPath = ERROR_ICON_PATH;
