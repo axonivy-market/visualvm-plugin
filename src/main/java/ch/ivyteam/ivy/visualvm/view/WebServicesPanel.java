@@ -24,10 +24,11 @@ import javax.swing.tree.ExpandVetoException;
 import javax.swing.tree.MutableTreeNode;
 import javax.swing.tree.TreePath;
 import javax.swing.tree.TreeSelectionModel;
+import org.apache.commons.lang.StringUtils;
 import org.openide.util.ImageUtilities;
 
 /**
- *
+ * 
  * @author htnam
  */
 @SuppressWarnings({"serial", "PMD.SingularField"})
@@ -35,28 +36,41 @@ public class WebServicesPanel extends javax.swing.JPanel {
 
   private static final String APP_ICON_PATH = "resources/icons/app_icon.png";
   private static final String ENV_ICON_PATH = "resources/icons/env_icon.png";
-  private static final String CONF_ICON_PATH = "resources/icons/db_icon.png";
+  private static final String WS_ICON_PATH = "resources/icons/web_services_icon.png";
+  private static final String RECORDING_ICON_PATH = "resources/icons/ws_recording_icon.png";
 
-  private final Icon fAppIcon; // icon for application node
-  private final Icon fEnvIcon; // icon for environment node
-  private final Icon fConfIcon; // icon for configuration node
-  private final DefaultTreeModel fEnvTreeModel; // data model for the tree
-  private final AppEnvConfigNode fRootNode; // the root node
-  private final WebServicesView fExternalDbView; // the main view to interact when selection changed
-  private TreePath[] fSelectedPath; // store the selected path when the tree collapses or expands
-  private boolean fResized = false; // resize to 20% the width of whole panel at init time
-  private Map<String, Map<String, Set<String>>> fAppEnvConfigMap; // the tree data
+  /** icon for application node */
+  private final Icon fAppIcon;
+  /** icon for environment node */
+  private final Icon fEnvIcon;
+  /** icon for web-service node */
+  private final Icon fWsIcon;
+  /** icon for selected ws node */
+  private final Icon fRecordingIcon;
+  /** data model for the tree */
+  private final DefaultTreeModel fEnvTreeModel;
+  /** the root node */
+  private final AppEnvWsNode fRootNode;
+  /** the main view to interact when selection changed */
+  private final WebServicesView fExternalDbView;
+  /** store the selected path when the tree collapses or expands */
+  private TreePath[] fSelectedPath;
+  /** resize to 20% the width of whole panel at init time */
+  private boolean fResized = false;
+  /** the tree data */
+  private Map<String, Map<String, Set<String>>> fAppEnvWsMap;
 
   /**
-   * Creates new form WebServicesPanel
+   * Creates new form ExternalDbPanel
    */
   public WebServicesPanel(WebServicesView externalDbView) {
     fExternalDbView = externalDbView;
     fAppIcon = (Icon) ImageUtilities.loadImage(APP_ICON_PATH, true);
     fEnvIcon = (Icon) ImageUtilities.loadImage(ENV_ICON_PATH, true);
-    fConfIcon = (Icon) ImageUtilities.loadImage(CONF_ICON_PATH, true);
+    fWsIcon = (Icon) ImageUtilities.loadImage(WS_ICON_PATH, true);
+    fRecordingIcon = (Icon) ImageUtilities.loadImage(RECORDING_ICON_PATH, true);
     // need to init data models before initialization of the tree and the list
-    fRootNode = new AppEnvConfigNode("Server", fAppIcon);
+    fRootNode = new AppEnvWsNode("Server", fAppIcon);
     fEnvTreeModel = new DefaultTreeModel(fRootNode);
     initComponents();
     initTree();
@@ -78,9 +92,6 @@ public class WebServicesPanel extends javax.swing.JPanel {
     jPanel1 = new javax.swing.JPanel();
     jScrollPane1 = new javax.swing.JScrollPane();
     envJTree = new javax.swing.JTree();
-    jPanel2 = new javax.swing.JPanel();
-    jLabel1 = new javax.swing.JLabel();
-    jSeparator1 = new javax.swing.JSeparator();
 
     setLayout(new java.awt.GridBagLayout());
 
@@ -92,13 +103,13 @@ public class WebServicesPanel extends javax.swing.JPanel {
     javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
     jPanel5.setLayout(jPanel5Layout);
     jPanel5Layout.setHorizontalGroup(
-      jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-      .addGap(0, 310, Short.MAX_VALUE)
-    );
+            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGap(0, 310, Short.MAX_VALUE)
+            );
     jPanel5Layout.setVerticalGroup(
-      jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-      .addGap(0, 298, Short.MAX_VALUE)
-    );
+            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGap(0, 298, Short.MAX_VALUE)
+            );
 
     mainSplitpane.setRightComponent(jPanel5);
 
@@ -120,34 +131,6 @@ public class WebServicesPanel extends javax.swing.JPanel {
     gridBagConstraints.insets = new java.awt.Insets(5, 5, 5, 5);
     jPanel1.add(jScrollPane1, gridBagConstraints);
 
-    jPanel2.setLayout(new java.awt.GridBagLayout());
-
-    jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-    org.openide.awt.Mnemonics.setLocalizedText(jLabel1, org.openide.util.NbBundle.getMessage(WebServicesPanel.class, "WebServicesPanel.jLabel1.text")); // NOI18N
-    jLabel1.setToolTipText(org.openide.util.NbBundle.getMessage(WebServicesPanel.class, "WebServicesPanel.jLabel1.toolTipText")); // NOI18N
-    jLabel1.setHorizontalTextPosition(javax.swing.SwingConstants.LEADING);
-    gridBagConstraints = new java.awt.GridBagConstraints();
-    gridBagConstraints.gridx = 0;
-    gridBagConstraints.gridy = 0;
-    gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-    gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
-    gridBagConstraints.weightx = 1.0;
-    gridBagConstraints.insets = new java.awt.Insets(5, 0, 5, 0);
-    jPanel2.add(jLabel1, gridBagConstraints);
-
-    jSeparator1.setForeground(new java.awt.Color(120, 120, 120));
-    gridBagConstraints = new java.awt.GridBagConstraints();
-    gridBagConstraints.gridx = 0;
-    gridBagConstraints.gridy = 1;
-    gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-    jPanel2.add(jSeparator1, gridBagConstraints);
-
-    gridBagConstraints = new java.awt.GridBagConstraints();
-    gridBagConstraints.gridx = 0;
-    gridBagConstraints.gridy = 0;
-    gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-    jPanel1.add(jPanel2, gridBagConstraints);
-
     mainSplitpane.setLeftComponent(jPanel1);
 
     gridBagConstraints = new java.awt.GridBagConstraints();
@@ -161,13 +144,11 @@ public class WebServicesPanel extends javax.swing.JPanel {
 
   // Variables declaration - do not modify//GEN-BEGIN:variables
   private javax.swing.JTree envJTree;
-  private javax.swing.JLabel jLabel1;
   private javax.swing.JPanel jPanel1;
-  private javax.swing.JPanel jPanel2;
   private javax.swing.JPanel jPanel5;
   private javax.swing.JScrollPane jScrollPane1;
-  private javax.swing.JSeparator jSeparator1;
   private javax.swing.JSplitPane mainSplitpane;
+
   // End of variables declaration//GEN-END:variables
   // CHECKSTYLE:ON
 
@@ -180,7 +161,7 @@ public class WebServicesPanel extends javax.swing.JPanel {
 
   // init data for the tree
   void setTreeData(Map<String, Map<String, Set<String>>> appEnvConfMap) {
-    fAppEnvConfigMap = appEnvConfMap;
+    fAppEnvWsMap = appEnvConfMap;
     // reset the current tree
     for (int i = 0; i < fRootNode.getChildCount(); i++) {
       fEnvTreeModel.removeNodeFromParent((MutableTreeNode) fRootNode.getChildAt(i));
@@ -192,17 +173,17 @@ public class WebServicesPanel extends javax.swing.JPanel {
   private void initTreeData() {
     // update new data
     int index = 0;
-    for (String appName : fAppEnvConfigMap.keySet()) {
-      AppEnvConfigNode appNode = new AppEnvConfigNode(appName, fAppIcon);
+    for (String appName : fAppEnvWsMap.keySet()) {
+      AppEnvWsNode appNode = new AppEnvWsNode(appName, fAppIcon);
       fEnvTreeModel.insertNodeInto(appNode, fRootNode, index++);
       int envIndex = 0;
-      for (String env : fAppEnvConfigMap.get(appName).keySet()) {
-        AppEnvConfigNode envNode = new AppEnvConfigNode(env, fEnvIcon);
+      for (String env : fAppEnvWsMap.get(appName).keySet()) {
+        AppEnvWsNode envNode = new AppEnvWsNode(env, fEnvIcon);
         fEnvTreeModel.insertNodeInto(envNode, appNode, envIndex++);
-        int configIndex = 0;
-        for (String config : fAppEnvConfigMap.get(appName).get(env)) {
-          AppEnvConfigNode confNode = new AppEnvConfigNode(config, fConfIcon);
-          fEnvTreeModel.insertNodeInto(confNode, envNode, configIndex++);
+        int wsIndex = 0;
+        for (String ws : fAppEnvWsMap.get(appName).get(env)) {
+          AppEnvWsNode wsNode = new AppEnvWsNode(ws, fWsIcon);
+          fEnvTreeModel.insertNodeInto(wsNode, envNode, wsIndex++);
         }
       }
     }
@@ -231,7 +212,7 @@ public class WebServicesPanel extends javax.swing.JPanel {
     TreePath oldPath = e.getOldLeadSelectionPath();
     TreePath newPath = e.getNewLeadSelectionPath();
     if (newPath != null) {
-      AppEnvConfigNode node = (AppEnvConfigNode) newPath.getLastPathComponent();
+      AppEnvWsNode node = (AppEnvWsNode) newPath.getLastPathComponent();
       if (node.isLeaf()) {
         envJTree.setSelectionPath(newPath);
       } else {
@@ -278,22 +259,24 @@ public class WebServicesPanel extends javax.swing.JPanel {
     if (selectedPath == null) {
       return;
     }
-    AppEnvConfigNode node = (AppEnvConfigNode) selectedPath.getLastPathComponent();
+    AppEnvWsNode node = (AppEnvWsNode) selectedPath.getLastPathComponent();
     if (node != null && node.isLeaf()) {
       String appName = node.getParent().getParent().toString();
       String envName = node.getParent().toString();
-      fExternalDbView.fireCreateChartsAction(appName, envName, node.toString());
+      fExternalDbView.fireCreateChartsAction(appName, envName, node.getRealWsName());
       node.setIsOpened(true);
     }
   }
 
-  private class AppEnvConfigNode extends DefaultMutableTreeNode {
+  private class AppEnvWsNode extends DefaultMutableTreeNode {
 
     private final Icon fNodeIcon;
     private boolean fNodeOpened;
+    private final String realWsName;
 
-    public AppEnvConfigNode(Object userObject, Icon icon) {
-      super(userObject);
+    public AppEnvWsNode(Object userObject, Icon icon) {
+      realWsName = (String) userObject;
+      setUserObject(cutWsName());
       fNodeIcon = icon;
       setAllowsChildren(true);
     }
@@ -309,6 +292,19 @@ public class WebServicesPanel extends javax.swing.JPanel {
     private boolean isNodeOpened() {
       return fNodeOpened;
     }
+
+    public String getRealWsName() {
+      return realWsName;
+    }
+
+    private String cutWsName() {
+      String cut = StringUtils.substringBetween(realWsName, "\"", " (");
+      if (StringUtils.isEmpty(cut)) {
+        return realWsName;
+      } else {
+        return cut;
+      }
+    }
   }
 
   private class EnvTreeCellRenderer extends DefaultTreeCellRenderer {
@@ -318,12 +314,13 @@ public class WebServicesPanel extends javax.swing.JPanel {
             boolean leaf, int row, boolean hasFocus) {
       super.getTreeCellRendererComponent(tree, value, sel, expanded, leaf, row, hasFocus);
 
-      if (value instanceof AppEnvConfigNode) {
-        AppEnvConfigNode node = (AppEnvConfigNode) value;
+      if (value instanceof AppEnvWsNode) {
+        AppEnvWsNode node = (AppEnvWsNode) value;
         setIcon(node.getNodeIcon());
         setText((String) node.getUserObject());
         if (node.isNodeOpened()) {
           setForeground(Color.blue);
+          setIcon(fRecordingIcon);
         }
       }
       return this;

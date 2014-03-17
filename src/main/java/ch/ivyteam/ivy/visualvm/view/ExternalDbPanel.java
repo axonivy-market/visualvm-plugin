@@ -27,7 +27,7 @@ import javax.swing.tree.TreeSelectionModel;
 import org.openide.util.ImageUtilities;
 
 /**
- *
+ * 
  * @author htnam
  */
 @SuppressWarnings({"serial", "PMD.SingularField"})
@@ -37,17 +37,26 @@ public class ExternalDbPanel extends javax.swing.JPanel {
   private static final String ENV_ICON_PATH = "resources/icons/env_icon.png";
   private static final String CONF_ICON_PATH = "resources/icons/db_icon.png";
   private static final String RECORDING_ICON_PATH = "resources/icons/db_conf_recording_icon.png";
-
-  private final Icon fAppIcon; // icon for application node
-  private final Icon fEnvIcon; // icon for environment node
-  private final Icon fConfIcon; // icon for configuration node
+  /** icon for application node */
+  private final Icon fAppIcon;
+  /** icon for environment node */
+  private final Icon fEnvIcon;
+  /** icon for configuration node */
+  private final Icon fConfIcon;
+  /** icon for selected configuration node */
   private final Icon fRecordingIcon;
-  private final DefaultTreeModel fEnvTreeModel; // data model for the tree
-  private final AppEnvConfigNode fRootNode; // the root node
-  private final ExternalDbView fExternalDbView; // the main view to interact when selection changed
-  private TreePath[] fSelectedPath; // store the selected path when the tree collapses or expands
-  private boolean fResized = false; // resize to 20% the width of whole panel at init time
-  private Map<String, Map<String, Set<String>>> fAppEnvConfigMap; // the tree data
+  /** data model for the tree */
+  private final DefaultTreeModel fEnvTreeModel;
+  /** the root node */
+  private final AppEnvConfigNode fRootNode;
+  /** the main view to interact when selection changed */
+  private final ExternalDbView fExternalDbView;
+  /** store the selected path when the tree collapses or expands */
+  private TreePath[] fSelectedPath;
+  /** resize to 20% the width of whole panel at init time */
+  private boolean fResized = false;
+  /** the tree data */
+  private Map<String, Map<String, Set<String>>> fAppEnvConfigMap;
 
   /**
    * Creates new form ExternalDbPanel
@@ -92,13 +101,13 @@ public class ExternalDbPanel extends javax.swing.JPanel {
     javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
     jPanel5.setLayout(jPanel5Layout);
     jPanel5Layout.setHorizontalGroup(
-      jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-      .addGap(0, 310, Short.MAX_VALUE)
-    );
+            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGap(0, 310, Short.MAX_VALUE)
+            );
     jPanel5Layout.setVerticalGroup(
-      jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-      .addGap(0, 298, Short.MAX_VALUE)
-    );
+            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGap(0, 298, Short.MAX_VALUE)
+            );
 
     mainSplitpane.setRightComponent(jPanel5);
 
@@ -137,6 +146,7 @@ public class ExternalDbPanel extends javax.swing.JPanel {
   private javax.swing.JPanel jPanel5;
   private javax.swing.JScrollPane jScrollPane1;
   private javax.swing.JSplitPane mainSplitpane;
+
   // End of variables declaration//GEN-END:variables
   // CHECKSTYLE:ON
 
