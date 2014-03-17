@@ -3,13 +3,14 @@ package ch.ivyteam.ivy.visualvm.chart.data.externaldb;
 import ch.ivyteam.ivy.visualvm.chart.SerieStyle;
 import ch.ivyteam.ivy.visualvm.chart.data.AbstractExternalDbAndWebServiceDataSource;
 import ch.ivyteam.ivy.visualvm.chart.data.DbChartTitleConstant;
-import ch.ivyteam.ivy.visualvm.chart.data.support.ChartLabelDivideCalcSupport;
 import ch.ivyteam.ivy.visualvm.chart.data.support.MaxValueChartLabelCalcSupport;
+import ch.ivyteam.ivy.visualvm.chart.data.support.MeanTotalDeltaValueChartLabelCalcSupport;
 import ch.ivyteam.ivy.visualvm.model.IvyJmxConstant.IvyServer.ExternalDatabase;
 import ch.ivyteam.ivy.visualvm.view.IDataBeanProvider;
 
 public class ExternalDbProcessingTimeChartDataSource extends AbstractExternalDbAndWebServiceDataSource {
 
+  private static final long SCALED_FACTOR = 1000L;
   public static final String MAX_SERIE_DESC = DbChartTitleConstant.MAX_SERIE_DESC.
           replace("system", "external");
   public static final String MEAN_SERIE_DESC = DbChartTitleConstant.MEAN_SERIE_DESC.
@@ -25,11 +26,12 @@ public class ExternalDbProcessingTimeChartDataSource extends AbstractExternalDbA
   @Override
   public void init() {
     super.init();
-    setScaleFactor(1000L);
+    setScaleFactor(SCALED_FACTOR);
     addLabelCalcSupport(new MaxValueChartLabelCalcSupport(DbChartTitleConstant.MAX_OF_MAX_TITLE,
-            getObjectName(), ExternalDatabase.KEY_TRANS_MAX_EXE_DELTA_TIME));
-    addLabelCalcSupport(new ChartLabelDivideCalcSupport(DbChartTitleConstant.TOTAL_MEAN_TITLE,
-            getObjectName(), ExternalDatabase.KEY_TRANS_TOTAL_EXE_TIME, ExternalDatabase.KEY_TRANS_NUMBER));
+            getObjectName(), ExternalDatabase.KEY_TRANS_MAX_EXE_DELTA_TIME, SCALED_FACTOR));
+    addLabelCalcSupport(new MeanTotalDeltaValueChartLabelCalcSupport(
+            DbChartTitleConstant.TOTAL_MEAN_TITLE, getObjectName(),
+            ExternalDatabase.KEY_TRANS_TOTAL_EXE_TIME, ExternalDatabase.KEY_TRANS_NUMBER, SCALED_FACTOR));
 
     addSerie(DbChartTitleConstant.MAX_SERIE_TITLE, MAX_SERIE_DESC, SerieStyle.LINE_FILLED,
             getObjectName(), ExternalDatabase.KEY_TRANS_MAX_EXE_DELTA_TIME);

@@ -13,12 +13,18 @@ public class LatestValueChartLabelCalcSupport extends AbstractChartLabelCalcSupp
     fAttrKey = attrKey;
   }
 
+  public LatestValueChartLabelCalcSupport(String text, ObjectName objName,
+          String attrKey, long scaledFactor) {
+    this(text, objName, attrKey);
+    setScaledFactor(scaledFactor);
+  }
+
   @Override
   protected long calculateValue(QueryResult queryResult) {
     Object value = queryResult.getValue(fObjName, fAttrKey);
     long current = getValue();
     if (value instanceof Number) {
-      current = ((Number) value).longValue();
+      current = ((Number) value).longValue() / getScaledFactor();
     }
     return current;
   }

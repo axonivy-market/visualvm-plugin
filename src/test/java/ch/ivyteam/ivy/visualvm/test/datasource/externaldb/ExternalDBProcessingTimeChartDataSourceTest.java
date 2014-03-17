@@ -28,7 +28,6 @@ public class ExternalDBProcessingTimeChartDataSourceTest extends AbstractTest {
 
   private static final String DATA_FILE_PATH = "/ch/ivyteam/ivy/visualvm/test/datasource/externaldb"
           + "/ExternalDbProcessingTimeChartDataSourceTest.xml";
-  private final String[] fConfigs;
   private final long fMax;
   private final long fMin;
   private final long fMean;
@@ -42,20 +41,23 @@ public class ExternalDBProcessingTimeChartDataSourceTest extends AbstractTest {
 
   @Parameterized.Parameters(name = "{index}")
   public static Iterable<Object[]> data() throws JAXBException, URISyntaxException {
-    return TestUtil
-            .createTestData(
-                    DATA_FILE_PATH,
-                    new Object[]{new String[]{"test", "enviroment1", "DBConfig1"}, 5, 0, 3, 5, 3},
-                    new Object[]{new String[]{"test", "enviroment1", "DBConfig1"}, 5, 3, 2, 5, 3},
-                    new Object[]{new String[]{"test", "enviroment1", "DBConfig1"}, 6, 3, 2, 6, 3}
-            );
+    return TestUtil.createTestData(DATA_FILE_PATH,
+            //max:5 | min:3 | total:16 | trans:5
+            new Object[]{5, 0, 3, 5, 0},
+            //max:6 | min:2 | total:26 | trans:7
+            new Object[]{6, 5, 2, 6, 5},
+            //max:4 | min:3 | total:30 | trans:8
+            new Object[]{4, 4, 3, 6, 4},
+            //max:4 | min:3 | total:28 | trans:6
+            new Object[]{4, 0, 3, 6, 12},
+            //max:0 | min:0 | total:0 | trans:0
+            new Object[]{0, 0, 0, 6, 12}
+    );
   }
 
   public ExternalDBProcessingTimeChartDataSourceTest(BeanTestData.Dataset dataset,
-          String[] configs, long max, long mean, long min, long maxOfMax, long totalMean) {
+          long max, long mean, long min, long maxOfMax, long totalMean) {
     super(dataset);
-    fConfigs = new String[configs.length];
-    System.arraycopy(configs, 0, fConfigs, 0, configs.length);
     fMax = max;
     fMin = min;
     fMean = mean;
@@ -74,12 +76,11 @@ public class ExternalDBProcessingTimeChartDataSourceTest extends AbstractTest {
     when(fProvider.getMBeanServerConnection()).thenReturn(mockConnection);
 
     if (fDataSource == null) {
-      fDataSource = new ExternalDbProcessingTimeChartDataSource(fProvider, "",
-              "", "");
+      fDataSource = new ExternalDbProcessingTimeChartDataSource(fProvider, "", "", "");
       fDataSource.setNamePattern(IvyJmxConstant.IvyServer.ExternalDatabase.NAME_PATTERN);
-      fDataSource.setApplication(fConfigs[0]);
-      fDataSource.setEnvironment(fConfigs[1]);
-      fDataSource.setConfigName(fConfigs[2]);
+      fDataSource.setApplication("test");
+      fDataSource.setEnvironment("enviroment1");
+      fDataSource.setConfigName("DBConfig1");
       fDataSource.init();
       fLabelCalcSupports = fDataSource.getLabelCalcSupports();
 

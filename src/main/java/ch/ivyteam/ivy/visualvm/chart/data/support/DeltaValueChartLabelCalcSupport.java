@@ -15,12 +15,17 @@ public class DeltaValueChartLabelCalcSupport extends AbstractChartLabelCalcSuppo
     fAttrKey = attrKey;
   }
 
+  public DeltaValueChartLabelCalcSupport(String text, ObjectName objName, String attrKey, long scaledFactor) {
+    this(text, objName, attrKey);
+    setScaledFactor(scaledFactor);
+  }
+
   @Override
   protected long calculateValue(QueryResult queryResult) {
     Object value = queryResult.getValue(fObjName, fAttrKey);
     long result = fLastValue;
     if (value instanceof Number) {
-      result = ((Number) value).longValue();
+      result = ((Number) value).longValue() / getScaledFactor();
       if (isLastValueValid()) {
         result = ensurePositive(result - fLastValue);
       } else {
@@ -39,7 +44,7 @@ public class DeltaValueChartLabelCalcSupport extends AbstractChartLabelCalcSuppo
     super.updateValues(queryResult);
     Object value = queryResult.getValue(fObjName, fAttrKey);
     if (value instanceof Number) {
-      fLastValue = ((Number) value).longValue();
+      fLastValue = ((Number) value).longValue() / getScaledFactor();
     }
   }
 

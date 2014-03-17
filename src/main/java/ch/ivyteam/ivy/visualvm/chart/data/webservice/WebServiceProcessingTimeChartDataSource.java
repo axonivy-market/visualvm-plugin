@@ -3,12 +3,13 @@ package ch.ivyteam.ivy.visualvm.chart.data.webservice;
 import ch.ivyteam.ivy.visualvm.chart.SerieStyle;
 import ch.ivyteam.ivy.visualvm.chart.data.AbstractExternalDbAndWebServiceDataSource;
 import ch.ivyteam.ivy.visualvm.chart.data.DbChartTitleConstant;
-import ch.ivyteam.ivy.visualvm.chart.data.support.ChartLabelDivideCalcSupport;
 import ch.ivyteam.ivy.visualvm.chart.data.support.MaxValueChartLabelCalcSupport;
+import ch.ivyteam.ivy.visualvm.chart.data.support.MeanTotalDeltaValueChartLabelCalcSupport;
 import ch.ivyteam.ivy.visualvm.model.IvyJmxConstant.IvyServer.WebService;
 import ch.ivyteam.ivy.visualvm.view.IDataBeanProvider;
 
 public class WebServiceProcessingTimeChartDataSource extends AbstractExternalDbAndWebServiceDataSource {
+  private static final long SCALED_FACTOR = 1000L;
   public static final String MIN_SERIE_DESCRIPTION = DbChartTitleConstant.MIN_SERIE_DESC.
           replace("system database transactions", "calls to the web service");
   public static final String MAX_SERIE_DESCRIPTION = DbChartTitleConstant.MAX_SERIE_DESC.
@@ -25,11 +26,11 @@ public class WebServiceProcessingTimeChartDataSource extends AbstractExternalDbA
   @Override
   public void init() {
     super.init();
-    setScaleFactor(1000L);
+    setScaleFactor(SCALED_FACTOR);
     addLabelCalcSupport(new MaxValueChartLabelCalcSupport(DbChartTitleConstant.MAX_OF_MAX_TITLE,
-            getObjectName(), WebService.KEY_CALL_MAX_EXE_TIME_DELTA));
-    addLabelCalcSupport(new ChartLabelDivideCalcSupport(DbChartTitleConstant.TOTAL_MEAN_TITLE,
-            getObjectName(), WebService.KEY_CALL_TOTAL_EXE_TIME, WebService.KEY_CALLS));
+            getObjectName(), WebService.KEY_CALL_MAX_EXE_TIME_DELTA, SCALED_FACTOR));
+    addLabelCalcSupport(new MeanTotalDeltaValueChartLabelCalcSupport(DbChartTitleConstant.TOTAL_MEAN_TITLE,
+            getObjectName(), WebService.KEY_CALL_TOTAL_EXE_TIME, WebService.KEY_CALLS, SCALED_FACTOR));
 
     addSerie(DbChartTitleConstant.MAX_SERIE_TITLE, MAX_SERIE_DESCRIPTION, SerieStyle.LINE_FILLED,
             getObjectName(), WebService.KEY_CALL_MAX_EXE_TIME_DELTA);

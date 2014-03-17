@@ -7,6 +7,11 @@ public class MaxValueChartLabelCalcSupport extends AbstractChartLabelCalcSupport
   private final ObjectName fObjName;
   private final String fAttrKey;
 
+  public MaxValueChartLabelCalcSupport(String text, ObjectName objName, String attrKey, long scaledFactor) {
+    this(text, objName, attrKey);
+    setScaledFactor(scaledFactor);
+  }
+
   public MaxValueChartLabelCalcSupport(String text, ObjectName objName, String attrKey) {
     setText(text);
     fObjName = objName;
@@ -18,7 +23,7 @@ public class MaxValueChartLabelCalcSupport extends AbstractChartLabelCalcSupport
     Object value = queryResult.getValue(fObjName, fAttrKey);
     long max = getValue();
     if (value instanceof Number) {
-      long longValue = ((Number) value).longValue();
+      long longValue = ((Number) value).longValue() / getScaledFactor();
       if (longValue > getValue()) {
         max = longValue;
       }

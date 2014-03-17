@@ -1,8 +1,8 @@
 package ch.ivyteam.ivy.visualvm.chart.data.request;
 
 import ch.ivyteam.ivy.visualvm.chart.data.XYChartDataSource;
-import ch.ivyteam.ivy.visualvm.chart.data.support.ChartLabelDivideCalcSupport;
 import ch.ivyteam.ivy.visualvm.chart.data.support.MaxMeanDeltaValueChartLabelCalcSupport;
+import ch.ivyteam.ivy.visualvm.chart.data.support.MeanTotalDeltaValueChartLabelCalcSupport;
 import ch.ivyteam.ivy.visualvm.model.IvyJmxConstant;
 import ch.ivyteam.ivy.visualvm.service.BasicIvyJmxDataCollector;
 import ch.ivyteam.ivy.visualvm.view.IDataBeanProvider;
@@ -18,7 +18,7 @@ public class ProcessingTimeChartDataSource extends XYChartDataSource {
     super(dataBeanProvider, chartName, xAxisDescription, yAxisDescription);
     MBeanServerConnection mBeanServerConnection = getDataBeanProvider().getMBeanServerConnection();
     BasicIvyJmxDataCollector collector = new BasicIvyJmxDataCollector();
-    String legendDesc = "Mean time to process a new request served by {0} connector since the last poll";
+    String legendDesc = "Mean processing time for new requests served by {0} connector since the last poll";
     for (ObjectName processorName : collector.getTomcatRequestProcessors(mBeanServerConnection)) {
       String protocol = dataBeanProvider.getCachedData().getProtocol(processorName);
       addDeltaMeanSerie(protocol, MessageFormat.format(legendDesc, protocol), processorName,
@@ -27,7 +27,7 @@ public class ProcessingTimeChartDataSource extends XYChartDataSource {
       addLabelCalcSupport(new MaxMeanDeltaValueChartLabelCalcSupport("Max " + protocol,
               processorName, IvyJmxConstant.Ivy.Processor.KEY_PROCESS_TIME,
               IvyJmxConstant.Ivy.Processor.KEY_REQUEST_COUNT));
-      addLabelCalcSupport(new ChartLabelDivideCalcSupport("Total mean " + protocol,
+      addLabelCalcSupport(new MeanTotalDeltaValueChartLabelCalcSupport("Total mean " + protocol,
               processorName, IvyJmxConstant.Ivy.Processor.KEY_PROCESS_TIME,
               IvyJmxConstant.Ivy.Processor.KEY_REQUEST_COUNT));
     }

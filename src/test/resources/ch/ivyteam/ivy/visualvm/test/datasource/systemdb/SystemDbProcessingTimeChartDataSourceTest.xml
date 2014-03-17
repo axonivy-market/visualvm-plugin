@@ -6,11 +6,11 @@
       <dataset>
         <property>
           <name>transactionsMaxExecutionTimeDeltaInMicroSeconds</name>
-          <value type="java.lang.Long">5</value>
+          <value type="java.lang.Long">5000</value>
         </property>
         <property>
           <name>transactionsTotalExecutionTimeInMicroSeconds</name>
-          <value type="java.lang.Long">15</value>
+          <value type="java.lang.Long">16000</value>
         </property>
         <property>
           <name>transactions</name>
@@ -18,7 +18,7 @@
         </property>
         <property>
           <name>transactionsMinExecutionTimeDeltaInMicroSeconds</name>
-          <value type="java.lang.Long">3</value>
+          <value type="java.lang.Long">3000</value>
         </property>
       </dataset>
     </property>
@@ -30,11 +30,11 @@
       <dataset>
         <property>
           <name>transactionsMaxExecutionTimeDeltaInMicroSeconds</name>
-          <value type="java.lang.Long">5</value>
+          <value type="java.lang.Long">6000</value>
         </property>
         <property>
           <name>transactionsTotalExecutionTimeInMicroSeconds</name>
-          <value type="java.lang.Long">21</value>
+          <value type="java.lang.Long">26000</value>
         </property>
         <property>
           <name>transactions</name>
@@ -42,7 +42,7 @@
         </property>
         <property>
           <name>transactionsMinExecutionTimeDeltaInMicroSeconds</name>
-          <value type="java.lang.Long">2</value>
+          <value type="java.lang.Long">2000</value>
         </property>
       </dataset>
     </property>
@@ -54,11 +54,11 @@
       <dataset>
         <property>
           <name>transactionsMaxExecutionTimeDeltaInMicroSeconds</name>
-          <value type="java.lang.Long">6</value>
+          <value type="java.lang.Long">4000</value>
         </property>
         <property>
           <name>transactionsTotalExecutionTimeInMicroSeconds</name>
-          <value type="java.lang.Long">24</value>
+          <value type="java.lang.Long">30000</value>
         </property>
         <property>
           <name>transactions</name>
@@ -66,7 +66,55 @@
         </property>
         <property>
           <name>transactionsMinExecutionTimeDeltaInMicroSeconds</name>
-          <value type="java.lang.Long">2</value>
+          <value type="java.lang.Long">3000</value>
+        </property>
+      </dataset>
+    </property>
+  </dataset>
+  
+  <dataset>
+    <property>
+      <name>Xpert.ivy Server:type=Database Persistency Service</name>
+      <dataset>
+        <property>
+          <name>transactionsMaxExecutionTimeDeltaInMicroSeconds</name>
+          <value type="java.lang.Long">4000</value>
+        </property>
+        <property>
+          <name>transactionsTotalExecutionTimeInMicroSeconds</name>
+          <value type="java.lang.Long">28000</value>
+        </property>
+        <property>
+          <name>transactions</name>
+          <value type="java.lang.Long">6</value>
+        </property>
+        <property>
+          <name>transactionsMinExecutionTimeDeltaInMicroSeconds</name>
+          <value type="java.lang.Long">3000</value>
+        </property>
+      </dataset>
+    </property>
+  </dataset>
+  
+  <dataset>
+    <property>
+      <name>Xpert.ivy Server:type=Database Persistency Service</name>
+      <dataset>
+        <property>
+          <name>transactionsMaxExecutionTimeDeltaInMicroSeconds</name>
+          <value type="java.lang.Long">0</value>
+        </property>
+        <property>
+          <name>transactionsTotalExecutionTimeInMicroSeconds</name>
+          <value type="java.lang.Long">0</value>
+        </property>
+        <property>
+          <name>transactions</name>
+          <value type="java.lang.Long">0</value>
+        </property>
+        <property>
+          <name>transactionsMinExecutionTimeDeltaInMicroSeconds</name>
+          <value type="java.lang.Long">0</value>
         </property>
       </dataset>
     </property>

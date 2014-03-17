@@ -6,6 +6,7 @@ import ch.ivyteam.ivy.visualvm.chart.QueryResult;
 public abstract class AbstractChartLabelCalcSupport {
   private String fText;
   private long fValue;
+  private long fScaledFactor = 1L;
 
   protected abstract long calculateValue(QueryResult queryResult);
 
@@ -38,6 +39,14 @@ public abstract class AbstractChartLabelCalcSupport {
       positive = 0L;
     }
     return positive;
+  }
+
+  public long getScaledFactor() {
+    return fScaledFactor;
+  }
+
+  public void setScaledFactor(long scaledFactor) {
+    fScaledFactor = scaledFactor;
   }
 
 }

@@ -5,8 +5,8 @@ import ch.ivyteam.ivy.visualvm.chart.QueryResult;
 import javax.management.ObjectName;
 
 public class MeanDeltaValueChartLabelCalcSupport extends AbstractChartLabelCalcSupport {
-  private DeltaValueChartLabelCalcSupport fDeltaOfTotal;
-  private DeltaValueChartLabelCalcSupport fDeltaOfCounter;
+  private final DeltaValueChartLabelCalcSupport fDeltaOfTotal;
+  private final DeltaValueChartLabelCalcSupport fDeltaOfCounter;
 
   public MeanDeltaValueChartLabelCalcSupport(String text, ObjectName objName,
           String totalAttrKey, String counterAttrKey) {

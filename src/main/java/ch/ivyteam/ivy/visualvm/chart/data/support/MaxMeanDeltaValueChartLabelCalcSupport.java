@@ -9,6 +9,12 @@ public class MaxMeanDeltaValueChartLabelCalcSupport extends MeanDeltaValueChartL
     super(text, objName, totalAttrKey, counterAttrKey);
   }
 
+  public MaxMeanDeltaValueChartLabelCalcSupport(String text, ObjectName objName,
+          String totalAttrKey, String counterAttrKey, long scaledFactor) {
+    this(text, objName, totalAttrKey, counterAttrKey);
+    setScaledFactor(scaledFactor);
+  }
+
   @Override
   protected long calculateValue(QueryResult queryResult) {
     long current = super.calculateValue(queryResult);

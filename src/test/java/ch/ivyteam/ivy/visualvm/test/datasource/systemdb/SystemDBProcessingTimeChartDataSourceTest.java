@@ -26,7 +26,7 @@ import static org.mockito.Mockito.when;
 public class SystemDBProcessingTimeChartDataSourceTest extends AbstractTest {
 
   private static final String DATA_FILE_PATH = "/ch/ivyteam/ivy/visualvm/test/datasource/systemdb/"
-                                               + "SystemDbProcessingTimeChartDataSourceTest.xml";
+          + "SystemDbProcessingTimeChartDataSourceTest.xml";
   private final long fMax;
   private final long fMin;
   private final long fMean;
@@ -40,13 +40,18 @@ public class SystemDBProcessingTimeChartDataSourceTest extends AbstractTest {
 
   @Parameterized.Parameters(name = "{index}")
   public static Iterable<Object[]> data() throws JAXBException, URISyntaxException {
-    return TestUtil
-            .createTestData(
-                    DATA_FILE_PATH,
-                    new Object[]{5, 0, 3, 5, 3},
-                    new Object[]{5, 3, 2, 5, 3},
-                    new Object[]{6, 3, 2, 6, 3}
-            );
+    return TestUtil.createTestData(DATA_FILE_PATH,
+            //max:5 | min:3 | total:16 | trans:5
+            new Object[]{5, 0, 3, 5, 0},
+            //max:6 | min:2 | total:26 | trans:7
+            new Object[]{6, 5, 2, 6, 5},
+            //max:4 | min:3 | total:30 | trans:8
+            new Object[]{4, 4, 3, 6, 4},
+            //max:4 | min:3 | total:28 | trans:6
+            new Object[]{4, 0, 3, 6, 12},
+            //max:0 | min:0 | total:0 | trans:0
+            new Object[]{0, 0, 0, 6, 12}
+    );
   }
 
   public SystemDBProcessingTimeChartDataSourceTest(BeanTestData.Dataset dataset,
@@ -71,7 +76,7 @@ public class SystemDBProcessingTimeChartDataSourceTest extends AbstractTest {
 
     if (fDataSource == null) {
       fDataSource = new ProcessingTimeChartDataSource(fProvider, "",
-                                                      "", "");
+              "", "");
       fLabelCalcSupports = fDataSource.getLabelCalcSupports();
       fQuery = new Query();
       fDataSource.updateQuery(fQuery);

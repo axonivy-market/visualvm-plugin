@@ -32,4 +32,5 @@ public class StaticValueChartLabelCalcSupport extends AbstractChartLabelCalcSupp
   public void updateQuery(Query query) {
     query.addSubQuery(fObjName, fAttrKey);
   }
+
 }

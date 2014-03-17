@@ -10,6 +10,12 @@ public class MaxDeltaValueChartLabelCalcSupport extends DeltaValueChartLabelCalc
     super(text, objName, attrKey);
   }
 
+  public MaxDeltaValueChartLabelCalcSupport(String text, ObjectName objName,
+          String attrKey, long scaledFactor) {
+    this(text, objName, attrKey);
+    setScaledFactor(scaledFactor);
+  }
+
   @Override
   protected long calculateValue(QueryResult queryResult) {
     long nextDelta = super.calculateValue(queryResult);
