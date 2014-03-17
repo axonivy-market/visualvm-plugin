@@ -39,7 +39,7 @@ public class WebServicesView extends AbstractView {
             getDataBeanProvider(), null, null, "Calls");
     WebServiceProcessingTimeChartDataSource processTimeDataSource
             = new WebServiceProcessingTimeChartDataSource(getDataBeanProvider(), null, null,
-                    "Processing Time [µs]");
+                    "Processing Time [ms]");
 
     configDataSources(callsDataSource, processTimeDataSource);
     chartPanel.addChart(callsDataSource);
@@ -81,4 +81,5 @@ public class WebServicesView extends AbstractView {
       createdCharts.put(chartKey, chart);
     }
   }
+
 }

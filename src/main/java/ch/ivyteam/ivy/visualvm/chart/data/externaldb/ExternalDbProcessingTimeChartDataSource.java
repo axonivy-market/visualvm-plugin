@@ -25,17 +25,18 @@ public class ExternalDbProcessingTimeChartDataSource extends AbstractExternalDbA
   @Override
   public void init() {
     super.init();
+    setScaleFactor(1000L);
     addLabelCalcSupport(new MaxValueChartLabelCalcSupport(DbChartTitleConstant.MAX_OF_MAX_TITLE,
             getObjectName(), ExternalDatabase.KEY_TRANS_MAX_EXE_DELTA_TIME));
     addLabelCalcSupport(new ChartLabelDivideCalcSupport(DbChartTitleConstant.TOTAL_MEAN_TITLE,
             getObjectName(), ExternalDatabase.KEY_TRANS_TOTAL_EXE_TIME, ExternalDatabase.KEY_TRANS_NUMBER));
 
-    addSerie(DbChartTitleConstant.MAX_SERIE_TITLE, MAX_SERIE_DESC, SerieStyle.LINE_FILLED, getObjectName(),
-            ExternalDatabase.KEY_TRANS_MAX_EXE_DELTA_TIME);
+    addSerie(DbChartTitleConstant.MAX_SERIE_TITLE, MAX_SERIE_DESC, SerieStyle.LINE_FILLED,
+            getObjectName(), ExternalDatabase.KEY_TRANS_MAX_EXE_DELTA_TIME);
     addDeltaMeanSerie(DbChartTitleConstant.MEAN_SERIE_TITLE, MEAN_SERIE_DESC, SerieStyle.LINE_FILLED,
             getObjectName(), ExternalDatabase.KEY_TRANS_TOTAL_EXE_TIME, ExternalDatabase.KEY_TRANS_NUMBER);
-    addSerie(DbChartTitleConstant.MIN_SERIE_TITLE, MIN_SERIE_DESC, SerieStyle.LINE_FILLED, getObjectName(),
-            ExternalDatabase.KEY_TRANS_MIN_EXE_DELTA_TIME);
+    addSerie(DbChartTitleConstant.MIN_SERIE_TITLE, MIN_SERIE_DESC, SerieStyle.LINE_FILLED,
+            getObjectName(), ExternalDatabase.KEY_TRANS_MIN_EXE_DELTA_TIME);
   }
 
 }

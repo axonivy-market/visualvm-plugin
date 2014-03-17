@@ -44,7 +44,7 @@ public class ExternalDbView extends AbstractView {
             getDataBeanProvider(), null, null, "Transactions");
     ExternalDbProcessingTimeChartDataSource transProcessTimeDataSource
             = new ExternalDbProcessingTimeChartDataSource(getDataBeanProvider(), null, null,
-                    "Processing Time [µs]");
+                    "Processing Time [ms]");
 
     configDataSources(connectionDataSource, transactionDataSource, transProcessTimeDataSource);
     chartPanel.addChart(connectionDataSource, generateDescriptionForConnectionChart());
@@ -128,4 +128,5 @@ public class ExternalDbView extends AbstractView {
     builder.append("</html>");
     return builder.toString();
   }
+
 }

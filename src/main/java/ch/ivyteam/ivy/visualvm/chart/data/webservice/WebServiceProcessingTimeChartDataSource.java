@@ -25,6 +25,7 @@ public class WebServiceProcessingTimeChartDataSource extends AbstractExternalDbA
   @Override
   public void init() {
     super.init();
+    setScaleFactor(1000L);
     addLabelCalcSupport(new MaxValueChartLabelCalcSupport(DbChartTitleConstant.MAX_OF_MAX_TITLE,
             getObjectName(), WebService.KEY_CALL_MAX_EXE_TIME_DELTA));
     addLabelCalcSupport(new ChartLabelDivideCalcSupport(DbChartTitleConstant.TOTAL_MEAN_TITLE,

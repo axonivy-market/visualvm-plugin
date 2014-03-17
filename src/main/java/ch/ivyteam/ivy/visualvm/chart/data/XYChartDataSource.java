@@ -17,6 +17,7 @@ public class XYChartDataSource {
   private final IDataBeanProvider fDataBeanProvider;
   private final List<SerieDataSource> serieDataSources = new ArrayList<>();
   private final List<AbstractChartLabelCalcSupport> fLabelCalcSupports = new ArrayList<>();
+  private long fScaleFactor = 1L;
 
   /**
    *
@@ -42,6 +43,14 @@ public class XYChartDataSource {
     return values;
   }
 
+  public long getScaleFactor() {
+    return fScaleFactor;
+  }
+
+  public void setScaleFactor(long scaleFactor) {
+    this.fScaleFactor = scaleFactor;
+  }
+
   public long[] calculateDetailValues(QueryResult result) {
     long[] values = new long[fLabelCalcSupports.size()];
     int pos = 0;
@@ -53,14 +62,15 @@ public class XYChartDataSource {
   }
 
   public void addFixedSerie(String serie, String description, long fixedValue) {
-    SerieDataSource serieDataSource = new AttributeDataSource(serie, 1L, SerieStyle.FILLED, fixedValue);
+    SerieDataSource serieDataSource = new AttributeDataSource(serie, fScaleFactor, SerieStyle.FILLED,
+            fixedValue);
     serieDataSource.setDescription(description);
     serieDataSources.add(serieDataSource);
   }
 
   public void addSerie(String serie, String description, SerieStyle style, ObjectName mBeanName,
           String attribute) {
-    SerieDataSource serieDataSource = new AttributeDataSource(serie, 1L,
+    SerieDataSource serieDataSource = new AttributeDataSource(serie, fScaleFactor,
             style, mBeanName, attribute);
     serieDataSource.setDescription(description);
     serieDataSources.add(serieDataSource);
@@ -72,7 +82,8 @@ public class XYChartDataSource {
 
   public void addDeltaSerie(String serie, String description, SerieStyle style, ObjectName mBeanName,
           String attribute) {
-    SerieDataSource serieDataSource = new DeltaAttributeDataSource(serie, 1L, style, mBeanName, attribute);
+    SerieDataSource serieDataSource = new DeltaAttributeDataSource(serie, fScaleFactor, style, mBeanName,
+            attribute);
     serieDataSource.setDescription(description);
     serieDataSources.add(serieDataSource);
   }
@@ -126,9 +137,9 @@ public class XYChartDataSource {
   public void addDeltaMeanSerie(String serie, String description, SerieStyle style, ObjectName mBeanName,
           String totalValueAttribute, String countAttribute) {
     SerieDataSource totalValueDataSource = new DeltaAttributeDataSource(
-            serie, 1L, SerieStyle.LINE, mBeanName, totalValueAttribute);
+            serie, fScaleFactor, SerieStyle.LINE, mBeanName, totalValueAttribute);
     SerieDataSource countDataSource = new DeltaAttributeDataSource(serie,
-            1L, SerieStyle.LINE, mBeanName, countAttribute);
+            fScaleFactor, SerieStyle.LINE, mBeanName, countAttribute);
     addMeanSerie(serie, description, style, totalValueDataSource, countDataSource);
   }
 

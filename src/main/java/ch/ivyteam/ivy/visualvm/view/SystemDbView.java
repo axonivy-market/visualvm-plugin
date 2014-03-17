@@ -21,7 +21,7 @@ public class SystemDbView extends AbstractView {
     TransactionChartDataSource transactionNumberDataSource = new TransactionChartDataSource(
             getDataBeanProvider(), null, null, "Transactions");
     ProcessingTimeChartDataSource processTimeDataSource = new ProcessingTimeChartDataSource(
-            getDataBeanProvider(), null, null, "Processing Time [µs]");
+            getDataBeanProvider(), null, null, "Processing Time [ms]");
 
     super.getViewComponent().configureDetailsArea(new DataViewComponent.DetailsAreaConfiguration(null,
             false), DataViewComponent.TOP_LEFT);

@@ -13,6 +13,7 @@ public class ProcessingTimeChartDataSource extends XYChartDataSource {
   public ProcessingTimeChartDataSource(IDataBeanProvider dataBeanProvider, String chartName,
           String xAxisDescription, String yAxisDescription) {
     super(dataBeanProvider, chartName, xAxisDescription, yAxisDescription);
+    setScaleFactor(1000L);
 
     addLabelCalcSupport(new MaxValueChartLabelCalcSupport(DbChartTitleConstant.MAX_OF_MAX_TITLE,
             DatabasePersistency.NAME, DatabasePersistency.KEY_TRANS_MAX_EXE_DELTA_TIME));
@@ -34,4 +35,5 @@ public class ProcessingTimeChartDataSource extends XYChartDataSource {
             SerieStyle.LINE_FILLED, DatabasePersistency.NAME,
             DatabasePersistency.KEY_TRANS_MIN_EXE_DELTA_TIME);
   }
+
 }
