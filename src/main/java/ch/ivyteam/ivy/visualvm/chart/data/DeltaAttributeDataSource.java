@@ -14,18 +14,18 @@ public class DeltaAttributeDataSource extends AttributeDataSource {
 
   @Override
   public long getValue(QueryResult result) {
-    return toDeltaValue(super.getValue(result));
+    long latestValue = super.getValue(result);
+    long deltaValue = toDeltaValue(latestValue);
+    storeLatestValue(latestValue);
+    return toScaledLong(deltaValue);
   }
 
   private long toDeltaValue(long paramVal) {
     long val = paramVal;
     if (isLastValueValid()) {
       long delta = val - lastValue;
-      delta = (delta < 0) ? 0 : delta;
-      lastValue = val;
-      val = delta;
+      val = (delta < 0) ? 0 : delta;
     } else {
-      lastValue = val;
       val = 0;
     }
     return val;
@@ -33,6 +33,10 @@ public class DeltaAttributeDataSource extends AttributeDataSource {
 
   private boolean isLastValueValid() {
     return lastValue != Long.MIN_VALUE;
+  }
+
+  private void storeLatestValue(long value) {
+    lastValue = value;
   }
 
 }

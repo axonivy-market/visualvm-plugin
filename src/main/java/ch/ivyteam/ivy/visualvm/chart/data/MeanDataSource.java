@@ -11,10 +11,10 @@ class MeanDataSource extends SerieDataSource {
   private final SerieDataSource fTotalValueDataSource;
   private final SerieDataSource fCountValueDataSource;
 
-  public MeanDataSource(String serie, SerieStyle serieStyle,
+  public MeanDataSource(String serie, long scaleFactor, SerieStyle serieStyle,
           SerieDataSource totalValueDataSource,
           SerieDataSource countValueDataSource) {
-    super(serie, 1L, serieStyle);
+    super(serie, scaleFactor, serieStyle);
     fTotalValueDataSource = totalValueDataSource;
     fCountValueDataSource = countValueDataSource;
 
@@ -33,6 +33,7 @@ class MeanDataSource extends SerieDataSource {
     if (count == 0L) {
       return 0L;
     }
-    return totalValue / count;
+    return toScaledLong(totalValue / count);
   }
+
 }
