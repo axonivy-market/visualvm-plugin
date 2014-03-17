@@ -1,18 +1,23 @@
 package ch.ivyteam.ivy.visualvm;
 
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
+import javax.management.AttributeNotFoundException;
+import javax.management.InstanceNotFoundException;
+import javax.management.MBeanException;
+import javax.management.MBeanServerConnection;
+import javax.management.ReflectionException;
+
 import ch.ivyteam.ivy.visualvm.model.IvyJmxConstant;
+
 import com.sun.tools.visualvm.application.Application;
 import com.sun.tools.visualvm.core.ui.DataSourceView;
 import com.sun.tools.visualvm.core.ui.DataSourceViewProvider;
 import com.sun.tools.visualvm.core.ui.DataSourceViewsManager;
 import com.sun.tools.visualvm.tools.jmx.JmxModel;
 import com.sun.tools.visualvm.tools.jmx.JmxModelFactory;
-import java.io.IOException;
-import javax.management.AttributeNotFoundException;
-import javax.management.InstanceNotFoundException;
-import javax.management.MBeanException;
-import javax.management.MBeanServerConnection;
-import javax.management.ReflectionException;
 
 class IvyViewProvider extends DataSourceViewProvider<Application> {
 
@@ -23,17 +28,25 @@ class IvyViewProvider extends DataSourceViewProvider<Application> {
   protected boolean supportsViewFor(Application application) {
     try {
       JmxModel jmx = JmxModelFactory.getJmxModelFor(application);
-      MBeanServerConnection mbsc = jmx.getMBeanServerConnection();
-      Object name = mbsc.getAttribute(IvyJmxConstant.IvyServer.Server.NAME,
-              IvyJmxConstant.IvyServer.Server.KEY_APPLICATION_NAME);
-      boolean isIvyServer = name.toString().equals(IvyView.IVY_SERVER_APP_NAME);
-      boolean isIvyDesigner = name.toString().equals(IvyView.IVY_DESIGNER_APP_NAME);
-      ivyView = new IvyView(application, isIvyServer);
-      return isIvyServer || isIvyDesigner;
+      if (jmx != null) {
+        MBeanServerConnection mbsc = jmx.getMBeanServerConnection();
+        if (mbsc != null) {
+          Object name = mbsc.getAttribute(IvyJmxConstant.IvyServer.Server.NAME,
+                  IvyJmxConstant.IvyServer.Server.KEY_APPLICATION_NAME);
+          if (name != null) {
+            boolean isIvyServer = name.toString().equals(IvyView.IVY_SERVER_APP_NAME);
+            boolean isIvyDesigner = name.toString().equals(IvyView.IVY_DESIGNER_APP_NAME);
+            ivyView = new IvyView(application, isIvyServer);
+            return isIvyServer || isIvyDesigner;
+          }
+        }
+      }
     } catch (AttributeNotFoundException | InstanceNotFoundException | MBeanException | ReflectionException |
-            IOException | NullPointerException e) {
-      return false;
+            IOException e) {
+      Logger.getLogger(IvyViewProvider.class.getName()).log(Level.WARNING,
+              "Cannot detect Ivy application", e);
     }
+    return false;
   }
 
   @Override

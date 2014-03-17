@@ -4,13 +4,13 @@
  */
 package ch.ivyteam.ivy.visualvm.view;
 
-import ch.ivyteam.ivy.visualvm.chart.ChartsPanel;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 import java.util.Map;
 import java.util.Set;
+
 import javax.swing.Icon;
 import javax.swing.JTree;
 import javax.swing.event.TreeExpansionEvent;
@@ -24,8 +24,11 @@ import javax.swing.tree.ExpandVetoException;
 import javax.swing.tree.MutableTreeNode;
 import javax.swing.tree.TreePath;
 import javax.swing.tree.TreeSelectionModel;
+
 import org.apache.commons.lang.StringUtils;
 import org.openide.util.ImageUtilities;
+
+import ch.ivyteam.ivy.visualvm.chart.ChartsPanel;
 
 /**
  * 
