@@ -7,9 +7,9 @@ import ch.ivyteam.ivy.visualvm.model.IvyJmxConstant.IvyServer.WebService;
 import ch.ivyteam.ivy.visualvm.view.IDataBeanProvider;
 
 public class WebServiceCallsChartDataSource extends AbstractExternalDbAndWebServiceDataSource {
-  private static final String CALLS_SERIE_DESCRIPTION = DbChartTitleConstant.TRANSACTION_SERIE_DESC.
+  public static final String CALLS_SERIE_DESCRIPTION = DbChartTitleConstant.TRANSACTION_SERIE_DESC.
           replace("system database transactions", "calls to the web service");
-  private static final String ERRORS_SERIE_DESCRIPTION = DbChartTitleConstant.TRANSACTION_ERROR_SERIE_DESC.
+  public static final String ERRORS_SERIE_DESCRIPTION = DbChartTitleConstant.TRANSACTION_ERROR_SERIE_DESC.
           replace("system database transactions", "calls to the web service");
 
   public WebServiceCallsChartDataSource(IDataBeanProvider dataBeanProvider, String chartName,

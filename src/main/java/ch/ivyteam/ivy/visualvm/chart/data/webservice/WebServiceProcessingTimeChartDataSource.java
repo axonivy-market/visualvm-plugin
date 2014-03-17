@@ -9,11 +9,11 @@ import ch.ivyteam.ivy.visualvm.model.IvyJmxConstant.IvyServer.WebService;
 import ch.ivyteam.ivy.visualvm.view.IDataBeanProvider;
 
 public class WebServiceProcessingTimeChartDataSource extends AbstractExternalDbAndWebServiceDataSource {
-  private static final String MIN_SERIE_DESCRIPTION = DbChartTitleConstant.MIN_SERIE_DESC.
+  public static final String MIN_SERIE_DESCRIPTION = DbChartTitleConstant.MIN_SERIE_DESC.
           replace("system database transactions", "calls to the web service");
-  private static final String MAX_SERIE_DESCRIPTION = DbChartTitleConstant.MAX_SERIE_DESC.
+  public static final String MAX_SERIE_DESCRIPTION = DbChartTitleConstant.MAX_SERIE_DESC.
           replace("system database transactions", "calls to the web service");
-  private static final String MEAN_SERIE_DESCRIPTION = DbChartTitleConstant.MEAN_SERIE_DESC.
+  public static final String MEAN_SERIE_DESCRIPTION = DbChartTitleConstant.MEAN_SERIE_DESC.
           replace("system database transactions", "calls to the web service");
 
   public WebServiceProcessingTimeChartDataSource(IDataBeanProvider dataBeanProvider, String chartName,
