@@ -4,10 +4,6 @@
  */
 package ch.ivyteam.ivy.visualvm.view;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Set;
-
 import ch.ivyteam.ivy.visualvm.chart.ChartsPanel;
 import ch.ivyteam.ivy.visualvm.chart.data.AbstractExternalDbAndWebServiceDataSource;
 import ch.ivyteam.ivy.visualvm.chart.data.externaldb.ExternalDbConnectionChartDataSource;
@@ -15,8 +11,10 @@ import ch.ivyteam.ivy.visualvm.chart.data.externaldb.ExternalDbProcessingTimeCha
 import ch.ivyteam.ivy.visualvm.chart.data.externaldb.ExternalDbTransactionChartDataSource;
 import ch.ivyteam.ivy.visualvm.model.IvyJmxConstant;
 import ch.ivyteam.ivy.visualvm.util.DataUtils;
-
 import com.sun.tools.visualvm.core.ui.components.DataViewComponent;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Set;
 
 /**
  *
@@ -119,8 +117,8 @@ public class ExternalDbView extends AbstractView {
   private String generateDescriptionForProcessingTimeChart() {
     StringBuilder builder = new StringBuilder();
     builder.append("<html>");
-    builder.append("The chart shows the maximum and the minimum time needed to execute a transaction in ");
-    builder.append("last poll.<br><br>");
+    builder.append("The chart shows the maximum, the mean and the minimum time needed to execute"
+            + " transactions since the last poll.<br><br>");
     builder.append("<b>Max: </b>").append(ExternalDbProcessingTimeChartDataSource.MAX_SERIE_DESC)
             .append(BR_TAG);
     builder.append("<b>Mean: </b>").append(ExternalDbProcessingTimeChartDataSource.MEAN_SERIE_DESC)

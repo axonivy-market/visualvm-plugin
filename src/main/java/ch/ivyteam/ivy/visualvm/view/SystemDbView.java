@@ -1,14 +1,12 @@
 package ch.ivyteam.ivy.visualvm.view;
 
-import javax.swing.JComponent;
-
 import ch.ivyteam.ivy.visualvm.chart.ChartsPanel;
 import ch.ivyteam.ivy.visualvm.chart.data.DbChartTitleConstant;
 import ch.ivyteam.ivy.visualvm.chart.data.systemdb.ConnectionChartDataSource;
 import ch.ivyteam.ivy.visualvm.chart.data.systemdb.ProcessingTimeChartDataSource;
 import ch.ivyteam.ivy.visualvm.chart.data.systemdb.TransactionChartDataSource;
-
 import com.sun.tools.visualvm.core.ui.components.DataViewComponent;
+import javax.swing.JComponent;
 
 public class SystemDbView extends AbstractView {
 
@@ -66,8 +64,8 @@ public class SystemDbView extends AbstractView {
   private String generateDescriptionForProcessingTimeChart() {
     StringBuilder builder = new StringBuilder();
     builder.append("<html>");
-    builder.append("The chart shows the maximum, the mean and the minimum time needed to execute a ");
-    builder.append("transaction since the last poll.<br><br>");
+    builder.append("The chart shows the maximum, the mean and the minimum time needed to execute ");
+    builder.append("transactions since the last poll.<br><br>");
     builder.append("<b>Max</b>: ").append(DbChartTitleConstant.MAX_SERIE_DESC).append(BR);
     builder.append("<b>Mean</b>: ").append(DbChartTitleConstant.MEAN_SERIE_DESC).append(BR);
     builder.append("<b>Min</b>: ").append(DbChartTitleConstant.MIN_SERIE_DESC);

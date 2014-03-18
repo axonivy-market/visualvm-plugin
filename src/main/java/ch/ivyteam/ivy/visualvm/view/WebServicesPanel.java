@@ -4,13 +4,12 @@
  */
 package ch.ivyteam.ivy.visualvm.view;
 
-import java.awt.Color;
+import ch.ivyteam.ivy.visualvm.chart.ChartsPanel;
 import java.awt.Component;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 import java.util.Map;
 import java.util.Set;
-
 import javax.swing.Icon;
 import javax.swing.JTree;
 import javax.swing.event.TreeExpansionEvent;
@@ -24,11 +23,8 @@ import javax.swing.tree.ExpandVetoException;
 import javax.swing.tree.MutableTreeNode;
 import javax.swing.tree.TreePath;
 import javax.swing.tree.TreeSelectionModel;
-
 import org.apache.commons.lang.StringUtils;
 import org.openide.util.ImageUtilities;
-
-import ch.ivyteam.ivy.visualvm.chart.ChartsPanel;
 
 /**
  * 
@@ -72,7 +68,7 @@ public class WebServicesPanel extends javax.swing.JPanel {
     fEnvIcon = (Icon) ImageUtilities.loadImage(ENV_ICON_PATH, true);
     fWsIcon = (Icon) ImageUtilities.loadImage(WS_ICON_PATH, true);
     fRecordingIcon = (Icon) ImageUtilities.loadImage(RECORDING_ICON_PATH, true);
-    // need to init data models before initialization of the tree and the list
+    // need to init data models before initialization of the tree
     fRootNode = new AppEnvWsNode("Server", fAppIcon);
     fEnvTreeModel = new DefaultTreeModel(fRootNode);
     initComponents();
@@ -322,7 +318,6 @@ public class WebServicesPanel extends javax.swing.JPanel {
         setIcon(node.getNodeIcon());
         setText((String) node.getUserObject());
         if (node.isNodeOpened()) {
-          setForeground(Color.blue);
           setIcon(fRecordingIcon);
         }
       }

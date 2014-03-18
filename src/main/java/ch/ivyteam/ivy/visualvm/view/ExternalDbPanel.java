@@ -5,7 +5,6 @@
 package ch.ivyteam.ivy.visualvm.view;
 
 import ch.ivyteam.ivy.visualvm.chart.ChartsPanel;
-import java.awt.Color;
 import java.awt.Component;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
@@ -67,7 +66,7 @@ public class ExternalDbPanel extends javax.swing.JPanel {
     fEnvIcon = (Icon) ImageUtilities.loadImage(ENV_ICON_PATH, true);
     fConfIcon = (Icon) ImageUtilities.loadImage(CONF_ICON_PATH, true);
     fRecordingIcon = (Icon) ImageUtilities.loadImage(RECORDING_ICON_PATH, true);
-    // need to init data models before initialization of the tree and the list
+    // need to init data models before initialization of the tree
     fRootNode = new AppEnvConfigNode("Server", fAppIcon);
     fEnvTreeModel = new DefaultTreeModel(fRootNode);
     initComponents();
@@ -302,7 +301,6 @@ public class ExternalDbPanel extends javax.swing.JPanel {
         setIcon(node.getNodeIcon());
         setText((String) node.getUserObject());
         if (node.isNodeOpened()) {
-          setForeground(Color.blue);
           setIcon(fRecordingIcon);
         }
       }

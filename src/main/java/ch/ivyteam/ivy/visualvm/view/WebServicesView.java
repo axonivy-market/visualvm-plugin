@@ -4,18 +4,16 @@
  */
 package ch.ivyteam.ivy.visualvm.view;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Set;
-
 import ch.ivyteam.ivy.visualvm.chart.ChartsPanel;
 import ch.ivyteam.ivy.visualvm.chart.data.AbstractExternalDbAndWebServiceDataSource;
 import ch.ivyteam.ivy.visualvm.chart.data.webservice.WebServiceCallsChartDataSource;
 import ch.ivyteam.ivy.visualvm.chart.data.webservice.WebServiceProcessingTimeChartDataSource;
 import ch.ivyteam.ivy.visualvm.model.IvyJmxConstant;
 import ch.ivyteam.ivy.visualvm.util.DataUtils;
-
 import com.sun.tools.visualvm.core.ui.components.DataViewComponent;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Set;
 
 /**
  *
@@ -100,8 +98,8 @@ public class WebServicesView extends AbstractView {
   private String generateDescriptionForProcessingTimeChart() {
     StringBuilder builder = new StringBuilder();
     builder.append("<html>");
-    builder.append("The chart shows the maximum, the mean and the minimum time needed to execute a ");
-    builder.append("call since the last poll.").append(BR).append(BR);
+    builder.append("The chart shows the maximum, the mean and the minimum time needed to execute ");
+    builder.append("web service calls since the last poll.").append(BR).append(BR);
     builder.append("<b>Max</b>: ").append(WebServiceProcessingTimeChartDataSource.MAX_SERIE_DESCRIPTION)
             .append(BR);
     builder.append("<b>Mean</b>: ").append(WebServiceProcessingTimeChartDataSource.MEAN_SERIE_DESCRIPTION)
