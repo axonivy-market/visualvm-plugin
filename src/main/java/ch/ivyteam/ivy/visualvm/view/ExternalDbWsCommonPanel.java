@@ -262,7 +262,7 @@ public class ExternalDbWsCommonPanel extends javax.swing.JPanel {
       @Override
       public void componentResized(ComponentEvent e) {
         if (!fResized) {
-          mainSplitpane.setDividerLocation(getSize().width / 5);
+          mainSplitpane.setDividerLocation((int) (getSize().getWidth() / 5));
           fResized = true;
         }
       }
@@ -287,8 +287,8 @@ public class ExternalDbWsCommonPanel extends javax.swing.JPanel {
     fConfWsIcon = wsIcon;
   }
 
-  void setRecordingIcon(Icon recordingIcon) {
-    fRecordingIcon = recordingIcon;
+  void setRecordingIcon(Icon recordIcon) {
+    fRecordingIcon = recordIcon;
   }
 
   private class AppEnvConfigNode extends DefaultMutableTreeNode {
@@ -317,8 +317,12 @@ public class ExternalDbWsCommonPanel extends javax.swing.JPanel {
     }
 
     private String cutNodeTextToView() {
-      String viewName = StringUtils.substringBetween(realNodeText, "\"", " (");
-      return StringUtils.isEmpty(viewName) ? viewName : realNodeText;
+      String cut = StringUtils.substringBetween(realNodeText, "\"", " (");
+      if (StringUtils.isEmpty(cut)) {
+        return realNodeText;
+      } else {
+        return cut;
+      }
     }
   }
 

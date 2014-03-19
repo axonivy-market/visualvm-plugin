@@ -1,23 +1,20 @@
 package ch.ivyteam.ivy.visualvm;
 
-import java.io.IOException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
-import javax.management.AttributeNotFoundException;
-import javax.management.InstanceNotFoundException;
-import javax.management.MBeanException;
-import javax.management.MBeanServerConnection;
-import javax.management.ReflectionException;
-
 import ch.ivyteam.ivy.visualvm.model.IvyJmxConstant;
-
 import com.sun.tools.visualvm.application.Application;
 import com.sun.tools.visualvm.core.ui.DataSourceView;
 import com.sun.tools.visualvm.core.ui.DataSourceViewProvider;
 import com.sun.tools.visualvm.core.ui.DataSourceViewsManager;
 import com.sun.tools.visualvm.tools.jmx.JmxModel;
 import com.sun.tools.visualvm.tools.jmx.JmxModelFactory;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.management.AttributeNotFoundException;
+import javax.management.InstanceNotFoundException;
+import javax.management.MBeanException;
+import javax.management.MBeanServerConnection;
+import javax.management.ReflectionException;
 
 class IvyViewProvider extends DataSourceViewProvider<Application> {
 
@@ -43,8 +40,7 @@ class IvyViewProvider extends DataSourceViewProvider<Application> {
       }
     } catch (AttributeNotFoundException | InstanceNotFoundException | MBeanException | ReflectionException |
             IOException e) {
-      Logger.getLogger(IvyViewProvider.class.getName()).log(Level.WARNING,
-              "Cannot detect Ivy application", e);
+      Logger.getLogger(IvyViewProvider.class.getName()).log(Level.INFO, "Cannot detect Ivy application", e);
     }
     return false;
   }

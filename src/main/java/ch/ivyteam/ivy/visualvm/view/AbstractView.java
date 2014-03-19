@@ -4,7 +4,6 @@ import ch.ivyteam.ivy.visualvm.chart.Query;
 import ch.ivyteam.ivy.visualvm.chart.QueryResult;
 import com.sun.tools.visualvm.core.ui.components.DataViewComponent;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 import javax.management.MBeanServerConnection;
 import javax.swing.JComponent;
@@ -53,18 +52,13 @@ public class AbstractView {
   public void update() {
     MBeanServerConnection serverConnection = getDataBeanProvider().getMBeanServerConnection();
     Query query = new Query();
-
-    // use iterator to avoid concurrent modification exception
-    Iterator<IUpdatableUIObject> iter = fUpdatableUIObjects.iterator();
-    while (iter.hasNext()) {
-      IUpdatableUIObject updatableUIObj = iter.next();
+    // use array to avoid concurrent modification exception
+    IUpdatableUIObject[] array = fUpdatableUIObjects.toArray(new IUpdatableUIObject[]{});
+    for (IUpdatableUIObject updatableUIObj : array) {
       updatableUIObj.updateQuery(query);
     }
     QueryResult result = query.execute(serverConnection);
-
-    iter = fUpdatableUIObjects.iterator();
-    while (iter.hasNext()) {
-      IUpdatableUIObject updatableUIObj = iter.next();
+    for (IUpdatableUIObject updatableUIObj : array) {
       updatableUIObj.updateValues(result);
     }
   }
