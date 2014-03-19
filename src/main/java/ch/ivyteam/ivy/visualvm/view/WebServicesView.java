@@ -5,35 +5,33 @@
 package ch.ivyteam.ivy.visualvm.view;
 
 import ch.ivyteam.ivy.visualvm.chart.ChartsPanel;
-import ch.ivyteam.ivy.visualvm.chart.data.AbstractExternalDbAndWebServiceDataSource;
 import ch.ivyteam.ivy.visualvm.chart.data.webservice.WebServiceCallsChartDataSource;
 import ch.ivyteam.ivy.visualvm.chart.data.webservice.WebServiceProcessingTimeChartDataSource;
 import ch.ivyteam.ivy.visualvm.model.IvyJmxConstant;
 import ch.ivyteam.ivy.visualvm.util.DataUtils;
+import static ch.ivyteam.ivy.visualvm.view.ExternalDbWsCommonPanel.WS_ICON_PATH;
+import static ch.ivyteam.ivy.visualvm.view.ExternalDbWsCommonPanel.WS_RECORDING_ICON_PATH;
 import com.sun.tools.visualvm.core.ui.components.DataViewComponent;
-import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
+import javax.swing.Icon;
+import org.openide.util.ImageUtilities;
 
 /**
  *
  * @author htnam
  */
-public class WebServicesView extends AbstractView {
-
-  private final WebServicesPanel fWebServicesPanel;
-  private String fCurrentAppName, fCurrentEnvName, fCurrentConfigName;
-  private final Map<String, ChartsPanel> createdCharts;
+public class WebServicesView extends ExternalDbWsCommonView {
 
   public WebServicesView(IDataBeanProvider dataBeanProvider) {
     super(dataBeanProvider);
-    createdCharts = new HashMap<>();
-    fWebServicesPanel = new WebServicesPanel(this);
+    fUIPanel = new ExternalDbWsCommonPanel(this);
+    fUIPanel.setWsIcon((Icon) ImageUtilities.loadImage(WS_ICON_PATH, true));
+    fUIPanel.setRecordingIcon((Icon) ImageUtilities.loadImage(WS_RECORDING_ICON_PATH, true));
   }
 
-  // call when user select environment & db configuration
-  private ChartsPanel createWebServicesChartPanel() {
-
+  @Override
+  protected ChartsPanel createChartPanel() {
     ChartsPanel chartPanel = new ChartsPanel(false);
     WebServiceCallsChartDataSource callsDataSource = new WebServiceCallsChartDataSource(
             getDataBeanProvider(), null, null, "Calls");
@@ -41,47 +39,23 @@ public class WebServicesView extends AbstractView {
             = new WebServiceProcessingTimeChartDataSource(getDataBeanProvider(), null, null,
                     "Processing Time [ms]");
 
-    configDataSources(callsDataSource, processTimeDataSource);
+    configDataSources(IvyJmxConstant.IvyServer.WebService.NAME_PATTERN,
+            callsDataSource, processTimeDataSource);
     chartPanel.addChart(callsDataSource, generateDescriptionForCallsChart());
     chartPanel.addChart(processTimeDataSource, generateDescriptionForProcessingTimeChart());
     registerScheduledUpdate(chartPanel);
     return chartPanel;
   }
 
-  private void configDataSources(AbstractExternalDbAndWebServiceDataSource... dataSources) {
-    for (AbstractExternalDbAndWebServiceDataSource dataSource : dataSources) {
-      dataSource.setNamePattern(IvyJmxConstant.IvyServer.WebService.NAME_PATTERN);
-      dataSource.setApplication(fCurrentAppName);
-      dataSource.setEnvironment(fCurrentEnvName);
-      dataSource.setConfigName(fCurrentConfigName);
-      dataSource.init();
-    }
-  }
-
   @Override
   public DataViewComponent getViewComponent() {
     DataViewComponent viewComponent = super.getViewComponent();
-    viewComponent.add(fWebServicesPanel);
+    viewComponent.add(fUIPanel);
     Map<String, Map<String, Set<String>>> appEnvWs = DataUtils.getWebServicesConfigs(getDataBeanProvider()
             .getMBeanServerConnection());
-    fWebServicesPanel.setTreeData(appEnvWs);
+    fUIPanel.setTreeData(appEnvWs);
     return viewComponent;
   }
-
-  void fireCreateChartsAction(String appName, String envName, String configName) {
-    fCurrentAppName = appName;
-    fCurrentEnvName = envName;
-    fCurrentConfigName = configName;
-    String chartKey = appName + envName + configName;
-    if (createdCharts.containsKey(chartKey)) {
-      fWebServicesPanel.setChartPanelToVisible(createdCharts.get(chartKey));
-    } else {
-      ChartsPanel chart = createWebServicesChartPanel();
-      fWebServicesPanel.setChartPanelToVisible(chart);
-      createdCharts.put(chartKey, chart);
-    }
-  }
-  public static final String BR = "<br>";
 
   private String generateDescriptionForCallsChart() {
     String callDesc = "The chart shows the number of calls to the web service and "

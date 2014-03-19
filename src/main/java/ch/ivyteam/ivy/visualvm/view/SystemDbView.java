@@ -47,8 +47,6 @@ public class SystemDbView extends AbstractView {
     return builder.toString();
   }
 
-  public static final String BR = "<br>";
-
   private String generateDescriptionForTransactionChart() {
     StringBuilder builder = new StringBuilder();
     builder.append("<html>");

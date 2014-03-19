@@ -23,49 +23,69 @@ import javax.swing.tree.ExpandVetoException;
 import javax.swing.tree.MutableTreeNode;
 import javax.swing.tree.TreePath;
 import javax.swing.tree.TreeSelectionModel;
+import org.apache.commons.lang.StringUtils;
 import org.openide.util.ImageUtilities;
 
-/**
- * 
- * @author htnam
- */
 @SuppressWarnings({"serial", "PMD.SingularField"})
-public class ExternalDbPanel extends javax.swing.JPanel {
+public class ExternalDbWsCommonPanel extends javax.swing.JPanel {
 
   private static final String APP_ICON_PATH = "resources/icons/app_icon.png";
   private static final String ENV_ICON_PATH = "resources/icons/env_icon.png";
   private static final String CONF_ICON_PATH = "resources/icons/db_icon.png";
-  private static final String RECORDING_ICON_PATH = "resources/icons/db_conf_recording_icon.png";
-  /** icon for application node */
+  private static final String DB_RECORDING_ICON_PATH = "resources/icons/db_conf_recording_icon.png";
+  protected static final String WS_ICON_PATH = "resources/icons/web_services_icon.png";
+  protected static final String WS_RECORDING_ICON_PATH = "resources/icons/ws_recording_icon.png";
+
+  /**
+   * icon for application node
+   */
   private final Icon fAppIcon;
-  /** icon for environment node */
+  /**
+   * icon for environment node
+   */
   private final Icon fEnvIcon;
-  /** icon for configuration node */
-  private final Icon fConfIcon;
-  /** icon for selected configuration node */
-  private final Icon fRecordingIcon;
-  /** data model for the tree */
+  /**
+   * icon for configuration node
+   */
+  protected Icon fConfWsIcon;
+  /**
+   * icon for selected configuration node
+   */
+  protected Icon fRecordingIcon;
+  /**
+   * data model for the tree
+   */
   private final DefaultTreeModel fEnvTreeModel;
-  /** the root node */
+  /**
+   * the root node
+   */
   private final AppEnvConfigNode fRootNode;
-  /** the main view to interact when selection changed */
-  private final ExternalDbView fExternalDbView;
-  /** store the selected path when the tree collapses or expands */
+  /**
+   * the main view to interact when selection changed
+   */
+  private final ExternalDbWsCommonView fExternalDbWsView;
+  /**
+   * store the selected path when the tree collapses or expands
+   */
   private TreePath[] fSelectedPath;
-  /** resize to 20% the width of whole panel at init time */
+  /**
+   * resize to 20% the width of whole panel at init time
+   */
   private boolean fResized = false;
-  /** the tree data */
-  private Map<String, Map<String, Set<String>>> fAppEnvConfigMap;
+  /**
+   * the tree data
+   */
+  private Map<String, Map<String, Set<String>>> fAppEnvConfigWsMap;
 
   /**
    * Creates new form ExternalDbPanel
    */
-  public ExternalDbPanel(ExternalDbView externalDbView) {
-    fExternalDbView = externalDbView;
+  ExternalDbWsCommonPanel(ExternalDbWsCommonView externalDbView) {
+    fExternalDbWsView = externalDbView;
     fAppIcon = (Icon) ImageUtilities.loadImage(APP_ICON_PATH, true);
     fEnvIcon = (Icon) ImageUtilities.loadImage(ENV_ICON_PATH, true);
-    fConfIcon = (Icon) ImageUtilities.loadImage(CONF_ICON_PATH, true);
-    fRecordingIcon = (Icon) ImageUtilities.loadImage(RECORDING_ICON_PATH, true);
+    fConfWsIcon = (Icon) ImageUtilities.loadImage(CONF_ICON_PATH, true);
+    fRecordingIcon = (Icon) ImageUtilities.loadImage(DB_RECORDING_ICON_PATH, true);
     // need to init data models before initialization of the tree
     fRootNode = new AppEnvConfigNode("Server", fAppIcon);
     fEnvTreeModel = new DefaultTreeModel(fRootNode);
@@ -100,13 +120,13 @@ public class ExternalDbPanel extends javax.swing.JPanel {
     javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
     jPanel5.setLayout(jPanel5Layout);
     jPanel5Layout.setHorizontalGroup(
-            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGap(0, 310, Short.MAX_VALUE)
-            );
+      jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+      .addGap(0, 310, Short.MAX_VALUE)
+    );
     jPanel5Layout.setVerticalGroup(
-            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGap(0, 298, Short.MAX_VALUE)
-            );
+      jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+      .addGap(0, 298, Short.MAX_VALUE)
+    );
 
     mainSplitpane.setRightComponent(jPanel5);
 
@@ -145,10 +165,8 @@ public class ExternalDbPanel extends javax.swing.JPanel {
   private javax.swing.JPanel jPanel5;
   private javax.swing.JScrollPane jScrollPane1;
   private javax.swing.JSplitPane mainSplitpane;
-
   // End of variables declaration//GEN-END:variables
   // CHECKSTYLE:ON
-
   // the view will call this method to change the charts
   void setChartPanelToVisible(ChartsPanel externalDbChartPanel) {
     int oldDividerLoc = mainSplitpane.getDividerLocation();
@@ -158,7 +176,7 @@ public class ExternalDbPanel extends javax.swing.JPanel {
 
   // init data for the tree
   void setTreeData(Map<String, Map<String, Set<String>>> appEnvConfMap) {
-    fAppEnvConfigMap = appEnvConfMap;
+    fAppEnvConfigWsMap = appEnvConfMap;
     // reset the current tree
     for (int i = 0; i < fRootNode.getChildCount(); i++) {
       fEnvTreeModel.removeNodeFromParent((MutableTreeNode) fRootNode.getChildAt(i));
@@ -170,16 +188,16 @@ public class ExternalDbPanel extends javax.swing.JPanel {
   private void initTreeData() {
     // update new data
     int index = 0;
-    for (String appName : fAppEnvConfigMap.keySet()) {
+    for (String appName : fAppEnvConfigWsMap.keySet()) {
       AppEnvConfigNode appNode = new AppEnvConfigNode(appName, fAppIcon);
       fEnvTreeModel.insertNodeInto(appNode, fRootNode, index++);
       int envIndex = 0;
-      for (String env : fAppEnvConfigMap.get(appName).keySet()) {
+      for (String env : fAppEnvConfigWsMap.get(appName).keySet()) {
         AppEnvConfigNode envNode = new AppEnvConfigNode(env, fEnvIcon);
         fEnvTreeModel.insertNodeInto(envNode, appNode, envIndex++);
         int configIndex = 0;
-        for (String config : fAppEnvConfigMap.get(appName).get(env)) {
-          AppEnvConfigNode confNode = new AppEnvConfigNode(config, fConfIcon);
+        for (String config : fAppEnvConfigWsMap.get(appName).get(env)) {
+          AppEnvConfigNode confNode = new AppEnvConfigNode(config, fConfWsIcon);
           fEnvTreeModel.insertNodeInto(confNode, envNode, configIndex++);
         }
       }
@@ -244,7 +262,7 @@ public class ExternalDbPanel extends javax.swing.JPanel {
       @Override
       public void componentResized(ComponentEvent e) {
         if (!fResized) {
-          mainSplitpane.setDividerLocation((int) (getSize().getWidth() / 5));
+          mainSplitpane.setDividerLocation(getSize().width / 5);
           fResized = true;
         }
       }
@@ -260,18 +278,28 @@ public class ExternalDbPanel extends javax.swing.JPanel {
     if (node != null && node.isLeaf()) {
       String appName = node.getParent().getParent().toString();
       String envName = node.getParent().toString();
-      fExternalDbView.fireCreateChartsAction(appName, envName, node.toString());
+      fExternalDbWsView.fireCreateChartsAction(appName, envName, node.toString());
       node.setIsOpened(true);
     }
+  }
+
+  void setWsIcon(Icon wsIcon) {
+    fConfWsIcon = wsIcon;
+  }
+
+  void setRecordingIcon(Icon recordingIcon) {
+    fRecordingIcon = recordingIcon;
   }
 
   private class AppEnvConfigNode extends DefaultMutableTreeNode {
 
     private final Icon fNodeIcon;
     private boolean fNodeOpened;
+    private final String realNodeText;
 
     public AppEnvConfigNode(Object userObject, Icon icon) {
-      super(userObject);
+      realNodeText = (String) userObject;
+      setUserObject(cutNodeTextToView());
       fNodeIcon = icon;
       setAllowsChildren(true);
     }
@@ -286,6 +314,11 @@ public class ExternalDbPanel extends javax.swing.JPanel {
 
     private boolean isNodeOpened() {
       return fNodeOpened;
+    }
+
+    private String cutNodeTextToView() {
+      String viewName = StringUtils.substringBetween(realNodeText, "\"", " (");
+      return StringUtils.isEmpty(viewName) ? viewName : realNodeText;
     }
   }
 

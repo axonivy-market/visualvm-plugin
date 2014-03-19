@@ -12,6 +12,7 @@ import javax.swing.ToolTipManager;
 
 public class AbstractView {
 
+  public static final String BR = "<br>";
   private final IDataBeanProvider fDataBeanProvider;
   private DataViewComponent fViewComponent;
   private final List<IUpdatableUIObject> fUpdatableUIObjects;
@@ -52,7 +53,7 @@ public class AbstractView {
   public void update() {
     MBeanServerConnection serverConnection = getDataBeanProvider().getMBeanServerConnection();
     Query query = new Query();
-    
+
     // use iterator to avoid concurrent modification exception
     Iterator<IUpdatableUIObject> iter = fUpdatableUIObjects.iterator();
     while (iter.hasNext()) {
@@ -60,7 +61,7 @@ public class AbstractView {
       updatableUIObj.updateQuery(query);
     }
     QueryResult result = query.execute(serverConnection);
-    
+
     iter = fUpdatableUIObjects.iterator();
     while (iter.hasNext()) {
       IUpdatableUIObject updatableUIObj = iter.next();
