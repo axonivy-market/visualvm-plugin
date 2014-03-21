@@ -12,9 +12,9 @@ import java.util.Map;
 
 abstract class ExternalDbWsCommonView extends AbstractView {
 
-  protected String fCurrentAppName, fCurrentEnvName, fCurrentConfigName;
-  protected final Map<String, ChartsPanel> fCreatedCharts;
-  protected ExternalDbWsCommonPanel fUIPanel;
+  private String fCurrentAppName, fCurrentEnvName, fCurrentConfigName;
+  private final Map<String, ChartsPanel> fCreatedCharts;
+  private ExternalDbWsCommonPanel fUIPanel;
 
   public ExternalDbWsCommonView(IDataBeanProvider dataBeanProvider) {
     super(dataBeanProvider);
@@ -44,6 +44,14 @@ abstract class ExternalDbWsCommonView extends AbstractView {
       dataSource.setConfigName(fCurrentConfigName);
       dataSource.init();
     }
+  }
+
+  public void setUIPanel(ExternalDbWsCommonPanel UIPanel) {
+    this.fUIPanel = UIPanel;
+  }
+
+  public ExternalDbWsCommonPanel getUIPanel() {
+    return fUIPanel;
   }
 
   protected abstract ChartsPanel createChartPanel();

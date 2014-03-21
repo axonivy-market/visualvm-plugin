@@ -47,11 +47,11 @@ public class ExternalDbWsCommonPanel extends javax.swing.JPanel {
   /**
    * icon for configuration node
    */
-  protected Icon fConfWsIcon;
+  private Icon fConfWsIcon;
   /**
    * icon for selected configuration node
    */
-  protected Icon fRecordingIcon;
+  private Icon fRecordingIcon;
   /**
    * data model for the tree
    */

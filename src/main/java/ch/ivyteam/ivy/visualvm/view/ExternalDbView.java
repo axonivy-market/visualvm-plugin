@@ -22,7 +22,7 @@ public class ExternalDbView extends ExternalDbWsCommonView {
 
   public ExternalDbView(IDataBeanProvider dataBeanProvider) {
     super(dataBeanProvider);
-    fUIPanel = new ExternalDbWsCommonPanel(this);
+    setUIPanel(new ExternalDbWsCommonPanel(this));
   }
 
   // call when user select environment & db configuration
@@ -49,10 +49,10 @@ public class ExternalDbView extends ExternalDbWsCommonView {
   @Override
   public DataViewComponent getViewComponent() {
     DataViewComponent viewComponent = super.getViewComponent();
-    viewComponent.add(fUIPanel);
+    viewComponent.add(getUIPanel());
     Map<String, Map<String, Set<String>>> appEnvConfMap = DataUtils.getExternalDbConfigs(getDataBeanProvider()
             .getMBeanServerConnection());
-    fUIPanel.setTreeData(appEnvConfMap);
+    getUIPanel().setTreeData(appEnvConfMap);
     return viewComponent;
   }
 

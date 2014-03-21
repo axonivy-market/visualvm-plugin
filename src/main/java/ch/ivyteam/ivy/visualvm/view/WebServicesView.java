@@ -25,9 +25,9 @@ public class WebServicesView extends ExternalDbWsCommonView {
 
   public WebServicesView(IDataBeanProvider dataBeanProvider) {
     super(dataBeanProvider);
-    fUIPanel = new ExternalDbWsCommonPanel(this);
-    fUIPanel.setWsIcon((Icon) ImageUtilities.loadImage(WS_ICON_PATH, true));
-    fUIPanel.setRecordingIcon((Icon) ImageUtilities.loadImage(WS_RECORDING_ICON_PATH, true));
+    setUIPanel(new ExternalDbWsCommonPanel(this));
+    getUIPanel().setWsIcon((Icon) ImageUtilities.loadImage(WS_ICON_PATH, true));
+    getUIPanel().setRecordingIcon((Icon) ImageUtilities.loadImage(WS_RECORDING_ICON_PATH, true));
   }
 
   @Override
@@ -50,10 +50,10 @@ public class WebServicesView extends ExternalDbWsCommonView {
   @Override
   public DataViewComponent getViewComponent() {
     DataViewComponent viewComponent = super.getViewComponent();
-    viewComponent.add(fUIPanel);
+    viewComponent.add(getUIPanel());
     Map<String, Map<String, Set<String>>> appEnvWs = DataUtils.getWebServicesConfigs(getDataBeanProvider()
             .getMBeanServerConnection());
-    fUIPanel.setTreeData(appEnvWs);
+    getUIPanel().setTreeData(appEnvWs);
     return viewComponent;
   }
 
