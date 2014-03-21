@@ -46,8 +46,8 @@ abstract class ExternalDbWsCommonView extends AbstractView {
     }
   }
 
-  public void setUIPanel(ExternalDbWsCommonPanel UIPanel) {
-    this.fUIPanel = UIPanel;
+  public void setUIPanel(ExternalDbWsCommonPanel uiPanel) {
+    this.fUIPanel = uiPanel;
   }
 
   public ExternalDbWsCommonPanel getUIPanel() {
