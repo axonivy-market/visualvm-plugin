@@ -278,7 +278,7 @@ public class ExternalDbWsCommonPanel extends javax.swing.JPanel {
     if (node != null && node.isLeaf()) {
       String appName = node.getParent().getParent().toString();
       String envName = node.getParent().toString();
-      fExternalDbWsView.fireCreateChartsAction(appName, envName, node.toString());
+      fExternalDbWsView.fireCreateChartsAction(appName, envName, node.getRealName());
       node.setIsOpened(true);
     }
   }
@@ -295,10 +295,10 @@ public class ExternalDbWsCommonPanel extends javax.swing.JPanel {
 
     private final Icon fNodeIcon;
     private boolean fNodeOpened;
-    private final String realNodeText;
+    private final String fRealNodeText;
 
     public AppEnvConfigNode(Object userObject, Icon icon) {
-      realNodeText = (String) userObject;
+      fRealNodeText = (String) userObject;
       setUserObject(cutNodeTextToView());
       fNodeIcon = icon;
       setAllowsChildren(true);
@@ -316,10 +316,14 @@ public class ExternalDbWsCommonPanel extends javax.swing.JPanel {
       return fNodeOpened;
     }
 
+    public String getRealName() {
+      return fRealNodeText;
+    }
+
     private String cutNodeTextToView() {
-      String cut = StringUtils.substringBetween(realNodeText, "\"", " (");
+      String cut = StringUtils.substringBetween(fRealNodeText, "\"", " (");
       if (StringUtils.isEmpty(cut)) {
-        return realNodeText;
+        return fRealNodeText;
       } else {
         return cut;
       }
