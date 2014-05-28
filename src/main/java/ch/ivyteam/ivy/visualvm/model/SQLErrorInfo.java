@@ -1,5 +1,7 @@
 package ch.ivyteam.ivy.visualvm.model;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class SQLErrorInfo {
@@ -74,6 +76,15 @@ public class SQLErrorInfo {
 
   public void setStacktrace(String stacktrace) {
     this.fStacktrace = stacktrace;
+  }
+
+  public String getDbConfig() {
+    return fApplication + "\\" + fEnvironment + "\\" + fConfigName;
+  }
+
+  public String getExecutionTime() {
+    DateFormat df = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+    return df.format(fTimestamp);
   }
 
   private String getKey() {

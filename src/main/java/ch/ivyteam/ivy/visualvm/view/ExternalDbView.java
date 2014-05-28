@@ -11,6 +11,7 @@ import ch.ivyteam.ivy.visualvm.chart.data.externaldb.ExternalDbTransactionChartD
 import ch.ivyteam.ivy.visualvm.model.IvyJmxConstant;
 import ch.ivyteam.ivy.visualvm.util.DataUtils;
 import com.sun.tools.visualvm.core.ui.components.DataViewComponent;
+import com.sun.tools.visualvm.core.ui.components.DataViewComponent.DetailsView;
 import java.util.Map;
 import java.util.Set;
 import javax.swing.JPanel;
@@ -22,10 +23,13 @@ public class ExternalDbView extends ExternalDbWsCommonView {
   private static final String ERRORS = "Errors";
   private final ExternalDbErrorDataBuffer fErrorInfoBuffer;
 
+  private DetailsView fErrorsDetailsView;
+  private DetailsView fChartsDetailsView;
+  private ExternalDbErrorsPanel fUIErrorPanel;
+
   public ExternalDbView(DataBeanProvider dataBeanProvider) {
     super(dataBeanProvider);
-    fErrorInfoBuffer = new ExternalDbErrorDataBuffer(getDataBeanProvider()
-            .getMBeanServerConnection());
+    fErrorInfoBuffer = new ExternalDbErrorDataBuffer(getDataBeanProvider().getMBeanServerConnection(), 100);
     registerScheduledUpdate(fErrorInfoBuffer);
   }
 
@@ -68,14 +72,16 @@ public class ExternalDbView extends ExternalDbWsCommonView {
 
   private void createExternalDbView() {
     ExternalDbWsCommonPanel chartsPanel = new ExternalDbWsCommonPanel(this);
-    ExternalDbErrorsPanel errorsPanel = new ExternalDbErrorsPanel();
     setUIChartsPanel(chartsPanel);
+    fUIErrorPanel = new ExternalDbErrorsPanel(this);
+
+    fChartsDetailsView = new DataViewComponent.DetailsView(CHARTS, null, 10, chartsPanel, null);
+    fErrorsDetailsView = new DetailsView(ERRORS, null, 10, fUIErrorPanel, null);
+
     super.getViewComponent().configureDetailsArea(new DataViewComponent.DetailsAreaConfiguration(null,
             false), DataViewComponent.TOP_LEFT);
-    super.getViewComponent().addDetailsView(new DataViewComponent.DetailsView(CHARTS, null, 10,
-            chartsPanel, null), DataViewComponent.TOP_LEFT);
-    super.getViewComponent().addDetailsView(new DataViewComponent.DetailsView(ERRORS, null, 10,
-            errorsPanel, null), DataViewComponent.TOP_LEFT);
+    super.getViewComponent().addDetailsView(fChartsDetailsView, DataViewComponent.TOP_LEFT);
+    super.getViewComponent().addDetailsView(fErrorsDetailsView, DataViewComponent.TOP_LEFT);
   }
 
   private String generateDescriptionForConnectionChart() {
@@ -117,6 +123,22 @@ public class ExternalDbView extends ExternalDbWsCommonView {
             .append(BR);
     builder.append("</html>");
     return builder.toString();
+  }
+
+  public void refreshErrorTab() {
+    fUIErrorPanel.refresh(fErrorInfoBuffer.getErrorInfoBuffer());
+  }
+
+  public void switchToChartsTab() {
+    super.getViewComponent().selectDetailsView(fChartsDetailsView);
+  }
+
+  @Override
+  public void update() {
+    super.update();
+    if (!fUIErrorPanel.isLoaded() && !fErrorInfoBuffer.getErrorInfoBuffer().isEmpty()) {
+      refreshErrorTab();
+    }
   }
 
 }

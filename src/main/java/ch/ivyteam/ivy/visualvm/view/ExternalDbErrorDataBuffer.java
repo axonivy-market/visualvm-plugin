@@ -29,17 +29,18 @@ public class ExternalDbErrorDataBuffer implements IUpdatableUIObject {
   private static final String KEY_OBJECT_NAME_PATTERN
           = "Xpert.ivy Server:type=External Database,application=*,environment=*,name=*";
 
-  private static final int MAX_BUFFER_SIZE = 100;
   private static final Logger LOGGER
           = Logger.getLogger(ExternalDbErrorDataBuffer.class.getName());
 
+  private final int fMaxBufferSize;
   private final MBeanServerConnection fConnection;
   private ObjectName fObjectNamePattern;
   private final List<ObjectName> fObjectNames = new ArrayList();
   private final List<SQLErrorInfo> fErrorInfoBuffer = new LinkedList<>();
 
-  ExternalDbErrorDataBuffer(MBeanServerConnection mBeanServerConnection) {
+  ExternalDbErrorDataBuffer(MBeanServerConnection mBeanServerConnection, int maxBufferSize) {
     fConnection = mBeanServerConnection;
+    fMaxBufferSize = maxBufferSize;
   }
 
   @Override
@@ -81,10 +82,10 @@ public class ExternalDbErrorDataBuffer implements IUpdatableUIObject {
 
   private void addErrorToBuffer(SQLErrorInfo errorInfo) {
     if (!fErrorInfoBuffer.contains(errorInfo)) {
-      if (fErrorInfoBuffer.size() >= MAX_BUFFER_SIZE) {
-        fErrorInfoBuffer.remove(0);
+      if (getErrorInfoBuffer().size() >= fMaxBufferSize) {
+        getErrorInfoBuffer().remove(0);
       }
-      fErrorInfoBuffer.add(errorInfo);
+      getErrorInfoBuffer().add(errorInfo);
     }
   }
 
@@ -105,6 +106,10 @@ public class ExternalDbErrorDataBuffer implements IUpdatableUIObject {
     errorInfo.setStacktrace(error.get(KEY_STACKTRACE).toString());
 
     return errorInfo;
+  }
+
+  public List<SQLErrorInfo> getErrorInfoBuffer() {
+    return fErrorInfoBuffer;
   }
 
 }
