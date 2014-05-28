@@ -13,16 +13,20 @@ import ch.ivyteam.ivy.visualvm.util.DataUtils;
 import com.sun.tools.visualvm.core.ui.components.DataViewComponent;
 import java.util.Map;
 import java.util.Set;
+import javax.swing.JPanel;
 
-/**
- *
- * @author htnam
- */
 public class ExternalDbView extends ExternalDbWsCommonView {
+
+  private boolean uiComplete;
+  private static final String CHARTS = "Charts";
+  private static final String ERRORS = "Errors";
+  private final ExternalDbErrorDataBuffer fErrorInfoBuffer;
 
   public ExternalDbView(IDataBeanProvider dataBeanProvider) {
     super(dataBeanProvider);
-    setUIPanel(new ExternalDbWsCommonPanel(this));
+    fErrorInfoBuffer = new ExternalDbErrorDataBuffer(getDataBeanProvider()
+            .getMBeanServerConnection());
+    registerScheduledUpdate(fErrorInfoBuffer);
   }
 
   // call when user select environment & db configuration
@@ -49,11 +53,29 @@ public class ExternalDbView extends ExternalDbWsCommonView {
   @Override
   public DataViewComponent getViewComponent() {
     DataViewComponent viewComponent = super.getViewComponent();
-    viewComponent.add(getUIPanel());
-    Map<String, Map<String, Set<String>>> appEnvConfMap = DataUtils.getExternalDbConfigs(getDataBeanProvider()
-            .getMBeanServerConnection());
-    getUIPanel().setTreeData(appEnvConfMap);
+    if (!uiComplete) {
+      JPanel panel = (JPanel) viewComponent.getComponent(0);
+      panel.remove(0);
+      createExternalDbView();
+      Map<String, Map<String, Set<String>>> appEnvConfMap = DataUtils.getExternalDbConfigs(
+              getDataBeanProvider()
+              .getMBeanServerConnection());
+      getUIChartsPanel().setTreeData(appEnvConfMap);
+      uiComplete = true;
+    }
     return viewComponent;
+  }
+
+  private void createExternalDbView() {
+    ExternalDbWsCommonPanel chartsPanel = new ExternalDbWsCommonPanel(this);
+    ExternalDbErrorsPanel errorsPanel = new ExternalDbErrorsPanel();
+    setUIChartsPanel(chartsPanel);
+    super.getViewComponent().configureDetailsArea(new DataViewComponent.DetailsAreaConfiguration(null,
+            false), DataViewComponent.TOP_LEFT);
+    super.getViewComponent().addDetailsView(new DataViewComponent.DetailsView(CHARTS, null, 10,
+            chartsPanel, null), DataViewComponent.TOP_LEFT);
+    super.getViewComponent().addDetailsView(new DataViewComponent.DetailsView(ERRORS, null, 10,
+            errorsPanel, null), DataViewComponent.TOP_LEFT);
   }
 
   private String generateDescriptionForConnectionChart() {

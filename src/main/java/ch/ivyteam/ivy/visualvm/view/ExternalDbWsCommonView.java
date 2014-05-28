@@ -14,7 +14,7 @@ abstract class ExternalDbWsCommonView extends AbstractView {
 
   private String fCurrentAppName, fCurrentEnvName, fCurrentConfigName;
   private final Map<String, ChartsPanel> fCreatedCharts;
-  private ExternalDbWsCommonPanel fUIPanel;
+  private ExternalDbWsCommonPanel fUIChartsPanel;
 
   public ExternalDbWsCommonView(IDataBeanProvider dataBeanProvider) {
     super(dataBeanProvider);
@@ -27,10 +27,10 @@ abstract class ExternalDbWsCommonView extends AbstractView {
     fCurrentConfigName = configName;
     String chartKey = appName + envName + configName;
     if (fCreatedCharts.containsKey(chartKey)) {
-      fUIPanel.setChartPanelToVisible(fCreatedCharts.get(chartKey));
+      fUIChartsPanel.setChartPanelToVisible(fCreatedCharts.get(chartKey));
     } else {
       ChartsPanel chartsPanel = createChartPanel();
-      fUIPanel.setChartPanelToVisible(chartsPanel);
+      fUIChartsPanel.setChartPanelToVisible(chartsPanel);
       fCreatedCharts.put(chartKey, chartsPanel);
     }
   }
@@ -46,12 +46,12 @@ abstract class ExternalDbWsCommonView extends AbstractView {
     }
   }
 
-  public void setUIPanel(ExternalDbWsCommonPanel uiPanel) {
-    this.fUIPanel = uiPanel;
+  public void setUIChartsPanel(ExternalDbWsCommonPanel uiPanel) {
+    this.fUIChartsPanel = uiPanel;
   }
 
-  public ExternalDbWsCommonPanel getUIPanel() {
-    return fUIPanel;
+  public ExternalDbWsCommonPanel getUIChartsPanel() {
+    return fUIChartsPanel;
   }
 
   protected abstract ChartsPanel createChartPanel();
