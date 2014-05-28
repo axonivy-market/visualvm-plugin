@@ -11,6 +11,7 @@ import ch.ivyteam.ivy.visualvm.util.DataUtils;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 import java.util.Set;
@@ -153,14 +154,22 @@ public class BasicIvyJmxDataCollector {
             }
           }
         }
-        String fullProtocol = DataUtils.getFullConnectorProtocol(connector.getProtocol(),
-                connector.getScheme());
-        connector.setProtocol(fullProtocol);
         mappedConnectors.add(connector);
       }
     } catch (IOException | InstanceNotFoundException | ReflectionException ex) {
       throw new IvyJmxDataCollectException(ex);
     }
+    Collections.sort(mappedConnectors, new Comparator<ServerConnectorInfo>() {
+      @Override
+      public int compare(ServerConnectorInfo o1, ServerConnectorInfo o2) {
+        int result = o1.getProtocol().compareTo(o2.getProtocol());
+        if (result == 0) {
+          result = o1.getScheme().compareTo(o2.getScheme());
+        }
+        return result;
+      }
+
+    });
     return mappedConnectors;
   }
 

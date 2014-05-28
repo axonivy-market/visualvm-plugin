@@ -10,7 +10,7 @@ import static ch.ivyteam.ivy.visualvm.test.AbstractTest.addTestData;
 import static ch.ivyteam.ivy.visualvm.test.AbstractTest.createMockConnection;
 import ch.ivyteam.ivy.visualvm.test.data.model.BeanTestData;
 import ch.ivyteam.ivy.visualvm.test.util.TestUtil;
-import ch.ivyteam.ivy.visualvm.view.IDataBeanProvider;
+import ch.ivyteam.ivy.visualvm.view.DataBeanProvider;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.util.List;
@@ -64,7 +64,7 @@ public class ExternalDbConnectionChartDataSourceTest extends AbstractTest {
     when(mockConnection.getAttribute(objectName,
             IvyJmxConstant.IvyServer.ExternalDatabase.KEY_MAX_CONNECTION)).thenReturn(fMaxConnection);
 
-    IDataBeanProvider provider = mockDataProvider(mockConnection);
+    DataBeanProvider provider = mockDataProvider(mockConnection);
 
     ExternalDbConnectionChartDataSource dataSource = new ExternalDbConnectionChartDataSource(provider, "",
             "", "");

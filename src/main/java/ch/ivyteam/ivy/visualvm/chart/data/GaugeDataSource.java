@@ -2,19 +2,19 @@ package ch.ivyteam.ivy.visualvm.chart.data;
 
 import ch.ivyteam.ivy.visualvm.chart.Query;
 import ch.ivyteam.ivy.visualvm.chart.QueryResult;
-import ch.ivyteam.ivy.visualvm.view.IDataBeanProvider;
+import ch.ivyteam.ivy.visualvm.view.DataBeanProvider;
 import java.util.ArrayList;
 import java.util.List;
 import javax.management.ObjectName;
 
 public class GaugeDataSource {
-  private final IDataBeanProvider fDataBeanProvider;
+  private final DataBeanProvider fDataBeanProvider;
   private final String fAttribute;
   private final ObjectName fMBeanName;
   private static final double SCALE_FACTOR = 1D;
   private final List<Double> fThresholds = new ArrayList();
 
-  public GaugeDataSource(IDataBeanProvider dataBeanProvider, ObjectName mBeanName, String attribute) {
+  public GaugeDataSource(DataBeanProvider dataBeanProvider, ObjectName mBeanName, String attribute) {
     fDataBeanProvider = dataBeanProvider;
     fMBeanName = mBeanName;
     fAttribute = attribute;
@@ -24,7 +24,7 @@ public class GaugeDataSource {
     return fThresholds;
   }
 
-  public IDataBeanProvider getDataBeanProvider() {
+  public DataBeanProvider getDataBeanProvider() {
     return fDataBeanProvider;
   }
 

@@ -1,25 +1,21 @@
 package ch.ivyteam.ivy.visualvm.view;
 
-import ch.ivyteam.ivy.visualvm.util.DataUtils;
-import com.sun.tools.visualvm.application.Application;
 import javax.management.MBeanServerConnection;
 
-public class DataBeanProvider implements IDataBeanProvider {
+public class DataBeanProvider {
   private final MBeanServerConnection fMBeanServerConnection;
-  private final CachedData fCachedData;
+  private final GenericData fCachedData;
 
-  public DataBeanProvider(Application ivyApplication) {
-    fMBeanServerConnection = DataUtils.getMBeanServerConnection(ivyApplication);
-    fCachedData = new CachedData(fMBeanServerConnection);
+  public DataBeanProvider(MBeanServerConnection connection) {
+    fMBeanServerConnection = connection;
+    fCachedData = new GenericData(fMBeanServerConnection);
   }
 
-  @Override
   public MBeanServerConnection getMBeanServerConnection() {
     return fMBeanServerConnection;
   }
 
-  @Override
-  public CachedData getCachedData() {
+  public GenericData getGenericData() {
     return fCachedData;
   }
 

@@ -7,7 +7,7 @@ import ch.ivyteam.ivy.visualvm.model.IvyJmxConstant;
 import ch.ivyteam.ivy.visualvm.test.AbstractTest;
 import ch.ivyteam.ivy.visualvm.test.data.model.BeanTestData;
 import ch.ivyteam.ivy.visualvm.test.util.TestUtil;
-import ch.ivyteam.ivy.visualvm.view.IDataBeanProvider;
+import ch.ivyteam.ivy.visualvm.view.DataBeanProvider;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.util.HashSet;
@@ -59,7 +59,7 @@ public class SessionChartDataSourceTest extends AbstractTest {
     when(mockConnection.queryNames(IvyJmxConstant.Ivy.Manager.PATTERN, null))
             .thenReturn(connectorObjNames);
 
-    IDataBeanProvider provider = mockDataProvider(mockConnection);
+    DataBeanProvider provider = mockDataProvider(mockConnection);
 
     SessionChartDataSource sessionChartDataSource = new SessionChartDataSource(provider, "", "", "");
     Query query = new Query();

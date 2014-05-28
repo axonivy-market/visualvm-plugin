@@ -8,7 +8,7 @@ import ch.ivyteam.ivy.visualvm.model.IvyJmxConstant;
 import ch.ivyteam.ivy.visualvm.test.AbstractTest;
 import ch.ivyteam.ivy.visualvm.test.data.model.BeanTestData;
 import ch.ivyteam.ivy.visualvm.test.util.TestUtil;
-import ch.ivyteam.ivy.visualvm.view.IDataBeanProvider;
+import ch.ivyteam.ivy.visualvm.view.DataBeanProvider;
 import java.net.URISyntaxException;
 import java.util.List;
 import javax.management.MBeanServerConnection;
@@ -23,7 +23,7 @@ import static org.mockito.Mockito.when;
 public class ExternalWSCallingTimeChartDataSourceTest extends AbstractTest {
 
   private static final String DATA_FILE_PATH = "/ch/ivyteam/ivy/visualvm/test/datasource/externalws"
-                                               + "/ExternalWSCallingTimeChartDataSourceTest.xml";
+          + "/ExternalWSCallingTimeChartDataSourceTest.xml";
   private final String[] fConfigs;
   private final long fMax;
   private final long fMin;
@@ -31,7 +31,7 @@ public class ExternalWSCallingTimeChartDataSourceTest extends AbstractTest {
   private final long fMaxOfMax;
   private final long fTotalMean;
 
-  private static IDataBeanProvider fProvider;
+  private static DataBeanProvider fProvider;
   private static Query fQuery;
   private static WebServiceProcessingTimeChartDataSource fDataSource;
   private static List<AbstractChartLabelCalcSupport> fLabelCalcSupports;
@@ -65,13 +65,13 @@ public class ExternalWSCallingTimeChartDataSourceTest extends AbstractTest {
     final MBeanServerConnection mockConnection = createMockConnection();
     addTestData(mockConnection, getDataset());
     if (fProvider == null) {
-      fProvider = mock(IDataBeanProvider.class);
+      fProvider = mock(DataBeanProvider.class);
     }
     when(fProvider.getMBeanServerConnection()).thenReturn(mockConnection);
 
     if (fDataSource == null) {
       fDataSource = new WebServiceProcessingTimeChartDataSource(fProvider, "",
-                                                                "", "");
+              "", "");
       fDataSource.setApplication(fConfigs[0]);
       fDataSource.setEnvironment(fConfigs[1]);
       fDataSource.setConfigName(fConfigs[2]);

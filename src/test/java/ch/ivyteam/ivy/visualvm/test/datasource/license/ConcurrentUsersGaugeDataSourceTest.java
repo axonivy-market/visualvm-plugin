@@ -7,7 +7,7 @@ import ch.ivyteam.ivy.visualvm.chart.data.license.ConcurrentUsersGaugeDataSource
 import ch.ivyteam.ivy.visualvm.test.AbstractTest;
 import ch.ivyteam.ivy.visualvm.test.data.model.BeanTestData;
 import ch.ivyteam.ivy.visualvm.test.util.TestUtil;
-import ch.ivyteam.ivy.visualvm.view.IDataBeanProvider;
+import ch.ivyteam.ivy.visualvm.view.DataBeanProvider;
 import eu.hansolo.steelseries.gauges.Radial;
 import java.io.IOException;
 import java.net.URISyntaxException;
@@ -51,7 +51,7 @@ public class ConcurrentUsersGaugeDataSourceTest extends AbstractTest {
           MalformedObjectNameException {
     final MBeanServerConnection mockConnection = createMockConnection();
     addTestData(mockConnection, getDataset());
-    IDataBeanProvider provider = mockDataProvider(mockConnection);
+    DataBeanProvider provider = mockDataProvider(mockConnection);
     ConcurrentUsersGaugeDataSource concurrentUsersGaugeDataSource = new ConcurrentUsersGaugeDataSource(
             provider, fLimit);
     RadialPanel radialPanel = new RadialPanel(concurrentUsersGaugeDataSource);

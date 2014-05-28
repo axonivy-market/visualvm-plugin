@@ -3,9 +3,8 @@ package ch.ivyteam.ivy.visualvm.test;
 import ch.ivyteam.ivy.visualvm.exception.IvyVisualVMRuntimeException;
 import ch.ivyteam.ivy.visualvm.test.data.model.BeanTestData;
 import ch.ivyteam.ivy.visualvm.test.data.model.BeanTestData.Dataset.Property;
-import ch.ivyteam.ivy.visualvm.view.CachedData;
+import ch.ivyteam.ivy.visualvm.view.GenericData;
 import ch.ivyteam.ivy.visualvm.view.DataBeanProvider;
-import ch.ivyteam.ivy.visualvm.view.IDataBeanProvider;
 import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -85,10 +84,10 @@ public abstract class AbstractTest extends TestCase {
     }
   }
 
-  public IDataBeanProvider mockDataProvider(MBeanServerConnection connection) {
-    IDataBeanProvider provider = Mockito.mock(DataBeanProvider.class);
+  public DataBeanProvider mockDataProvider(MBeanServerConnection connection) {
+    DataBeanProvider provider = Mockito.mock(DataBeanProvider.class);
     when(provider.getMBeanServerConnection()).thenReturn(connection);
-    when(provider.getCachedData()).thenReturn(new CachedData(connection));
+    when(provider.getGenericData()).thenReturn(new GenericData(connection));
     return provider;
   }
 

@@ -6,7 +6,7 @@ import ch.ivyteam.ivy.visualvm.chart.data.DbChartTitleConstant;
 import ch.ivyteam.ivy.visualvm.chart.data.support.MaxValueChartLabelCalcSupport;
 import ch.ivyteam.ivy.visualvm.chart.data.support.StaticValueChartLabelCalcSupport;
 import ch.ivyteam.ivy.visualvm.model.IvyJmxConstant.IvyServer.ExternalDatabase;
-import ch.ivyteam.ivy.visualvm.view.IDataBeanProvider;
+import ch.ivyteam.ivy.visualvm.view.DataBeanProvider;
 
 public class ExternalDbConnectionChartDataSource extends AbstractExternalDbAndWebServiceDataSource {
 
@@ -15,7 +15,7 @@ public class ExternalDbConnectionChartDataSource extends AbstractExternalDbAndWe
   public static final String USED_SERIE_DESC = DbChartTitleConstant.USED_SERIE_DESC.
           replace("system", "external");
 
-  public ExternalDbConnectionChartDataSource(IDataBeanProvider dataBeanProvider, String chartName,
+  public ExternalDbConnectionChartDataSource(DataBeanProvider dataBeanProvider, String chartName,
           String xAxisDescription, String yAxisDescription) {
     super(dataBeanProvider, chartName, xAxisDescription, yAxisDescription);
   }
@@ -35,4 +35,5 @@ public class ExternalDbConnectionChartDataSource extends AbstractExternalDbAndWe
     addSerie(DbChartTitleConstant.USED_SERIE_TITLE, USED_SERIE_DESC, SerieStyle.LINE_FILLED, getObjectName(),
             ExternalDatabase.KEY_USED_CONNECTION);
   }
+
 }

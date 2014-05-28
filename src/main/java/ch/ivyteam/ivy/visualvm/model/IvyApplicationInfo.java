@@ -3,6 +3,8 @@ package ch.ivyteam.ivy.visualvm.model;
 import java.util.Date;
 
 public class IvyApplicationInfo {
+  public static final String IVY_SERVER_APP_NAME = "Xpert.ivy Server";
+  public static final String IVY_DESIGNER_APP_NAME = "Xpert.ivy Designer";
 
   private String fApplicationName;
   private String fVersion;
@@ -60,6 +62,10 @@ public class IvyApplicationInfo {
 
   public void setReleaseCandidate(boolean releaseCandidate) {
     fReleaseCandidate = releaseCandidate;
+  }
+
+  public boolean isServer() {
+    return IVY_SERVER_APP_NAME.equals(fApplicationName);
   }
 
 }

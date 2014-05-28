@@ -12,18 +12,18 @@ import javax.swing.ToolTipManager;
 public class AbstractView {
 
   public static final String BR = "<br>";
-  private final IDataBeanProvider fDataBeanProvider;
+  private final DataBeanProvider fDataBeanProvider;
   private DataViewComponent fViewComponent;
   private final List<IUpdatableUIObject> fUpdatableUIObjects;
 
-  public AbstractView(IDataBeanProvider dataBeanProvider) {
+  public AbstractView(DataBeanProvider dataBeanProvider) {
     fDataBeanProvider = dataBeanProvider;
     fUpdatableUIObjects = new ArrayList<>();
     ToolTipManager.sharedInstance().setInitialDelay(200);
     ToolTipManager.sharedInstance().setDismissDelay(99999);
   }
 
-  public IDataBeanProvider getDataBeanProvider() {
+  public DataBeanProvider getDataBeanProvider() {
     return fDataBeanProvider;
   }
 
@@ -74,7 +74,7 @@ public class AbstractView {
   /**
    * Disable close ability for an area with specified position on viewer
    *
-   * @param viewer the viewer
+   * @param viewer   the viewer
    * @param position the position on view
    * @see DataViewComponent#configureDetailsArea(
    * com.sun.tools.visualvm.core.ui.components.DataViewComponent.DetailsAreaConfiguration, int)

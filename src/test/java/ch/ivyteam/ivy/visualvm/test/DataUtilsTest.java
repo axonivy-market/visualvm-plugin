@@ -25,13 +25,6 @@ public class DataUtilsTest {
   }
 
   @Test
-  public void testGetFullConnectorProtocol() {
-    assertEquals("HTTPS/1.1", DataUtils.getFullConnectorProtocol("HTTP/1.1", "https"));
-    assertEquals("HTTP/1.1", DataUtils.getFullConnectorProtocol("HTTP/1.1", "http"));
-    assertEquals("AJP/1.3", DataUtils.getFullConnectorProtocol("AJP/1.3", "http"));
-  }
-
-  @Test
   public void testGetHostNameFromRuntimeId() {
     assertEquals("AAVN-WS-04", DataUtils.getHostNameFromRuntimeId("1234@AAVN-WS-04"));
   }

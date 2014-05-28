@@ -6,7 +6,7 @@ import ch.ivyteam.ivy.visualvm.chart.data.DbChartTitleConstant;
 import ch.ivyteam.ivy.visualvm.chart.data.support.MaxValueChartLabelCalcSupport;
 import ch.ivyteam.ivy.visualvm.chart.data.support.MeanTotalDeltaValueChartLabelCalcSupport;
 import ch.ivyteam.ivy.visualvm.model.IvyJmxConstant.IvyServer.ExternalDatabase;
-import ch.ivyteam.ivy.visualvm.view.IDataBeanProvider;
+import ch.ivyteam.ivy.visualvm.view.DataBeanProvider;
 
 public class ExternalDbProcessingTimeChartDataSource extends AbstractExternalDbAndWebServiceDataSource {
 
@@ -18,7 +18,7 @@ public class ExternalDbProcessingTimeChartDataSource extends AbstractExternalDbA
   public static final String MIN_SERIE_DESC = DbChartTitleConstant.MIN_SERIE_DESC.
           replace("system", "external");
 
-  public ExternalDbProcessingTimeChartDataSource(IDataBeanProvider dataBeanProvider, String chartName,
+  public ExternalDbProcessingTimeChartDataSource(DataBeanProvider dataBeanProvider, String chartName,
           String xAxisDescription, String yAxisDescription) {
     super(dataBeanProvider, chartName, xAxisDescription, yAxisDescription);
   }

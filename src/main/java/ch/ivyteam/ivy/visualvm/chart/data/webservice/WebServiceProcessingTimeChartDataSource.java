@@ -6,7 +6,7 @@ import ch.ivyteam.ivy.visualvm.chart.data.DbChartTitleConstant;
 import ch.ivyteam.ivy.visualvm.chart.data.support.MaxValueChartLabelCalcSupport;
 import ch.ivyteam.ivy.visualvm.chart.data.support.MeanTotalDeltaValueChartLabelCalcSupport;
 import ch.ivyteam.ivy.visualvm.model.IvyJmxConstant.IvyServer.WebService;
-import ch.ivyteam.ivy.visualvm.view.IDataBeanProvider;
+import ch.ivyteam.ivy.visualvm.view.DataBeanProvider;
 
 public class WebServiceProcessingTimeChartDataSource extends AbstractExternalDbAndWebServiceDataSource {
   private static final long SCALED_FACTOR = 1000L;
@@ -17,7 +17,7 @@ public class WebServiceProcessingTimeChartDataSource extends AbstractExternalDbA
   public static final String MEAN_SERIE_DESCRIPTION = DbChartTitleConstant.MEAN_SERIE_DESC.
           replace("system database transactions", "calls to the web service");
 
-  public WebServiceProcessingTimeChartDataSource(IDataBeanProvider dataBeanProvider, String chartName,
+  public WebServiceProcessingTimeChartDataSource(DataBeanProvider dataBeanProvider, String chartName,
           String xAxisDescription, String yAxisDescription) {
     super(dataBeanProvider, chartName, xAxisDescription, yAxisDescription);
 

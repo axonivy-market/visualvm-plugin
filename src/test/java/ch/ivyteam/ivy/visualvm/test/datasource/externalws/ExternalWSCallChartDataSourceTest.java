@@ -8,7 +8,7 @@ import ch.ivyteam.ivy.visualvm.model.IvyJmxConstant;
 import ch.ivyteam.ivy.visualvm.test.AbstractTest;
 import ch.ivyteam.ivy.visualvm.test.data.model.BeanTestData;
 import ch.ivyteam.ivy.visualvm.test.util.TestUtil;
-import ch.ivyteam.ivy.visualvm.view.IDataBeanProvider;
+import ch.ivyteam.ivy.visualvm.view.DataBeanProvider;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.util.List;
@@ -29,8 +29,8 @@ import static org.mockito.Mockito.when;
 public class ExternalWSCallChartDataSourceTest extends AbstractTest {
 
   private static final String DATA_FILE_PATH = "/ch/ivyteam/ivy/visualvm/test/datasource/externalws"
-                                               + "/ExternalWSCallChartDataSourceTest.xml";
-  private static IDataBeanProvider fProvider;
+          + "/ExternalWSCallChartDataSourceTest.xml";
+  private static DataBeanProvider fProvider;
   private static Query fQuery;
   private static WebServiceCallsChartDataSource fDataSource;
   private static List<AbstractChartLabelCalcSupport> fLabelCalcSupports;
@@ -68,14 +68,14 @@ public class ExternalWSCallChartDataSourceTest extends AbstractTest {
     final MBeanServerConnection mockConnection = createMockConnection();
     addTestData(mockConnection, getDataset());
     if (fProvider == null) {
-      fProvider = mock(IDataBeanProvider.class);
+      fProvider = mock(DataBeanProvider.class);
     }
     when(fProvider.getMBeanServerConnection()).thenReturn(mockConnection);
 
     if (fDataSource == null) {
       fDataSource
-      = new WebServiceCallsChartDataSource(fProvider, "",
-                                           "", "");
+              = new WebServiceCallsChartDataSource(fProvider, "",
+                      "", "");
       fDataSource.setApplication(fConfigs[0]);
       fDataSource.setEnvironment(fConfigs[1]);
       fDataSource.setConfigName(fConfigs[2]);

@@ -4,25 +4,23 @@ import ch.ivyteam.ivy.visualvm.chart.SerieStyle;
 import ch.ivyteam.ivy.visualvm.chart.data.XYChartDataSource;
 import ch.ivyteam.ivy.visualvm.chart.data.support.MaxDeltaValueChartLabelCalcSupport;
 import ch.ivyteam.ivy.visualvm.model.IvyJmxConstant;
-import ch.ivyteam.ivy.visualvm.service.BasicIvyJmxDataCollector;
-import ch.ivyteam.ivy.visualvm.view.IDataBeanProvider;
+import ch.ivyteam.ivy.visualvm.model.ServerConnectorInfo;
+import ch.ivyteam.ivy.visualvm.view.DataBeanProvider;
 import java.text.MessageFormat;
-import javax.management.MBeanServerConnection;
 import javax.management.ObjectName;
 
 public class ErrorChartDataSource extends XYChartDataSource {
 
 //  private static final Logger LOGGER = Logger.getLogger(ErrorChartDataSource.class.getName());
-  public ErrorChartDataSource(IDataBeanProvider dataBeanProvider, String chartName, String xAxisDescription,
+  public ErrorChartDataSource(DataBeanProvider dataBeanProvider, String chartName, String xAxisDescription,
           String yAxisDescription) {
     super(dataBeanProvider, chartName, xAxisDescription, yAxisDescription);
-    MBeanServerConnection mBeanServerConnection = getDataBeanProvider().getMBeanServerConnection();
-    BasicIvyJmxDataCollector collector = new BasicIvyJmxDataCollector();
     String legendDescription = "Number of new errors of requests served by {0} connector since the last poll";
-    for (ObjectName processorName : collector.getTomcatRequestProcessors(mBeanServerConnection)) {
-      String protocol = dataBeanProvider.getCachedData().getProtocol(processorName);
-      addDeltaSerie(protocol, MessageFormat.format(legendDescription, protocol), SerieStyle.LINE,
-              processorName, IvyJmxConstant.Ivy.Processor.KEY_ERROR_COUNT);
+    for (ServerConnectorInfo connector : dataBeanProvider.getGenericData().getServerConnectors()) {
+      String protocol = connector.getDisplayProtocol();
+      ObjectName processorName = connector.getGlobalRequestProcessorName();
+      addDeltaSerie(protocol, MessageFormat.format(legendDescription, protocol),
+              SerieStyle.LINE, processorName, IvyJmxConstant.Ivy.Processor.KEY_ERROR_COUNT);
       addLabelCalcSupport(new MaxDeltaValueChartLabelCalcSupport("Max " + protocol,
               processorName, IvyJmxConstant.Ivy.Processor.KEY_ERROR_COUNT));
     }

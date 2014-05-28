@@ -6,11 +6,11 @@ import ch.ivyteam.ivy.visualvm.chart.data.XYChartDataSource;
 import ch.ivyteam.ivy.visualvm.chart.data.support.MaxValueChartLabelCalcSupport;
 import ch.ivyteam.ivy.visualvm.chart.data.support.StaticValueChartLabelCalcSupport;
 import ch.ivyteam.ivy.visualvm.model.IvyJmxConstant.IvyServer.DatabasePersistency;
-import ch.ivyteam.ivy.visualvm.view.IDataBeanProvider;
+import ch.ivyteam.ivy.visualvm.view.DataBeanProvider;
 
 public class ConnectionChartDataSource extends XYChartDataSource {
 
-  public ConnectionChartDataSource(IDataBeanProvider dataBeanProvider, String chartName,
+  public ConnectionChartDataSource(DataBeanProvider dataBeanProvider, String chartName,
           String xAxisDescription, String yAxisDescription) {
     super(dataBeanProvider, chartName, xAxisDescription, yAxisDescription);
 
@@ -29,4 +29,5 @@ public class ConnectionChartDataSource extends XYChartDataSource {
     addSerie(DbChartTitleConstant.USED_SERIE_TITLE, DbChartTitleConstant.USED_SERIE_DESC,
             SerieStyle.LINE_FILLED, DatabasePersistency.NAME, DatabasePersistency.KEY_USED_CONNECTION);
   }
+
 }

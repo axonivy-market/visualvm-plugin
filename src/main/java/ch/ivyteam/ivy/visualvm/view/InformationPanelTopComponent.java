@@ -17,31 +17,14 @@ import java.util.logging.Logger;
 import javax.management.MBeanServerConnection;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
-import org.netbeans.api.settings.ConvertAsProperties;
-import org.openide.awt.ActionID;
-import org.openide.awt.ActionReference;
+import javax.swing.JPanel;
 import org.openide.util.NbBundle.Messages;
-import org.openide.windows.TopComponent;
 
-/**
- * Top component which displays something.
- */
-@ConvertAsProperties(dtd = "-//ch.ivyteam.ivy.visualvm.view//InformationPanel//EN", autostore = false)
-@TopComponent.Description(preferredID = "InformationPanelTopComponent",
-        // iconBase="SET/PATH/TO/ICON/HERE",
-        persistenceType = TopComponent.PERSISTENCE_ALWAYS)
-@TopComponent.Registration(mode = "bottomSlidingSide", openAtStartup = false)
-@ActionID(category = "Window", id = "ch.ivyteam.ivy.visualvm.view.InformationPanelTopComponent")
-@ActionReference(path = "Menu/Window" /*
- * , position = 333
- */)
-@TopComponent.OpenActionRegistration(displayName = "#CTL_InformationPanelAction",
-        preferredID = "InformationPanelTopComponent")
 @Messages({"CTL_InformationPanelAction=InformationPanel",
   "CTL_InformationPanelTopComponent=InformationPanel Window",
   "HINT_InformationPanelTopComponent=This is a InformationPanel window"})
 @SuppressWarnings("PMD.SingularField")
-public final class InformationPanelTopComponent extends TopComponent {
+public final class InformationPanelTopComponent extends JPanel {
 
   private static final Logger LOGGER = Logger.getLogger(InformationPanelTopComponent.class.getName());
   private static final Insets LABEL_INSETS = new Insets(5, 5, 5, 5);
@@ -50,7 +33,6 @@ public final class InformationPanelTopComponent extends TopComponent {
     initComponents();
     setName(Bundle.CTL_InformationPanelTopComponent());
     setToolTipText(Bundle.HINT_InformationPanelTopComponent());
-
   }
 
   /*
@@ -563,15 +545,6 @@ public final class InformationPanelTopComponent extends TopComponent {
   private javax.swing.JLabel version;
   private javax.swing.JLabel versionLabel;
   // End of variables declaration//GEN-END:variables
-  @Override
-  public void componentOpened() {
-    // TO DO add custom code on component opening
-  }
-
-  @Override
-  public void componentClosed() {
-    // TO DO add custom code on component closing
-  }
 
   void writeProperties(java.util.Properties p) {
     // better to version settings since initial version as advocated at
@@ -588,7 +561,8 @@ public final class InformationPanelTopComponent extends TopComponent {
   /*
    * CHECKSTYLE:ON
    */
-  public void readInformation(MBeanServerConnection connection) {
+  public void readInformation(DataBeanProvider dataBeanProvider) {
+    MBeanServerConnection connection = dataBeanProvider.getMBeanServerConnection();
     BasicIvyJmxDataCollector collector = new BasicIvyJmxDataCollector();
 
     try {
@@ -643,23 +617,19 @@ public final class InformationPanelTopComponent extends TopComponent {
       LOGGER.warning(ex.getMessage());
     }
 
-    try {
-      List<ServerConnectorInfo> connectorInfo = collector.getMappedConnectors(connection);
-      connectorsPanel.removeAll();
-      if (connectorInfo.size() > 0) {
-        int index = 0;
-        for (ServerConnectorInfo connector : connectorInfo) {
-          JLabel label = new JLabel(connector.getProtocol() + " - " + connector.getPort());
-          connectorsPanel.add(label, new GridBagConstraints(0, index++, 1, 1, 1, 1,
-                  GridBagConstraints.NORTHWEST, GridBagConstraints.NONE, LABEL_INSETS, 0, 0));
-        }
-      } else {
-        JLabel label = new JLabel("No connector!");
-        connectorsPanel.add(label, new GridBagConstraints(0, 0, 1, 1, 0, 0, GridBagConstraints.NORTHWEST,
-                GridBagConstraints.NONE, LABEL_INSETS, 0, 0));
+    List<ServerConnectorInfo> connectorInfo = dataBeanProvider.getGenericData().getServerConnectors();
+    connectorsPanel.removeAll();
+    if (connectorInfo.size() > 0) {
+      int index = 0;
+      for (ServerConnectorInfo connector : connectorInfo) {
+        JLabel label = new JLabel(connector.getDisplayProtocol() + " - " + connector.getPort());
+        connectorsPanel.add(label, new GridBagConstraints(0, index++, 1, 1, 1, 1,
+                GridBagConstraints.NORTHWEST, GridBagConstraints.NONE, LABEL_INSETS, 0, 0));
       }
-    } catch (IvyJmxDataCollectException ex) {
-      LOGGER.warning(ex.getMessage());
+    } else {
+      JLabel label = new JLabel("No connector!");
+      connectorsPanel.add(label, new GridBagConstraints(0, 0, 1, 1, 0, 0, GridBagConstraints.NORTHWEST,
+              GridBagConstraints.NONE, LABEL_INSETS, 0, 0));
     }
 
     try {

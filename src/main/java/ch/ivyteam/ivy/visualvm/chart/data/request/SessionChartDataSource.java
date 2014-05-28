@@ -5,12 +5,12 @@ import ch.ivyteam.ivy.visualvm.chart.data.XYChartDataSource;
 import ch.ivyteam.ivy.visualvm.chart.data.support.LatestValueChartLabelCalcSupport;
 import ch.ivyteam.ivy.visualvm.model.IvyJmxConstant;
 import ch.ivyteam.ivy.visualvm.service.BasicIvyJmxDataCollector;
-import ch.ivyteam.ivy.visualvm.view.IDataBeanProvider;
+import ch.ivyteam.ivy.visualvm.view.DataBeanProvider;
 import javax.management.MBeanServerConnection;
 import javax.management.ObjectName;
 
 public class SessionChartDataSource extends XYChartDataSource {
-  public SessionChartDataSource(IDataBeanProvider dataBeanProvider, String chartName,
+  public SessionChartDataSource(DataBeanProvider dataBeanProvider, String chartName,
           String xAxisDescription, String yAxisDescription) {
     super(dataBeanProvider, chartName, xAxisDescription, yAxisDescription);
     MBeanServerConnection mBeanServerConnection = getDataBeanProvider().getMBeanServerConnection();

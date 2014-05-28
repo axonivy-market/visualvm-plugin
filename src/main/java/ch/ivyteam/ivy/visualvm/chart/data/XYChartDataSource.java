@@ -4,7 +4,7 @@ import ch.ivyteam.ivy.visualvm.chart.Query;
 import ch.ivyteam.ivy.visualvm.chart.QueryResult;
 import ch.ivyteam.ivy.visualvm.chart.SerieStyle;
 import ch.ivyteam.ivy.visualvm.chart.data.support.AbstractChartLabelCalcSupport;
-import ch.ivyteam.ivy.visualvm.view.IDataBeanProvider;
+import ch.ivyteam.ivy.visualvm.view.DataBeanProvider;
 import java.util.ArrayList;
 import java.util.List;
 import javax.management.ObjectName;
@@ -14,7 +14,7 @@ public class XYChartDataSource {
   private final String fChartName;
   private final String fXAxisDescription;
   private final String fYAxisDescription;
-  private final IDataBeanProvider fDataBeanProvider;
+  private final DataBeanProvider fDataBeanProvider;
   private final List<SerieDataSource> serieDataSources = new ArrayList<>();
   private final List<AbstractChartLabelCalcSupport> fLabelCalcSupports = new ArrayList<>();
   private long fScaleFactor = 1L;
@@ -26,7 +26,7 @@ public class XYChartDataSource {
    * @param xAxisDescription description of x axis
    * @param yAxisDescription description of y axis
    */
-  public XYChartDataSource(IDataBeanProvider dataBeanProvider, String chartName,
+  public XYChartDataSource(DataBeanProvider dataBeanProvider, String chartName,
           String xAxisDescription, String yAxisDescription) {
     fDataBeanProvider = dataBeanProvider;
     fChartName = chartName;
@@ -101,7 +101,7 @@ public class XYChartDataSource {
     }
   }
 
-  public IDataBeanProvider getDataBeanProvider() {
+  public DataBeanProvider getDataBeanProvider() {
     return fDataBeanProvider;
   }
 

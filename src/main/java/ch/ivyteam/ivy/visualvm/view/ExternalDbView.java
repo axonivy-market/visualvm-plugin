@@ -22,7 +22,7 @@ public class ExternalDbView extends ExternalDbWsCommonView {
   private static final String ERRORS = "Errors";
   private final ExternalDbErrorDataBuffer fErrorInfoBuffer;
 
-  public ExternalDbView(IDataBeanProvider dataBeanProvider) {
+  public ExternalDbView(DataBeanProvider dataBeanProvider) {
     super(dataBeanProvider);
     fErrorInfoBuffer = new ExternalDbErrorDataBuffer(getDataBeanProvider()
             .getMBeanServerConnection());

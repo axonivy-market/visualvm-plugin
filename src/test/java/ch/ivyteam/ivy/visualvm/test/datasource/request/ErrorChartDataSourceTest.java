@@ -7,7 +7,7 @@ import ch.ivyteam.ivy.visualvm.model.IvyJmxConstant;
 import ch.ivyteam.ivy.visualvm.test.AbstractTest;
 import ch.ivyteam.ivy.visualvm.test.data.model.BeanTestData;
 import ch.ivyteam.ivy.visualvm.test.util.TestUtil;
-import ch.ivyteam.ivy.visualvm.view.IDataBeanProvider;
+import ch.ivyteam.ivy.visualvm.view.DataBeanProvider;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.util.HashSet;
@@ -63,13 +63,13 @@ public class ErrorChartDataSourceTest extends AbstractTest {
     final MBeanServerConnection mockConnection = createMockConnection();
     addTestData(mockConnection, getDataset());
     Set<ObjectName> connectorObjNames = new HashSet<>();
-    connectorObjNames.add(new ObjectName("ivy:type=GlobalRequestProcessor,name=\"ajp-bio-8009\""));
-    connectorObjNames.add(new ObjectName("ivy:type=GlobalRequestProcessor,name=\"http-bio-8080\""));
-    connectorObjNames.add(new ObjectName("ivy:type=GlobalRequestProcessor,name=\"http-bio-8443\""));
-    when(mockConnection.queryNames(IvyJmxConstant.Ivy.Processor.PATTERN, null))
+    connectorObjNames.add(new ObjectName("ivy:type=Connector,port=8009"));
+    connectorObjNames.add(new ObjectName("ivy:type=Connector,port=8080"));
+    connectorObjNames.add(new ObjectName("ivy:type=Connector,port=8443"));
+    when(mockConnection.queryNames(IvyJmxConstant.Ivy.Connector.PATTERN, null))
             .thenReturn(connectorObjNames);
 
-    IDataBeanProvider provider = mockDataProvider(mockConnection);
+    DataBeanProvider provider = mockDataProvider(mockConnection);
 
     if (errorChartDataSource == null) {
       errorChartDataSource = new ErrorChartDataSource(provider, "", "", "");

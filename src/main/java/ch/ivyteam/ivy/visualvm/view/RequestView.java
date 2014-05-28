@@ -17,7 +17,7 @@ public class RequestView extends AbstractView {
   private static final String TIME_MS = "Processing Time [ms]";
   private boolean uiComplete;
 
-  public RequestView(IDataBeanProvider dataBeanProvider) {
+  public RequestView(DataBeanProvider dataBeanProvider) {
     super(dataBeanProvider);
   }
 

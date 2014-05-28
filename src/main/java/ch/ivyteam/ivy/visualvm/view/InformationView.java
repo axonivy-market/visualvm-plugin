@@ -8,7 +8,7 @@ public class InformationView extends AbstractView {
   private final InformationPanelTopComponent fInformationPanel;
   private boolean uiComplete;
 
-  public InformationView(IDataBeanProvider dataBeanProvider) {
+  public InformationView(DataBeanProvider dataBeanProvider) {
     super(dataBeanProvider);
     fInformationPanel = createInfoPanel();
   }
@@ -22,7 +22,7 @@ public class InformationView extends AbstractView {
 
   private InformationPanelTopComponent createInfoPanel() {
     InformationPanelTopComponent infoPanel = new InformationPanelTopComponent();
-    infoPanel.readInformation(getDataBeanProvider().getMBeanServerConnection());
+    infoPanel.readInformation(getDataBeanProvider());
     return infoPanel;
   }
 

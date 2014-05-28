@@ -6,12 +6,12 @@ import ch.ivyteam.ivy.visualvm.chart.data.XYChartDataSource;
 import ch.ivyteam.ivy.visualvm.chart.data.support.MaxValueChartLabelCalcSupport;
 import ch.ivyteam.ivy.visualvm.chart.data.support.MeanTotalDeltaValueChartLabelCalcSupport;
 import ch.ivyteam.ivy.visualvm.model.IvyJmxConstant.IvyServer.DatabasePersistency;
-import ch.ivyteam.ivy.visualvm.view.IDataBeanProvider;
+import ch.ivyteam.ivy.visualvm.view.DataBeanProvider;
 
 public class ProcessingTimeChartDataSource extends XYChartDataSource {
   private static final long SCALED_FACTOR = 1000L;
 
-  public ProcessingTimeChartDataSource(IDataBeanProvider dataBeanProvider, String chartName,
+  public ProcessingTimeChartDataSource(DataBeanProvider dataBeanProvider, String chartName,
           String xAxisDescription, String yAxisDescription) {
     super(dataBeanProvider, chartName, xAxisDescription, yAxisDescription);
     setScaleFactor(SCALED_FACTOR);

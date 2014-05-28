@@ -6,7 +6,7 @@ import ch.ivyteam.ivy.visualvm.chart.data.license.ConcurrentUsersChartDataSource
 import ch.ivyteam.ivy.visualvm.test.AbstractTest;
 import ch.ivyteam.ivy.visualvm.test.data.model.BeanTestData;
 import ch.ivyteam.ivy.visualvm.test.util.TestUtil;
-import ch.ivyteam.ivy.visualvm.view.IDataBeanProvider;
+import ch.ivyteam.ivy.visualvm.view.DataBeanProvider;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import javax.management.InstanceNotFoundException;
@@ -43,7 +43,7 @@ public class ConcurrentUsersChartDataSourceTest extends AbstractTest {
           MalformedObjectNameException {
     final MBeanServerConnection mockConnection = createMockConnection();
     addTestData(mockConnection, getDataset());
-    IDataBeanProvider provider = mockDataProvider(mockConnection);
+    DataBeanProvider provider = mockDataProvider(mockConnection);
     ConcurrentUsersChartDataSource concurrentUsersChartDataSource = new ConcurrentUsersChartDataSource(
             provider, "", 6);
     Query query = new Query();

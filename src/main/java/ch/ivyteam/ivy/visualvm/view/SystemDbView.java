@@ -10,7 +10,7 @@ import javax.swing.JComponent;
 
 public class SystemDbView extends AbstractView {
 
-  public SystemDbView(IDataBeanProvider dataBeanProvider) {
+  public SystemDbView(DataBeanProvider dataBeanProvider) {
     super(dataBeanProvider);
   }
 

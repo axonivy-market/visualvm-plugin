@@ -16,7 +16,7 @@ abstract class ExternalDbWsCommonView extends AbstractView {
   private final Map<String, ChartsPanel> fCreatedCharts;
   private ExternalDbWsCommonPanel fUIChartsPanel;
 
-  public ExternalDbWsCommonView(IDataBeanProvider dataBeanProvider) {
+  public ExternalDbWsCommonView(DataBeanProvider dataBeanProvider) {
     super(dataBeanProvider);
     fCreatedCharts = new HashMap<>();
   }
@@ -55,4 +55,5 @@ abstract class ExternalDbWsCommonView extends AbstractView {
   }
 
   protected abstract ChartsPanel createChartPanel();
+
 }

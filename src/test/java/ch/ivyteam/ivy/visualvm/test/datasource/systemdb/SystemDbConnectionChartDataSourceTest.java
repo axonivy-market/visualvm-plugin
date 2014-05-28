@@ -9,7 +9,7 @@ import static ch.ivyteam.ivy.visualvm.test.AbstractTest.addTestData;
 import static ch.ivyteam.ivy.visualvm.test.AbstractTest.createMockConnection;
 import ch.ivyteam.ivy.visualvm.test.data.model.BeanTestData;
 import ch.ivyteam.ivy.visualvm.test.util.TestUtil;
-import ch.ivyteam.ivy.visualvm.view.IDataBeanProvider;
+import ch.ivyteam.ivy.visualvm.view.DataBeanProvider;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.util.List;
@@ -53,10 +53,10 @@ public class SystemDbConnectionChartDataSourceTest extends AbstractTest {
           ReflectionException, MBeanException, AttributeNotFoundException, InstanceNotFoundException {
     final MBeanServerConnection mockConnection = createMockConnection();
     addTestData(mockConnection, getDataset());
-    IDataBeanProvider provider = mockDataProvider(mockConnection);
+    DataBeanProvider provider = mockDataProvider(mockConnection);
 
     ConnectionChartDataSource dataSource = new ConnectionChartDataSource(provider, "",
-                                                                         "", "");
+            "", "");
 
     Query query = new Query();
     dataSource.updateQuery(query);

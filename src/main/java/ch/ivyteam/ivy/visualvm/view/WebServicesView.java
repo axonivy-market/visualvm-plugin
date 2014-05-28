@@ -23,7 +23,7 @@ import org.openide.util.ImageUtilities;
  */
 public class WebServicesView extends ExternalDbWsCommonView {
 
-  public WebServicesView(IDataBeanProvider dataBeanProvider) {
+  public WebServicesView(DataBeanProvider dataBeanProvider) {
     super(dataBeanProvider);
     setUIChartsPanel(new ExternalDbWsCommonPanel(this));
     getUIChartsPanel().setWsIcon((Icon) ImageUtilities.loadImage(WS_ICON_PATH, true));
@@ -51,8 +51,8 @@ public class WebServicesView extends ExternalDbWsCommonView {
   public DataViewComponent getViewComponent() {
     DataViewComponent viewComponent = super.getViewComponent();
     viewComponent.add(getUIChartsPanel());
-    Map<String, Map<String, Set<String>>> appEnvWs = DataUtils.getWebServicesConfigs(getDataBeanProvider()
-            .getMBeanServerConnection());
+    Map<String, Map<String, Set<String>>> appEnvWs = DataUtils.getWebServicesConfigs(
+            getDataBeanProvider().getMBeanServerConnection());
     getUIChartsPanel().setTreeData(appEnvWs);
     return viewComponent;
   }

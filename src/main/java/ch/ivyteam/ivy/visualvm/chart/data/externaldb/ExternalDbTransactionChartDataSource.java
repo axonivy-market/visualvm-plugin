@@ -5,14 +5,15 @@ import ch.ivyteam.ivy.visualvm.chart.data.AbstractExternalDbAndWebServiceDataSou
 import ch.ivyteam.ivy.visualvm.chart.data.DbChartTitleConstant;
 import ch.ivyteam.ivy.visualvm.chart.data.support.MaxDeltaValueChartLabelCalcSupport;
 import ch.ivyteam.ivy.visualvm.model.IvyJmxConstant.IvyServer.ExternalDatabase;
-import ch.ivyteam.ivy.visualvm.view.IDataBeanProvider;
+import ch.ivyteam.ivy.visualvm.view.DataBeanProvider;
 
 public class ExternalDbTransactionChartDataSource extends AbstractExternalDbAndWebServiceDataSource {
 
-  public ExternalDbTransactionChartDataSource(IDataBeanProvider dataBeanProvider, String chartName,
+  public ExternalDbTransactionChartDataSource(DataBeanProvider dataBeanProvider, String chartName,
           String xAxisDescription, String yAxisDescription) {
     super(dataBeanProvider, chartName, xAxisDescription, yAxisDescription);
   }
+
   public static final String TRANSACTION_ERROR_SERIE_DESC = DbChartTitleConstant.TRANSACTION_ERROR_SERIE_DESC
           .replace("system", "external");
   public static final String TRANSACTION_SERIE_DESC = DbChartTitleConstant.TRANSACTION_SERIE_DESC

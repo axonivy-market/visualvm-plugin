@@ -19,7 +19,7 @@ public class LicenseView extends AbstractView {
   private IvyLicenseInfo fLicenseInfo;
   private final LicenseInformationPanel fLicenseInformationPanel;
 
-  public LicenseView(IDataBeanProvider dataBeanProvider) {
+  public LicenseView(DataBeanProvider dataBeanProvider) {
     super(dataBeanProvider);
     retrieveLicenseInfo();
     fLicenseInformationPanel = new LicenseInformationPanel(fLicenseInfo);

@@ -1,16 +1,11 @@
 package ch.ivyteam.ivy.visualvm.util;
 
-import ch.ivyteam.ivy.visualvm.model.ServerConnectorInfo;
-import com.sun.tools.visualvm.application.Application;
-import com.sun.tools.visualvm.tools.jmx.JmxModel;
-import com.sun.tools.visualvm.tools.jmx.JmxModelFactory;
 import java.io.IOException;
 import java.text.DateFormat;
 import java.text.MessageFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
@@ -77,34 +72,6 @@ public final class DataUtils {
       result = osName + " (64bit)";
     }
     return result;
-  }
-
-  public static String getFullConnectorProtocol(String protocol, String scheme) {
-    String result = protocol;
-    if (result != null && "https".equals(scheme)) {
-      result = result.replace("HTTP/", "HTTPS/");
-    }
-    return result;
-  }
-
-  public static String getShortConnectorProtocol(String protocol, String scheme) {
-    String result = getFullConnectorProtocol(protocol, scheme);
-    if (result != null) {
-      int slashIndex = result.indexOf('/');
-      result = result.substring(0, slashIndex);
-    }
-    return result;
-  }
-
-  public static String findProtocol(List<ServerConnectorInfo> mappedConnectors, String port) {
-    String protocol = "";
-    for (ServerConnectorInfo connector : mappedConnectors) {
-      if (port.equals(connector.getPort())) {
-        protocol = DataUtils.getShortConnectorProtocol(connector.getProtocol(), connector.getScheme());
-        break;
-      }
-    }
-    return protocol;
   }
 
   public static String getHostNameFromRuntimeId(String runtimeId) {
@@ -265,15 +232,6 @@ public final class DataUtils {
     return splits[1];
   }
 
-  public static MBeanServerConnection getMBeanServerConnection(Application app) {
-    JmxModel jmx = JmxModelFactory.getJmxModelFor(app);
-    if (jmx != null && jmx.getConnectionState() == JmxModel.ConnectionState.CONNECTED) {
-      return jmx.getMBeanServerConnection();
-    } else {
-      return null;
-    }
-  }
-
   public static Map<String, Map<String, Set<String>>> getExternalDbConfigs(MBeanServerConnection conn) {
     Set<ObjectName> externalDbConfigs = new TreeSet<>();
     try {
@@ -323,4 +281,5 @@ public final class DataUtils {
     }
     return appEnvConfMap;
   }
+
 }

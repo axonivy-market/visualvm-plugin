@@ -10,7 +10,7 @@ import static ch.ivyteam.ivy.visualvm.test.AbstractTest.addTestData;
 import static ch.ivyteam.ivy.visualvm.test.AbstractTest.createMockConnection;
 import ch.ivyteam.ivy.visualvm.test.data.model.BeanTestData;
 import ch.ivyteam.ivy.visualvm.test.util.TestUtil;
-import ch.ivyteam.ivy.visualvm.view.IDataBeanProvider;
+import ch.ivyteam.ivy.visualvm.view.DataBeanProvider;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.util.List;
@@ -39,7 +39,7 @@ public class ExternalDbTransactionChartDataSourceTest extends AbstractTest {
     );
   }
 
-  private static IDataBeanProvider fProvider;
+  private static DataBeanProvider fProvider;
   private static Query fQuery;
   private static ExternalDbTransactionChartDataSource fDataSource;
   private static List<AbstractChartLabelCalcSupport> fLabelCalcSupports;
@@ -67,7 +67,7 @@ public class ExternalDbTransactionChartDataSourceTest extends AbstractTest {
     final MBeanServerConnection mockConnection = createMockConnection();
     addTestData(mockConnection, getDataset());
     if (fProvider == null) {
-      fProvider = mock(IDataBeanProvider.class);
+      fProvider = mock(DataBeanProvider.class);
     }
     when(fProvider.getMBeanServerConnection()).thenReturn(mockConnection);
 

@@ -47,7 +47,6 @@ public class ServerInformationTest extends AbstractTest {
   private static final String AJP_13 = "AJP/1.3";
   private static final String HTTP = "http";
   private static final String HTTP_11 = "HTTP/1.1";
-  private static final String HTTPS_11 = "HTTPS/1.1";
   private static final String PORT_8080 = "8080";
   private static final String OS_NAME_CUSTOM = "Windows Server 2008 (64bit)";
 
@@ -110,17 +109,16 @@ public class ServerInformationTest extends AbstractTest {
 
 //     verify connectors
     List<ServerConnectorInfo> connectorInfo = collector.getMappedConnectors(mockedMBeanServer);
-    assertEquals(PORT_8080, connectorInfo.get(0).getPort());
-    assertEquals(HTTP_11, connectorInfo.get(0).getProtocol());
+    assertEquals(PORT_8009, connectorInfo.get(0).getPort());
+    assertEquals(AJP_13, connectorInfo.get(0).getProtocol());
     assertEquals(HTTP, connectorInfo.get(0).getScheme());
 
-    assertEquals(PORT_8009, connectorInfo.get(1).getPort());
-    assertEquals(AJP_13, connectorInfo.get(1).getProtocol());
+    assertEquals(PORT_8080, connectorInfo.get(1).getPort());
+    assertEquals(HTTP_11, connectorInfo.get(1).getProtocol());
     assertEquals(HTTP, connectorInfo.get(1).getScheme());
 
     assertEquals(PORT_8443, connectorInfo.get(2).getPort());
-    // HTTPS_11 because HTTP will be replaced by HTTPS if scheme is https
-    assertEquals(HTTPS_11, connectorInfo.get(2).getProtocol());
+    assertEquals(HTTP_11, connectorInfo.get(2).getProtocol());
     assertEquals(HTTPS, connectorInfo.get(2).getScheme());
 
   }

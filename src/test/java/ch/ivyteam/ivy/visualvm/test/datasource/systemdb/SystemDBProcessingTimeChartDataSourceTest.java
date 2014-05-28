@@ -7,7 +7,7 @@ import ch.ivyteam.ivy.visualvm.chart.data.systemdb.ProcessingTimeChartDataSource
 import ch.ivyteam.ivy.visualvm.test.AbstractTest;
 import ch.ivyteam.ivy.visualvm.test.data.model.BeanTestData;
 import ch.ivyteam.ivy.visualvm.test.util.TestUtil;
-import ch.ivyteam.ivy.visualvm.view.IDataBeanProvider;
+import ch.ivyteam.ivy.visualvm.view.DataBeanProvider;
 import java.net.URISyntaxException;
 import java.util.List;
 import javax.management.MBeanServerConnection;
@@ -33,7 +33,7 @@ public class SystemDBProcessingTimeChartDataSourceTest extends AbstractTest {
   private final long fMaxOfMax;
   private final long fTotalMean;
 
-  private static IDataBeanProvider fProvider;
+  private static DataBeanProvider fProvider;
   private static Query fQuery;
   private static ProcessingTimeChartDataSource fDataSource;
   private static List<AbstractChartLabelCalcSupport> fLabelCalcSupports;
@@ -70,7 +70,7 @@ public class SystemDBProcessingTimeChartDataSourceTest extends AbstractTest {
     final MBeanServerConnection mockConnection = createMockConnection();
     addTestData(mockConnection, getDataset());
     if (fProvider == null) {
-      fProvider = mock(IDataBeanProvider.class);
+      fProvider = mock(DataBeanProvider.class);
     }
     when(fProvider.getMBeanServerConnection()).thenReturn(mockConnection);
 

@@ -5,7 +5,7 @@
  */
 package ch.ivyteam.ivy.visualvm.chart.data;
 
-import ch.ivyteam.ivy.visualvm.view.IDataBeanProvider;
+import ch.ivyteam.ivy.visualvm.view.DataBeanProvider;
 import java.util.logging.Logger;
 import javax.management.MalformedObjectNameException;
 import javax.management.ObjectName;
@@ -24,7 +24,7 @@ public abstract class AbstractExternalDbAndWebServiceDataSource extends XYChartD
   private ObjectName fObjectName;
   private String fNamePattern;
 
-  public AbstractExternalDbAndWebServiceDataSource(IDataBeanProvider dataBeanProvider, String chartName,
+  public AbstractExternalDbAndWebServiceDataSource(DataBeanProvider dataBeanProvider, String chartName,
           String xAxisDescription,
           String yAxisDescription) {
     super(dataBeanProvider, chartName, xAxisDescription, yAxisDescription);

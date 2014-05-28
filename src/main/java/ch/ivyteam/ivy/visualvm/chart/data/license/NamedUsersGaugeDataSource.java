@@ -6,11 +6,11 @@ package ch.ivyteam.ivy.visualvm.chart.data.license;
 
 import ch.ivyteam.ivy.visualvm.chart.data.GaugeDataSource;
 import ch.ivyteam.ivy.visualvm.model.IvyJmxConstant;
-import ch.ivyteam.ivy.visualvm.view.IDataBeanProvider;
+import ch.ivyteam.ivy.visualvm.view.DataBeanProvider;
 
 public class NamedUsersGaugeDataSource extends GaugeDataSource {
 
-  public NamedUsersGaugeDataSource(IDataBeanProvider dataBeanProvider, int namedUsersLimit) {
+  public NamedUsersGaugeDataSource(DataBeanProvider dataBeanProvider, int namedUsersLimit) {
     super(dataBeanProvider, IvyJmxConstant.IvyServer.SecurityManager.NAME,
             IvyJmxConstant.IvyServer.SecurityManager.KEY_LICENSED_USERS);
     getThresholds().add(0.0);

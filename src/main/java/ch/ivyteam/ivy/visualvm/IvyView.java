@@ -4,7 +4,6 @@ import ch.ivyteam.ivy.visualvm.exception.ClosedIvyServerConnectionException;
 import ch.ivyteam.ivy.visualvm.view.AbstractView;
 import ch.ivyteam.ivy.visualvm.view.DataBeanProvider;
 import ch.ivyteam.ivy.visualvm.view.ExternalDbView;
-import ch.ivyteam.ivy.visualvm.view.IDataBeanProvider;
 import ch.ivyteam.ivy.visualvm.view.InformationView;
 import ch.ivyteam.ivy.visualvm.view.LicenseView;
 import ch.ivyteam.ivy.visualvm.view.RequestView;
@@ -41,20 +40,16 @@ class IvyView extends DataSourceView {
   public static final String USER_REQ_IMAGE_PATH = "resources/icons/user_req.png";
   public static final String USER_DEF_IMAGE_PATH = "resources/icons/user_def.png";
   public static final String LICENSE_IMAGE_PATH = "resources/icons/license.png";
-  public static final String IVY_SERVER_APP_NAME = "Xpert.ivy Server";
-  public static final String IVY_DESIGNER_APP_NAME = "Xpert.ivy Designer";
 
   private ScheduledTask updateTask;
   private final List<AbstractView> views = new ArrayList<>();
-  private final DataPollSettingChangeListener pollSettingChangeListener = new DataPollSettingChangeListener();
-  private final boolean fIsIvyServer;
-  private final Application fIvyApplication;
+  private final DataPollSettingChangeListener fPollSettingChangeListener
+          = new DataPollSettingChangeListener();
+  private DataBeanProvider fDataBeanProvider;
 
-  public IvyView(Application application, boolean isServer) {
+  public IvyView(Application application) {
     super(application, "Xpert.ivy", new ImageIcon(ImageUtilities.loadImage(IVY_IMAGE_PATH, true)).
             getImage(), 60, false);
-    fIvyApplication = application;
-    fIsIvyServer = isServer;
   }
 
   @Override
@@ -65,32 +60,31 @@ class IvyView extends DataSourceView {
     // Add the master view and configuration view to the component:
     DataViewComponent dvcRoot = createDVC("", null);
     dvcRoot.add(tabbed);
-    IDataBeanProvider dataBeanProvider = new DataBeanProvider(fIvyApplication);
 
     // add views
-    addInformationView(dataBeanProvider, tabbed);
-    addLicenseView(dataBeanProvider, tabbed);
-    addRequestView(dataBeanProvider, tabbed);
-    addSystemDBView(dataBeanProvider, tabbed);
-    addExternalDBView(dataBeanProvider, tabbed);
-    addWebServicesView(dataBeanProvider, tabbed);
+    addInformationView(fDataBeanProvider, tabbed);
+    addLicenseView(fDataBeanProvider, tabbed);
+    addRequestView(fDataBeanProvider, tabbed);
+    addSystemDBView(fDataBeanProvider, tabbed);
+    addExternalDBView(fDataBeanProvider, tabbed);
+    addWebServicesView(fDataBeanProvider, tabbed);
 
     // init scheduler
     updateTask = Scheduler.sharedInstance().schedule(new UpdateChartTask(),
             Quantum.seconds(GlobalPreferences.sharedInstance().getMonitoredDataPoll()), true);
-    GlobalPreferences.sharedInstance().watchMonitoredDataPoll(pollSettingChangeListener);
+    GlobalPreferences.sharedInstance().watchMonitoredDataPoll(fPollSettingChangeListener);
     return dvcRoot;
   }
 
-  private void addInformationView(IDataBeanProvider dataBeanProvider, JTabbedPane tabbed) {
+  private void addInformationView(DataBeanProvider dataBeanProvider, JTabbedPane tabbed) {
     InformationView infoView = new InformationView(dataBeanProvider);
     views.add(infoView);
     tabbed.addTab("Information", (Icon) ImageUtilities.loadImage(INFO_IMAGE_PATH, true),
             infoView.getViewComponent());
   }
 
-  private void addLicenseView(IDataBeanProvider dataBeanProvider, JTabbedPane tabbed) {
-    if (fIsIvyServer) {
+  private void addLicenseView(DataBeanProvider dataBeanProvider, JTabbedPane tabbed) {
+    if (fDataBeanProvider.getGenericData().getApplicationInfo().isServer()) {
       LicenseView licenseView = new LicenseView(dataBeanProvider);
       views.add(licenseView);
       tabbed.addTab("License", (Icon) ImageUtilities.loadImage(LICENSE_IMAGE_PATH, true),
@@ -98,28 +92,28 @@ class IvyView extends DataSourceView {
     }
   }
 
-  private void addRequestView(IDataBeanProvider dataBeanProvider, JTabbedPane tabbed) {
+  private void addRequestView(DataBeanProvider dataBeanProvider, JTabbedPane tabbed) {
     RequestView requestViewNew = new RequestView(dataBeanProvider);
     views.add(requestViewNew);
     tabbed.addTab("User Requests", (Icon) ImageUtilities.loadImage(USER_REQ_IMAGE_PATH, true),
             requestViewNew.getViewComponent());
   }
 
-  private void addSystemDBView(IDataBeanProvider dataBeanProvider, JTabbedPane tabbed) {
+  private void addSystemDBView(DataBeanProvider dataBeanProvider, JTabbedPane tabbed) {
     SystemDbView systemDbView = new SystemDbView(dataBeanProvider);
     views.add(systemDbView);
     tabbed.addTab("System Database", (Icon) ImageUtilities.loadImage(DB_ICON_IMAGE_PATH, true),
             systemDbView.getViewComponent());
   }
 
-  private void addExternalDBView(IDataBeanProvider dataBeanProvider, JTabbedPane tabbed) {
+  private void addExternalDBView(DataBeanProvider dataBeanProvider, JTabbedPane tabbed) {
     ExternalDbView extDbView = new ExternalDbView(dataBeanProvider);
     views.add(extDbView);
     tabbed.addTab("External Databases", (Icon) ImageUtilities.loadImage(EXT_DB_ICON_IMAGE_PATH, true),
             extDbView.getViewComponent());
   }
 
-  private void addWebServicesView(IDataBeanProvider dataBeanProvider, JTabbedPane tabbed) {
+  private void addWebServicesView(DataBeanProvider dataBeanProvider, JTabbedPane tabbed) {
     WebServicesView wsView = new WebServicesView(dataBeanProvider);
     views.add(wsView);
     tabbed.addTab("Web Services", (Icon) ImageUtilities.loadImage(WEB_SERVICE_ICON_IMAGE_PATH, true),
@@ -135,6 +129,10 @@ class IvyView extends DataSourceView {
     DataViewComponent.MasterViewConfiguration masterConfiguration
             = new DataViewComponent.MasterViewConfiguration(false);
     return new DataViewComponent(masterView, masterConfiguration);
+  }
+
+  public void setDataBeanProvider(DataBeanProvider dataBeanProvider) {
+    fDataBeanProvider = dataBeanProvider;
   }
 
   private class UpdateChartTask implements SchedulerTask {
