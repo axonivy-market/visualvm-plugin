@@ -553,11 +553,6 @@ public final class InformationPanelTopComponent extends JPanel {
     // TO DO store your settings
   }
 
-  void readProperties(java.util.Properties p) {
-    String version = p.getProperty("version"); // NOPMD
-    // TO DO read your settings according to their version
-  }
-
   /*
    * CHECKSTYLE:ON
    */
@@ -565,16 +560,15 @@ public final class InformationPanelTopComponent extends JPanel {
     MBeanServerConnection connection = dataBeanProvider.getMBeanServerConnection();
     BasicIvyJmxDataCollector collector = new BasicIvyJmxDataCollector();
 
-    try {
-      IvyApplicationInfo basicInfo = collector.getApplicationInfo(connection);
+    IvyApplicationInfo basicInfo = dataBeanProvider.getGenericData().getApplicationInfo();
+    if (basicInfo != null) {
       setLabelText(versionLabel, version, basicInfo.getVersion());
       setLabelText(buildDateLabel, buildDate, DataUtils.dateToString(basicInfo.getBuildDate()));
       setLabelText(installDirLabel, installationDirectory, basicInfo.getInstallationDirectory());
-    } catch (IvyJmxDataCollectException ex) {
+    } else {
       hideInfoLabels(versionLabel, version);
       hideInfoLabels(buildDateLabel, buildDate);
       hideInfoLabels(installDirLabel, installationDirectory);
-      LOGGER.warning(ex.getMessage());
     }
 
     try {
