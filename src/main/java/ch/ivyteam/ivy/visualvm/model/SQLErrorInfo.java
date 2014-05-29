@@ -1,10 +1,9 @@
 package ch.ivyteam.ivy.visualvm.model;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class SQLErrorInfo {
+  private static final String BACKSLASH = "\\";
   private String fApplication;
   private String fEnvironment;
   private String fConfigName;
@@ -22,11 +21,11 @@ public class SQLErrorInfo {
     this.fProcessElementId = processElementId;
   }
 
-  public Date getTimestamp() {
+  public Date getTime() {
     return fTimestamp;
   }
 
-  public void setTimestamp(Date timestamp) {
+  public void setTime(Date timestamp) {
     this.fTimestamp = timestamp;
   }
 
@@ -79,16 +78,12 @@ public class SQLErrorInfo {
   }
 
   public String getDbConfig() {
-    return fApplication + "\\" + fEnvironment + "\\" + fConfigName;
-  }
-
-  public String getExecutionTime() {
-    DateFormat df = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
-    return df.format(fTimestamp);
+    return fApplication + BACKSLASH + fEnvironment + BACKSLASH + fConfigName;
   }
 
   private String getKey() {
-    return fApplication + "$" + fEnvironment + "$" + fConfigName + "$" + fTimestamp.getTime();
+    return fApplication + BACKSLASH + fEnvironment + BACKSLASH + fConfigName
+            + BACKSLASH + fTimestamp.getTime();
   }
 
   @Override

@@ -130,14 +130,14 @@
                   <Dimension value="[2, 2]"/>
                 </Property>
                 <Property name="tableHeader" type="javax.swing.table.JTableHeader" editor="org.netbeans.modules.form.editors2.JTableHeaderEditor">
-                  <TableHeader reorderingAllowed="true" resizingAllowed="true"/>
+                  <TableHeader reorderingAllowed="false" resizingAllowed="true"/>
                 </Property>
               </Properties>
               <BindingProperties>
                 <BindingProperty name="elements" source="fErrorInfoList" target="tableErrors" targetPath="elements" updateStrategy="1" immediately="true">
                   <Property name="name" type="java.lang.String" value="bindingTableErrors"/>
-                  <Subbinding sourcePath="${executionTime}">
-                    <BindingParameter name="javax.swing.binding.ParameterKeys.COLUMN_CLASS" value="String.class"/>
+                  <Subbinding sourcePath="${time}">
+                    <BindingParameter name="javax.swing.binding.ParameterKeys.COLUMN_CLASS" value="java.util.Date.class"/>
                     <BindingParameter name="javax.swing.binding.ParameterKeys.EDITABLE" value="false"/>
                   </Subbinding>
                   <Subbinding sourcePath="${dbConfig}">

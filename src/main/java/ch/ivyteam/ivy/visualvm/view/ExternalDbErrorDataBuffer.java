@@ -95,7 +95,7 @@ public class ExternalDbErrorDataBuffer implements IUpdatableUIObject {
     errorInfo.setApplication(objectName.getKeyProperty(KEY_APP));
     errorInfo.setEnvironment(objectName.getKeyProperty(KEY_ENVIRONMENT));
     errorInfo.setConfigName(objectName.getKeyProperty(KEY_CONFIG));
-    errorInfo.setTimestamp((Date) execution.get(KEY_EXECUTION_TIME));
+    errorInfo.setTime((Date) execution.get(KEY_EXECUTION_TIME));
     errorInfo.setStatement(execution.get(KEY_SQL).toString());
 
     CompositeData databaseElement = (CompositeData) execution.get(KEY_DATABASE_ELEMENT);

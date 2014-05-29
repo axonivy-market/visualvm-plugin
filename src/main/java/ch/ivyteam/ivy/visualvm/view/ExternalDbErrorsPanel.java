@@ -1,33 +1,27 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package ch.ivyteam.ivy.visualvm.view;
 
 import ch.ivyteam.ivy.visualvm.model.SQLErrorInfo;
+import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import javax.swing.JTable;
 import javax.swing.RowSorter.SortKey;
 import javax.swing.SortOrder;
+import javax.swing.table.DefaultTableCellRenderer;
 import org.jdesktop.beansbinding.Binding;
 
-/**
- *
- * @author thnghia
- */
 public class ExternalDbErrorsPanel extends javax.swing.JPanel {
 
   private final ExternalDbView fExternalDbView;
   private boolean fIsLoaded = false;
+  private final DateCellRenderer fDateCellRenderer = new DateCellRenderer();
 
-  /**
-   * Creates new form ExternalDbPanel
-   */
   public ExternalDbErrorsPanel(ExternalDbView view) {
     fExternalDbView = view;
     initComponents();
@@ -54,6 +48,7 @@ public class ExternalDbErrorsPanel extends javax.swing.JPanel {
     fErrorInfoList.clear();
     fErrorInfoList.addAll(errors);
     bindingTableErrors.bind();
+    tableErrors.getColumnModel().getColumn(0).setCellRenderer(fDateCellRenderer);
     tableErrors.repaint();
   }
 
@@ -123,11 +118,12 @@ public class ExternalDbErrorsPanel extends javax.swing.JPanel {
 
     tableErrors.setAutoCreateRowSorter(true);
     tableErrors.setIntercellSpacing(new java.awt.Dimension(2, 2));
+    tableErrors.getTableHeader().setReorderingAllowed(false);
 
     org.jdesktop.swingbinding.JTableBinding jTableBinding = org.jdesktop.swingbinding.SwingBindings.createJTableBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ, fErrorInfoList, tableErrors, "bindingTableErrors");
-    org.jdesktop.swingbinding.JTableBinding.ColumnBinding columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${executionTime}"));
-    columnBinding.setColumnName("Execution Time");
-    columnBinding.setColumnClass(String.class);
+    org.jdesktop.swingbinding.JTableBinding.ColumnBinding columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${time}"));
+    columnBinding.setColumnName("Time");
+    columnBinding.setColumnClass(java.util.Date.class);
     columnBinding.setEditable(false);
     columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${dbConfig}"));
     columnBinding.setColumnName("Db Config");
@@ -210,6 +206,7 @@ public class ExternalDbErrorsPanel extends javax.swing.JPanel {
   private org.jdesktop.beansbinding.BindingGroup bindingGroup;
   // End of variables declaration//GEN-END:variables
   // CHECKSTYLE:ON
+
   private class RefreshButtonActionListener implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
@@ -227,9 +224,24 @@ public class ExternalDbErrorsPanel extends javax.swing.JPanel {
         fExternalDbView.fireCreateChartsAction(error.getApplication(), error.getEnvironment(), error.
                 getConfigName());
         fExternalDbView.switchToChartsTab();
-        fExternalDbView.setSelectedNode(error.getApplication(), error.getEnvironment(), 
+        fExternalDbView.setSelectedNode(error.getApplication(), error.getEnvironment(),
                 error.getConfigName());
       }
+    }
+
+  }
+
+  private class DateCellRenderer extends DefaultTableCellRenderer {
+    @Override
+    public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected,
+            boolean hasFocus, int row, int column) {
+      String dateValue = value.toString();
+      if (value instanceof Date) {
+        SimpleDateFormat format = new SimpleDateFormat("dd/MM/yy hh:mm:ss");
+        dateValue = format.format(value);
+      }
+      return super.getTableCellRendererComponent(table, dateValue, isSelected,
+              hasFocus, row, column);
     }
 
   }
