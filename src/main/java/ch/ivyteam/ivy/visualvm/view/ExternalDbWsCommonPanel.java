@@ -8,6 +8,7 @@ import ch.ivyteam.ivy.visualvm.chart.ChartsPanel;
 import java.awt.Component;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 import javax.swing.Icon;
@@ -76,6 +77,10 @@ public class ExternalDbWsCommonPanel extends javax.swing.JPanel {
    * the tree data
    */
   private Map<String, Map<String, Set<String>>> fAppEnvConfigWsMap;
+  /**
+   * To store the tree leaves, get it out when needed to avoid navigating the tree
+   */
+  private final Map<String, AppEnvConfigNode> fLeaves;
 
   /**
    * Creates new form ExternalDbPanel
@@ -86,6 +91,7 @@ public class ExternalDbWsCommonPanel extends javax.swing.JPanel {
     fEnvIcon = (Icon) ImageUtilities.loadImage(ENV_ICON_PATH, true);
     fConfWsIcon = (Icon) ImageUtilities.loadImage(CONF_ICON_PATH, true);
     fRecordingIcon = (Icon) ImageUtilities.loadImage(DB_RECORDING_ICON_PATH, true);
+    fLeaves = new HashMap<>();
     // need to init data models before initialization of the tree
     fRootNode = new AppEnvConfigNode("Server", fAppIcon);
     fEnvTreeModel = new DefaultTreeModel(fRootNode);
@@ -186,6 +192,7 @@ public class ExternalDbWsCommonPanel extends javax.swing.JPanel {
   }
 
   private void initTreeData() {
+    fLeaves.clear();
     // update new data
     int index = 0;
     for (String appName : fAppEnvConfigWsMap.keySet()) {
@@ -199,6 +206,7 @@ public class ExternalDbWsCommonPanel extends javax.swing.JPanel {
         for (String config : fAppEnvConfigWsMap.get(appName).get(env)) {
           AppEnvConfigNode confNode = new AppEnvConfigNode(config, fConfWsIcon);
           fEnvTreeModel.insertNodeInto(confNode, envNode, configIndex++);
+          fLeaves.put(appName + "_" + env + "_" + config, confNode);
         }
       }
     }
@@ -289,6 +297,13 @@ public class ExternalDbWsCommonPanel extends javax.swing.JPanel {
 
   void setRecordingIcon(Icon recordIcon) {
     fRecordingIcon = recordIcon;
+  }
+
+  public void setSelectedNode(String appName, String envName, String confWsName) {
+    AppEnvConfigNode confWsNode = fLeaves.get(appName + "_" + envName + "_" + confWsName);
+    if (confWsNode != null) {
+      envJTree.setSelectionPath(new TreePath(confWsNode.getPath()));
+    }
   }
 
   private class AppEnvConfigNode extends DefaultMutableTreeNode {

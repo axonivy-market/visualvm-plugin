@@ -56,4 +56,7 @@ abstract class ExternalDbWsCommonView extends AbstractView {
 
   protected abstract ChartsPanel createChartPanel();
 
+  public void setSelectedNode(String appName, String envName, String confEnvName) {
+    fUIChartsPanel.setSelectedNode(appName, envName, confEnvName);
+  }
 }

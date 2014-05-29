@@ -227,6 +227,8 @@ public class ExternalDbErrorsPanel extends javax.swing.JPanel {
         fExternalDbView.fireCreateChartsAction(error.getApplication(), error.getEnvironment(), error.
                 getConfigName());
         fExternalDbView.switchToChartsTab();
+        fExternalDbView.setSelectedNode(error.getApplication(), error.getEnvironment(), 
+                error.getConfigName());
       }
     }
 
