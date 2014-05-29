@@ -23,7 +23,6 @@ public class ExternalDbView extends ExternalDbWsCommonView {
   private static final String ERRORS = "Errors";
   private final ExternalDbErrorDataBuffer fErrorInfoBuffer;
 
-  private DetailsView fErrorsDetailsView;
   private DetailsView fChartsDetailsView;
   private ExternalDbErrorsPanel fUIErrorPanel;
 
@@ -76,7 +75,7 @@ public class ExternalDbView extends ExternalDbWsCommonView {
     fUIErrorPanel = new ExternalDbErrorsPanel(this);
 
     fChartsDetailsView = new DataViewComponent.DetailsView(CHARTS, null, 10, chartsPanel, null);
-    fErrorsDetailsView = new DetailsView(ERRORS, null, 10, fUIErrorPanel, null);
+    DetailsView fErrorsDetailsView = new DetailsView(ERRORS, null, 10, fUIErrorPanel, null);
 
     super.getViewComponent().configureDetailsArea(new DataViewComponent.DetailsAreaConfiguration(null,
             false), DataViewComponent.TOP_LEFT);

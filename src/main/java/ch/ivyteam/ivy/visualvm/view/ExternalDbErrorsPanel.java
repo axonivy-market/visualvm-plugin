@@ -72,6 +72,7 @@ public class ExternalDbErrorsPanel extends javax.swing.JPanel {
     sortKeys.add(sortKey);
     return sortKeys;
   }
+  // CHECKSTYLE:OFF
 
   /**
    * This method is called from within the constructor to initialize the form. WARNING: Do NOT modify this
@@ -208,7 +209,7 @@ public class ExternalDbErrorsPanel extends javax.swing.JPanel {
   private javax.swing.JTextArea txtStacktrace;
   private org.jdesktop.beansbinding.BindingGroup bindingGroup;
   // End of variables declaration//GEN-END:variables
-
+  // CHECKSTYLE:ON
   private class RefreshButtonActionListener implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
