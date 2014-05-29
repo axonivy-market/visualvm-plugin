@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<beanTestData>
+  <dataset>
+    <property>
+      <name>Xpert.ivy Server:type=Server</name>
+      <dataset>
+        <property>
+          <name>version</name>
+          <value>5.2.0.44832</value>
+        </property>
+        <property>
+          <name>applicationName</name>
+          <value>Xpert.ivy Server</value>
+        </property>
+      </dataset>
+    </property>
+  </dataset>
+    
+  <dataset>
+    <property>
+      <name>Xpert.ivy Server:type=Server</name>
+      <dataset>
+        <property>
+          <name>version</name>
+          <value>5.1.0.44832</value>
+        </property>
+        <property>
+          <name>applicationName</name>
+          <value>Xpert.ivy Server</value>
+        </property>
+      </dataset>
+    </property>
+  </dataset>
+  
+  <dataset>
+    <property>
+      <name>Xpert.ivy Server:type=Server</name>
+      <dataset>
+        <property>
+          <name>version</name>
+          <value>5.0.0.44832</value>
+        </property>
+        <property>
+          <name>applicationName</name>
+          <value>Xpert.ivy Server</value>
+        </property>
+      </dataset>
+    </property>
+  </dataset>
+  
+  <dataset>
+    <property>
+      <name>Xpert.ivy Server:type=Server</name>
+      <dataset>
+        <property>
+          <name>version</name>
+          <value>4.3.0.44832</value>
+        </property>
+        <property>
+          <name>applicationName</name>
+          <value>Xpert.ivy Server</value>
+        </property>
+      </dataset>
+    </property>
+  </dataset>
+  
+  <dataset>
+    <property>
+      <name>Xpert.ivy Server:type=Server</name>
+      <dataset>
+        <property>
+          <name>version</name>
+          <value>5.2.0.44832</value>
+        </property>
+        <property>
+          <name>applicationName</name>
+          <value>Xpert.ivy Designer</value>
+        </property>
+      </dataset>
+    </property>
+  </dataset>
+  
+  <dataset>
+    <property>
+      <name>Xpert.ivy Server:type=Server</name>
+      <dataset>
+        <property>
+          <name>version</name>
+          <value>5.1.0.44832</value>
+        </property>
+        <property>
+          <name>applicationName</name>
+          <value>Xpert.ivy Designer</value>
+        </property>
+      </dataset>
+    </property>
+  </dataset>
+  
+  <dataset>
+    <property>
+      <name>Xpert.ivy Server:type=Server</name>
+      <dataset>
+        <property>
+          <name>version</name>
+          <value>5.0.0.44832</value>
+        </property>
+        <property>
+          <name>applicationName</name>
+          <value>Xpert.ivy Designer</value>
+        </property>
+      </dataset>
+    </property>
+  </dataset>
+  
+  <dataset>
+    <property>
+      <name>Xpert.ivy Server:type=Server</name>
+      <dataset>
+        <property>
+          <name>version</name>
+          <value>4.3.0.44832</value>
+        </property>
+        <property>
+          <name>applicationName</name>
+          <value>Xpert.ivy Designer</value>
+        </property>
+      </dataset>
+    </property>
+  </dataset>
+  
+  <dataset>
+  </dataset>
+</beanTestData>

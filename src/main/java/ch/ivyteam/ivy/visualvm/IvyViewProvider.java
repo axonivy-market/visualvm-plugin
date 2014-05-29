@@ -1,6 +1,7 @@
 package ch.ivyteam.ivy.visualvm;
 
 import ch.ivyteam.ivy.visualvm.model.IvyApplicationInfo;
+import ch.ivyteam.ivy.visualvm.util.DataUtils;
 import ch.ivyteam.ivy.visualvm.view.DataBeanProvider;
 import com.sun.tools.visualvm.application.Application;
 import com.sun.tools.visualvm.core.ui.DataSourceView;
@@ -10,39 +11,47 @@ import com.sun.tools.visualvm.tools.jmx.JmxModel;
 import com.sun.tools.visualvm.tools.jmx.JmxModelFactory;
 import javax.management.MBeanServerConnection;
 
-class IvyViewProvider extends DataSourceViewProvider<Application> {
+public class IvyViewProvider extends DataSourceViewProvider<Application> {
 
   private static final DataSourceViewProvider<Application> INSTANCE = new IvyViewProvider();
-  private IvyView ivyView = null;
   private DataBeanProvider fDataBeanProvider;
 
   @Override
   protected boolean supportsViewFor(Application application) {
     JmxModel jmx = JmxModelFactory.getJmxModelFor(application);
+    boolean result = false;
     if (jmx != null) {
       MBeanServerConnection mbsc = jmx.getMBeanServerConnection();
       if (mbsc != null) {
-        fDataBeanProvider = new DataBeanProvider(mbsc);
-        IvyApplicationInfo appInfo = fDataBeanProvider.getGenericData().getApplicationInfo();
-        if ((appInfo != null)
-                && ("5.1".compareTo(appInfo.getVersion()) < 0)) {
-          boolean isIvyServer = IvyApplicationInfo.IVY_SERVER_APP_NAME.equals(appInfo.getApplicationName());
-          boolean isIvyDesigner = IvyApplicationInfo.IVY_DESIGNER_APP_NAME.
-                  equals(appInfo.getApplicationName());
-          if (isIvyServer || isIvyDesigner) {
-            ivyView = new IvyView(application);
-            ivyView.setDataBeanProvider(fDataBeanProvider);
-            return true;
-          }
-          return false;
-        }
+        fDataBeanProvider = produceDataBeanProvider(mbsc);
+        result = (fDataBeanProvider != null);
       }
     }
-    return false;
+    return result;
+  }
+
+  public DataBeanProvider produceDataBeanProvider(MBeanServerConnection mbsc) {
+    DataBeanProvider dataBeanProvider = new DataBeanProvider(mbsc);
+    IvyApplicationInfo appInfo = dataBeanProvider.getGenericData().getApplicationInfo();
+    if ((appInfo != null) && DataUtils.checkIvyVersion(appInfo.getVersion(), 5, 1)) {
+      switch (appInfo.getApplicationName()) {
+        case IvyApplicationInfo.IVY_SERVER_APP_NAME:
+        case IvyApplicationInfo.IVY_DESIGNER_APP_NAME:
+          break;
+        default:
+          dataBeanProvider = null;
+          break;
+      }
+    } else {
+      dataBeanProvider = null;
+    }
+    return dataBeanProvider;
   }
 
   @Override
   protected DataSourceView createView(Application application) {
+    IvyView ivyView = new IvyView(application);
+    ivyView.setDataBeanProvider(fDataBeanProvider);
     return ivyView;
   }
 

@@ -66,6 +66,31 @@ public final class DataUtils {
     return version;
   }
 
+  public static boolean checkIvyVersion(String version, int fstV, int secV) {
+    boolean result = false;
+    if (version != null) {
+      String[] splits = version.split("\\.");
+      if (splits.length > 0) {
+        try {
+          int v1 = Integer.parseInt(splits[0]);
+          if (v1 > fstV) {
+            result = true;
+          } else if ((v1 == fstV) && (splits.length > 1)) {
+            try {
+              int v2 = Integer.parseInt(splits[1]);
+              if (v2 >= secV) {
+                result = true;
+              }
+            } catch (NumberFormatException ex) {
+            }
+          }
+        } catch (NumberFormatException ex) {
+        }
+      }
+    }
+    return result;
+  }
+
   public static String getFullOSName(String osName, String osArch) {
     String result = osName;
     if (osName != null && osArch != null && osArch.toLowerCase().contains("64")) {

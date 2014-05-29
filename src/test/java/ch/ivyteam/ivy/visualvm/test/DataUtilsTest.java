@@ -3,6 +3,8 @@ package ch.ivyteam.ivy.visualvm.test;
 import ch.ivyteam.ivy.visualvm.util.DataUtils;
 import java.util.Calendar;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 import org.junit.Test;
 
 public class DataUtilsTest {
@@ -16,6 +18,23 @@ public class DataUtilsTest {
   @Test
   public void testGetIvyServerVersion() {
     assertEquals("5.1.0 (revision 44657)", DataUtils.getIvyServerVersion("5.1.0.44657"));
+  }
+
+  @Test
+  public void testCheckIvyVersion() {
+    assertTrue(DataUtils.checkIvyVersion("10.1.0.44657", 5, 1));
+    assertTrue(DataUtils.checkIvyVersion("5.2.0.44657", 5, 1));
+    assertTrue(DataUtils.checkIvyVersion("5.1.0.44657", 5, 1));
+    assertFalse(DataUtils.checkIvyVersion("5.0.0.44657", 5, 1));
+    assertFalse(DataUtils.checkIvyVersion("4.3.0.44657", 5, 1));
+
+    assertTrue(DataUtils.checkIvyVersion("10", 5, 1));
+    assertFalse(DataUtils.checkIvyVersion(null, 5, 1));
+    assertFalse(DataUtils.checkIvyVersion("4", 5, 1));
+    assertFalse(DataUtils.checkIvyVersion("5", 5, 1));
+    assertFalse(DataUtils.checkIvyVersion("5.0", 5, 1));
+    assertTrue(DataUtils.checkIvyVersion("5.1", 5, 1));
+    assertTrue(DataUtils.checkIvyVersion("5.2", 5, 1));
   }
 
   @Test
