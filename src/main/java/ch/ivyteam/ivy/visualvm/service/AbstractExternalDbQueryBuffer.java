@@ -16,16 +16,16 @@ import javax.management.MBeanServerConnection;
 import javax.management.ObjectName;
 import javax.management.openmbean.CompositeData;
 
-public abstract class AbstractExternalDbSQLBuffer implements IUpdatableUIObject {
+public abstract class AbstractExternalDbQueryBuffer implements IUpdatableUIObject {
   private static final Logger LOGGER
-          = Logger.getLogger(ExternalDbErrorSQLBuffer.class.getName());
+          = Logger.getLogger(ExternalDbErrorQueryBuffer.class.getName());
 
   private final int fMaxBufferSize;
   private final MBeanServerConnection fConnection;
   private Comparator<CompositeData> fComparator;
   private final List<ObjectName> fObjectNames = new ArrayList();
 
-  public AbstractExternalDbSQLBuffer(MBeanServerConnection mBeanServerConnection, int maxBufferSize) {
+  public AbstractExternalDbQueryBuffer(MBeanServerConnection mBeanServerConnection, int maxBufferSize) {
     fConnection = mBeanServerConnection;
     fMaxBufferSize = maxBufferSize;
   }

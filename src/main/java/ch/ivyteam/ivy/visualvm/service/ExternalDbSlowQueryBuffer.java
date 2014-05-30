@@ -9,11 +9,11 @@ import javax.management.MBeanServerConnection;
 import javax.management.ObjectName;
 import javax.management.openmbean.CompositeData;
 
-public class ExternalDbSlowSQLBuffer extends AbstractExternalDbSQLBuffer {
+public class ExternalDbSlowQueryBuffer extends AbstractExternalDbQueryBuffer {
 
   private final List<SQLInfo> fSQLInfoBuffer = new LinkedList<>();
 
-  public ExternalDbSlowSQLBuffer(MBeanServerConnection mBeanServerConnection, int maxBufferSize) {
+  public ExternalDbSlowQueryBuffer(MBeanServerConnection mBeanServerConnection, int maxBufferSize) {
     super(mBeanServerConnection, maxBufferSize);
     setComparator(new ExecutionTimeComparator());
   }

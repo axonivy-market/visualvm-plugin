@@ -11,10 +11,10 @@ import javax.management.MBeanServerConnection;
 import javax.management.ObjectName;
 import javax.management.openmbean.CompositeData;
 
-public class ExternalDbErrorSQLBuffer extends AbstractExternalDbSQLBuffer {
+public class ExternalDbErrorQueryBuffer extends AbstractExternalDbQueryBuffer {
   private final List<SQLErrorInfo> fErrorInfoBuffer = new LinkedList<>();
 
-  public ExternalDbErrorSQLBuffer(MBeanServerConnection mBeanServerConnection, int maxBufferSize) {
+  public ExternalDbErrorQueryBuffer(MBeanServerConnection mBeanServerConnection, int maxBufferSize) {
     super(mBeanServerConnection, maxBufferSize);
     setComparator(new TimeComparator());
   }

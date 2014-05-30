@@ -4,7 +4,7 @@
   <NonVisualComponents>
     <Component class="java.util.ArrayList" name="fErrorInfoList">
       <AuxValues>
-        <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;ch.ivyteam.ivy.visualvm.model.SQLErrorInfo&gt;"/>
+        <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;SQLErrorInfo&gt;"/>
       </AuxValues>
     </Component>
   </NonVisualComponents>
@@ -125,9 +125,6 @@
                       <Renderer/>
                     </Column>
                   </TableColumnModel>
-                </Property>
-                <Property name="intercellSpacing" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-                  <Dimension value="[2, 2]"/>
                 </Property>
                 <Property name="tableHeader" type="javax.swing.table.JTableHeader" editor="org.netbeans.modules.form.editors2.JTableHeaderEditor">
                   <TableHeader reorderingAllowed="false" resizingAllowed="true"/>

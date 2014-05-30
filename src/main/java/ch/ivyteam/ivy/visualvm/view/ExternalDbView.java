@@ -5,7 +5,8 @@ import ch.ivyteam.ivy.visualvm.chart.data.externaldb.ExternalDbConnectionChartDa
 import ch.ivyteam.ivy.visualvm.chart.data.externaldb.ExternalDbProcessingTimeChartDataSource;
 import ch.ivyteam.ivy.visualvm.chart.data.externaldb.ExternalDbTransactionChartDataSource;
 import ch.ivyteam.ivy.visualvm.model.IvyJmxConstant;
-import ch.ivyteam.ivy.visualvm.service.ExternalDbErrorSQLBuffer;
+import ch.ivyteam.ivy.visualvm.service.ExternalDbErrorQueryBuffer;
+import ch.ivyteam.ivy.visualvm.service.ExternalDbSlowQueryBuffer;
 import ch.ivyteam.ivy.visualvm.util.DataUtils;
 import com.sun.tools.visualvm.core.ui.components.DataViewComponent;
 import com.sun.tools.visualvm.core.ui.components.DataViewComponent.DetailsView;
@@ -18,15 +19,20 @@ public class ExternalDbView extends ExternalDbWsCommonView {
   private boolean uiComplete;
   private static final String CHARTS = "Charts";
   private static final String ERRORS = "Errors";
-  private final ExternalDbErrorSQLBuffer fErrorInfoBuffer;
+  private static final String SLOW_QUERIES = "Slow Queries";
+  private final ExternalDbErrorQueryBuffer fErrorInfoBuffer;
+  private final ExternalDbSlowQueryBuffer fSlowQueryBuffer;
 
   private DetailsView fChartsDetailsView;
   private ExternalDbErrorsPanel fUIErrorPanel;
+  private ExternalDbSlowQueriesPanel fUISlowQueriesPanel;
 
   public ExternalDbView(DataBeanProvider dataBeanProvider) {
     super(dataBeanProvider);
-    fErrorInfoBuffer = new ExternalDbErrorSQLBuffer(getDataBeanProvider().getMBeanServerConnection(), 100);
+    fErrorInfoBuffer = new ExternalDbErrorQueryBuffer(getDataBeanProvider().getMBeanServerConnection(), 100);
+    fSlowQueryBuffer = new ExternalDbSlowQueryBuffer(getDataBeanProvider().getMBeanServerConnection(), 100);
     registerScheduledUpdate(fErrorInfoBuffer);
+    registerScheduledUpdate(fSlowQueryBuffer);
   }
 
   // call when user select environment & db configuration
@@ -70,14 +76,17 @@ public class ExternalDbView extends ExternalDbWsCommonView {
     ExternalDbWsCommonPanel chartsPanel = new ExternalDbWsCommonPanel(this);
     setUIChartsPanel(chartsPanel);
     fUIErrorPanel = new ExternalDbErrorsPanel(this);
+    fUISlowQueriesPanel = new ExternalDbSlowQueriesPanel(this);
 
     fChartsDetailsView = new DataViewComponent.DetailsView(CHARTS, null, 10, chartsPanel, null);
     DetailsView fErrorsDetailsView = new DetailsView(ERRORS, null, 10, fUIErrorPanel, null);
+    DetailsView fSlowQueriesView = new DetailsView(SLOW_QUERIES, null, 10, fUISlowQueriesPanel, null);
 
     super.getViewComponent().configureDetailsArea(new DataViewComponent.DetailsAreaConfiguration(null,
             false), DataViewComponent.TOP_LEFT);
     super.getViewComponent().addDetailsView(fChartsDetailsView, DataViewComponent.TOP_LEFT);
     super.getViewComponent().addDetailsView(fErrorsDetailsView, DataViewComponent.TOP_LEFT);
+    super.getViewComponent().addDetailsView(fSlowQueriesView, DataViewComponent.TOP_LEFT);
   }
 
   private String generateDescriptionForConnectionChart() {
@@ -125,8 +134,14 @@ public class ExternalDbView extends ExternalDbWsCommonView {
     fUIErrorPanel.refresh(fErrorInfoBuffer.getBuffer());
   }
 
-  public void switchToChartsTab() {
+  public void refreshSlowQueriesTab() {
+    fUISlowQueriesPanel.refresh(fSlowQueryBuffer.getBuffer());
+  }
+
+  public void showChart(String appName, String envName, String configName) {
     super.getViewComponent().selectDetailsView(fChartsDetailsView);
+    fireCreateChartsAction(appName, envName, configName);
+    setSelectedNode(appName, envName, configName);
   }
 
   @Override
@@ -134,6 +149,9 @@ public class ExternalDbView extends ExternalDbWsCommonView {
     super.update();
     if (!fUIErrorPanel.isLoaded() && !fErrorInfoBuffer.getBuffer().isEmpty()) {
       refreshErrorTab();
+    }
+    if (!fUISlowQueriesPanel.isLoaded() && !fSlowQueryBuffer.getBuffer().isEmpty()) {
+      refreshSlowQueriesTab();
     }
   }
 
