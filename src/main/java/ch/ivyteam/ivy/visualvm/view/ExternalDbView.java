@@ -1,7 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties. To change this template file,
- * choose Tools | Templates and open the template in the editor.
- */
 package ch.ivyteam.ivy.visualvm.view;
 
 import ch.ivyteam.ivy.visualvm.chart.ChartsPanel;
@@ -9,6 +5,7 @@ import ch.ivyteam.ivy.visualvm.chart.data.externaldb.ExternalDbConnectionChartDa
 import ch.ivyteam.ivy.visualvm.chart.data.externaldb.ExternalDbProcessingTimeChartDataSource;
 import ch.ivyteam.ivy.visualvm.chart.data.externaldb.ExternalDbTransactionChartDataSource;
 import ch.ivyteam.ivy.visualvm.model.IvyJmxConstant;
+import ch.ivyteam.ivy.visualvm.service.ExternalDbErrorSQLBuffer;
 import ch.ivyteam.ivy.visualvm.util.DataUtils;
 import com.sun.tools.visualvm.core.ui.components.DataViewComponent;
 import com.sun.tools.visualvm.core.ui.components.DataViewComponent.DetailsView;
@@ -21,14 +18,14 @@ public class ExternalDbView extends ExternalDbWsCommonView {
   private boolean uiComplete;
   private static final String CHARTS = "Charts";
   private static final String ERRORS = "Errors";
-  private final ExternalDbErrorDataBuffer fErrorInfoBuffer;
+  private final ExternalDbErrorSQLBuffer fErrorInfoBuffer;
 
   private DetailsView fChartsDetailsView;
   private ExternalDbErrorsPanel fUIErrorPanel;
 
   public ExternalDbView(DataBeanProvider dataBeanProvider) {
     super(dataBeanProvider);
-    fErrorInfoBuffer = new ExternalDbErrorDataBuffer(getDataBeanProvider().getMBeanServerConnection(), 100);
+    fErrorInfoBuffer = new ExternalDbErrorSQLBuffer(getDataBeanProvider().getMBeanServerConnection(), 100);
     registerScheduledUpdate(fErrorInfoBuffer);
   }
 
@@ -125,7 +122,7 @@ public class ExternalDbView extends ExternalDbWsCommonView {
   }
 
   public void refreshErrorTab() {
-    fUIErrorPanel.refresh(fErrorInfoBuffer.getErrorInfoBuffer());
+    fUIErrorPanel.refresh(fErrorInfoBuffer.getBuffer());
   }
 
   public void switchToChartsTab() {
@@ -135,7 +132,7 @@ public class ExternalDbView extends ExternalDbWsCommonView {
   @Override
   public void update() {
     super.update();
-    if (!fUIErrorPanel.isLoaded() && !fErrorInfoBuffer.getErrorInfoBuffer().isEmpty()) {
+    if (!fUIErrorPanel.isLoaded() && !fErrorInfoBuffer.getBuffer().isEmpty()) {
       refreshErrorTab();
     }
   }

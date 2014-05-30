@@ -79,14 +79,16 @@ public class IvyJmxConstant {
       public static final String KEY_TRANS_NUMBER = "transactions";
       public static final String KEY_TRANS_TOTAL_EXE_TIME = "transactionsTotalExecutionTimeInMicroSeconds";
       public static final String KEY_TRANS_MAX_EXE_TIME = "transactionsMaxExecutionTimeInMicroSeconds";
-      public static final String KEY_TRANS_MAX_EXE_DELTA_TIME =
-              "transactionsMaxExecutionTimeDeltaInMicroSeconds";
-      public static final String KEY_TRANS_MIN_EXE_DELTA_TIME =
-              "transactionsMinExecutionTimeDeltaInMicroSeconds";
+      public static final String KEY_TRANS_MAX_EXE_DELTA_TIME
+              = "transactionsMaxExecutionTimeDeltaInMicroSeconds";
+      public static final String KEY_TRANS_MIN_EXE_DELTA_TIME
+              = "transactionsMinExecutionTimeDeltaInMicroSeconds";
       public static final String KEY_TRANS_MIN_EXE_TIME = "transactionsMinExecutionTimeInMicroSeconds";
     }
 
     public static final class ExternalDatabase {
+      public static final ObjectName NAME_FILTER = initObjectName(
+              "Xpert.ivy Server:type=External Database,application=*,environment=*,name=*");
       public static final String NAME_PATTERN = "Xpert.ivy Server:type=External Database,application=%s,"
               + "environment=%s,name=%s";
       public static final String KEY_PRODUCT_NAME = "databaseProductName";
@@ -102,11 +104,25 @@ public class IvyJmxConstant {
       public static final String KEY_ERROR_NUMBER = "errors";
       public static final String KEY_TRANS_TOTAL_EXE_TIME = "transactionsTotalExecutionTimeInMicroSeconds";
       public static final String KEY_TRANS_MAX_EXE_TIME = "transactionsMaxExecutionTimeInMicroSeconds";
-      public static final String KEY_TRANS_MAX_EXE_DELTA_TIME =
-              "transactionsMaxExecutionTimeDeltaInMicroSeconds";
-      public static final String KEY_TRANS_MIN_EXE_DELTA_TIME =
-              "transactionsMinExecutionTimeDeltaInMicroSeconds";
+      public static final String KEY_TRANS_MAX_EXE_DELTA_TIME
+              = "transactionsMaxExecutionTimeDeltaInMicroSeconds";
+      public static final String KEY_TRANS_MIN_EXE_DELTA_TIME
+              = "transactionsMinExecutionTimeDeltaInMicroSeconds";
       public static final String KEY_TRANS_MIN_EXE_TIME = "transactionsMinExecutionTimeInMicroSeconds";
+
+      public static final String KEY_EXECUTION_HISTORY = "executionHistory";
+      public static final String KEY_APP = "application";
+      public static final String KEY_ENVIRONMENT = "environment";
+      public static final String KEY_CONFIG = "name";
+      public static final String KEY_EXECUTION_TIMESTAMP = "executionTimestamp";
+      public static final String KEY_SQL = "sql";
+      public static final String KEY_DATABASE_ELEMENT = "databaseElement";
+      public static final String KEY_PROCESS_ID = "processElementId";
+      public static final String KEY_EXECUTION_TIME = "executionTimeInMicroSeconds";
+      public static final String KEY_ERROR = "error";
+      public static final String KEY_STACKTRACE = "stackTrace";
+      public static final String KEY_MESSAGE = "message";
+
     }
 
     public static final class WebService {
