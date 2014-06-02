@@ -11,9 +11,9 @@ public class ConcurrentUsersChartDataSource extends XYChartDataSource {
   public ConcurrentUsersChartDataSource(DataBeanProvider dataBeanProvider, String yAxisDescription,
           int sessionsLimit) {
     super(dataBeanProvider, null, null, yAxisDescription);
-    addFixedSerie("Limit", "The maximum number of the concurrent users restricted by the license",
+    addFixedSerie("Limit", "The maximum number of concurrent users restricted by the license",
             sessionsLimit);
-    addSerie("Now", "The current number of the concurrent users", SerieStyle.LINE,
+    addSerie("Now", "The number of users that are currently logged-in.", SerieStyle.LINE,
             IvyJmxConstant.IvyServer.SecurityManager.NAME,
             IvyJmxConstant.IvyServer.SecurityManager.KEY_LICENSED_SESSIONS);
     addLabelCalcSupport(new MaxValueChartLabelCalcSupport("Max Now",

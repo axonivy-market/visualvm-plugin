@@ -76,8 +76,8 @@ public class LicenseView extends AbstractView {
             .append("Note that if the same user is logged in multiple times, ")
             .append("she is counted as one concurrent user.")
             .append("<br/><br/>")
-            .append("<b>Limit:</b> The maximum number of the concurrent users restricted by the license<br/>")
-            .append("<b>Now:</b> The current number of the concurrent users<br/>")
+            .append("<b>Limit:</b> The maximum number of concurrent users restricted by the license<br/>")
+            .append("<b>Now:</b> The number of users that are currently logged-in.<br/>")
             .append("</body></html>");
     return description.toString();
   }

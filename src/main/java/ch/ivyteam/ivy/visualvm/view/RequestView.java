@@ -70,7 +70,7 @@ public class RequestView extends AbstractView {
 
   private String getErrorChartDescription() {
     StringBuilder sb = new StringBuilder("<html>");
-    sb.append("The chart shows the number of new errors of requests ");
+    sb.append("The chart shows the number of new errors in requests ");
     sb.append("served by each connector since the last poll,");
     sb.append(END_LINE);
     sb.append(" i.e. number of requests with a HTTP response code between 400 and 599");
