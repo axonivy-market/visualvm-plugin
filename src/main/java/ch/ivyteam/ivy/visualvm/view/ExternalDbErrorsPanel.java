@@ -1,6 +1,6 @@
 package ch.ivyteam.ivy.visualvm.view;
 
-import ch.ivyteam.ivy.visualvm.model.SQLErrorInfo;
+import ch.ivyteam.ivy.visualvm.model.SQLInfo;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
@@ -23,17 +23,14 @@ public class ExternalDbErrorsPanel extends javax.swing.JPanel {
     java.awt.GridBagConstraints gridBagConstraints;
     bindingGroup = new org.jdesktop.beansbinding.BindingGroup();
 
-    fErrorInfoList = new java.util.ArrayList<SQLErrorInfo>();
+    fErrorInfoList = new java.util.ArrayList<SQLInfo>();
     btnRefresh = new javax.swing.JButton();
     emptyLabel = new javax.swing.JLabel();
     jSplitPane1 = new javax.swing.JSplitPane();
     jScrollPane1 = new javax.swing.JScrollPane();
     tableErrors = new javax.swing.JTable();
-    errorDetailsTabbedPane = new javax.swing.JTabbedPane();
-    jScrollPane2 = new javax.swing.JScrollPane();
-    txtStacktrace = new javax.swing.JTextArea();
     jScrollPane3 = new javax.swing.JScrollPane();
-    txtSQL = new javax.swing.JTextArea();
+    txtDetails = new javax.swing.JTextArea();
 
     setBackground(new java.awt.Color(255, 255, 255));
     setLayout(new java.awt.GridBagLayout());
@@ -53,9 +50,8 @@ public class ExternalDbErrorsPanel extends javax.swing.JPanel {
     add(emptyLabel, gridBagConstraints);
 
     jSplitPane1.setBackground(new java.awt.Color(255, 255, 255));
-    jSplitPane1.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+    jSplitPane1.setBorder(null);
     jSplitPane1.setDividerLocation(150);
-    jSplitPane1.setDividerSize(3);
     jSplitPane1.setOrientation(javax.swing.JSplitPane.VERTICAL_SPLIT);
 
     jScrollPane1.setBackground(new java.awt.Color(255, 255, 255));
@@ -92,35 +88,19 @@ public class ExternalDbErrorsPanel extends javax.swing.JPanel {
 
     jSplitPane1.setLeftComponent(jScrollPane1);
 
-    jScrollPane2.setBorder(null);
-
-    txtStacktrace.setEditable(false);
-    txtStacktrace.setColumns(20);
-    txtStacktrace.setFont(new java.awt.Font("Monospaced", 0, 12)); // NOI18N
-    txtStacktrace.setRows(5);
-
-    org.jdesktop.beansbinding.Binding binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ, tableErrors, org.jdesktop.beansbinding.ELProperty.create("${selectedElement.stacktrace}"), txtStacktrace, org.jdesktop.beansbinding.BeanProperty.create("text"), "bindingTxtStacktrace");
-    bindingGroup.addBinding(binding);
-
-    jScrollPane2.setViewportView(txtStacktrace);
-
-    errorDetailsTabbedPane.addTab(org.openide.util.NbBundle.getMessage(ExternalDbErrorsPanel.class, "ExternalDbErrorsPanel.jScrollPane2.TabConstraints.tabTitle"), jScrollPane2); // NOI18N
-
     jScrollPane3.setBorder(null);
 
-    txtSQL.setEditable(false);
-    txtSQL.setColumns(20);
-    txtSQL.setFont(new java.awt.Font("Monospaced", 0, 12)); // NOI18N
-    txtSQL.setRows(5);
+    txtDetails.setEditable(false);
+    txtDetails.setColumns(20);
+    txtDetails.setFont(new java.awt.Font("Monospaced", 0, 12)); // NOI18N
+    txtDetails.setRows(5);
 
-    binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ, tableErrors, org.jdesktop.beansbinding.ELProperty.create("${selectedElement.statement}"), txtSQL, org.jdesktop.beansbinding.BeanProperty.create("text"), "bindingTxtSQL");
+    org.jdesktop.beansbinding.Binding binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ, tableErrors, org.jdesktop.beansbinding.ELProperty.create("${selectedElement.errorMessage}\n\n${selectedElement.statement}"), txtDetails, org.jdesktop.beansbinding.BeanProperty.create("text"));
     bindingGroup.addBinding(binding);
 
-    jScrollPane3.setViewportView(txtSQL);
+    jScrollPane3.setViewportView(txtDetails);
 
-    errorDetailsTabbedPane.addTab(org.openide.util.NbBundle.getMessage(ExternalDbErrorsPanel.class, "ExternalDbErrorsPanel.jScrollPane3.TabConstraints.tabTitle"), jScrollPane3); // NOI18N
-
-    jSplitPane1.setRightComponent(errorDetailsTabbedPane);
+    jSplitPane1.setRightComponent(jScrollPane3);
 
     gridBagConstraints = new java.awt.GridBagConstraints();
     gridBagConstraints.gridx = 0;
@@ -137,15 +117,12 @@ public class ExternalDbErrorsPanel extends javax.swing.JPanel {
   // Variables declaration - do not modify//GEN-BEGIN:variables
   private javax.swing.JButton btnRefresh;
   private javax.swing.JLabel emptyLabel;
-  private javax.swing.JTabbedPane errorDetailsTabbedPane;
-  private java.util.ArrayList<SQLErrorInfo> fErrorInfoList;
+  private java.util.ArrayList<SQLInfo> fErrorInfoList;
   private javax.swing.JScrollPane jScrollPane1;
-  private javax.swing.JScrollPane jScrollPane2;
   private javax.swing.JScrollPane jScrollPane3;
   private javax.swing.JSplitPane jSplitPane1;
   private javax.swing.JTable tableErrors;
-  private javax.swing.JTextArea txtSQL;
-  private javax.swing.JTextArea txtStacktrace;
+  private javax.swing.JTextArea txtDetails;
   private org.jdesktop.beansbinding.BindingGroup bindingGroup;
   // End of variables declaration//GEN-END:variables
   // CHECKSTYLE:ON
@@ -162,7 +139,7 @@ public class ExternalDbErrorsPanel extends javax.swing.JPanel {
     tableErrors.addMouseListener(new ErrorsTableMouseListener());
   }
 
-  public void refresh(List<SQLErrorInfo> errors) {
+  public void refresh(List<SQLInfo> errors) {
     fIsLoaded = true;
     List<? extends SortKey> sortKeys = tableErrors.getRowSorter().getSortKeys();
     refreshErrorsTable(errors);
@@ -174,7 +151,7 @@ public class ExternalDbErrorsPanel extends javax.swing.JPanel {
     clearDetailsArea();
   }
 
-  private void refreshErrorsTable(List<SQLErrorInfo> errors) {
+  private void refreshErrorsTable(List<SQLInfo> errors) {
     Binding bindingTableErrors = bindingGroup.getBinding("bindingTableErrors");
     bindingTableErrors.unbind();
     fErrorInfoList.clear();
@@ -185,8 +162,7 @@ public class ExternalDbErrorsPanel extends javax.swing.JPanel {
   }
 
   private void clearDetailsArea() {
-    txtStacktrace.setText("");
-    txtSQL.setText("");
+    txtDetails.setText("");
   }
 
   public boolean isLoaded() {
@@ -213,7 +189,7 @@ public class ExternalDbErrorsPanel extends javax.swing.JPanel {
     public void mouseClicked(MouseEvent e) {
       if (e.getClickCount() == 2) {
         int selectedRow = tableErrors.getSelectedRow();
-        SQLErrorInfo error = fErrorInfoList.get(tableErrors.convertRowIndexToModel(selectedRow));
+        SQLInfo error = fErrorInfoList.get(tableErrors.convertRowIndexToModel(selectedRow));
         fExternalDbView.showChart(error.getApplication(), error.getEnvironment(), error.getConfigName());
       }
     }

@@ -11,9 +11,18 @@ public class SQLInfo {
   private String fStatement;
   private Date fTimestamp;
   private long fExecutionTime = 0;
+  private String fErrorMessage;
+
+  public String getErrorMessage() {
+    return fErrorMessage;
+  }
+
+  public void setErrorMessage(String errorMessage) {
+    this.fErrorMessage = errorMessage;
+  }
 
   public String getProcessElementId() {
-    return fProcessElementId;
+    return fProcessElementId.replace("-bean", "");
   }
 
   public void setProcessElementId(String processElementId) {
@@ -61,7 +70,7 @@ public class SQLInfo {
   }
 
   public long getExecutionTime() {
-    return fExecutionTime;
+    return fExecutionTime / 1000; // microseconds -> milliseconds
   }
 
   public void setExecutionTime(long executionTime) {
@@ -74,7 +83,7 @@ public class SQLInfo {
 
   private String getKey() {
     return fApplication + BACKSLASH + fEnvironment + BACKSLASH + fConfigName
-            + BACKSLASH + fTimestamp.getTime();
+            + BACKSLASH + fTimestamp.getTime() + BACKSLASH + fExecutionTime;
   }
 
   @Override

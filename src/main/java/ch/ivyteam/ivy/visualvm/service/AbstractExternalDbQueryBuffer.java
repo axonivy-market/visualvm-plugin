@@ -4,11 +4,13 @@ import ch.ivyteam.ivy.visualvm.chart.Query;
 import ch.ivyteam.ivy.visualvm.chart.QueryResult;
 import ch.ivyteam.ivy.visualvm.model.IvyJmxConstant.IvyServer.ExternalDatabase;
 import ch.ivyteam.ivy.visualvm.model.SQLInfo;
+import ch.ivyteam.ivy.visualvm.util.DataUtils;
 import ch.ivyteam.ivy.visualvm.view.IUpdatableUIObject;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.Date;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.logging.Logger;
 import javax.management.MBeanServerConnection;
@@ -17,18 +19,18 @@ import javax.management.openmbean.CompositeData;
 
 public abstract class AbstractExternalDbQueryBuffer implements IUpdatableUIObject {
   private static final Logger LOGGER
-                              = Logger.getLogger(ExternalDbErrorQueryBuffer.class.getName());
+          = Logger.getLogger(ExternalDbErrorQueryBuffer.class.getName());
+  private static final int DEFAULT_BUFFER_SIZE = 100;
 
   private final int fMaxBufferSize;
   private final MBeanServerConnection fConnection;
-  private final Comparator<SQLInfo> fTimeComparator;
+  private final Comparator<SQLInfo> fTimeComparator = new TimeComparator();
   private final List<ObjectName> fObjectNames = new ArrayList();
-  private static final int DEFAULT_BUFFER_SIZE = 100;
+  private List<SQLInfo> fSQLInfoBuffer = new LinkedList<>();
 
   public AbstractExternalDbQueryBuffer(MBeanServerConnection mBeanServerConnection, int maxBufferSize) {
     fConnection = mBeanServerConnection;
     fMaxBufferSize = maxBufferSize;
-    fTimeComparator = new TimeComparator();
   }
 
   public AbstractExternalDbQueryBuffer(MBeanServerConnection mBeanServerConnection) {
@@ -52,19 +54,34 @@ public abstract class AbstractExternalDbQueryBuffer implements IUpdatableUIObjec
   public void updateValues(QueryResult result) {
     for (ObjectName objectName : fObjectNames) {
       CompositeData[] exeHistory = (CompositeData[]) result.getValue(objectName,
-                                                                     ExternalDatabase.KEY_EXECUTION_HISTORY);
+              ExternalDatabase.KEY_EXECUTION_HISTORY);
       for (CompositeData execution : exeHistory) {
         handleExecutionData(execution, objectName);
       }
     }
-    sortAndTruncateBuffer();
+    sortBuffer();
+    truncateBuffer();
   }
 
-  protected abstract void sortAndTruncateBuffer();
+  protected void sortBuffer() {
+    DataUtils.sort(getBuffer(), getTimeComparator());
+  }
+
+  protected void addSQLInfoToBuffer(SQLInfo sqlInfo) {
+    if (!getBuffer().contains(sqlInfo)) {
+      getBuffer().add(sqlInfo);
+    }
+  }
+
+  private void truncateBuffer() {
+    final int fromIndex = Math.max(0, fSQLInfoBuffer.size() - fMaxBufferSize);
+    fSQLInfoBuffer = fSQLInfoBuffer.subList(fromIndex, fSQLInfoBuffer.size());
+  }
 
   protected abstract void handleExecutionData(CompositeData execution, ObjectName objectName);
 
-  protected void setSQLInfoProperties(SQLInfo sqlInfo, ObjectName objectName, CompositeData execution) {
+  protected SQLInfo createSQLInfo(ObjectName objectName, CompositeData execution) {
+    SQLInfo sqlInfo = new SQLInfo();
     sqlInfo.setApplication(objectName.getKeyProperty(ExternalDatabase.KEY_APP));
     sqlInfo.setEnvironment(objectName.getKeyProperty(ExternalDatabase.KEY_ENVIRONMENT));
     sqlInfo.setConfigName(objectName.getKeyProperty(ExternalDatabase.KEY_CONFIG));
@@ -74,10 +91,15 @@ public abstract class AbstractExternalDbQueryBuffer implements IUpdatableUIObjec
 
     CompositeData databaseElement = (CompositeData) execution.get(ExternalDatabase.KEY_DATABASE_ELEMENT);
     sqlInfo.setProcessElementId(databaseElement.get(ExternalDatabase.KEY_PROCESS_ID).toString());
+    CompositeData error = (CompositeData) execution.get(ExternalDatabase.KEY_ERROR);
+    if (error != null) {
+      sqlInfo.setErrorMessage(error.get(ExternalDatabase.KEY_MESSAGE).toString());
+    }
+    return sqlInfo;
   }
 
-  public int getMaxBufferSize() {
-    return fMaxBufferSize;
+  public List<SQLInfo> getBuffer() {
+    return fSQLInfoBuffer;
   }
 
   public Comparator<SQLInfo> getTimeComparator() {

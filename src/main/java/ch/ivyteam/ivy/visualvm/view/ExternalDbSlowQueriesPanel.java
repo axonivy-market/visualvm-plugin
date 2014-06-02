@@ -55,11 +55,9 @@ public class ExternalDbSlowQueriesPanel extends javax.swing.JPanel {
     gridBagConstraints.insets = new java.awt.Insets(5, 5, 5, 5);
     add(btnRefresh, gridBagConstraints);
 
+    jSplitPane1.setBorder(null);
     jSplitPane1.setDividerLocation(120);
-    jSplitPane1.setDividerSize(3);
     jSplitPane1.setOrientation(javax.swing.JSplitPane.VERTICAL_SPLIT);
-
-    jScrollPane1.setBorder(null);
 
     tableSlowQueries.setAutoCreateRowSorter(true);
     tableSlowQueries.getTableHeader().setReorderingAllowed(false);
@@ -78,7 +76,7 @@ public class ExternalDbSlowQueriesPanel extends javax.swing.JPanel {
     columnBinding.setColumnClass(String.class);
     columnBinding.setEditable(false);
     columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${executionTime}"));
-    columnBinding.setColumnName("Execution Time (µs)");
+    columnBinding.setColumnName("Execution Time [ms]");
     columnBinding.setColumnClass(Long.class);
     columnBinding.setEditable(false);
     bindingGroup.addBinding(jTableBinding);
@@ -95,6 +93,7 @@ public class ExternalDbSlowQueriesPanel extends javax.swing.JPanel {
 
     jScrollPane2.setBorder(null);
 
+    txtSQL.setEditable(false);
     txtSQL.setColumns(20);
     txtSQL.setFont(new java.awt.Font("Monospaced", 0, 12)); // NOI18N
     txtSQL.setRows(5);
