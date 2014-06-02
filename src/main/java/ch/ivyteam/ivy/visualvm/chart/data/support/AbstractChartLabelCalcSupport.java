@@ -7,6 +7,8 @@ public abstract class AbstractChartLabelCalcSupport {
   private String fText;
   private long fValue;
   private long fScaledFactor = 1L;
+  private String fUnit;
+  private String fTooltip;
 
   protected abstract long calculateValue(QueryResult queryResult);
 
@@ -47,6 +49,22 @@ public abstract class AbstractChartLabelCalcSupport {
 
   public void setScaledFactor(long scaledFactor) {
     fScaledFactor = scaledFactor;
+  }
+
+  public String getTooltip() {
+    return fTooltip;
+  }
+
+  public void setTooltip(String tooltip) {
+    fTooltip = tooltip;
+  }
+
+  public String getUnit() {
+    return fUnit;
+  }
+
+  public void setUnit(String unit) {
+    fUnit = unit;
   }
 
 }

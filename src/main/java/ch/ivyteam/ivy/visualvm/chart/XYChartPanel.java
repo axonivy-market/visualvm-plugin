@@ -1,9 +1,9 @@
 package ch.ivyteam.ivy.visualvm.chart;
 
-import ch.ivyteam.ivy.visualvm.chart.data.HtmlSupport;
 import ch.ivyteam.ivy.visualvm.chart.data.SerieDataSource;
 import ch.ivyteam.ivy.visualvm.chart.data.XYChartDataSource;
 import ch.ivyteam.ivy.visualvm.chart.data.support.AbstractChartLabelCalcSupport;
+import ch.ivyteam.ivy.visualvm.view.HtmlLabelComponent;
 import ch.ivyteam.ivy.visualvm.view.IUpdatableUIObject;
 import com.sun.tools.visualvm.charts.ChartFactory;
 import com.sun.tools.visualvm.charts.SimpleXYChartDescriptor;
@@ -14,10 +14,10 @@ import java.awt.Color;
 import java.awt.Component;
 import java.awt.Container;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
-import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -40,16 +40,14 @@ public class XYChartPanel extends JPanel implements IUpdatableUIObject {
   private static final String ICON_HELP_URL = "/resources/icons/question16_with_padding.png";
 
   private SimpleXYChartSupport fChart;
-  private JLabel fHtmlLabel;
+  private HtmlLabelComponent fHtmlLabel;
   private Component fYAxis;
   private Component fXAxis;
   private Component fYAxisDescription;
   private Component fChartArea;
   private Component fChartLegend;
   private final XYChartDataSource fDataSource;
-  private NumberFormat fNumberFormat;
-  private String fYAxisHelpMessage;
-  private String[] fDetailLabels;
+  private String fYAxisTooltip;
 
   private final List<StorageItem> fStorage;
 
@@ -57,14 +55,15 @@ public class XYChartPanel extends JPanel implements IUpdatableUIObject {
     this(dataSource, null);
   }
 
-  XYChartPanel(XYChartDataSource dataSource, String yAxisMessage) {
+  XYChartPanel(XYChartDataSource dataSource, String yAxisTooltip) {
     fDataSource = dataSource;
     fStorage = new ArrayList<>();
-    fNumberFormat = NumberFormat.getNumberInstance();
 
-    fYAxisHelpMessage = yAxisMessage;
+    fYAxisTooltip = yAxisTooltip;
     createChart();
-    createYAxisHelpMessage(yAxisMessage);
+    createYAxisHeader(yAxisTooltip);
+    createLegendTooltips();
+    createLabels();
   }
 
   private void createChart() {
@@ -80,17 +79,13 @@ public class XYChartPanel extends JPanel implements IUpdatableUIObject {
     add(fChart.getChart(), new GridBagConstraints(
             0, 0, 1, 1, 1, 1, GridBagConstraints.WEST, GridBagConstraints.BOTH,
             new Insets(0, 0, 0, 0), 0, 0));
-    fHtmlLabel = new JLabel();
-    fHtmlLabel.setVerticalAlignment(JLabel.TOP);
+    fHtmlLabel = new HtmlLabelComponent();
     add(fHtmlLabel, new GridBagConstraints(
             1, 0, 0, 0, 0, 0, GridBagConstraints.WEST, GridBagConstraints.BOTH,
             new Insets(0, 0, 0, 0), 0, 0));
     fYAxis = identifyYAxis();
     fXAxis = identifyXAxis();
     fChartArea = identifyChartMainArea();
-    fChartLegend = identifyLegend();
-
-    createLegendTooltips();
   }
 
   @Override
@@ -100,8 +95,7 @@ public class XYChartPanel extends JPanel implements IUpdatableUIObject {
     fChart.addValues(currentTime, values);
 
     long[] labels = fDataSource.calculateDetailValues(result);
-    String text = HtmlSupport.toOneColumnHtmlTable(fDetailLabels, format(labels));
-    fHtmlLabel.setText(text);
+    fHtmlLabel.updateValues(labels);
     View view = (View) fHtmlLabel.getClientProperty(BasicHTML.propertyKey);
     if (view != null) {
       int w = (int) view.getPreferredSpan(View.X_AXIS);
@@ -114,15 +108,6 @@ public class XYChartPanel extends JPanel implements IUpdatableUIObject {
   @Override
   public void updateQuery(Query query) {
     fDataSource.updateQuery(query);
-  }
-
-  private String[] format(long[] nums) {
-    String[] result = new String[nums.length];
-    int index = 0;
-    for (long num : nums) {
-      result[index++] = fNumberFormat.format(num);
-    }
-    return result;
   }
 
   private Component identifyYAxis() {
@@ -155,29 +140,32 @@ public class XYChartPanel extends JPanel implements IUpdatableUIObject {
     return fXAxis;
   }
 
-  public String getYAxisHelpMessage() {
-    return fYAxisHelpMessage;
+  public String getYAxisTooltip() {
+    return fYAxisTooltip;
   }
 
-  private void createYAxisHelpMessage(String message) {
+  private void createYAxisHeader(String yAxisTooltip) {
     Container container = (Container) fChart.getChart().getComponent(CONTAINER_CHART_INDEX);
     JLabel yAxisLabel = (JLabel) container.getComponent(CHART_YAXIS_LABEL_INDEX);
-    if (StringUtils.isEmpty(message)) {
+    Font font = new Font(yAxisLabel.getFont().getFontName(), Font.BOLD,
+            yAxisLabel.getFont().getSize());
+    yAxisLabel.setFont(font);
+    if (StringUtils.isEmpty(yAxisTooltip)) {
       fYAxisDescription = yAxisLabel;
       return;
     }
-    fYAxisDescription = createYaxisDescriptorPanel(createYAxisHelpLabel(message), yAxisLabel);
+    fYAxisDescription = createYAxisDescriptorPanel(createYAxisHelpLabel(yAxisTooltip), yAxisLabel);
     container.add(fYAxisDescription, BorderLayout.WEST);
   }
 
-  private JLabel createYAxisHelpLabel(final String message) {
+  private JLabel createYAxisHelpLabel(final String yAxisTooltip) {
     ImageIcon helpIcon = new ImageIcon(getClass().getResource(ICON_HELP_URL));
     JLabel label = new JLabel(helpIcon);
-    label.setToolTipText(message);
+    label.setToolTipText(yAxisTooltip);
     return label;
   }
 
-  private JPanel createYaxisDescriptorPanel(Component... components) {
+  private JPanel createYAxisDescriptorPanel(Component... components) {
     JPanel yAxisDescriptorPanel = new JPanel();
     BoxLayout boxLayout = new BoxLayout(yAxisDescriptorPanel, BoxLayout.Y_AXIS);
     yAxisDescriptorPanel.setLayout(boxLayout);
@@ -192,7 +180,7 @@ public class XYChartPanel extends JPanel implements IUpdatableUIObject {
 
   public void updateCachePeriod() {
     createChart();
-    createYAxisHelpMessage(fYAxisHelpMessage);
+    createYAxisHeader(fYAxisTooltip);
     long buffer = GlobalPreferences.sharedInstance().getMonitoredDataCache() * 60 * 1000;
     long currentTime = System.currentTimeMillis();
     restoreDataFromStorage(buffer, currentTime);
@@ -237,19 +225,13 @@ public class XYChartPanel extends JPanel implements IUpdatableUIObject {
     for (SerieDataSource dataSource : fDataSource.getSerieDataSources()) {
       dataSource.configureSerie(chartDescriptor);
     }
-
-    fDetailLabels = new String[fDataSource.getLabelCalcSupports().size()];
-    int index = 0;
-    for (AbstractChartLabelCalcSupport support : fDataSource.getLabelCalcSupports()) {
-      fDetailLabels[index++] = support.getText();
-    }
   }
 
   public Component getYAxisDescription() {
     return fYAxisDescription;
   }
 
-  public JLabel getHtmlLabel() {
+  public HtmlLabelComponent getHtmlLabel() {
     return fHtmlLabel;
   }
 
@@ -262,6 +244,7 @@ public class XYChartPanel extends JPanel implements IUpdatableUIObject {
   }
 
   private void createLegendTooltips() {
+    fChartLegend = identifyLegend();
     Container legendContainer = (Container) ((Container) fChartLegend).getComponent(0);
     int index = 0;
     for (Component legend : legendContainer.getComponents()) {
@@ -269,6 +252,12 @@ public class XYChartPanel extends JPanel implements IUpdatableUIObject {
       if (index < fDataSource.getSerieDataSources().size()) {
         legendButton.setToolTipText(fDataSource.getSerieDataSources().get(index++).getDescription());
       }
+    }
+  }
+
+  private void createLabels() {
+    for (AbstractChartLabelCalcSupport calc : fDataSource.getLabelCalcSupports()) {
+      fHtmlLabel.addInfo("key", calc.getText(), "0", calc.getUnit(), calc.getTooltip());
     }
   }
 
