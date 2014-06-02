@@ -29,8 +29,8 @@ public class ExternalDbView extends ExternalDbWsCommonView {
 
   public ExternalDbView(DataBeanProvider dataBeanProvider) {
     super(dataBeanProvider);
-    fErrorInfoBuffer = new ExternalDbErrorQueryBuffer(getDataBeanProvider().getMBeanServerConnection(), 100);
-    fSlowQueryBuffer = new ExternalDbSlowQueryBuffer(getDataBeanProvider().getMBeanServerConnection(), 100);
+    fErrorInfoBuffer = new ExternalDbErrorQueryBuffer(getDataBeanProvider().getMBeanServerConnection());
+    fSlowQueryBuffer = new ExternalDbSlowQueryBuffer(getDataBeanProvider().getMBeanServerConnection());
     registerScheduledUpdate(fErrorInfoBuffer);
     registerScheduledUpdate(fSlowQueryBuffer);
   }
@@ -44,11 +44,12 @@ public class ExternalDbView extends ExternalDbWsCommonView {
     ExternalDbTransactionChartDataSource transactionDataSource = new ExternalDbTransactionChartDataSource(
             getDataBeanProvider(), null, null, "Transactions");
     ExternalDbProcessingTimeChartDataSource transProcessTimeDataSource
-            = new ExternalDbProcessingTimeChartDataSource(getDataBeanProvider(), null, null,
-                    "Processing Time [ms]");
+                                            = new ExternalDbProcessingTimeChartDataSource(
+            getDataBeanProvider(), null, null,
+            "Processing Time [ms]");
 
     configDataSources(IvyJmxConstant.IvyServer.ExternalDatabase.NAME_PATTERN,
-            connectionDataSource, transactionDataSource, transProcessTimeDataSource);
+                      connectionDataSource, transactionDataSource, transProcessTimeDataSource);
     chartPanel.addChart(connectionDataSource, generateDescriptionForConnectionChart());
     chartPanel.addChart(transactionDataSource, generateDescriptionForTransactionChart());
     chartPanel.addChart(transProcessTimeDataSource, generateDescriptionForProcessingTimeChart());
@@ -83,7 +84,8 @@ public class ExternalDbView extends ExternalDbWsCommonView {
     DetailsView fSlowQueriesView = new DetailsView(SLOW_QUERIES, null, 10, fUISlowQueriesPanel, null);
 
     super.getViewComponent().configureDetailsArea(new DataViewComponent.DetailsAreaConfiguration(null,
-            false), DataViewComponent.TOP_LEFT);
+                                                                                                 false),
+                                                  DataViewComponent.TOP_LEFT);
     super.getViewComponent().addDetailsView(fChartsDetailsView, DataViewComponent.TOP_LEFT);
     super.getViewComponent().addDetailsView(fErrorsDetailsView, DataViewComponent.TOP_LEFT);
     super.getViewComponent().addDetailsView(fSlowQueriesView, DataViewComponent.TOP_LEFT);
@@ -119,7 +121,7 @@ public class ExternalDbView extends ExternalDbWsCommonView {
     StringBuilder builder = new StringBuilder();
     builder.append("<html>");
     builder.append("The chart shows the maximum, the mean and the minimum time needed to execute"
-            + " transactions since the last poll.<br><br>");
+                   + " transactions since the last poll.<br><br>");
     builder.append("<b>Max: </b>").append(ExternalDbProcessingTimeChartDataSource.MAX_SERIE_DESC)
             .append(BR);
     builder.append("<b>Mean: </b>").append(ExternalDbProcessingTimeChartDataSource.MEAN_SERIE_DESC)

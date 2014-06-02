@@ -70,7 +70,7 @@ public class BeanTestData {
       @XmlElement
       private Value value;
       @XmlElement
-      private Dataset dataset;
+      private List<Dataset> dataset;
 
       public String getName() {
         return name;
@@ -88,11 +88,14 @@ public class BeanTestData {
         this.value = pValue;
       }
 
-      public Dataset getDataset() {
+      public List<Dataset> getDataset() {
+        if (dataset == null) {
+          dataset = new ArrayList<>();
+        }
         return dataset;
       }
 
-      public void setDataset(Dataset pDataset) {
+      public void setDataset(List<Dataset> pDataset) {
         this.dataset = pDataset;
       }
 

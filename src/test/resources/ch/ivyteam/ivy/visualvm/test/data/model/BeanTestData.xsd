@@ -19,7 +19,7 @@
       <xs:element type="xs:string" name="name"/>
       <xs:choice>
         <xs:element name="value" type="Value" />
-        <xs:element name="dataset" type= "Dataset"/>
+        <xs:element name="dataset" type= "Dataset" maxOccurs="unbounded" minOccurs="0"/>
       </xs:choice>
     </xs:sequence>
   </xs:complexType>

@@ -1,0 +1,370 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<beanTestData>
+    <dataset>
+        <property>
+            <name>Xpert.ivy Server:type=External Database,application=app1,environment=env1,name=config1</name>
+            <dataset>
+                <property>
+                    <name>executionHistory</name>
+                    <dataset type="javax.management.openmbean.CompositeData">
+                        <property>
+                            <name>databaseElement</name>
+                            <dataset type="javax.management.openmbean.CompositeData">
+                                <property>
+                                    <name>processElementId</name>
+                                    <value>144918C0A385EAC6-f7-bean</value>
+                                </property>
+                            </dataset>
+                        </property>
+                        <property>
+                            <name>executionTimestamp</name>
+                            <value type="java.util.Date">28/05/2014 10:45:11</value>
+                        </property>
+                        <property>
+                            <name>executionTimeInMicroSeconds</name>
+                            <value type="java.lang.Long">0</value>
+                        </property>
+                        <property>
+                            <name>error</name>
+                            <dataset type="javax.management.openmbean.CompositeData">
+                                <property>
+                                    <name>message</name>
+                                    <value>ERROR: value too long for type character varying(30)</value>
+                                </property>
+                                <property>
+                                    <name>stackTrace</name>
+                                    <value>org.postgresql.util.PSQLException: ERROR: value too long</value>
+                                </property>
+                                <property>
+                                    <name>type</name>
+                                    <value>org.postgresql.util.PSQLException</value>
+                                </property>
+                            </dataset>
+                        </property>
+                        <property>
+                            <name>sql</name>
+                            <value>INSERT INTO authors (last_name, first_name) VALUES ('"last_name of insert over 30 characters"', '"first_name of insert over 30 characters"')</value>
+                        </property>
+                    </dataset>
+                </property>
+            </dataset>
+        </property>
+        <property>
+            <name>Xpert.ivy Server:type=External Database,application=app1,environment=env1,name=config2</name>
+            <dataset>
+                <property>
+                    <name>executionHistory</name>
+                    <dataset type="javax.management.openmbean.CompositeData">
+                        <property>
+                            <name>databaseElement</name>
+                            <dataset type="javax.management.openmbean.CompositeData">
+                                <property>
+                                    <name>processElementId</name>
+                                    <value>144918C0A385EAC6-f7-bean</value>
+                                </property>
+                            </dataset>
+                        </property>
+                        <property>
+                            <name>executionTimestamp</name>
+                            <value type="java.util.Date">28/05/2014 10:45:11</value>
+                        </property>
+                        <property>
+                            <name>executionTimeInMicroSeconds</name>
+                            <value type="java.lang.Long">123456</value>
+                        </property>
+                        <property>
+                            <name>sql</name>
+                            <value>INSERT INTO authors (last_name, first_name) VALUES ('"upteam"', '"ivyteam"')</value>
+                        </property>
+                    </dataset>
+                </property>
+            </dataset>
+        </property>
+    </dataset>
+    
+    <dataset>
+        <property>
+            <name>Xpert.ivy Server:type=External Database,application=app1,environment=env1,name=config1</name>
+            <dataset>
+                <property>
+                    <name>executionHistory</name>
+                    
+                    <dataset type="javax.management.openmbean.CompositeData">
+                        <property>
+                            <name>databaseElement</name>
+                            <dataset type="javax.management.openmbean.CompositeData">
+                                <property>
+                                    <name>processElementId</name>
+                                    <value>144918C0A385EAC6-f7-bean</value>
+                                </property>
+                            </dataset>
+                        </property>
+                        <property>
+                            <name>executionTimestamp</name>
+                            <value type="java.util.Date">28/05/2014 10:45:11</value>
+                        </property>
+                        <property>
+                            <name>executionTimeInMicroSeconds</name>
+                            <value type="java.lang.Long">0</value>
+                        </property>
+                        <property>
+                            <name>error</name>
+                            <dataset type="javax.management.openmbean.CompositeData">
+                                <property>
+                                    <name>message</name>
+                                    <value>ERROR: value too long for type character varying(30)</value>
+                                </property>
+                                <property>
+                                    <name>stackTrace</name>
+                                    <value>org.postgresql.util.PSQLException: ERROR: value too long</value>
+                                </property>
+                                <property>
+                                    <name>type</name>
+                                    <value>org.postgresql.util.PSQLException</value>
+                                </property>
+                            </dataset>
+                        </property>
+                        <property>
+                            <name>sql</name>
+                            <value>INSERT INTO authors (last_name, first_name) VALUES ('"last_name of insert over 30 characters"', '"first_name of insert over 30 characters"')</value>
+                        </property>
+                    </dataset>
+                    <dataset type="javax.management.openmbean.CompositeData">
+                        <property>
+                            <name>databaseElement</name>
+                            <dataset type="javax.management.openmbean.CompositeData">
+                                <property>
+                                    <name>processElementId</name>
+                                    <value>144918C0A385EAC6-f7-bean</value>
+                                </property>
+                            </dataset>
+                        </property>
+                        <property>
+                            <name>executionTimestamp</name>
+                            <value type="java.util.Date">28/05/2014 11:35:32</value>
+                        </property>
+                        <property>
+                            <name>executionTimeInMicroSeconds</name>
+                            <value type="java.lang.Long">0</value>
+                        </property>
+                        <property>
+                            <name>error</name>
+                            <dataset type="javax.management.openmbean.CompositeData">
+                                <property>
+                                    <name>message</name>
+                                    <value>ERROR: value too long for type character varying(30)</value>
+                                </property>
+                                <property>
+                                    <name>stackTrace</name>
+                                    <value>org.postgresql.util.PSQLException: ERROR: value too long</value>
+                                </property>
+                                <property>
+                                    <name>type</name>
+                                    <value>org.postgresql.util.PSQLException</value>
+                                </property>
+                            </dataset>
+                        </property>
+                        <property>
+                            <name>sql</name>
+                            <value>INSERT INTO authors (last_name, first_name) VALUES ('"last_name of insert 2 over 30 characters"', '"first_name of insert over 30 characters"')</value>
+                        </property>
+                    </dataset>
+                </property>
+            </dataset>
+        </property>
+        <property>
+            <name>Xpert.ivy Server:type=External Database,application=app1,environment=env1,name=config2</name>
+            <dataset>
+                <property>
+                    <name>executionHistory</name>
+                    <dataset type="javax.management.openmbean.CompositeData">
+                        <property>
+                            <name>databaseElement</name>
+                            <dataset type="javax.management.openmbean.CompositeData">
+                                <property>
+                                    <name>processElementId</name>
+                                    <value>144918C0A385EAC6-f7-bean</value>
+                                </property>
+                            </dataset>
+                        </property>
+                        <property>
+                            <name>executionTimestamp</name>
+                            <value type="java.util.Date">28/05/2014 10:45:11</value>
+                        </property>
+                        <property>
+                            <name>executionTimeInMicroSeconds</name>
+                            <value type="java.lang.Long">123456</value>
+                        </property>
+                        <property>
+                            <name>sql</name>
+                            <value>INSERT INTO authors (last_name, first_name) VALUES ('"upteam"', '"ivyteam"')</value>
+                        </property>
+                    </dataset>
+                </property>
+            </dataset>
+        </property>
+    </dataset>
+    
+    <dataset>
+        <property>
+            <name>Xpert.ivy Server:type=External Database,application=app1,environment=env1,name=config1</name>
+            <dataset>
+                <property>
+                    <name>executionHistory</name>
+                    <dataset type="javax.management.openmbean.CompositeData">
+                        <property>
+                            <name>databaseElement</name>
+                            <dataset type="javax.management.openmbean.CompositeData">
+                                <property>
+                                    <name>processElementId</name>
+                                    <value>144918C0A385EAC6-f7-bean</value>
+                                </property>
+                            </dataset>
+                        </property>
+                        <property>
+                            <name>executionTimestamp</name>
+                            <value type="java.util.Date">28/05/2014 10:45:11</value>
+                        </property>
+                        <property>
+                            <name>executionTimeInMicroSeconds</name>
+                            <value type="java.lang.Long">0</value>
+                        </property>
+                        <property>
+                            <name>error</name>
+                            <dataset type="javax.management.openmbean.CompositeData">
+                                <property>
+                                    <name>message</name>
+                                    <value>ERROR: value too long for type character varying(30)</value>
+                                </property>
+                                <property>
+                                    <name>stackTrace</name>
+                                    <value>org.postgresql.util.PSQLException: ERROR: value too long</value>
+                                </property>
+                                <property>
+                                    <name>type</name>
+                                    <value>org.postgresql.util.PSQLException</value>
+                                </property>
+                            </dataset>
+                        </property>
+                        <property>
+                            <name>sql</name>
+                            <value>INSERT INTO authors (last_name, first_name) VALUES ('"last_name of insert over 30 characters"', '"first_name of insert over 30 characters"')</value>
+                        </property>
+                    </dataset>
+                    
+                    <dataset type="javax.management.openmbean.CompositeData">
+                        <property>
+                            <name>databaseElement</name>
+                            <dataset type="javax.management.openmbean.CompositeData">
+                                <property>
+                                    <name>processElementId</name>
+                                    <value>144918C0A385EAC6-f7-bean</value>
+                                </property>
+                            </dataset>
+                        </property>
+                        <property>
+                            <name>executionTimestamp</name>
+                            <value type="java.util.Date">28/05/2014 11:35:32</value>
+                        </property>
+                        <property>
+                            <name>executionTimeInMicroSeconds</name>
+                            <value type="java.lang.Long">0</value>
+                        </property>
+                        <property>
+                            <name>error</name>
+                            <dataset type="javax.management.openmbean.CompositeData">
+                                <property>
+                                    <name>message</name>
+                                    <value>ERROR: value too long for type character varying(30)</value>
+                                </property>
+                                <property>
+                                    <name>stackTrace</name>
+                                    <value>org.postgresql.util.PSQLException: ERROR: value too long</value>
+                                </property>
+                                <property>
+                                    <name>type</name>
+                                    <value>org.postgresql.util.PSQLException</value>
+                                </property>
+                            </dataset>
+                        </property>
+                        <property>
+                            <name>sql</name>
+                            <value>INSERT INTO authors (last_name, first_name) VALUES ('"last_name of insert 2 over 30 characters"', '"first_name of insert over 30 characters"')</value>
+                        </property>
+                    </dataset>
+                    <dataset type="javax.management.openmbean.CompositeData">
+                        <property>
+                            <name>databaseElement</name>
+                            <dataset type="javax.management.openmbean.CompositeData">
+                                <property>
+                                    <name>processElementId</name>
+                                    <value>144918C0A385EAC6-f7-bean</value>
+                                </property>
+                            </dataset>
+                        </property>
+                        <property>
+                            <name>executionTimestamp</name>
+                            <value type="java.util.Date">28/05/2014 14:57:41</value>
+                        </property>
+                        <property>
+                            <name>executionTimeInMicroSeconds</name>
+                            <value type="java.lang.Long">0</value>
+                        </property>
+                        <property>
+                            <name>error</name>
+                            <dataset type="javax.management.openmbean.CompositeData">
+                                <property>
+                                    <name>message</name>
+                                    <value>ERROR: value too long for type character varying(30)</value>
+                                </property>
+                                <property>
+                                    <name>stackTrace</name>
+                                    <value>org.postgresql.util.PSQLException: ERROR: value too long</value>
+                                </property>
+                                <property>
+                                    <name>type</name>
+                                    <value>org.postgresql.util.PSQLException</value>
+                                </property>
+                            </dataset>
+                        </property>
+                        <property>
+                            <name>sql</name>
+                            <value>INSERT INTO authors (last_name, first_name) VALUES ('"last_name of insert 3 over 30 characters"', '"first_name of insert over 30 characters"')</value>
+                        </property>
+                    </dataset>
+                </property>
+            </dataset>
+        </property>
+        <property>
+            <name>Xpert.ivy Server:type=External Database,application=app1,environment=env1,name=config2</name>
+            <dataset>
+                <property>
+                    <name>executionHistory</name>
+                    <dataset type="javax.management.openmbean.CompositeData">
+                        <property>
+                            <name>databaseElement</name>
+                            <dataset type="javax.management.openmbean.CompositeData">
+                                <property>
+                                    <name>processElementId</name>
+                                    <value>144918C0A385EAC6-f7-bean</value>
+                                </property>
+                            </dataset>
+                        </property>
+                        <property>
+                            <name>executionTimestamp</name>
+                            <value type="java.util.Date">28/05/2014 10:45:11</value>
+                        </property>
+                        <property>
+                            <name>executionTimeInMicroSeconds</name>
+                            <value type="java.lang.Long">123456</value>
+                        </property>
+                        <property>
+                            <name>sql</name>
+                            <value>INSERT INTO authors (last_name, first_name) VALUES ('"upteam"', '"ivyteam"')</value>
+                        </property>
+                    </dataset>
+                </property>
+            </dataset>
+        </property>
+    </dataset>
+</beanTestData>

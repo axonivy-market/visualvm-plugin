@@ -1,10 +1,8 @@
 package ch.ivyteam.ivy.visualvm.service;
 
-import ch.ivyteam.ivy.visualvm.model.IvyJmxConstant;
 import ch.ivyteam.ivy.visualvm.model.IvyJmxConstant.IvyServer.ExternalDatabase;
 import ch.ivyteam.ivy.visualvm.model.SQLErrorInfo;
-import java.util.Comparator;
-import java.util.Date;
+import ch.ivyteam.ivy.visualvm.util.DataUtils;
 import java.util.LinkedList;
 import java.util.List;
 import javax.management.MBeanServerConnection;
@@ -12,11 +10,14 @@ import javax.management.ObjectName;
 import javax.management.openmbean.CompositeData;
 
 public class ExternalDbErrorQueryBuffer extends AbstractExternalDbQueryBuffer {
-  private final List<SQLErrorInfo> fErrorInfoBuffer = new LinkedList<>();
+  private List<SQLErrorInfo> fErrorInfoBuffer = new LinkedList<>();
 
   public ExternalDbErrorQueryBuffer(MBeanServerConnection mBeanServerConnection, int maxBufferSize) {
     super(mBeanServerConnection, maxBufferSize);
-    setComparator(new TimeComparator());
+  }
+
+  public ExternalDbErrorQueryBuffer(MBeanServerConnection mBeanServerConnection) {
+    super(mBeanServerConnection);
   }
 
   @Override
@@ -28,6 +29,13 @@ public class ExternalDbErrorQueryBuffer extends AbstractExternalDbQueryBuffer {
       setErrorInfoProperties(errorInfo, execution);
       addErrorToBuffer(errorInfo);
     }
+  }
+
+  @Override
+  protected void sortAndTruncateBuffer() {
+    DataUtils.sort(fErrorInfoBuffer, getTimeComparator());
+    final int fromIndex = Math.max(0, fErrorInfoBuffer.size() - getMaxBufferSize());
+    fErrorInfoBuffer = fErrorInfoBuffer.subList(fromIndex, fErrorInfoBuffer.size());
   }
 
   public List<SQLErrorInfo> getBuffer() {
@@ -42,22 +50,8 @@ public class ExternalDbErrorQueryBuffer extends AbstractExternalDbQueryBuffer {
 
   private void addErrorToBuffer(SQLErrorInfo errorInfo) {
     if (!fErrorInfoBuffer.contains(errorInfo)) {
-      if (getBuffer().size() >= getMaxBufferSize()) {
-        getBuffer().remove(0);
-      }
       getBuffer().add(errorInfo);
     }
-  }
-
-  private class TimeComparator implements Comparator<CompositeData> {
-
-    @Override
-    public int compare(CompositeData o1, CompositeData o2) {
-      return ((Date) o1.get(IvyJmxConstant.IvyServer.ExternalDatabase.KEY_EXECUTION_TIMESTAMP)).compareTo(
-              (Date) o2.get(
-                      IvyJmxConstant.IvyServer.ExternalDatabase.KEY_EXECUTION_TIMESTAMP));
-    }
-
   }
 
 }

@@ -1,11 +1,15 @@
 package ch.ivyteam.ivy.visualvm.util;
 
+import ch.ivyteam.ivy.visualvm.model.SQLInfo;
 import java.io.IOException;
 import java.text.DateFormat;
 import java.text.MessageFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
@@ -305,6 +309,23 @@ public final class DataUtils {
       }
     }
     return appEnvConfMap;
+  }
+
+  public static void sort(List<? extends SQLInfo> c, final Comparator<SQLInfo>... comparators) {
+    Collections.sort(c, new Comparator<SQLInfo>() {
+
+      @Override
+      public int compare(SQLInfo a, SQLInfo b) {
+        for (Comparator<SQLInfo> cmp : comparators) {
+          int delta = cmp.compare(a, b);
+          if (delta != 0) {
+            return delta;
+          }
+        }
+        return 0;
+      }
+
+    });
   }
 
 }

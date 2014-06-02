@@ -7,7 +7,6 @@ import ch.ivyteam.ivy.visualvm.model.SQLInfo;
 import ch.ivyteam.ivy.visualvm.view.IUpdatableUIObject;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
@@ -18,16 +17,22 @@ import javax.management.openmbean.CompositeData;
 
 public abstract class AbstractExternalDbQueryBuffer implements IUpdatableUIObject {
   private static final Logger LOGGER
-          = Logger.getLogger(ExternalDbErrorQueryBuffer.class.getName());
+                              = Logger.getLogger(ExternalDbErrorQueryBuffer.class.getName());
 
   private final int fMaxBufferSize;
   private final MBeanServerConnection fConnection;
-  private Comparator<CompositeData> fComparator;
+  private final Comparator<SQLInfo> fTimeComparator;
   private final List<ObjectName> fObjectNames = new ArrayList();
+  private static final int DEFAULT_BUFFER_SIZE = 100;
 
   public AbstractExternalDbQueryBuffer(MBeanServerConnection mBeanServerConnection, int maxBufferSize) {
     fConnection = mBeanServerConnection;
     fMaxBufferSize = maxBufferSize;
+    fTimeComparator = new TimeComparator();
+  }
+
+  public AbstractExternalDbQueryBuffer(MBeanServerConnection mBeanServerConnection) {
+    this(mBeanServerConnection, DEFAULT_BUFFER_SIZE);
   }
 
   @Override
@@ -47,13 +52,15 @@ public abstract class AbstractExternalDbQueryBuffer implements IUpdatableUIObjec
   public void updateValues(QueryResult result) {
     for (ObjectName objectName : fObjectNames) {
       CompositeData[] exeHistory = (CompositeData[]) result.getValue(objectName,
-              ExternalDatabase.KEY_EXECUTION_HISTORY);
-      Arrays.sort(exeHistory, fComparator);
+                                                                     ExternalDatabase.KEY_EXECUTION_HISTORY);
       for (CompositeData execution : exeHistory) {
         handleExecutionData(execution, objectName);
       }
     }
+    sortAndTruncateBuffer();
   }
+
+  protected abstract void sortAndTruncateBuffer();
 
   protected abstract void handleExecutionData(CompositeData execution, ObjectName objectName);
 
@@ -73,8 +80,17 @@ public abstract class AbstractExternalDbQueryBuffer implements IUpdatableUIObjec
     return fMaxBufferSize;
   }
 
-  public void setComparator(Comparator<CompositeData> comparator) {
-    fComparator = comparator;
+  public Comparator<SQLInfo> getTimeComparator() {
+    return fTimeComparator;
+  }
+
+  private class TimeComparator implements Comparator<SQLInfo> {
+
+    @Override
+    public int compare(SQLInfo o1, SQLInfo o2) {
+      return ((Date) o1.getTime()).compareTo((Date) o2.getTime());
+    }
+
   }
 
 }
