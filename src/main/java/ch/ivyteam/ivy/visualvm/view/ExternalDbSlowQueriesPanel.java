@@ -82,12 +82,6 @@ public class ExternalDbSlowQueriesPanel extends javax.swing.JPanel {
     bindingGroup.addBinding(jTableBinding);
     jTableBinding.bind();
     jScrollPane1.setViewportView(tableSlowQueries);
-    if (tableSlowQueries.getColumnModel().getColumnCount() > 0) {
-      tableSlowQueries.getColumnModel().getColumn(0).setHeaderValue(org.openide.util.NbBundle.getMessage(ExternalDbSlowQueriesPanel.class, "ExternalDbSlowQueriesPanel.tableSlowQueries.columnModel.title0_1")); // NOI18N
-      tableSlowQueries.getColumnModel().getColumn(1).setHeaderValue(org.openide.util.NbBundle.getMessage(ExternalDbSlowQueriesPanel.class, "ExternalDbSlowQueriesPanel.tableSlowQueries.columnModel.title1_1")); // NOI18N
-      tableSlowQueries.getColumnModel().getColumn(2).setHeaderValue(org.openide.util.NbBundle.getMessage(ExternalDbSlowQueriesPanel.class, "ExternalDbSlowQueriesPanel.tableSlowQueries.columnModel.title2_1")); // NOI18N
-      tableSlowQueries.getColumnModel().getColumn(3).setHeaderValue(org.openide.util.NbBundle.getMessage(ExternalDbSlowQueriesPanel.class, "ExternalDbSlowQueriesPanel.tableSlowQueries.columnModel.title3_1")); // NOI18N
-    }
 
     jSplitPane1.setTopComponent(jScrollPane1);
 

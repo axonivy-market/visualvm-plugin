@@ -79,12 +79,6 @@ public class ExternalDbErrorsPanel extends javax.swing.JPanel {
     bindingGroup.addBinding(jTableBinding);
     jTableBinding.bind();
     jScrollPane1.setViewportView(tableErrors);
-    if (tableErrors.getColumnModel().getColumnCount() > 0) {
-      tableErrors.getColumnModel().getColumn(0).setHeaderValue(org.openide.util.NbBundle.getMessage(ExternalDbErrorsPanel.class, "ExternalDbErrorsPanel.tableErrors.columnModel.title0_1")); // NOI18N
-      tableErrors.getColumnModel().getColumn(1).setHeaderValue(org.openide.util.NbBundle.getMessage(ExternalDbErrorsPanel.class, "ExternalDbErrorsPanel.tableErrors.columnModel.title1_1")); // NOI18N
-      tableErrors.getColumnModel().getColumn(2).setHeaderValue(org.openide.util.NbBundle.getMessage(ExternalDbErrorsPanel.class, "ExternalDbErrorsPanel.tableErrors.columnModel.title2_1")); // NOI18N
-      tableErrors.getColumnModel().getColumn(3).setHeaderValue(org.openide.util.NbBundle.getMessage(ExternalDbErrorsPanel.class, "ExternalDbErrorsPanel.tableErrors.columnModel.title3_1")); // NOI18N
-    }
 
     jSplitPane1.setLeftComponent(jScrollPane1);
 
@@ -148,7 +142,7 @@ public class ExternalDbErrorsPanel extends javax.swing.JPanel {
     } else {
       tableErrors.getRowSorter().setSortKeys(sortKeys);
     }
-    clearDetailsArea();
+    txtDetails.setText("");
   }
 
   private void refreshErrorsTable(List<SQLInfo> errors) {
@@ -159,10 +153,6 @@ public class ExternalDbErrorsPanel extends javax.swing.JPanel {
     bindingTableErrors.bind();
     tableErrors.getColumnModel().getColumn(0).setCellRenderer(fDateCellRenderer);
     tableErrors.repaint();
-  }
-
-  private void clearDetailsArea() {
-    txtDetails.setText("");
   }
 
   public boolean isLoaded() {

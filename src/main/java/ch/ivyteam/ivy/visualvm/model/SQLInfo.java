@@ -10,7 +10,7 @@ public class SQLInfo {
   private String fProcessElementId;
   private String fStatement;
   private Date fTimestamp;
-  private long fExecutionTime = 0;
+  private long fExecutionTime;
   private String fErrorMessage;
 
   public String getErrorMessage() {
