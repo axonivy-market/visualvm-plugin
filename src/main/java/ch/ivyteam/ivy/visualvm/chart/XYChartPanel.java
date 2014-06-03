@@ -18,8 +18,8 @@ import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
-import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.List;
 import javax.swing.AbstractButton;
 import javax.swing.Box;
@@ -57,11 +57,15 @@ public class XYChartPanel extends JPanel implements IUpdatableUIObject {
 
   XYChartPanel(XYChartDataSource dataSource, String yAxisTooltip) {
     fDataSource = dataSource;
-    fStorage = new ArrayList<>();
-
+    fStorage = new LinkedList<>();
     fYAxisTooltip = yAxisTooltip;
+    createUI();
+  }
+
+  private void createUI() {
+    removeAll();
     createChart();
-    createYAxisHeader(yAxisTooltip);
+    createYAxisHeader(fYAxisTooltip);
     createLegendTooltips();
     createLabels();
   }
@@ -75,7 +79,6 @@ public class XYChartPanel extends JPanel implements IUpdatableUIObject {
 
     setLayout(new GridBagLayout());
     setBackground(Color.WHITE);
-    removeAll();
     add(fChart.getChart(), new GridBagConstraints(
             0, 0, 1, 1, 1, 1, GridBagConstraints.WEST, GridBagConstraints.BOTH,
             new Insets(0, 0, 0, 0), 0, 0));
@@ -179,27 +182,25 @@ public class XYChartPanel extends JPanel implements IUpdatableUIObject {
   }
 
   public void updateCachePeriod() {
-    createChart();
-    createYAxisHeader(fYAxisTooltip);
-    long buffer = GlobalPreferences.sharedInstance().getMonitoredDataCache() * 60 * 1000;
+    createUI();
     long currentTime = System.currentTimeMillis();
-    restoreDataFromStorage(buffer, currentTime);
+    restoreDataFromStorage(currentTime);
   }
 
-  private void restoreDataFromStorage(long cachePeriod, long currentTime) {
-    removeOutOfDateStorageItem(cachePeriod, currentTime);
+  private void restoreDataFromStorage(long currentTime) {
+    removeOutOfDateStorageItem(currentTime);
     for (StorageItem item : fStorage) {
       fChart.addValues(item.getTimestamp(), item.getValues());
     }
   }
 
   private void addStorageItem(long currentTime, long[] values) {
-    long buffer = GlobalPreferences.sharedInstance().getMonitoredDataCache() * 60 * 1000;
     fStorage.add(new StorageItem(currentTime, values));
-    removeOutOfDateStorageItem(buffer, currentTime);
+    removeOutOfDateStorageItem(currentTime);
   }
 
-  private void removeOutOfDateStorageItem(long cachePeriod, long currentTime) {
+  private void removeOutOfDateStorageItem(long currentTime) {
+    long cachePeriod = GlobalPreferences.sharedInstance().getMonitoredDataCache() * 60 * 1000;
     Iterator<StorageItem> iterator = fStorage.iterator();
     while (iterator.hasNext()) {
       StorageItem item = iterator.next();
