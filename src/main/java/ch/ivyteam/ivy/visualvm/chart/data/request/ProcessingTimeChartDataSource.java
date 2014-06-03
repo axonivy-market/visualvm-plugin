@@ -15,7 +15,7 @@ public class ProcessingTimeChartDataSource extends XYChartDataSource {
   public ProcessingTimeChartDataSource(DataBeanProvider dataBeanProvider, String chartName,
           String xAxisDescription, String yAxisDescription) {
     super(dataBeanProvider, chartName, xAxisDescription, yAxisDescription);
-    String legendDesc = "Mean processing time for new requests served by {0} connector since the last poll";
+    String legendDesc = "Mean processing time for new requests served by {0} connector since the last polling";
     for (ServerConnectorInfo connector : dataBeanProvider.getGenericData().getServerConnectors()) {
       ObjectName processorName = connector.getGlobalRequestProcessorName();
       String protocol = connector.getDisplayProtocol();

@@ -121,7 +121,7 @@ public class ExternalDbView extends ExternalDbWsCommonView {
     StringBuilder builder = new StringBuilder();
     builder.append("<html>");
     builder.append("The chart shows the maximum, the mean and the minimum time needed to execute"
-                   + " transactions since the last poll.<br><br>");
+                   + " transactions since the last polling.<br><br>");
     builder.append("<b>Max: </b>").append(ExternalDbProcessingTimeChartDataSource.MAX_SERIE_DESC)
             .append(BR);
     builder.append("<b>Mean: </b>").append(ExternalDbProcessingTimeChartDataSource.MEAN_SERIE_DESC)

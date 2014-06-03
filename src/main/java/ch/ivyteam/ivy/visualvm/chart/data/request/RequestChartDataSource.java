@@ -15,7 +15,7 @@ public class RequestChartDataSource extends XYChartDataSource {
   public RequestChartDataSource(DataBeanProvider dataBeanProvider, String chartName,
           String xAxisDescription, String yAxisDescription) {
     super(dataBeanProvider, chartName, xAxisDescription, yAxisDescription);
-    String legendDescription = "Number of new requests served by {0} connector since the last poll";
+    String legendDescription = "Number of new requests served by {0} connector since the last polling";
     for (ServerConnectorInfo connector : dataBeanProvider.getGenericData().getServerConnectors()) {
       String protocol = connector.getDisplayProtocol();
       ObjectName processorName = connector.getGlobalRequestProcessorName();

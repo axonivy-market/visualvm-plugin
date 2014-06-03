@@ -64,14 +64,14 @@ public class RequestView extends AbstractView {
 
   private String getRequestChartDescription() {
     StringBuilder sb = new StringBuilder(
-            "The chart shows the number of new requests served by each connector since the last poll");
+            "The chart shows the number of new requests served by each connector since the last polling");
     return sb.toString();
   }
 
   private String getErrorChartDescription() {
     StringBuilder sb = new StringBuilder("<html>");
     sb.append("The chart shows the number of new errors in requests ");
-    sb.append("served by each connector since the last poll,");
+    sb.append("served by each connector since the last polling,");
     sb.append(END_LINE);
     sb.append(" i.e. number of requests with a HTTP response code between 400 and 599");
     return sb.toString();
@@ -79,7 +79,7 @@ public class RequestView extends AbstractView {
 
   private String getProcessTimeChartDescription() {
     StringBuilder sb = new StringBuilder("The chart shows the mean processing time for new requests ");
-    sb.append("served by each connector since the last poll");
+    sb.append("served by each connector since the last polling");
     return sb.toString();
   }
 

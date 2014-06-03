@@ -63,7 +63,7 @@ public class SystemDbView extends AbstractView {
     StringBuilder builder = new StringBuilder();
     builder.append("<html>");
     builder.append("The chart shows the maximum, the mean and the minimum time needed to execute ");
-    builder.append("transactions since the last poll.<br><br>");
+    builder.append("transactions since the last polling.<br><br>");
     builder.append("<b>Max</b>: ").append(DbChartTitleConstant.MAX_SERIE_DESC).append(BR);
     builder.append("<b>Mean</b>: ").append(DbChartTitleConstant.MEAN_SERIE_DESC).append(BR);
     builder.append("<b>Min</b>: ").append(DbChartTitleConstant.MIN_SERIE_DESC);

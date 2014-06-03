@@ -20,18 +20,18 @@ public final class DbChartTitleConstant {
   public static final String MAX_CALLS_TITLE = "Max calls";
 
   public static final String TRANSACTION_ERROR_SERIE_DESC = "The number of system database transactions"
-          + " that have finished since the last poll and were erroneous.";
+          + " that have finished since the last polling and were erroneous.";
   public static final String TRANSACTION_SERIE_DESC = "The number of system database transactions that have "
-          + "finished since the last poll.";
+          + "finished since the last polling.";
   public static final String OPEN_SERIE_DESC = "The number of open connections to the system database.";
   public static final String USED_SERIE_DESC = "The number of used connections to the system database"
-          + " for which at least one statement was executed since the last poll.";
+          + " for which at least one statement was executed since the last polling.";
   public static final String MAX_SERIE_DESC = "The maximum processing time of all system database "
-          + "transactions that have finished since the last poll.";
+          + "transactions that have finished since the last polling.";
   public static final String MEAN_SERIE_DESC = "The mean processing time of all system database "
-          + "transactions that have finished since the last poll.";
+          + "transactions that have finished since the last polling.";
   public static final String MIN_SERIE_DESC = "The minimum processing time of all system database "
-          + "transactions that have finished since the last poll.";
+          + "transactions that have finished since the last polling.";
 
   private DbChartTitleConstant() {
   }
