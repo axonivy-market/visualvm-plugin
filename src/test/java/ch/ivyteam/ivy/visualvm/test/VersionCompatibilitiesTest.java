@@ -56,8 +56,9 @@ public class VersionCompatibilitiesTest extends AbstractTest {
     }
 
     IvyViewProvider ivyViewProvider = new IvyViewProvider();
-    DataBeanProvider dataBeanProvider = ivyViewProvider.produceDataBeanProvider(mockedMBeanServer);
-    assertEquals(fResult, dataBeanProvider != null);
+    DataBeanProvider dataBeanProvider = new DataBeanProvider(mockedMBeanServer);
+    boolean isIvy = ivyViewProvider.checkAppropriateIvyApp(dataBeanProvider);
+    assertEquals(fResult, isIvy);
   }
 
 }

@@ -6,6 +6,8 @@ import java.awt.event.MouseEvent;
 import javax.swing.JLabel;
 
 public class HtmlLabelComponent extends JLabel {
+  public static final int ROW_HEIGHT = 14;
+
   private final TableGenerator fTableGenerator;
 
   public HtmlLabelComponent() {
@@ -34,7 +36,7 @@ public class HtmlLabelComponent extends JLabel {
 
   @Override
   public String getToolTipText(MouseEvent event) {
-    int rowIndex = (int) (event.getY() / 14);
+    int rowIndex = (int) (event.getY() / ROW_HEIGHT);
     return fTableGenerator.getTooltip(rowIndex);
   }
 

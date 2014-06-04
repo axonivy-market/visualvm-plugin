@@ -23,29 +23,27 @@ public class IvyViewProvider extends DataSourceViewProvider<Application> {
     if (jmx != null) {
       MBeanServerConnection mbsc = jmx.getMBeanServerConnection();
       if (mbsc != null) {
-        fDataBeanProvider = produceDataBeanProvider(mbsc);
-        result = (fDataBeanProvider != null);
+        fDataBeanProvider = new DataBeanProvider(mbsc);
+        result = checkAppropriateIvyApp(fDataBeanProvider);
       }
     }
     return result;
   }
 
-  public DataBeanProvider produceDataBeanProvider(MBeanServerConnection mbsc) {
-    DataBeanProvider dataBeanProvider = new DataBeanProvider(mbsc);
+  public boolean checkAppropriateIvyApp(DataBeanProvider dataBeanProvider) {
+    boolean result = false;
     IvyApplicationInfo appInfo = dataBeanProvider.getGenericData().getApplicationInfo();
     if ((appInfo != null) && DataUtils.checkIvyVersion(appInfo.getVersion(), 5, 1)) {
       switch (appInfo.getApplicationName()) {
         case IvyApplicationInfo.IVY_SERVER_APP_NAME:
         case IvyApplicationInfo.IVY_DESIGNER_APP_NAME:
+          result = true;
           break;
         default:
-          dataBeanProvider = null;
           break;
       }
-    } else {
-      dataBeanProvider = null;
     }
-    return dataBeanProvider;
+    return result;
   }
 
   @Override
