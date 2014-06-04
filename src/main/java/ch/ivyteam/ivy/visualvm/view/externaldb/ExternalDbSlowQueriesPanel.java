@@ -1,22 +1,15 @@
-package ch.ivyteam.ivy.visualvm.view;
+package ch.ivyteam.ivy.visualvm.view.externaldb;
 
 import ch.ivyteam.ivy.visualvm.model.SQLInfo;
-import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.text.NumberFormat;
-import java.util.ArrayList;
 import java.util.List;
-import javax.swing.JLabel;
 import javax.swing.JTable;
-import javax.swing.RowSorter.SortKey;
-import javax.swing.SortOrder;
-import javax.swing.table.DefaultTableCellRenderer;
 import org.jdesktop.beansbinding.Binding;
 
-public class ExternalDbSlowQueriesPanel extends javax.swing.JPanel {
+public class ExternalDbSlowQueriesPanel extends AbstractExternalDbQueriesPanel {
 
   /**
    * This method is called from within the constructor to initialize the form. WARNING: Do NOT modify this
@@ -56,7 +49,7 @@ public class ExternalDbSlowQueriesPanel extends javax.swing.JPanel {
     add(btnRefresh, gridBagConstraints);
 
     jSplitPane1.setBorder(null);
-    jSplitPane1.setDividerLocation(120);
+    jSplitPane1.setDividerLocation(200);
     jSplitPane1.setOrientation(javax.swing.JSplitPane.VERTICAL_SPLIT);
 
     tableSlowQueries.setAutoCreateRowSorter(true);
@@ -76,8 +69,12 @@ public class ExternalDbSlowQueriesPanel extends javax.swing.JPanel {
     columnBinding.setColumnClass(String.class);
     columnBinding.setEditable(false);
     columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${executionTime}"));
-    columnBinding.setColumnName("Execution Time [ms]");
+    columnBinding.setColumnName("Execution Time");
     columnBinding.setColumnClass(Long.class);
+    columnBinding.setEditable(false);
+    columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${statement}"));
+    columnBinding.setColumnName("Statement");
+    columnBinding.setColumnClass(String.class);
     columnBinding.setEditable(false);
     bindingGroup.addBinding(jTableBinding);
     jTableBinding.bind();
@@ -124,56 +121,50 @@ public class ExternalDbSlowQueriesPanel extends javax.swing.JPanel {
   private org.jdesktop.beansbinding.BindingGroup bindingGroup;
   // End of variables declaration//GEN-END:variables
 
-  private final ExternalDbView fExternalDbView;
-  private boolean fIsLoaded = false;
-  private final DateTableCellRenderer fDateCellRenderer = new DateTableCellRenderer();
-  private final NumberTableCellRenderer fNumberCellRenderer = new NumberTableCellRenderer();
-
   public ExternalDbSlowQueriesPanel(ExternalDbView externalDbView) {
+    super(externalDbView);
     initComponents();
-    fExternalDbView = externalDbView;
+    initTableCellRenderer();
     btnRefresh.addActionListener(new RefreshButtonActionListener());
     tableSlowQueries.addMouseListener(new SlowQueriesTableMouseListener());
   }
 
-  public void refresh(List<SQLInfo> sqlInfoList) {
-    fIsLoaded = true;
-    List<? extends SortKey> sortKeys = tableSlowQueries.getRowSorter().getSortKeys();
-    refreshSlowQueriesTable(sqlInfoList);
-    if (sortKeys.isEmpty()) {
-      tableSlowQueries.getRowSorter().setSortKeys(createDefaultSortKey());
-    } else {
-      tableSlowQueries.getRowSorter().setSortKeys(sortKeys);
-    }
+  @Override
+  protected JTable getQueriesTable() {
+    return tableSlowQueries;
+  }
+
+  @Override
+  protected void clearDetailsArea() {
     txtSQL.setText("");
   }
 
-  private void refreshSlowQueriesTable(List<SQLInfo> sqlInfoList) {
+  @Override
+  protected List<SQLInfo> getSQLInfoList() {
+    return fSQLInfoList;
+  }
+
+  @Override
+  protected int getDefaultSortColumnIndex() {
+    return 3;
+  }
+
+  @Override
+  protected void refreshQueriesTable(List<SQLInfo> sqlInfoList) {
     Binding binding = bindingGroup.getBinding("bindingSlowQueriesTable");
     binding.unbind();
     fSQLInfoList.clear();
     fSQLInfoList.addAll(sqlInfoList);
     binding.bind();
-    tableSlowQueries.getColumnModel().getColumn(0).setCellRenderer(fDateCellRenderer);
-    tableSlowQueries.getColumnModel().getColumn(3).setCellRenderer(fNumberCellRenderer);
+    tableSlowQueries.getColumnModel().getColumn(0).setCellRenderer(getDateCellRenderer());
+    tableSlowQueries.getColumnModel().getColumn(3).setCellRenderer(getNumberCellRenderer());
     tableSlowQueries.repaint();
-  }
-
-  public boolean isLoaded() {
-    return fIsLoaded;
-  }
-
-  private List<SortKey> createDefaultSortKey() {
-    List<SortKey> sortKeys = new ArrayList();
-    SortKey sortKey = new SortKey(3, SortOrder.DESCENDING);
-    sortKeys.add(sortKey);
-    return sortKeys;
   }
 
   private class RefreshButtonActionListener implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
-      fExternalDbView.refreshSlowQueriesTab();
+      getExternalDbView().refreshSlowQueriesTab();
     }
 
   }
@@ -181,26 +172,7 @@ public class ExternalDbSlowQueriesPanel extends javax.swing.JPanel {
   private class SlowQueriesTableMouseListener extends MouseAdapter {
     @Override
     public void mouseClicked(MouseEvent e) {
-      if (e.getClickCount() == 2) {
-        int selectedRow = tableSlowQueries.getSelectedRow();
-        SQLInfo info = fSQLInfoList.get(tableSlowQueries.convertRowIndexToModel(selectedRow));
-        fExternalDbView.showChart(info.getApplication(), info.getEnvironment(), info.getConfigName());
-      }
-    }
-
-  }
-
-  class NumberTableCellRenderer extends DefaultTableCellRenderer {
-
-    @Override
-    public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected,
-            boolean hasFocus, int row, int column) {
-      String dateValue = value.toString();
-      if (value instanceof Long) {
-        dateValue = NumberFormat.getNumberInstance().format(value);
-      }
-      setHorizontalAlignment(JLabel.RIGHT);
-      return super.getTableCellRendererComponent(table, dateValue, isSelected, hasFocus, row, column);
+      handleDoubleClick(e);
     }
 
   }

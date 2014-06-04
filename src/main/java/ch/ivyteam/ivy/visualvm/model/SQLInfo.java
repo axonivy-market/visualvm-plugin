@@ -70,7 +70,7 @@ public class SQLInfo {
   }
 
   public long getExecutionTime() {
-    return fExecutionTime / 1000; // microseconds -> milliseconds
+    return fExecutionTime;
   }
 
   public void setExecutionTime(long executionTime) {

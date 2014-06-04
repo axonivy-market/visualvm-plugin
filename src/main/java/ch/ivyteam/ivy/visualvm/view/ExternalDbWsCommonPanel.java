@@ -85,7 +85,7 @@ public class ExternalDbWsCommonPanel extends javax.swing.JPanel {
   /**
    * Creates new form ExternalDbPanel
    */
-  ExternalDbWsCommonPanel(ExternalDbWsCommonView externalDbView) {
+  public ExternalDbWsCommonPanel(ExternalDbWsCommonView externalDbView) {
     fExternalDbWsView = externalDbView;
     fAppIcon = (Icon) ImageUtilities.loadImage(APP_ICON_PATH, true);
     fEnvIcon = (Icon) ImageUtilities.loadImage(ENV_ICON_PATH, true);
@@ -181,7 +181,7 @@ public class ExternalDbWsCommonPanel extends javax.swing.JPanel {
   }
 
   // init data for the tree
-  void setTreeData(Map<String, Map<String, Set<String>>> appEnvConfMap) {
+  public void setTreeData(Map<String, Map<String, Set<String>>> appEnvConfMap) {
     fAppEnvConfigWsMap = appEnvConfMap;
     // reset the current tree
     for (int i = 0; i < fRootNode.getChildCount(); i++) {
@@ -228,6 +228,7 @@ public class ExternalDbWsCommonPanel extends javax.swing.JPanel {
         preventSelection(selectionEvent);
         createChartsPanel();
       }
+
     });
   }
 
@@ -274,6 +275,7 @@ public class ExternalDbWsCommonPanel extends javax.swing.JPanel {
           fResized = true;
         }
       }
+
     });
   }
 
@@ -343,6 +345,7 @@ public class ExternalDbWsCommonPanel extends javax.swing.JPanel {
         return cut;
       }
     }
+
   }
 
   private class EnvTreeCellRenderer extends DefaultTreeCellRenderer {
@@ -362,5 +365,6 @@ public class ExternalDbWsCommonPanel extends javax.swing.JPanel {
       }
       return this;
     }
+
   }
 }

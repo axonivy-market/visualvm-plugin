@@ -1,17 +1,15 @@
-package ch.ivyteam.ivy.visualvm.view;
+package ch.ivyteam.ivy.visualvm.view.externaldb;
 
 import ch.ivyteam.ivy.visualvm.model.SQLInfo;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.util.ArrayList;
 import java.util.List;
-import javax.swing.RowSorter.SortKey;
-import javax.swing.SortOrder;
+import javax.swing.JTable;
 import org.jdesktop.beansbinding.Binding;
 
-public class ExternalDbErrorsPanel extends javax.swing.JPanel {
+public class ExternalDbErrorsPanel extends AbstractExternalDbQueriesPanel {
   // CHECKSTYLE:OFF
   /**
    * This method is called from within the constructor to initialize the form. WARNING: Do NOT modify this
@@ -51,7 +49,7 @@ public class ExternalDbErrorsPanel extends javax.swing.JPanel {
 
     jSplitPane1.setBackground(new java.awt.Color(255, 255, 255));
     jSplitPane1.setBorder(null);
-    jSplitPane1.setDividerLocation(150);
+    jSplitPane1.setDividerLocation(200);
     jSplitPane1.setOrientation(javax.swing.JSplitPane.VERTICAL_SPLIT);
 
     jScrollPane1.setBackground(new java.awt.Color(255, 255, 255));
@@ -121,55 +119,49 @@ public class ExternalDbErrorsPanel extends javax.swing.JPanel {
   // End of variables declaration//GEN-END:variables
   // CHECKSTYLE:ON
 
-  private final ExternalDbView fExternalDbView;
-  private boolean fIsLoaded = false;
-  private final DateTableCellRenderer fDateCellRenderer = new DateTableCellRenderer();
-
   public ExternalDbErrorsPanel(ExternalDbView view) {
-    fExternalDbView = view;
+    super(view);
     initComponents();
-    tableErrors.setCellEditor(null);
+    initTableCellRenderer();
     btnRefresh.addActionListener(new RefreshButtonActionListener());
     tableErrors.addMouseListener(new ErrorsTableMouseListener());
   }
 
-  public void refresh(List<SQLInfo> errors) {
-    fIsLoaded = true;
-    List<? extends SortKey> sortKeys = tableErrors.getRowSorter().getSortKeys();
-    refreshErrorsTable(errors);
-    if (sortKeys.isEmpty()) {
-      tableErrors.getRowSorter().setSortKeys(createDefaultSortKey());
-    } else {
-      tableErrors.getRowSorter().setSortKeys(sortKeys);
-    }
+  @Override
+  protected List<SQLInfo> getSQLInfoList() {
+    return fErrorInfoList;
+  }
+
+  @Override
+  protected JTable getQueriesTable() {
+    return tableErrors;
+  }
+
+  @Override
+  protected void clearDetailsArea() {
     txtDetails.setText("");
   }
 
-  private void refreshErrorsTable(List<SQLInfo> errors) {
+  @Override
+  protected int getDefaultSortColumnIndex() {
+    return 0;
+  }
+
+  @Override
+  protected void refreshQueriesTable(List<SQLInfo> sqlInfoList) {
     Binding bindingTableErrors = bindingGroup.getBinding("bindingTableErrors");
     bindingTableErrors.unbind();
     fErrorInfoList.clear();
-    fErrorInfoList.addAll(errors);
+    fErrorInfoList.addAll(sqlInfoList);
     bindingTableErrors.bind();
-    tableErrors.getColumnModel().getColumn(0).setCellRenderer(fDateCellRenderer);
+    tableErrors.getColumnModel().getColumn(0).setCellRenderer(getDateCellRenderer());
     tableErrors.repaint();
-  }
-
-  public boolean isLoaded() {
-    return fIsLoaded;
-  }
-
-  private List<SortKey> createDefaultSortKey() {
-    List<SortKey> sortKeys = new ArrayList();
-    SortKey sortKey = new SortKey(0, SortOrder.DESCENDING);
-    sortKeys.add(sortKey);
-    return sortKeys;
   }
 
   private class RefreshButtonActionListener implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
-      fExternalDbView.refreshErrorTab();
+      getExternalDbView().refreshErrorTab();
     }
 
   }
@@ -177,11 +169,7 @@ public class ExternalDbErrorsPanel extends javax.swing.JPanel {
   private class ErrorsTableMouseListener extends MouseAdapter {
     @Override
     public void mouseClicked(MouseEvent e) {
-      if (e.getClickCount() == 2) {
-        int selectedRow = tableErrors.getSelectedRow();
-        SQLInfo error = fErrorInfoList.get(tableErrors.convertRowIndexToModel(selectedRow));
-        fExternalDbView.showChart(error.getApplication(), error.getEnvironment(), error.getConfigName());
-      }
+      handleDoubleClick(e);
     }
 
   }

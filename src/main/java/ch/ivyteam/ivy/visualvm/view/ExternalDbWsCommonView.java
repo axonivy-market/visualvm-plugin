@@ -10,7 +10,7 @@ import ch.ivyteam.ivy.visualvm.chart.data.AbstractExternalDbAndWebServiceDataSou
 import java.util.HashMap;
 import java.util.Map;
 
-abstract class ExternalDbWsCommonView extends AbstractView {
+abstract public class ExternalDbWsCommonView extends AbstractView {
 
   private String fCurrentAppName, fCurrentEnvName, fCurrentConfigName;
   private final Map<String, ChartsPanel> fCreatedCharts;
@@ -59,4 +59,5 @@ abstract class ExternalDbWsCommonView extends AbstractView {
   public void setSelectedNode(String appName, String envName, String confEnvName) {
     fUIChartsPanel.setSelectedNode(appName, envName, confEnvName);
   }
+
 }

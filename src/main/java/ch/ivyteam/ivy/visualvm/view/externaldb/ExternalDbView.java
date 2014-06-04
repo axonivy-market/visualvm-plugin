@@ -1,4 +1,4 @@
-package ch.ivyteam.ivy.visualvm.view;
+package ch.ivyteam.ivy.visualvm.view.externaldb;
 
 import ch.ivyteam.ivy.visualvm.chart.ChartsPanel;
 import ch.ivyteam.ivy.visualvm.chart.data.externaldb.ExternalDbConnectionChartDataSource;
@@ -8,6 +8,9 @@ import ch.ivyteam.ivy.visualvm.model.IvyJmxConstant;
 import ch.ivyteam.ivy.visualvm.service.ExternalDbErrorQueryBuffer;
 import ch.ivyteam.ivy.visualvm.service.ExternalDbSlowQueryBuffer;
 import ch.ivyteam.ivy.visualvm.util.DataUtils;
+import ch.ivyteam.ivy.visualvm.view.DataBeanProvider;
+import ch.ivyteam.ivy.visualvm.view.ExternalDbWsCommonPanel;
+import ch.ivyteam.ivy.visualvm.view.ExternalDbWsCommonView;
 import com.sun.tools.visualvm.core.ui.components.DataViewComponent;
 import com.sun.tools.visualvm.core.ui.components.DataViewComponent.DetailsView;
 import java.util.Map;
@@ -44,12 +47,12 @@ public class ExternalDbView extends ExternalDbWsCommonView {
     ExternalDbTransactionChartDataSource transactionDataSource = new ExternalDbTransactionChartDataSource(
             getDataBeanProvider(), null, null, "Transactions");
     ExternalDbProcessingTimeChartDataSource transProcessTimeDataSource
-                                            = new ExternalDbProcessingTimeChartDataSource(
-            getDataBeanProvider(), null, null,
-            "Processing Time [ms]");
+            = new ExternalDbProcessingTimeChartDataSource(
+                    getDataBeanProvider(), null, null,
+                    "Processing Time [ms]");
 
     configDataSources(IvyJmxConstant.IvyServer.ExternalDatabase.NAME_PATTERN,
-                      connectionDataSource, transactionDataSource, transProcessTimeDataSource);
+            connectionDataSource, transactionDataSource, transProcessTimeDataSource);
     chartPanel.addChart(connectionDataSource, generateDescriptionForConnectionChart());
     chartPanel.addChart(transactionDataSource, generateDescriptionForTransactionChart());
     chartPanel.addChart(transProcessTimeDataSource, generateDescriptionForProcessingTimeChart());
@@ -84,8 +87,8 @@ public class ExternalDbView extends ExternalDbWsCommonView {
     DetailsView fSlowQueriesView = new DetailsView(SLOW_QUERIES, null, 10, fUISlowQueriesPanel, null);
 
     super.getViewComponent().configureDetailsArea(new DataViewComponent.DetailsAreaConfiguration(null,
-                                                                                                 false),
-                                                  DataViewComponent.TOP_LEFT);
+            false),
+            DataViewComponent.TOP_LEFT);
     super.getViewComponent().addDetailsView(fChartsDetailsView, DataViewComponent.TOP_LEFT);
     super.getViewComponent().addDetailsView(fErrorsDetailsView, DataViewComponent.TOP_LEFT);
     super.getViewComponent().addDetailsView(fSlowQueriesView, DataViewComponent.TOP_LEFT);
@@ -121,7 +124,7 @@ public class ExternalDbView extends ExternalDbWsCommonView {
     StringBuilder builder = new StringBuilder();
     builder.append("<html>");
     builder.append("The chart shows the maximum, the mean and the minimum time needed to execute"
-                   + " transactions since the last polling.<br><br>");
+            + " transactions since the last polling.<br><br>");
     builder.append("<b>Max: </b>").append(ExternalDbProcessingTimeChartDataSource.MAX_SERIE_DESC)
             .append(BR);
     builder.append("<b>Mean: </b>").append(ExternalDbProcessingTimeChartDataSource.MEAN_SERIE_DESC)
