@@ -26,7 +26,7 @@ public abstract class AbstractExternalDbQueryBuffer implements IUpdatableUIObjec
   private final MBeanServerConnection fConnection;
   private final Comparator<SQLInfo> fTimeComparator = new TimeComparator();
   private final List<ObjectName> fObjectNames = new CopyOnWriteArrayList();
-  private List<SQLInfo> fSQLInfoBuffer = new CopyOnWriteArrayList<>();
+  private final List<SQLInfo> fSQLInfoBuffer = new CopyOnWriteArrayList<>();
 
   public AbstractExternalDbQueryBuffer(MBeanServerConnection mBeanServerConnection, int maxBufferSize) {
     fConnection = mBeanServerConnection;
@@ -77,7 +77,8 @@ public abstract class AbstractExternalDbQueryBuffer implements IUpdatableUIObjec
 
   private void truncateBuffer(List<SQLInfo> list) {
     final int fromIndex = Math.max(0, list.size() - fMaxBufferSize);
-    fSQLInfoBuffer = list.subList(fromIndex, list.size());
+    fSQLInfoBuffer.clear();
+    fSQLInfoBuffer.addAll(list.subList(fromIndex, list.size()));
   }
 
   protected abstract void handleExecutionData(CompositeData execution, ObjectName objectName);

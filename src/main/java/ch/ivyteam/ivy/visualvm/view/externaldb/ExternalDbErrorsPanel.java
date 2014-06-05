@@ -162,6 +162,7 @@ public class ExternalDbErrorsPanel extends AbstractExternalDbQueriesPanel {
     @Override
     public void actionPerformed(ActionEvent e) {
       getExternalDbView().refreshErrorTab();
+      adjustColumns();
     }
 
   }

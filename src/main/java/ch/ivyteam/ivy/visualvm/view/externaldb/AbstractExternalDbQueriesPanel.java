@@ -73,10 +73,14 @@ public abstract class AbstractExternalDbQueriesPanel extends JPanel {
     restoreQueriesTableConfig();
     clearDetailsArea();
     if (!fIsLoaded) {
-      TableColumnAdjuster adjuster = new TableColumnAdjuster(getQueriesTable());
-      adjuster.adjustColumns();
+      adjustColumns();
     }
     setLoaded(true);
+  }
+
+  protected void adjustColumns() {
+    TableColumnAdjuster adjuster = new TableColumnAdjuster(getQueriesTable());
+    adjuster.adjustColumns();
   }
 
   protected abstract List<SQLInfo> getSQLInfoList();
@@ -102,7 +106,7 @@ public abstract class AbstractExternalDbQueriesPanel extends JPanel {
     JTable queriesTable = getQueriesTable();
     if (fSortKeys.isEmpty()) {
       queriesTable.getRowSorter().setSortKeys(createDefaultSortKey(getDefaultSortColumnIndex(),
-              SortOrder.DESCENDING));
+                                                                   SortOrder.DESCENDING));
     } else {
       queriesTable.getRowSorter().setSortKeys(fSortKeys);
     }

@@ -69,7 +69,7 @@ public class ExternalDbSlowQueriesPanel extends AbstractExternalDbQueriesPanel {
     columnBinding.setColumnClass(String.class);
     columnBinding.setEditable(false);
     columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${executionTime}"));
-    columnBinding.setColumnName("Execution Time");
+    columnBinding.setColumnName("Execution Time (ms)");
     columnBinding.setColumnClass(Long.class);
     columnBinding.setEditable(false);
     columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${statement}"));
@@ -165,6 +165,7 @@ public class ExternalDbSlowQueriesPanel extends AbstractExternalDbQueriesPanel {
     @Override
     public void actionPerformed(ActionEvent e) {
       getExternalDbView().refreshSlowQueriesTab();
+      adjustColumns();
     }
 
   }
