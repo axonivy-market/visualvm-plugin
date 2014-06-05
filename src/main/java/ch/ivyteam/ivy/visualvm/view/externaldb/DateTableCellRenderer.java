@@ -24,7 +24,6 @@ class DateTableCellRenderer extends EvenOddCellRenderer {
     if (value instanceof Date) {
       dateValue = fDateFormat.format(value);
     }
-    setHorizontalAlignment(JLabel.RIGHT);
     return super.getTableCellRendererComponent(table, dateValue, isSelected, hasFocus, row, column);
   }
 
