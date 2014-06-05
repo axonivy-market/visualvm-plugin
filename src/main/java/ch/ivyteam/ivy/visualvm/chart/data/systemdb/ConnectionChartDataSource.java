@@ -14,14 +14,23 @@ public class ConnectionChartDataSource extends XYChartDataSource {
           String xAxisDescription, String yAxisDescription) {
     super(dataBeanProvider, chartName, xAxisDescription, yAxisDescription);
 
-    addLabelCalcSupport(new StaticValueChartLabelCalcSupport(DbChartTitleConstant.LIMIT_CONNECTION_TITLE,
-            DatabasePersistency.NAME, DatabasePersistency.KEY_MAX_CONNECTION));
+    StaticValueChartLabelCalcSupport limitConnectionLabelSupport
+            = new StaticValueChartLabelCalcSupport(DbChartTitleConstant.LIMIT_CONNECTION_TITLE,
+                    DatabasePersistency.NAME, DatabasePersistency.KEY_MAX_CONNECTION);
+    limitConnectionLabelSupport.setTooltip(DbChartTitleConstant.MAX_CONNECTION_DESC);
+    addLabelCalcSupport(limitConnectionLabelSupport);
 
-    addLabelCalcSupport(new MaxValueChartLabelCalcSupport(DbChartTitleConstant.MAX_OPEN_CONNECTION_TITLE,
-            DatabasePersistency.NAME, DatabasePersistency.KEY_OPEN_CONNECTION));
+    MaxValueChartLabelCalcSupport maxOpenConnectionLabelSupport
+            = new MaxValueChartLabelCalcSupport(DbChartTitleConstant.MAX_OPEN_CONNECTION_TITLE,
+                    DatabasePersistency.NAME, DatabasePersistency.KEY_OPEN_CONNECTION);
+    maxOpenConnectionLabelSupport.setTooltip(DbChartTitleConstant.MAX_OPEN_CONNECTION_DESC);
+    addLabelCalcSupport(maxOpenConnectionLabelSupport);
 
-    addLabelCalcSupport(new MaxValueChartLabelCalcSupport(DbChartTitleConstant.MAX_USED_CONNECTION_TITLE,
-            DatabasePersistency.NAME, DatabasePersistency.KEY_USED_CONNECTION));
+    MaxValueChartLabelCalcSupport maxUsedConnectionLabelSupport
+            = new MaxValueChartLabelCalcSupport(DbChartTitleConstant.MAX_USED_CONNECTION_TITLE,
+                    DatabasePersistency.NAME, DatabasePersistency.KEY_USED_CONNECTION);
+    maxUsedConnectionLabelSupport.setTooltip(DbChartTitleConstant.MAX_USED_CONNECTION_DESC);
+    addLabelCalcSupport(maxUsedConnectionLabelSupport);
 
     addSerie(DbChartTitleConstant.OPEN_SERIE_TITLE, DbChartTitleConstant.OPEN_SERIE_DESC,
             SerieStyle.LINE_FILLED, DatabasePersistency.NAME, DatabasePersistency.KEY_OPEN_CONNECTION);

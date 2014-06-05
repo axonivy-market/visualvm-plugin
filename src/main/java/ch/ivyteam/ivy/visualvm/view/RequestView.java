@@ -90,7 +90,7 @@ public class RequestView extends AbstractView {
     sb.append(END_LINE);
     sb.append("<b>HTTP:</b> Number of HTTP sessions");
     sb.append(END_LINE);
-    sb.append("<b>Ivy:</b> Number of HTTP sessions that do request against Xpert.ivy core");
+    sb.append("<b>Ivy:</b> Number of sessions that run requests against the Xpert.ivy core");
     sb.append(END_LINE);
     sb.append("<b>Concurrent users:</b> ");
     sb.append("Number of Xpert.ivy users that are currently logged-in");

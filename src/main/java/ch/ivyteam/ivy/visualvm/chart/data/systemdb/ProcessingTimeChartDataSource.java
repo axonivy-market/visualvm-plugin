@@ -16,12 +16,20 @@ public class ProcessingTimeChartDataSource extends XYChartDataSource {
     super(dataBeanProvider, chartName, xAxisDescription, yAxisDescription);
     setScaleFactor(SCALED_FACTOR);
 
-    addLabelCalcSupport(new MaxValueChartLabelCalcSupport(DbChartTitleConstant.MAX_OF_MAX_TITLE,
-            DatabasePersistency.NAME, DatabasePersistency.KEY_TRANS_MAX_EXE_DELTA_TIME, SCALED_FACTOR));
-    addLabelCalcSupport(new MeanTotalDeltaValueChartLabelCalcSupport(
-            DbChartTitleConstant.TOTAL_MEAN_TITLE, DatabasePersistency.NAME,
-            DatabasePersistency.KEY_TRANS_TOTAL_EXE_TIME, DatabasePersistency.KEY_TRANS_NUMBER,
-            SCALED_FACTOR));
+    MaxValueChartLabelCalcSupport maxOfMaxLabelSupport = new MaxValueChartLabelCalcSupport(
+            DbChartTitleConstant.MAX_OF_MAX_TITLE, DatabasePersistency.NAME,
+            DatabasePersistency.KEY_TRANS_MAX_EXE_DELTA_TIME, SCALED_FACTOR);
+    maxOfMaxLabelSupport.setTooltip(DbChartTitleConstant.MAX_OF_MAX_DESC);
+    maxOfMaxLabelSupport.setUnit("ms");
+    addLabelCalcSupport(maxOfMaxLabelSupport);
+
+    MeanTotalDeltaValueChartLabelCalcSupport totalMeanLabelSupport
+            = new MeanTotalDeltaValueChartLabelCalcSupport(DbChartTitleConstant.TOTAL_MEAN_TITLE,
+                    DatabasePersistency.NAME, DatabasePersistency.KEY_TRANS_TOTAL_EXE_TIME,
+                    DatabasePersistency.KEY_TRANS_NUMBER, SCALED_FACTOR);
+    totalMeanLabelSupport.setTooltip(DbChartTitleConstant.TOTAL_MEAN_DESC);
+    totalMeanLabelSupport.setUnit("ms");
+    addLabelCalcSupport(totalMeanLabelSupport);
 
     addSerie(DbChartTitleConstant.MAX_SERIE_TITLE,
             DbChartTitleConstant.MAX_SERIE_DESC,

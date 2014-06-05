@@ -16,9 +16,13 @@ public class ConcurrentUsersChartDataSource extends XYChartDataSource {
     addSerie("Now", "The number of users that are currently logged-in.", SerieStyle.LINE,
             IvyJmxConstant.IvyServer.SecurityManager.NAME,
             IvyJmxConstant.IvyServer.SecurityManager.KEY_LICENSED_SESSIONS);
-    addLabelCalcSupport(new MaxValueChartLabelCalcSupport("Max Now",
-            IvyJmxConstant.IvyServer.SecurityManager.NAME,
-            IvyJmxConstant.IvyServer.SecurityManager.KEY_LICENSED_SESSIONS));
+    MaxValueChartLabelCalcSupport maxConcurrentUsersLabelSupport
+            = new MaxValueChartLabelCalcSupport("Max",
+                    IvyJmxConstant.IvyServer.SecurityManager.NAME,
+                    IvyJmxConstant.IvyServer.SecurityManager.KEY_LICENSED_SESSIONS);
+    maxConcurrentUsersLabelSupport.setTooltip("The maximum number of users that were logged-in "
+            + "in a polling interval. Measured since the last start of VisualVM");
+    addLabelCalcSupport(maxConcurrentUsersLabelSupport);
   }
 
 }

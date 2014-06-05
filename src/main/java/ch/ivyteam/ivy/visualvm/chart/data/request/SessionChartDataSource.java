@@ -29,13 +29,14 @@ public class SessionChartDataSource extends XYChartDataSource {
       MaxValueChartLabelCalcSupport maxHttpSessionLabelSupport
               = new MaxValueChartLabelCalcSupport("Max HTTP",
                       tomcatManager, IvyJmxConstant.Ivy.Manager.KEY_ACTIVE_SESSION);
-      maxHttpSessionLabelSupport.setTooltip("Maximum number of HTTP sessions");
+      maxHttpSessionLabelSupport.setTooltip("The maximum number of HTTP sessions."
+              + " Measured since the last start of VisualVM");
       addLabelCalcSupport(maxHttpSessionLabelSupport);
     }
   }
 
   private void initDisplayForIvySessions() {
-    addSerie("Ivy", "Number of HTTP sessions that do request against Xpert.ivy core", SerieStyle.LINE,
+    addSerie("Ivy", "Number of HTTP sessions that run requests against the Xpert.ivy core", SerieStyle.LINE,
             IvyJmxConstant.IvyServer.SecurityManager.NAME,
             IvyJmxConstant.IvyServer.SecurityManager.KEY_SESSIONS);
     MaxValueChartLabelCalcSupport maxIvySessionLabelSupport
@@ -43,7 +44,8 @@ public class SessionChartDataSource extends XYChartDataSource {
                     IvyJmxConstant.IvyServer.SecurityManager.NAME,
                     IvyJmxConstant.IvyServer.SecurityManager.KEY_SESSIONS);
     maxIvySessionLabelSupport.setTooltip(
-            "Maximum number of HTTP sessions that do request against Xpert.ivy core");
+            "The maximum number of HTTP sessions that run requests against the Xpert.ivy core. "
+            + "Measured since the last start of VisualVM");
     addLabelCalcSupport(maxIvySessionLabelSupport);
   }
 
@@ -51,13 +53,13 @@ public class SessionChartDataSource extends XYChartDataSource {
     addSerie("Concurrent Users", "Number of Xpert.ivy users that are currently logged-in", SerieStyle.LINE,
             IvyJmxConstant.IvyServer.SecurityManager.NAME,
             IvyJmxConstant.IvyServer.SecurityManager.KEY_LICENSED_SESSIONS);
-    MaxValueChartLabelCalcSupport maxConcurrentUsersLabelSupport
+    MaxValueChartLabelCalcSupport maxConUsersLabelSupp
             = new MaxValueChartLabelCalcSupport("Max Concurrent Users",
                     IvyJmxConstant.IvyServer.SecurityManager.NAME,
                     IvyJmxConstant.IvyServer.SecurityManager.KEY_LICENSED_SESSIONS);
-    maxConcurrentUsersLabelSupport.
-            setTooltip("Maximum number of Xpert.ivy users that are currently logged-in");
-    addLabelCalcSupport(maxConcurrentUsersLabelSupport);
+    maxConUsersLabelSupp.setTooltip("The maximum number of users that were logged-in in a polling interval. "
+            + "Measured since the last start of VisualVM");
+    addLabelCalcSupport(maxConUsersLabelSupp);
   }
 
   private void initDisplayForRDSessions() {
@@ -68,7 +70,9 @@ public class SessionChartDataSource extends XYChartDataSource {
             = new MaxValueChartLabelCalcSupport("Max RD",
                     IvyJmxConstant.IvyServer.RichDialogExecution.NAME,
                     IvyJmxConstant.IvyServer.RichDialogExecution.KEY_RD_SESSIONS);
-    maxRDSessionLabelSupport.setTooltip("Maximum number of Xpert.ivy sessions that use Rich Dialogs");
+    maxRDSessionLabelSupport.setTooltip(
+            "The maximum number of Xpert.ivy sessions that were using Rich Dialogs. "
+            + "Measured since the last start of VisualVM");
     addLabelCalcSupport(maxRDSessionLabelSupport);
   }
 

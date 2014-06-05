@@ -15,14 +15,19 @@ public class ErrorChartDataSource extends XYChartDataSource {
   public ErrorChartDataSource(DataBeanProvider dataBeanProvider, String chartName, String xAxisDescription,
           String yAxisDescription) {
     super(dataBeanProvider, chartName, xAxisDescription, yAxisDescription);
-    String legendDescription = "Number of new errors in requests served by {0} connector since the last polling";
+    String legend = "Number of new errors in requests served by {0} connector since the last polling";
+    String labelDescription = "The maximum number of new errors in {0} requests in a polling interval. "
+            + "Measured since the last start of VisualVM";
     for (ServerConnectorInfo connector : dataBeanProvider.getGenericData().getServerConnectors()) {
       String protocol = connector.getDisplayProtocol();
       ObjectName processorName = connector.getGlobalRequestProcessorName();
-      addDeltaSerie(protocol, MessageFormat.format(legendDescription, protocol),
+      addDeltaSerie(protocol, MessageFormat.format(legend, protocol),
               SerieStyle.LINE, processorName, IvyJmxConstant.Ivy.Processor.KEY_ERROR_COUNT);
-      addLabelCalcSupport(new MaxDeltaValueChartLabelCalcSupport("Max " + protocol,
-              processorName, IvyJmxConstant.Ivy.Processor.KEY_ERROR_COUNT));
+      MaxDeltaValueChartLabelCalcSupport maxDeltaValueLabelSupport
+              = new MaxDeltaValueChartLabelCalcSupport("Max " + protocol,
+                      processorName, IvyJmxConstant.Ivy.Processor.KEY_ERROR_COUNT);
+      maxDeltaValueLabelSupport.setTooltip(MessageFormat.format(labelDescription, protocol));
+      addLabelCalcSupport(maxDeltaValueLabelSupport);
     }
   }
 

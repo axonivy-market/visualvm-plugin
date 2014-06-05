@@ -32,6 +32,23 @@ public final class DbChartTitleConstant {
           + "transactions that have finished since the last polling.";
   public static final String MIN_SERIE_DESC = "The minimum processing time of all system database "
           + "transactions that have finished since the last polling.";
+  public static final String MAX_CONNECTION_DESC = "The maximum number of available connections";
+  public static final String MAX_OPEN_CONNECTION_DESC = "The maximum number of open connections to "
+          + "the system database in a polling interval."
+          + " Measured since the last start of VisualVM";
+  public static final String MAX_USED_CONNECTION_DESC = "The maximum number of used connections to "
+          + "the system database in a polling interval. "
+          + "Measured since the last start of VisualVM";
+  public static final String MAX_TRANSACTION_DESC = "The maximum number of system database transactions "
+          + "that have finished in a polling interval. "
+          + "Measured since the last start of VisualVM";
+  public static final String MAX_ERROR_DESC = "The maximum number of erroneous system database transactions "
+          + "that have finished in a polling interval. "
+          + "Measured since the last start of VisualVM";
+  public static final String MAX_OF_MAX_DESC = "The maximum processing time of all "
+          + "system database transactions. Measured since the last start of VisualVM";
+  public static final String TOTAL_MEAN_DESC = "The average processing time of all "
+          + "system database transactions. Measured since the last start of VisualVM";
 
   private DbChartTitleConstant() {
   }
