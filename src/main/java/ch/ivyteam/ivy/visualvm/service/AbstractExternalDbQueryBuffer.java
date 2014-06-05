@@ -7,7 +7,6 @@ import ch.ivyteam.ivy.visualvm.model.SQLInfo;
 import ch.ivyteam.ivy.visualvm.util.DataUtils;
 import ch.ivyteam.ivy.visualvm.view.IUpdatableUIObject;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.LinkedList;
@@ -26,7 +25,7 @@ public abstract class AbstractExternalDbQueryBuffer implements IUpdatableUIObjec
   private final int fMaxBufferSize;
   private final MBeanServerConnection fConnection;
   private final Comparator<SQLInfo> fTimeComparator = new TimeComparator();
-  private final List<ObjectName> fObjectNames = new ArrayList();
+  private final List<ObjectName> fObjectNames = new CopyOnWriteArrayList();
   private List<SQLInfo> fSQLInfoBuffer = new CopyOnWriteArrayList<>();
 
   public AbstractExternalDbQueryBuffer(MBeanServerConnection mBeanServerConnection, int maxBufferSize) {
