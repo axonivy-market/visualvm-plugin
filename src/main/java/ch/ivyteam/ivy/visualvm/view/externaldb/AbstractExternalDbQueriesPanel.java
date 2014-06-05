@@ -23,6 +23,7 @@ public abstract class AbstractExternalDbQueriesPanel extends JPanel {
   private final NumberTableCellRenderer fNumberCellRenderer = new NumberTableCellRenderer();
   private final List<Integer> fColumnsWidths = new ArrayList<>();
   private List<? extends RowSorter.SortKey> fSortKeys;
+  private volatile boolean isRefreshing = false;
 
   public AbstractExternalDbQueriesPanel(ExternalDbView externalDbView) {
     fExternalDbView = externalDbView;
@@ -68,6 +69,10 @@ public abstract class AbstractExternalDbQueriesPanel extends JPanel {
   }
 
   public void refresh(List<SQLInfo> sqlInfoList) {
+    if (isRefreshing == true) {
+      return;
+    }
+    isRefreshing = true;
     storeQueriesTableConfig(getQueriesTable());
     refreshQueriesTable(sqlInfoList);
     restoreQueriesTableConfig();
@@ -76,6 +81,7 @@ public abstract class AbstractExternalDbQueriesPanel extends JPanel {
       adjustColumns();
     }
     setLoaded(true);
+    isRefreshing = false;
   }
 
   protected void adjustColumns() {
@@ -106,7 +112,7 @@ public abstract class AbstractExternalDbQueriesPanel extends JPanel {
     JTable queriesTable = getQueriesTable();
     if (fSortKeys.isEmpty()) {
       queriesTable.getRowSorter().setSortKeys(createDefaultSortKey(getDefaultSortColumnIndex(),
-                                                                   SortOrder.DESCENDING));
+              SortOrder.DESCENDING));
     } else {
       queriesTable.getRowSorter().setSortKeys(fSortKeys);
     }
