@@ -4,6 +4,7 @@ import ch.ivyteam.ivy.visualvm.model.IvyJmxConstant.IvyServer.ExternalDatabase;
 import ch.ivyteam.ivy.visualvm.model.SQLInfo;
 import ch.ivyteam.ivy.visualvm.util.DataUtils;
 import java.util.Comparator;
+import java.util.List;
 import javax.management.MBeanServerConnection;
 import javax.management.ObjectName;
 import javax.management.openmbean.CompositeData;
@@ -30,8 +31,8 @@ public class ExternalDbSlowQueryBuffer extends AbstractExternalDbQueryBuffer {
   }
 
   @Override
-  protected void sortBuffer() {
-    DataUtils.sort(getBuffer(), fExecutionTimeComparator, getTimeComparator());
+  protected void sortBuffer(List<SQLInfo> list) {
+    DataUtils.sort(list, fExecutionTimeComparator, getTimeComparator());
   }
 
   private class ExecutionTimeComparator implements Comparator<SQLInfo> {

@@ -12,6 +12,7 @@ import java.util.Comparator;
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.logging.Logger;
 import javax.management.MBeanServerConnection;
 import javax.management.ObjectName;
@@ -19,14 +20,14 @@ import javax.management.openmbean.CompositeData;
 
 public abstract class AbstractExternalDbQueryBuffer implements IUpdatableUIObject {
   private static final Logger LOGGER
-          = Logger.getLogger(ExternalDbErrorQueryBuffer.class.getName());
+                              = Logger.getLogger(ExternalDbErrorQueryBuffer.class.getName());
   private static final int DEFAULT_BUFFER_SIZE = 100;
 
   private final int fMaxBufferSize;
   private final MBeanServerConnection fConnection;
   private final Comparator<SQLInfo> fTimeComparator = new TimeComparator();
   private final List<ObjectName> fObjectNames = new ArrayList();
-  private List<SQLInfo> fSQLInfoBuffer = new LinkedList<>();
+  private List<SQLInfo> fSQLInfoBuffer = new CopyOnWriteArrayList<>();
 
   public AbstractExternalDbQueryBuffer(MBeanServerConnection mBeanServerConnection, int maxBufferSize) {
     fConnection = mBeanServerConnection;
@@ -54,17 +55,19 @@ public abstract class AbstractExternalDbQueryBuffer implements IUpdatableUIObjec
   public void updateValues(QueryResult result) {
     for (ObjectName objectName : fObjectNames) {
       CompositeData[] exeHistory = (CompositeData[]) result.getValue(objectName,
-              ExternalDatabase.KEY_EXECUTION_HISTORY);
+                                                                     ExternalDatabase.KEY_EXECUTION_HISTORY);
       for (CompositeData execution : exeHistory) {
         handleExecutionData(execution, objectName);
       }
     }
-    sortBuffer();
-    truncateBuffer();
+    List<SQLInfo> list = new LinkedList<>();
+    list.addAll(fSQLInfoBuffer);
+    sortBuffer(list);
+    truncateBuffer(list);
   }
 
-  protected void sortBuffer() {
-    DataUtils.sort(getBuffer(), getTimeComparator());
+  protected void sortBuffer(List<SQLInfo> list) {
+    DataUtils.sort(list, getTimeComparator());
   }
 
   protected void addSQLInfoToBuffer(SQLInfo sqlInfo) {
@@ -73,9 +76,9 @@ public abstract class AbstractExternalDbQueryBuffer implements IUpdatableUIObjec
     }
   }
 
-  private void truncateBuffer() {
-    final int fromIndex = Math.max(0, fSQLInfoBuffer.size() - fMaxBufferSize);
-    fSQLInfoBuffer = fSQLInfoBuffer.subList(fromIndex, fSQLInfoBuffer.size());
+  private void truncateBuffer(List<SQLInfo> list) {
+    final int fromIndex = Math.max(0, list.size() - fMaxBufferSize);
+    fSQLInfoBuffer = list.subList(fromIndex, list.size());
   }
 
   protected abstract void handleExecutionData(CompositeData execution, ObjectName objectName);
