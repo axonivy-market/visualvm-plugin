@@ -47,24 +47,28 @@ public final class DataUtils {
     }
     return null;
   }
+
   /**
    * @param date
    * @return date string with current locale (note: only date, no time value)
    */
   public static String dateToString(Date date) {
     Locale formatLocale = getFormatLocale();
-    DateFormat localizedFormat = DateFormat.getDateInstance(DateFormat.SHORT, formatLocale);
+    DateFormat localizedFormat = DateFormat.getDateInstance(DateFormat.FULL, formatLocale);
     return localizedFormat.format(date);
   }
+
   /**
    * @param date
    * @return date string with current locale
    */
   public static String dateTimeToString(Date date) {
     Locale formatLocale = getFormatLocale();
-    DateFormat localizedFormat = DateFormat.getDateTimeInstance(DateFormat.SHORT, DateFormat.SHORT,formatLocale);
+    DateFormat localizedFormat = DateFormat.getDateTimeInstance(DateFormat.SHORT, DateFormat.SHORT,
+            formatLocale);
     return localizedFormat.format(date);
   }
+
   public static Locale getFormatLocale() {
     String langFormat = System.getProperty("user.language.format");
     String countryFormat = System.getProperty("user.country.format");

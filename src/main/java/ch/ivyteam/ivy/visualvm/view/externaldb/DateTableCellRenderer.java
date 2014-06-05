@@ -13,9 +13,11 @@ class DateTableCellRenderer extends EvenOddCellRenderer {
   @Override
   public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected,
           boolean hasFocus, int row, int column) {
+    String strDate = "";
     if (value instanceof Date) {
-      value = DataUtils.dateTimeToString((Date) value);
+      strDate = DataUtils.dateTimeToString((Date) value);
     }
-    return super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
+    return super.getTableCellRendererComponent(table, strDate, isSelected, hasFocus, row, column);
   }
+
 }
