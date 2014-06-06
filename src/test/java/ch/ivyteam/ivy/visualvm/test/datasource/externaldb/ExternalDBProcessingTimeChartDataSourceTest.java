@@ -101,7 +101,7 @@ public class ExternalDBProcessingTimeChartDataSourceTest extends AbstractTest {
     //Check label  calculation support
     assertEquals("Max of max", fLabelCalcSupports.get(0).getText());
     assertEquals(fMaxOfMax, fLabelCalcSupports.get(0).getValue());
-    assertEquals("Total mean", fLabelCalcSupports.get(1).getText());
+    assertEquals("Total avg", fLabelCalcSupports.get(1).getText());
     assertEquals(fTotalMean, fLabelCalcSupports.get(1).getValue());
   }
 

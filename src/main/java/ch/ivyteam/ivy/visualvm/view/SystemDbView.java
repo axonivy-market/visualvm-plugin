@@ -62,10 +62,10 @@ public class SystemDbView extends AbstractView {
   private String generateDescriptionForProcessingTimeChart() {
     StringBuilder builder = new StringBuilder();
     builder.append("<html>");
-    builder.append("The chart shows the maximum, the mean and the minimum time needed to execute ");
+    builder.append("The chart shows the maximum, the average and the minimum time needed to execute ");
     builder.append("transactions since the last polling.<br><br>");
     builder.append("<b>Max</b>: ").append(DbChartTitleConstant.MAX_SERIE_DESC).append(BR);
-    builder.append("<b>Mean</b>: ").append(DbChartTitleConstant.MEAN_SERIE_DESC).append(BR);
+    builder.append("<b>Avg</b>: ").append(DbChartTitleConstant.MEAN_SERIE_DESC).append(BR);
     builder.append("<b>Min</b>: ").append(DbChartTitleConstant.MIN_SERIE_DESC);
     builder.append("</html>");
     return builder.toString();

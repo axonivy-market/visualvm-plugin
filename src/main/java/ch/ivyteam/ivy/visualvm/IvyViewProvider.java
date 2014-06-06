@@ -27,7 +27,10 @@ public class IvyViewProvider extends DataSourceViewProvider<Application> {
         result = checkAppropriateIvyApp(fDataBeanProvider);
       }
     }
-    return result;
+    if (!result) {
+      fDataBeanProvider = null;
+    }
+    return true;
   }
 
   public boolean checkAppropriateIvyApp(DataBeanProvider dataBeanProvider) {
@@ -48,9 +51,14 @@ public class IvyViewProvider extends DataSourceViewProvider<Application> {
 
   @Override
   protected DataSourceView createView(Application application) {
-    IvyView ivyView = new IvyView(application);
-    ivyView.setDataBeanProvider(fDataBeanProvider);
-    return ivyView;
+    DataSourceView view;
+    if (fDataBeanProvider != null) {
+      view = new IvyView(application);
+      ((IvyView) view).setDataBeanProvider(fDataBeanProvider);
+    } else {
+      view = new EmptyIvyView(application);
+    }
+    return view;
   }
 
   static void initialize() {

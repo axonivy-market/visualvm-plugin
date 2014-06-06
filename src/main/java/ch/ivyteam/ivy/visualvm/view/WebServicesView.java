@@ -72,11 +72,11 @@ public class WebServicesView extends ExternalDbWsCommonView {
   private String generateDescriptionForProcessingTimeChart() {
     StringBuilder builder = new StringBuilder();
     builder.append("<html>");
-    builder.append("The chart shows the maximum, the mean and the minimum time needed to execute ");
+    builder.append("The chart shows the maximum, the average and the minimum time needed to execute ");
     builder.append("web service calls since the last polling.").append(BR).append(BR);
     builder.append("<b>Max</b>: ").append(WebServiceProcessingTimeChartDataSource.MAX_SERIE_DESCRIPTION)
             .append(BR);
-    builder.append("<b>Mean</b>: ").append(WebServiceProcessingTimeChartDataSource.MEAN_SERIE_DESCRIPTION)
+    builder.append("<b>Avg</b>: ").append(WebServiceProcessingTimeChartDataSource.MEAN_SERIE_DESCRIPTION)
             .append(BR);
     builder.append("<b>Min</b>: ").append(WebServiceProcessingTimeChartDataSource.MIN_SERIE_DESCRIPTION);
     builder.append("</html>");
