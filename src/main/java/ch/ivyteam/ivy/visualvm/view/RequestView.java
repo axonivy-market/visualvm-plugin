@@ -95,7 +95,7 @@ public class RequestView extends AbstractView {
     sb.append("<b>Concurrent users:</b> ");
     sb.append("Number of Xpert.ivy users that are currently logged-in");
     sb.append(END_LINE);
-    sb.append("<b>RD:</b> Number of Xpert.ivy sessions that use Rich Dialogs");
+    sb.append("<b>Rich Dialog:</b> Number of Xpert.ivy sessions that use Rich Dialogs");
     sb.append("</html>");
     return sb.toString();
   }

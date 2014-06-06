@@ -63,11 +63,11 @@ public class SessionChartDataSource extends XYChartDataSource {
   }
 
   private void initDisplayForRDSessions() {
-    addSerie("RD", "Number of Xpert.ivy sessions that use Rich Dialogs", SerieStyle.LINE,
+    addSerie("Rich Dialog", "Number of Xpert.ivy sessions that use Rich Dialogs", SerieStyle.LINE,
             IvyJmxConstant.IvyServer.RichDialogExecution.NAME,
             IvyJmxConstant.IvyServer.RichDialogExecution.KEY_RD_SESSIONS);
     MaxValueChartLabelCalcSupport maxRDSessionLabelSupport
-            = new MaxValueChartLabelCalcSupport("Max RD",
+            = new MaxValueChartLabelCalcSupport("Max Rich Dialog",
                     IvyJmxConstant.IvyServer.RichDialogExecution.NAME,
                     IvyJmxConstant.IvyServer.RichDialogExecution.KEY_RD_SESSIONS);
     maxRDSessionLabelSupport.setTooltip(
