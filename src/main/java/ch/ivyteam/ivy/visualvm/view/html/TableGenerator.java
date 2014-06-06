@@ -92,6 +92,8 @@ public class TableGenerator {
     sb.append(TAG_CELL_END);
   }
 
+  //CHECKSTYLE:OFF
+  @SuppressWarnings("PMD")
   private final class Row {
     private String fKey;
     private String fLabel;
@@ -106,6 +108,5 @@ public class TableGenerator {
       fUnit = unit;
       fTooltip = tooltip;
     }
-
   }
 }

@@ -10,7 +10,7 @@ import ch.ivyteam.ivy.visualvm.chart.data.AbstractExternalDbAndWebServiceDataSou
 import java.util.HashMap;
 import java.util.Map;
 
-abstract public class ExternalDbWsCommonView extends AbstractView {
+public abstract class ExternalDbWsCommonView extends AbstractView {
 
   private String fCurrentAppName, fCurrentEnvName, fCurrentConfigName;
   private final Map<String, ChartsPanel> fCreatedCharts;

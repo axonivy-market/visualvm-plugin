@@ -69,7 +69,7 @@ public abstract class AbstractExternalDbQueriesPanel extends JPanel {
   }
 
   public void refresh(List<SQLInfo> sqlInfoList) {
-    if (isRefreshing == true) {
+    if (isRefreshing) {
       return;
     }
     isRefreshing = true;
