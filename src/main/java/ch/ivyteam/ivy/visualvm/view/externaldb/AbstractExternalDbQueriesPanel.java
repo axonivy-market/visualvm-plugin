@@ -69,10 +69,12 @@ public abstract class AbstractExternalDbQueriesPanel extends JPanel {
   }
 
   public void refresh(List<SQLInfo> sqlInfoList) {
-    if (isRefreshing) {
-      return;
+    synchronized (this) {
+      if (isRefreshing) {
+        return;//prevent other threads from calling this method when there is a running thread.
+      }
+      isRefreshing = true;
     }
-    isRefreshing = true;
     storeQueriesTableConfig(getQueriesTable());
     refreshQueriesTable(sqlInfoList);
     restoreQueriesTableConfig();
