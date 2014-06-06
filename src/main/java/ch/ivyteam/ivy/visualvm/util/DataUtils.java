@@ -64,7 +64,7 @@ public final class DataUtils {
    */
   public static String dateTimeToString(Date date) {
     Locale formatLocale = getFormatLocale();
-    DateFormat localizedFormat = DateFormat.getDateTimeInstance(DateFormat.SHORT, DateFormat.SHORT,
+    DateFormat localizedFormat = DateFormat.getDateTimeInstance(DateFormat.MEDIUM, DateFormat.MEDIUM,
             formatLocale);
     return localizedFormat.format(date);
   }
