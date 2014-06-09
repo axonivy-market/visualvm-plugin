@@ -13,6 +13,7 @@ import ch.ivyteam.ivy.visualvm.view.DataBeanProvider;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.text.ParseException;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 import javax.management.MBeanServerConnection;
@@ -20,7 +21,6 @@ import javax.management.MalformedObjectNameException;
 import javax.management.ObjectName;
 import javax.xml.bind.JAXBException;
 import static junit.framework.TestCase.assertEquals;
-import static junit.framework.TestCase.assertFalse;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
@@ -32,8 +32,8 @@ public class SlowQueryTest extends AbstractTest {
   private static final int MAX_BUFFER_ITEMS = 50;
   private static DataBeanProvider fProvider;
   private static ExternalDbSlowQueryBuffer fBuffer;
-
   private final int fExpectedNumOfSlows;
+  private static final Date fOldestQuery = new Date(0);
 
   public SlowQueryTest(BeanTestData.Dataset dataset, int max) {
     super(dataset);
@@ -44,12 +44,14 @@ public class SlowQueryTest extends AbstractTest {
   public static Iterable<Object[]> data() throws JAXBException, URISyntaxException, ParseException {
     return TestUtil.createTestData(
             "/ch/ivyteam/ivy/visualvm/test/datasource/externaldb/ComplicatedSlowTest.xml",
+            new Object[]{50},
+            new Object[]{50},
             new Object[]{50}
     );
   }
 
   @Test
-  public void testLimit() throws MalformedObjectNameException, IOException {
+  public void testHandleDuplicateAndSort() throws MalformedObjectNameException, IOException {
     final MBeanServerConnection mockConnection = createMockConnection();
     addTestData(mockConnection, getDataset());
     Set<ObjectName> extDbObjNames = new HashSet<>();
@@ -73,56 +75,19 @@ public class SlowQueryTest extends AbstractTest {
     QueryResult result = query.execute(mockConnection);
     fBuffer.updateValues(result);
 
-    // Assert the buffer
+    // Assert the buffer size
     assertEquals(fExpectedNumOfSlows, fBuffer.getBuffer().size());
-    // refresh several times
-    for (int index = 0; index < 10; index++) {
-      fBuffer.updateQuery(query);
-      result = query.execute(mockConnection);
-      fBuffer.updateValues(result);
-      assertEquals(fExpectedNumOfSlows, fBuffer.getBuffer().size());
-    }
 
-  }
+    // Assert the buffer changes
+    assertTrue(fOldestQuery.before(fBuffer.getBuffer().get(0).getTime()));
+    fOldestQuery.setTime(fBuffer.getBuffer().get(0).getTime().getTime());
 
-  @Test
-  public void testNoDuplicate() throws MalformedObjectNameException, IOException {
-    final MBeanServerConnection mockConnection = createMockConnection();
-    addTestData(mockConnection, getDataset());
-    Set<ObjectName> extDbObjNames = new HashSet<>();
-    extDbObjNames.add(new ObjectName(
-            "Xpert.ivy Server:type=External Database,application=app1,environment=env1,name=config1"));
-    extDbObjNames.add(new ObjectName(
-            "Xpert.ivy Server:type=External Database,application=app1,environment=env1,name=config2"));
-    when(mockConnection.queryNames(IvyJmxConstant.IvyServer.ExternalDatabase.NAME_FILTER, null))
-            .thenReturn(extDbObjNames);
-
-    if (fProvider == null) {
-      fProvider = mock(DataBeanProvider.class);
-    }
-    when(fProvider.getMBeanServerConnection()).thenReturn(mockConnection);
-
-    if (fBuffer == null) {
-      fBuffer = new ExternalDbSlowQueryBuffer(mockConnection, MAX_BUFFER_ITEMS);
-    }
-    Query query = new Query();
-    fBuffer.updateQuery(query);
-    QueryResult result = query.execute(mockConnection);
-    fBuffer.updateValues(result);
-
-    // Assert the buffer
-    assertEquals(fExpectedNumOfSlows, fBuffer.getBuffer().size());
-    // refresh several times
-    for (int index = 0; index < 10; index++) {
-      fBuffer.updateQuery(query);
-      result = query.execute(mockConnection);
-      fBuffer.updateValues(result);
-      assertEquals(fExpectedNumOfSlows, fBuffer.getBuffer().size());
-
-      for (int i = 0; i < fBuffer.getBuffer().size() - 1; i++) {
-        for (int j = i + 1; j < fBuffer.getBuffer().size(); j++) {
-          assertFalse(fBuffer.getBuffer().get(i).equals(fBuffer.getBuffer().get(j)));
-        }
+    // Assert the buffer duplication and sort
+    for (int i = 0; i < fBuffer.getBuffer().size() - 1; i++) {
+      for (int j = i + 1; j < fBuffer.getBuffer().size(); j++) {
+        assertFalse(fBuffer.getBuffer().get(i).equals(fBuffer.getBuffer().get(j)));
+        assertTrue(fBuffer.getBuffer().get(i).getExecutionTime() <= fBuffer.getBuffer().get(j).
+                getExecutionTime());
       }
     }
   }

@@ -104,7 +104,7 @@ public class ErrorQueryBufferTest extends AbstractTest {
   }
 
   @Test
-  public void testDBErrorQueriesBuffer() throws MalformedObjectNameException, IOException {
+  public void testCollectData() throws MalformedObjectNameException, IOException {
     final MBeanServerConnection mockConnection = createMockConnection();
     addTestData(mockConnection, getDataset());
     Set<ObjectName> extDbObjNames = new HashSet<>();
