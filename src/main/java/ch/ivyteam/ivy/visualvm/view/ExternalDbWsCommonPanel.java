@@ -191,6 +191,16 @@ public class ExternalDbWsCommonPanel extends javax.swing.JPanel {
     expandAllTreeNodes();
   }
 
+  public void refreshOpenedNodes() {
+    Set<String> createdChartKeySet = fExternalDbWsView.getCreatedChartKeySet();
+    for (String key : createdChartKeySet) {
+      AppEnvConfigNode node = fLeaves.get(key);
+      if (node != null) {
+        node.setIsOpened(true);
+      }
+    }
+  }
+
   private void initTreeData() {
     fLeaves.clear();
     // update new data
@@ -306,6 +316,10 @@ public class ExternalDbWsCommonPanel extends javax.swing.JPanel {
     if (confWsNode != null) {
       envJTree.setSelectionPath(new TreePath(confWsNode.getPath()));
     }
+  }
+
+  public boolean containsNode(String appName, String envName, String confWsName) {
+    return fLeaves.get(appName + "_" + envName + "_" + confWsName) != null;
   }
 
   private class AppEnvConfigNode extends DefaultMutableTreeNode {

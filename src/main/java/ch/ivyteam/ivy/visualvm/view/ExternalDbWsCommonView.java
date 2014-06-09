@@ -9,6 +9,7 @@ import ch.ivyteam.ivy.visualvm.chart.ChartsPanel;
 import ch.ivyteam.ivy.visualvm.chart.data.AbstractExternalDbAndWebServiceDataSource;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 
 public abstract class ExternalDbWsCommonView extends AbstractView {
 
@@ -25,7 +26,7 @@ public abstract class ExternalDbWsCommonView extends AbstractView {
     fCurrentAppName = appName;
     fCurrentEnvName = envName;
     fCurrentConfigName = configName;
-    String chartKey = appName + envName + configName;
+    String chartKey = appName + "_" + envName + "_" + configName;
     if (fCreatedCharts.containsKey(chartKey)) {
       fUIChartsPanel.setChartPanelToVisible(fCreatedCharts.get(chartKey));
     } else {
@@ -58,6 +59,10 @@ public abstract class ExternalDbWsCommonView extends AbstractView {
 
   public void setSelectedNode(String appName, String envName, String confEnvName) {
     fUIChartsPanel.setSelectedNode(appName, envName, confEnvName);
+  }
+
+  public Set<String> getCreatedChartKeySet() {
+    return fCreatedCharts.keySet();
   }
 
 }

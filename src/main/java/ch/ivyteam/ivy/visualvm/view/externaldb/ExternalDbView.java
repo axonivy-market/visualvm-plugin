@@ -68,22 +68,26 @@ public class ExternalDbView extends ExternalDbWsCommonView {
       JPanel panel = (JPanel) viewComponent.getComponent(0);
       panel.remove(0);
       createExternalDbView();
-      Map<String, Map<String, Set<String>>> appEnvConfMap = DataUtils.getExternalDbConfigs(
-              getDataBeanProvider()
-              .getMBeanServerConnection());
-      getUIChartsPanel().setTreeData(appEnvConfMap);
+      updateConfigTreeNodes();
       uiComplete = true;
     }
     return viewComponent;
   }
 
+  private void updateConfigTreeNodes() {
+    Map<String, Map<String, Set<String>>> appEnvConfMap = DataUtils.getExternalDbConfigs(
+            getDataBeanProvider()
+            .getMBeanServerConnection());
+    getUIChartsPanel().setTreeData(appEnvConfMap);
+  }
+
   private void createExternalDbView() {
-    ExternalDbWsCommonPanel chartsPanel = new ExternalDbWsCommonPanel(this);
-    setUIChartsPanel(chartsPanel);
+    fChartsPanel = new ExternalDbWsCommonPanel(this);
+    setUIChartsPanel(fChartsPanel);
     fUIErrorPanel = new ExternalDbErrorsPanel(this);
     fUISlowQueriesPanel = new ExternalDbSlowQueriesPanel(this);
 
-    fChartsDetailsView = new DataViewComponent.DetailsView(CHARTS, null, 10, chartsPanel, null);
+    fChartsDetailsView = new DataViewComponent.DetailsView(CHARTS, null, 10, fChartsPanel, null);
     DetailsView fErrorsDetailsView = new DetailsView(ERRORS, null, 10, fUIErrorPanel, null);
     DetailsView fSlowQueriesView = new DetailsView(SLOW_QUERIES, null, 10, fUISlowQueriesPanel, null);
 
@@ -94,6 +98,8 @@ public class ExternalDbView extends ExternalDbWsCommonView {
     super.getViewComponent().addDetailsView(fErrorsDetailsView, DataViewComponent.TOP_LEFT);
     super.getViewComponent().addDetailsView(fSlowQueriesView, DataViewComponent.TOP_LEFT);
   }
+
+  private ExternalDbWsCommonPanel fChartsPanel;
 
   private String generateDescriptionForConnectionChart() {
     StringBuilder builder = new StringBuilder();
@@ -147,6 +153,10 @@ public class ExternalDbView extends ExternalDbWsCommonView {
   public void showChart(String appName, String envName, String configName) {
     super.getViewComponent().selectDetailsView(fChartsDetailsView);
     fireCreateChartsAction(appName, envName, configName);
+    if (!fChartsPanel.containsNode(appName, envName, configName)) {
+      updateConfigTreeNodes();
+      fChartsPanel.refreshOpenedNodes();
+    }
     setSelectedNode(appName, envName, configName);
   }
 
