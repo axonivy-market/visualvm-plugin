@@ -2,6 +2,7 @@ package ch.ivyteam.ivy.visualvm.test;
 
 import ch.ivyteam.ivy.visualvm.util.DataUtils;
 import java.util.Calendar;
+import java.util.Locale;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
@@ -55,6 +56,20 @@ public class DataUtilsTest {
     assertEquals("Friday, February 14, 2014", DataUtils.dateToString(calendar.getTime()));
   }
 
+  @Test
+  public void testDateTimeToString() {
+    Calendar calendar = Calendar.getInstance();
+    calendar.set(2014, 1, 13,8,12,56);
+    Locale formatLocale = DataUtils.getFormatLocale();
+    if ("de_CH".equals(formatLocale.toString())){
+      assertEquals("13.01.14 08:12:56", DataUtils.dateTimeToString(calendar.getTime()));
+    }else if ("en_US".equals(""+formatLocale.toString())){
+      assertEquals("2/13/14 8:12:56 AM", DataUtils.dateTimeToString(calendar.getTime()));
+    }else if ("es_US".equals(""+formatLocale.toString())){
+      assertEquals("2/13/14 8:12:56 a.m.", DataUtils.dateTimeToString(calendar.getTime()));
+    }
+  }
+  
   @Test
   public void testGetHostFromConnectionUrl() {
     assertEquals("localhost", DataUtils.getHostFromConnectionUrl(
