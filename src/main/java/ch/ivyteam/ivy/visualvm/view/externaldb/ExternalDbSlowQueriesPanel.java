@@ -166,7 +166,6 @@ public class ExternalDbSlowQueriesPanel extends AbstractExternalDbQueriesPanel {
     @Override
     public void actionPerformed(ActionEvent e) {
       getExternalDbView().refreshSlowQueriesTab();
-      adjustColumns();
     }
 
   }
