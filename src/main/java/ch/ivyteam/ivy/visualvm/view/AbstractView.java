@@ -5,7 +5,6 @@ import ch.ivyteam.ivy.visualvm.chart.QueryResult;
 import com.sun.tools.visualvm.core.ui.components.DataViewComponent;
 import java.util.ArrayList;
 import java.util.List;
-import javax.management.MBeanServerConnection;
 import javax.swing.JComponent;
 import javax.swing.ToolTipManager;
 
@@ -49,17 +48,18 @@ public class AbstractView {
     return null;
   }
 
-  public void update() {
-    MBeanServerConnection serverConnection = getDataBeanProvider().getMBeanServerConnection();
-    Query query = new Query();
+  public void updateQuery(Query query) {
     // use array to avoid concurrent modification exception
     IUpdatableUIObject[] array = fUpdatableUIObjects.toArray(new IUpdatableUIObject[]{});
     for (IUpdatableUIObject updatableUIObj : array) {
       updatableUIObj.updateQuery(query);
     }
-    QueryResult result = query.execute(serverConnection);
+  }
+
+  public void updateDisplay(QueryResult queryResult) {
+    IUpdatableUIObject[] array = fUpdatableUIObjects.toArray(new IUpdatableUIObject[]{});
     for (IUpdatableUIObject updatableUIObj : array) {
-      updatableUIObj.updateValues(result);
+      updatableUIObj.updateValues(queryResult);
     }
   }
 

@@ -4,11 +4,11 @@ import javax.management.MBeanServerConnection;
 
 public class DataBeanProvider {
   private final MBeanServerConnection fMBeanServerConnection;
-  private final GenericData fCachedData;
+  private final GenericData fGenericData;
 
   public DataBeanProvider(MBeanServerConnection connection) {
     fMBeanServerConnection = connection;
-    fCachedData = new GenericData(fMBeanServerConnection);
+    fGenericData = new GenericData(fMBeanServerConnection);
   }
 
   public MBeanServerConnection getMBeanServerConnection() {
@@ -16,7 +16,7 @@ public class DataBeanProvider {
   }
 
   public GenericData getGenericData() {
-    return fCachedData;
+    return fGenericData;
   }
 
 }

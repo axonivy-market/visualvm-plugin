@@ -1,6 +1,7 @@
 package ch.ivyteam.ivy.visualvm.view;
 
 import ch.ivyteam.ivy.visualvm.chart.ChartsPanel;
+import ch.ivyteam.ivy.visualvm.chart.QueryResult;
 import ch.ivyteam.ivy.visualvm.chart.data.license.ConcurrentUsersChartDataSource;
 import ch.ivyteam.ivy.visualvm.chart.data.license.ConcurrentUsersGaugeDataSource;
 import ch.ivyteam.ivy.visualvm.chart.data.license.NamedUsersGaugeDataSource;
@@ -110,8 +111,8 @@ public class LicenseView extends AbstractView {
   private boolean fNearlyExpiredUpdated, fExpiredUpdated;
 
   @Override
-  public void update() {
-    super.update();
+  public void updateDisplay(QueryResult queryResult) {
+    super.updateDisplay(queryResult);
     BasicIvyJmxDataCollector collector = new BasicIvyJmxDataCollector();
     int namedUsers = 0;
     int concurrentUsers = 0;

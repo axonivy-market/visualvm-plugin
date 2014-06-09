@@ -1,6 +1,7 @@
 package ch.ivyteam.ivy.visualvm.view.externaldb;
 
 import ch.ivyteam.ivy.visualvm.chart.ChartsPanel;
+import ch.ivyteam.ivy.visualvm.chart.QueryResult;
 import ch.ivyteam.ivy.visualvm.chart.data.externaldb.ExternalDbConnectionChartDataSource;
 import ch.ivyteam.ivy.visualvm.chart.data.externaldb.ExternalDbProcessingTimeChartDataSource;
 import ch.ivyteam.ivy.visualvm.chart.data.externaldb.ExternalDbTransactionChartDataSource;
@@ -150,8 +151,8 @@ public class ExternalDbView extends ExternalDbWsCommonView {
   }
 
   @Override
-  public void update() {
-    super.update();
+  public void updateDisplay(QueryResult queryResult) {
+    super.updateDisplay(queryResult);
     if (!fUIErrorPanel.isLoaded() && !fErrorInfoBuffer.getBuffer().isEmpty()) {
       refreshErrorTab();
     }

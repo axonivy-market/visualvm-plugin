@@ -1,5 +1,7 @@
 package ch.ivyteam.ivy.visualvm;
 
+import ch.ivyteam.ivy.visualvm.chart.Query;
+import ch.ivyteam.ivy.visualvm.chart.QueryResult;
 import ch.ivyteam.ivy.visualvm.exception.ClosedIvyServerConnectionException;
 import ch.ivyteam.ivy.visualvm.view.AbstractView;
 import ch.ivyteam.ivy.visualvm.view.DataBeanProvider;
@@ -139,9 +141,14 @@ class IvyView extends DataSourceView {
 
     @Override
     public void onSchedule(long l) {
+      Query query = new Query();
+      for (AbstractView view : views) {
+        view.updateQuery(query);
+      }
+      QueryResult result = query.execute(fDataBeanProvider.getMBeanServerConnection());
       for (AbstractView view : views) {
         try {
-          view.update();
+          view.updateDisplay(result);
         } catch (ClosedIvyServerConnectionException ex) {
           updateTask.suspend();
           LOGGER.warning(ex.getMessage());
