@@ -37,14 +37,8 @@ public class IvyViewProvider extends DataSourceViewProvider<Application> {
     boolean result = false;
     IvyApplicationInfo appInfo = dataBeanProvider.getGenericData().getApplicationInfo();
     if ((appInfo != null) && DataUtils.checkIvyVersion(appInfo.getVersion(), 5, 1)) {
-      switch (appInfo.getApplicationName()) {
-        case IvyApplicationInfo.IVY_SERVER_APP_NAME:
-        case IvyApplicationInfo.IVY_DESIGNER_APP_NAME:
-          result = true;
-          break;
-        default:
-          break;
-      }
+      result = IvyApplicationInfo.IVY_SERVER_APP_NAME.equals(appInfo.getApplicationName())
+              || IvyApplicationInfo.IVY_DESIGNER_APP_NAME.equals(appInfo.getApplicationName());
     }
     return result;
   }

@@ -1,5 +1,6 @@
 package ch.ivyteam.ivy.visualvm.chart.data.request;
 
+import ch.ivyteam.ivy.visualvm.ContentProvider;
 import ch.ivyteam.ivy.visualvm.chart.data.XYChartDataSource;
 import ch.ivyteam.ivy.visualvm.chart.data.support.MaxMeanDeltaValueChartLabelCalcSupport;
 import ch.ivyteam.ivy.visualvm.chart.data.support.MeanTotalDeltaValueChartLabelCalcSupport;
@@ -15,11 +16,9 @@ public class ProcessingTimeChartDataSource extends XYChartDataSource {
   public ProcessingTimeChartDataSource(DataBeanProvider dataBeanProvider, String chartName,
           String xAxisDescription, String yAxisDescription) {
     super(dataBeanProvider, chartName, xAxisDescription, yAxisDescription);
-    String legend = "Average processing time for new requests served by {0} connector since the last polling";
-    String maxMean = "The maximum of the average processing time for new {0} requests in a polling interval. "
-            + "Measured since the last start of VisualVM";
-    String totalMean = "The total average processing time of all {0} requests. "
-            + "Measured since the last start of VisualVM";
+    String legend = ContentProvider.getFormatted("RequestProcessingTimeSerieDescription");
+    String maxMean = ContentProvider.getFormatted("MaxRequestProcessingTimeDescription");
+    String totalMean = ContentProvider.getFormatted("TotalAverageRequestProcessingTimeDescription");
     for (ServerConnectorInfo connector : dataBeanProvider.getGenericData().getServerConnectors()) {
       ObjectName processorName = connector.getGlobalRequestProcessorName();
       String protocol = connector.getDisplayProtocol();
@@ -28,19 +27,21 @@ public class ProcessingTimeChartDataSource extends XYChartDataSource {
               IvyJmxConstant.Ivy.Processor.KEY_REQUEST_COUNT);
 
       MaxMeanDeltaValueChartLabelCalcSupport maxMeanDeltaValueLabelSupport
-              = new MaxMeanDeltaValueChartLabelCalcSupport("Max " + protocol,
+              = new MaxMeanDeltaValueChartLabelCalcSupport(
+                      MessageFormat.format(MAX_OF, protocol),
                       processorName, IvyJmxConstant.Ivy.Processor.KEY_PROCESS_TIME,
                       IvyJmxConstant.Ivy.Processor.KEY_REQUEST_COUNT);
       maxMeanDeltaValueLabelSupport.setTooltip(MessageFormat.format(maxMean, protocol));
-      maxMeanDeltaValueLabelSupport.setUnit("ms");
+      maxMeanDeltaValueLabelSupport.setUnit(MILLISECOND);
       addLabelCalcSupport(maxMeanDeltaValueLabelSupport);
 
       MeanTotalDeltaValueChartLabelCalcSupport totalMeanDeltaValueLabelSupport
-              = new MeanTotalDeltaValueChartLabelCalcSupport("Total avg " + protocol,
+              = new MeanTotalDeltaValueChartLabelCalcSupport(
+                      MessageFormat.format(TOTAL_AVG_OF, protocol),
                       processorName, IvyJmxConstant.Ivy.Processor.KEY_PROCESS_TIME,
                       IvyJmxConstant.Ivy.Processor.KEY_REQUEST_COUNT);
       totalMeanDeltaValueLabelSupport.setTooltip(MessageFormat.format(totalMean, protocol));
-      totalMeanDeltaValueLabelSupport.setUnit("ms");
+      totalMeanDeltaValueLabelSupport.setUnit(MILLISECOND);
       addLabelCalcSupport(totalMeanDeltaValueLabelSupport);
     }
   }

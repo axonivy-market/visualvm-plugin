@@ -1,5 +1,6 @@
 package ch.ivyteam.ivy.visualvm.chart.data;
 
+import ch.ivyteam.ivy.visualvm.ContentProvider;
 import ch.ivyteam.ivy.visualvm.chart.Query;
 import ch.ivyteam.ivy.visualvm.chart.QueryResult;
 import ch.ivyteam.ivy.visualvm.chart.SerieStyle;
@@ -10,6 +11,10 @@ import java.util.List;
 import javax.management.ObjectName;
 
 public class XYChartDataSource {
+
+  public static final String MAX_OF = ContentProvider.get("MaxOf");
+  public static final String TOTAL_AVG_OF = ContentProvider.get("TotalAverageOf");
+  public static final String MILLISECOND = ContentProvider.get("MillisecondAbbr");
 
   private final String fChartName;
   private final String fXAxisDescription;

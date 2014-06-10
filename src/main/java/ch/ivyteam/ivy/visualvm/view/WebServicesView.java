@@ -1,9 +1,6 @@
-/*
- * To change this license header, choose License Headers in Project Properties. To change this template file,
- * choose Tools | Templates and open the template in the editor.
- */
 package ch.ivyteam.ivy.visualvm.view;
 
+import ch.ivyteam.ivy.visualvm.ContentProvider;
 import ch.ivyteam.ivy.visualvm.chart.ChartsPanel;
 import ch.ivyteam.ivy.visualvm.chart.data.webservice.WebServiceCallsChartDataSource;
 import ch.ivyteam.ivy.visualvm.chart.data.webservice.WebServiceProcessingTimeChartDataSource;
@@ -17,11 +14,10 @@ import java.util.Set;
 import javax.swing.Icon;
 import org.openide.util.ImageUtilities;
 
-/**
- *
- * @author htnam
- */
 public class WebServicesView extends ExternalDbWsCommonView {
+  private static final String CALLS = ContentProvider.get("Calls");
+  private static final String PROCESSING_TIME = ContentProvider.get("ProcessingTime")
+          + " [" + ContentProvider.get("MillisecondAbbr") + "]";
 
   public WebServicesView(DataBeanProvider dataBeanProvider) {
     super(dataBeanProvider);
@@ -34,10 +30,10 @@ public class WebServicesView extends ExternalDbWsCommonView {
   protected ChartsPanel createChartPanel() {
     ChartsPanel chartPanel = new ChartsPanel(false);
     WebServiceCallsChartDataSource callsDataSource = new WebServiceCallsChartDataSource(
-            getDataBeanProvider(), null, null, "Calls");
+            getDataBeanProvider(), null, null, CALLS);
     WebServiceProcessingTimeChartDataSource processTimeDataSource
             = new WebServiceProcessingTimeChartDataSource(getDataBeanProvider(), null, null,
-                    "Processing Time [ms]");
+                    PROCESSING_TIME);
 
     configDataSources(IvyJmxConstant.IvyServer.WebService.NAME_PATTERN,
             callsDataSource, processTimeDataSource);
@@ -58,29 +54,11 @@ public class WebServicesView extends ExternalDbWsCommonView {
   }
 
   private String generateDescriptionForCallsChart() {
-    String callDesc = "The chart shows the number of calls to the web service and "
-            + "the number of them that were erroneous.";
-    StringBuilder builder = new StringBuilder();
-    builder.append("<html>").append(callDesc).append(BR).append(BR);
-    builder.append("<b>Calls:</b> ").append(WebServiceCallsChartDataSource.CALLS_SERIE_DESCRIPTION)
-            .append(BR);
-    builder.append("<b>Errors:</b> ").append(WebServiceCallsChartDataSource.ERRORS_SERIE_DESCRIPTION);
-    builder.append("</html>");
-    return builder.toString();
+    return ContentProvider.getFormatted("WebServiceCallChartDescription");
   }
 
   private String generateDescriptionForProcessingTimeChart() {
-    StringBuilder builder = new StringBuilder();
-    builder.append("<html>");
-    builder.append("The chart shows the maximum, the average and the minimum time needed to execute ");
-    builder.append("web service calls since the last polling.").append(BR).append(BR);
-    builder.append("<b>Max</b>: ").append(WebServiceProcessingTimeChartDataSource.MAX_SERIE_DESCRIPTION)
-            .append(BR);
-    builder.append("<b>Avg</b>: ").append(WebServiceProcessingTimeChartDataSource.MEAN_SERIE_DESCRIPTION)
-            .append(BR);
-    builder.append("<b>Min</b>: ").append(WebServiceProcessingTimeChartDataSource.MIN_SERIE_DESCRIPTION);
-    builder.append("</html>");
-    return builder.toString();
+    return ContentProvider.getFormatted("WebServiceProcessingTimeChartDescription");
   }
 
 }

@@ -1,5 +1,6 @@
 package ch.ivyteam.ivy.visualvm.view;
 
+import ch.ivyteam.ivy.visualvm.ContentProvider;
 import ch.ivyteam.ivy.visualvm.chart.ChartsPanel;
 import ch.ivyteam.ivy.visualvm.chart.QueryResult;
 import ch.ivyteam.ivy.visualvm.chart.data.license.ConcurrentUsersChartDataSource;
@@ -35,8 +36,6 @@ public class LicenseView extends AbstractView {
   @Override
   public DataViewComponent getViewComponent() {
     DataViewComponent viewComponent = super.getViewComponent();
-    viewComponent.configureDetailsArea(new DataViewComponent.DetailsAreaConfiguration(
-            "General Information", false), DataViewComponent.TOP_LEFT);
     if (!uiComplete) {
       createLicenseInfoView();
       createSessionsView();
@@ -47,16 +46,19 @@ public class LicenseView extends AbstractView {
   }
 
   private void createLicenseInfoView() {
-    super.getViewComponent().addDetailsView(new DataViewComponent.DetailsView("General Information",
+    String generalInfo = ContentProvider.get("GeneralInfo");
+    super.getViewComponent().addDetailsView(new DataViewComponent.DetailsView(generalInfo,
             null, 10, fLicenseInformationPanel, null), DataViewComponent.TOP_LEFT);
-
+    super.getViewComponent().configureDetailsArea(new DataViewComponent.DetailsAreaConfiguration(
+            generalInfo, false), DataViewComponent.TOP_LEFT);
   }
 
   private void createSessionsView() {
+    String concurrentUsersDesc = ContentProvider.get("ConcurrentUsers");
     int serverSessionsLimit = fLicenseInfo.getServerSessionsLimit();
     if (serverSessionsLimit > 0) {
       ConcurrentUsersChartDataSource sessionDataSource = new ConcurrentUsersChartDataSource(
-              getDataBeanProvider(), "Concurrent Users", serverSessionsLimit);
+              getDataBeanProvider(), concurrentUsersDesc, serverSessionsLimit);
       ConcurrentUsersGaugeDataSource gaugeSessionsDataSource = new ConcurrentUsersGaugeDataSource(
               getDataBeanProvider(), fLicenseInfo.getServerSessionsLimit());
 
@@ -65,22 +67,13 @@ public class LicenseView extends AbstractView {
       sessionsChart.addGauge(gaugeSessionsDataSource);
       registerScheduledUpdate(sessionsChart);
 
-      super.getViewComponent().addDetailsView(new DataViewComponent.DetailsView("Concurrent Users",
+      super.getViewComponent().addDetailsView(new DataViewComponent.DetailsView(concurrentUsersDesc,
               null, 10, sessionsChart.getUIComponent(), null), DataViewComponent.BOTTOM_LEFT);
     }
   }
 
   private String getConcurrentUsersChartDescription() {
-    StringBuilder description = new StringBuilder("<html><body>");
-    description.append("The chart shows the information about the concurrent users. ")
-            .append("They are the Xpert.ivy users that are currently logged-in. <br/>")
-            .append("Note that if the same user is logged in multiple times, ")
-            .append("she is counted as one concurrent user.")
-            .append("<br/><br/>")
-            .append("<b>Limit:</b> The maximum number of concurrent users restricted by the license<br/>")
-            .append("<b>Now:</b> The number of users that are currently logged-in.<br/>")
-            .append("</body></html>");
-    return description.toString();
+    return ContentProvider.getFormatted("ConcurrentUsersChartDescription");
   }
 
   private void createUsersView() {
@@ -91,8 +84,10 @@ public class LicenseView extends AbstractView {
       userChart.addGauge(gaugeUsersDataSource);
       registerScheduledUpdate(userChart);
 
-      super.getViewComponent().addDetailsView(new DataViewComponent.DetailsView("Named Users",
-              null, 10, userChart.getUIComponent(), null), DataViewComponent.TOP_RIGHT);
+      super.getViewComponent().addDetailsView(
+              new DataViewComponent.DetailsView(ContentProvider.get("NamedUsers"), null, 10, userChart.
+                      getUIComponent(), null),
+              DataViewComponent.TOP_RIGHT);
     }
   }
 

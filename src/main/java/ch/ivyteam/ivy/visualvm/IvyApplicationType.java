@@ -29,7 +29,7 @@ class IvyApplicationType extends ApplicationType {
 
   @Override
   public String getDescription() {
-    return "Xpert.ivy";
+    return ContentProvider.get("XpertIvy");
   }
 
   @Override

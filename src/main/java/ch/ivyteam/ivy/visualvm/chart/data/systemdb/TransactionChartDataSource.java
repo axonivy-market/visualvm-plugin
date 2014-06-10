@@ -1,7 +1,7 @@
 package ch.ivyteam.ivy.visualvm.chart.data.systemdb;
 
+import ch.ivyteam.ivy.visualvm.ContentProvider;
 import ch.ivyteam.ivy.visualvm.chart.SerieStyle;
-import ch.ivyteam.ivy.visualvm.chart.data.DbChartTitleConstant;
 import ch.ivyteam.ivy.visualvm.chart.data.XYChartDataSource;
 import ch.ivyteam.ivy.visualvm.chart.data.support.MaxDeltaValueChartLabelCalcSupport;
 import ch.ivyteam.ivy.visualvm.model.IvyJmxConstant.IvyServer.DatabasePersistency;
@@ -14,20 +14,21 @@ public class TransactionChartDataSource extends XYChartDataSource {
     super(dataBeanProvider, chartName, xAxisDescription, yAxisDescription);
 
     MaxDeltaValueChartLabelCalcSupport maxTransactionLabelSupport
-            = new MaxDeltaValueChartLabelCalcSupport(DbChartTitleConstant.MAX_TRANSACTION_TITLE,
+            = new MaxDeltaValueChartLabelCalcSupport(ContentProvider.get("MaxTransactions"),
                     DatabasePersistency.NAME, DatabasePersistency.KEY_TRANS_NUMBER);
-    maxTransactionLabelSupport.setTooltip(DbChartTitleConstant.MAX_TRANSACTION_DESC);
+    maxTransactionLabelSupport.setTooltip(ContentProvider.getFormatted("MaxSysDbTransactionDescription"));
     addLabelCalcSupport(maxTransactionLabelSupport);
 
-    MaxDeltaValueChartLabelCalcSupport maxErrorLabelSupport
-            = new MaxDeltaValueChartLabelCalcSupport(DbChartTitleConstant.MAX_ERROR_TITLE,
-                    DatabasePersistency.NAME, DatabasePersistency.KEY_ERROR);
-    maxErrorLabelSupport.setTooltip(DbChartTitleConstant.MAX_ERROR_DESC);
+    MaxDeltaValueChartLabelCalcSupport maxErrorLabelSupport = new MaxDeltaValueChartLabelCalcSupport(
+            ContentProvider.get("MaxErrors"), DatabasePersistency.NAME, DatabasePersistency.KEY_ERROR);
+    maxErrorLabelSupport.setTooltip(ContentProvider.getFormatted("MaxSysDbErrorTransactionDescription"));
     addLabelCalcSupport(maxErrorLabelSupport);
 
-    addDeltaSerie(DbChartTitleConstant.TRANSACTION_TITLE, DbChartTitleConstant.TRANSACTION_SERIE_DESC,
+    addDeltaSerie(ContentProvider.get("Transactions"),
+            ContentProvider.getFormatted("SysDbTransactionSerieDescription"),
             SerieStyle.LINE_FILLED, DatabasePersistency.NAME, DatabasePersistency.KEY_TRANS_NUMBER);
-    addDeltaSerie(DbChartTitleConstant.ERROR_TITLE, DbChartTitleConstant.TRANSACTION_ERROR_SERIE_DESC,
+    addDeltaSerie(ContentProvider.get("Errors"),
+            ContentProvider.getFormatted("SysDbErrorTransactionSerieDescription"),
             SerieStyle.LINE_FILLED, DatabasePersistency.NAME, DatabasePersistency.KEY_ERROR);
   }
 

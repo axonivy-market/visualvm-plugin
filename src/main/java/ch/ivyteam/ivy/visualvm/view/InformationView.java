@@ -1,5 +1,6 @@
 package ch.ivyteam.ivy.visualvm.view;
 
+import ch.ivyteam.ivy.visualvm.ContentProvider;
 import com.sun.tools.visualvm.core.ui.components.DataViewComponent;
 import javax.swing.JComponent;
 
@@ -14,9 +15,11 @@ public class InformationView extends AbstractView {
   }
 
   private void createInfoView() {
-    super.getViewComponent().addDetailsView(new DataViewComponent.DetailsView("System Database",
-            null, 10, fInformationPanel.getSysDbPanel(), null), DataViewComponent.TOP_LEFT);
-    super.getViewComponent().addDetailsView(new DataViewComponent.DetailsView("Ports", null, 10,
+    super.getViewComponent().addDetailsView(new DataViewComponent.DetailsView(
+            ContentProvider.get("SystemDatabase"), null, 10,
+            fInformationPanel.getSysDbPanel(), null), DataViewComponent.TOP_LEFT);
+    super.getViewComponent().addDetailsView(new DataViewComponent.DetailsView(
+            ContentProvider.get("Ports"), null, 10,
             fInformationPanel.getConnectorsPanel(), null), DataViewComponent.TOP_RIGHT);
   }
 
@@ -38,7 +41,7 @@ public class InformationView extends AbstractView {
 
   @Override
   protected String getMasterViewTitle() {
-    return "General";
+    return ContentProvider.get("General");
   }
 
   @Override

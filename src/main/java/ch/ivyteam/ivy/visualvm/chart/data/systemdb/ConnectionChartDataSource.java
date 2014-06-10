@@ -1,7 +1,7 @@
 package ch.ivyteam.ivy.visualvm.chart.data.systemdb;
 
+import ch.ivyteam.ivy.visualvm.ContentProvider;
 import ch.ivyteam.ivy.visualvm.chart.SerieStyle;
-import ch.ivyteam.ivy.visualvm.chart.data.DbChartTitleConstant;
 import ch.ivyteam.ivy.visualvm.chart.data.XYChartDataSource;
 import ch.ivyteam.ivy.visualvm.chart.data.support.MaxValueChartLabelCalcSupport;
 import ch.ivyteam.ivy.visualvm.chart.data.support.StaticValueChartLabelCalcSupport;
@@ -15,27 +15,29 @@ public class ConnectionChartDataSource extends XYChartDataSource {
     super(dataBeanProvider, chartName, xAxisDescription, yAxisDescription);
 
     StaticValueChartLabelCalcSupport limitConnectionLabelSupport
-            = new StaticValueChartLabelCalcSupport(DbChartTitleConstant.LIMIT_CONNECTION_TITLE,
+            = new StaticValueChartLabelCalcSupport(ContentProvider.get("Limit"),
                     DatabasePersistency.NAME, DatabasePersistency.KEY_MAX_CONNECTION);
-    limitConnectionLabelSupport.setTooltip(DbChartTitleConstant.MAX_CONNECTION_DESC);
+    limitConnectionLabelSupport.setTooltip(ContentProvider.getFormatted("LimitConnectionDescription"));
     addLabelCalcSupport(limitConnectionLabelSupport);
 
     MaxValueChartLabelCalcSupport maxOpenConnectionLabelSupport
-            = new MaxValueChartLabelCalcSupport(DbChartTitleConstant.MAX_OPEN_CONNECTION_TITLE,
+            = new MaxValueChartLabelCalcSupport(ContentProvider.get("MaxOpen"),
                     DatabasePersistency.NAME, DatabasePersistency.KEY_OPEN_CONNECTION);
-    maxOpenConnectionLabelSupport.setTooltip(DbChartTitleConstant.MAX_OPEN_CONNECTION_DESC);
+    maxOpenConnectionLabelSupport.
+            setTooltip(ContentProvider.getFormatted("MaxSysDbOpenConnectionDescription"));
     addLabelCalcSupport(maxOpenConnectionLabelSupport);
 
     MaxValueChartLabelCalcSupport maxUsedConnectionLabelSupport
-            = new MaxValueChartLabelCalcSupport(DbChartTitleConstant.MAX_USED_CONNECTION_TITLE,
+            = new MaxValueChartLabelCalcSupport(ContentProvider.get("MaxUsed"),
                     DatabasePersistency.NAME, DatabasePersistency.KEY_USED_CONNECTION);
-    maxUsedConnectionLabelSupport.setTooltip(DbChartTitleConstant.MAX_USED_CONNECTION_DESC);
+    maxUsedConnectionLabelSupport.
+            setTooltip(ContentProvider.getFormatted("MaxSysDbUsedConnectionDescription"));
     addLabelCalcSupport(maxUsedConnectionLabelSupport);
 
-    addSerie(DbChartTitleConstant.OPEN_SERIE_TITLE, DbChartTitleConstant.OPEN_SERIE_DESC,
+    addSerie(ContentProvider.get("Open"), ContentProvider.getFormatted("SysDbOpenConnectionSerieDescription"),
             SerieStyle.LINE_FILLED, DatabasePersistency.NAME, DatabasePersistency.KEY_OPEN_CONNECTION);
 
-    addSerie(DbChartTitleConstant.USED_SERIE_TITLE, DbChartTitleConstant.USED_SERIE_DESC,
+    addSerie(ContentProvider.get("Used"), ContentProvider.getFormatted("SysDbUsedConnectionSerieDescription"),
             SerieStyle.LINE_FILLED, DatabasePersistency.NAME, DatabasePersistency.KEY_USED_CONNECTION);
   }
 

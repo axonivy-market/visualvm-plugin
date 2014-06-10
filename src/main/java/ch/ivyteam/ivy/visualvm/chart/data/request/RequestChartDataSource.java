@@ -1,5 +1,6 @@
 package ch.ivyteam.ivy.visualvm.chart.data.request;
 
+import ch.ivyteam.ivy.visualvm.ContentProvider;
 import ch.ivyteam.ivy.visualvm.chart.SerieStyle;
 import ch.ivyteam.ivy.visualvm.chart.data.XYChartDataSource;
 import ch.ivyteam.ivy.visualvm.chart.data.support.MaxDeltaValueChartLabelCalcSupport;
@@ -15,16 +16,16 @@ public class RequestChartDataSource extends XYChartDataSource {
   public RequestChartDataSource(DataBeanProvider dataBeanProvider, String chartName,
           String xAxisDescription, String yAxisDescription) {
     super(dataBeanProvider, chartName, xAxisDescription, yAxisDescription);
-    String legendDescription = "Number of new requests served by {0} connector since the last polling";
-    String labelDescription = "The maximum number of new {0} requests in a polling interval. "
-            + "Measured since the last start of VisualVM";
+    String legendDescription = ContentProvider.getFormatted("RequestSerieDescription");
+    String labelDescription = ContentProvider.getFormatted("MaxRequestDescription");
     for (ServerConnectorInfo connector : dataBeanProvider.getGenericData().getServerConnectors()) {
       String protocol = connector.getDisplayProtocol();
       ObjectName processorName = connector.getGlobalRequestProcessorName();
       addDeltaSerie(protocol, MessageFormat.format(legendDescription, protocol),
               SerieStyle.LINE, processorName, IvyJmxConstant.Ivy.Processor.KEY_REQUEST_COUNT);
       MaxDeltaValueChartLabelCalcSupport maxDeltaValueLabelSupport
-              = new MaxDeltaValueChartLabelCalcSupport("Max " + protocol,
+              = new MaxDeltaValueChartLabelCalcSupport(
+                      MessageFormat.format(MAX_OF, protocol),
                       processorName, IvyJmxConstant.Ivy.Processor.KEY_REQUEST_COUNT);
       maxDeltaValueLabelSupport.setTooltip(MessageFormat.format(labelDescription, protocol));
       addLabelCalcSupport(maxDeltaValueLabelSupport);

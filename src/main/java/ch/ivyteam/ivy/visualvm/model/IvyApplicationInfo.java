@@ -1,10 +1,11 @@
 package ch.ivyteam.ivy.visualvm.model;
 
+import ch.ivyteam.ivy.visualvm.ContentProvider;
 import java.util.Date;
 
 public class IvyApplicationInfo {
-  public static final String IVY_SERVER_APP_NAME = "Xpert.ivy Server";
-  public static final String IVY_DESIGNER_APP_NAME = "Xpert.ivy Designer";
+  public static final String IVY_SERVER_APP_NAME = ContentProvider.get("XpertIvyServerApp");
+  public static final String IVY_DESIGNER_APP_NAME = ContentProvider.get("XpertIvyDesignerApp");
 
   private String fApplicationName;
   private String fVersion;

@@ -50,8 +50,8 @@ class IvyView extends DataSourceView {
   private DataBeanProvider fDataBeanProvider;
 
   public IvyView(Application application) {
-    super(application, "Xpert.ivy", new ImageIcon(ImageUtilities.loadImage(IVY_IMAGE_PATH, true)).
-            getImage(), 60, false);
+    super(application, ContentProvider.get("XpertIvy"),
+            new ImageIcon(ImageUtilities.loadImage(IVY_IMAGE_PATH, true)).getImage(), 60, false);
   }
 
   @Override
@@ -81,7 +81,8 @@ class IvyView extends DataSourceView {
   private void addInformationView(DataBeanProvider dataBeanProvider, JTabbedPane tabbed) {
     InformationView infoView = new InformationView(dataBeanProvider);
     views.add(infoView);
-    tabbed.addTab("Information", (Icon) ImageUtilities.loadImage(INFO_IMAGE_PATH, true),
+    tabbed.addTab(ContentProvider.get("Information"),
+            (Icon) ImageUtilities.loadImage(INFO_IMAGE_PATH, true),
             infoView.getViewComponent());
   }
 
@@ -89,7 +90,8 @@ class IvyView extends DataSourceView {
     if (fDataBeanProvider.getGenericData().getApplicationInfo().isServer()) {
       LicenseView licenseView = new LicenseView(dataBeanProvider);
       views.add(licenseView);
-      tabbed.addTab("License", (Icon) ImageUtilities.loadImage(LICENSE_IMAGE_PATH, true),
+      tabbed.addTab(ContentProvider.get("License"),
+              (Icon) ImageUtilities.loadImage(LICENSE_IMAGE_PATH, true),
               licenseView.getViewComponent());
     }
   }
@@ -97,28 +99,32 @@ class IvyView extends DataSourceView {
   private void addRequestView(DataBeanProvider dataBeanProvider, JTabbedPane tabbed) {
     RequestView requestViewNew = new RequestView(dataBeanProvider);
     views.add(requestViewNew);
-    tabbed.addTab("User Requests", (Icon) ImageUtilities.loadImage(USER_REQ_IMAGE_PATH, true),
+    tabbed.addTab(ContentProvider.get("UserRequests"),
+            (Icon) ImageUtilities.loadImage(USER_REQ_IMAGE_PATH, true),
             requestViewNew.getViewComponent());
   }
 
   private void addSystemDBView(DataBeanProvider dataBeanProvider, JTabbedPane tabbed) {
     SystemDbView systemDbView = new SystemDbView(dataBeanProvider);
     views.add(systemDbView);
-    tabbed.addTab("System Database", (Icon) ImageUtilities.loadImage(DB_ICON_IMAGE_PATH, true),
+    tabbed.addTab(ContentProvider.get("SystemDatabase"),
+            (Icon) ImageUtilities.loadImage(DB_ICON_IMAGE_PATH, true),
             systemDbView.getViewComponent());
   }
 
   private void addExternalDBView(DataBeanProvider dataBeanProvider, JTabbedPane tabbed) {
     ExternalDbView extDbView = new ExternalDbView(dataBeanProvider);
     views.add(extDbView);
-    tabbed.addTab("External Databases", (Icon) ImageUtilities.loadImage(EXT_DB_ICON_IMAGE_PATH, true),
+    tabbed.addTab(ContentProvider.get("ExternalDatabases"),
+            (Icon) ImageUtilities.loadImage(EXT_DB_ICON_IMAGE_PATH, true),
             extDbView.getViewComponent());
   }
 
   private void addWebServicesView(DataBeanProvider dataBeanProvider, JTabbedPane tabbed) {
     WebServicesView wsView = new WebServicesView(dataBeanProvider);
     views.add(wsView);
-    tabbed.addTab("Web Services", (Icon) ImageUtilities.loadImage(WEB_SERVICE_ICON_IMAGE_PATH, true),
+    tabbed.addTab(ContentProvider.get("WebServices"), (Icon) ImageUtilities.loadImage(
+            WEB_SERVICE_ICON_IMAGE_PATH, true),
             wsView.getViewComponent());
   }
 

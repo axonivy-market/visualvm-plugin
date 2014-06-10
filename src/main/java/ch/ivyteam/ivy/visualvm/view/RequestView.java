@@ -1,5 +1,6 @@
 package ch.ivyteam.ivy.visualvm.view;
 
+import ch.ivyteam.ivy.visualvm.ContentProvider;
 import ch.ivyteam.ivy.visualvm.chart.ChartsPanel;
 import ch.ivyteam.ivy.visualvm.chart.data.request.ErrorChartDataSource;
 import ch.ivyteam.ivy.visualvm.chart.data.request.ProcessingTimeChartDataSource;
@@ -10,11 +11,11 @@ import javax.swing.JPanel;
 
 public class RequestView extends AbstractView {
 
-  public static final String END_LINE = "<br/>";
-  private static final String REQUESTS = "Requests";
-  private static final String ERRORS = "Errors";
-  private static final String SESSIONS = "Sessions";
-  private static final String TIME_MS = "Processing Time [ms]";
+  private static final String REQUESTS = ContentProvider.get("Requests");
+  private static final String ERRORS = ContentProvider.get("Errors");
+  private static final String SESSIONS = ContentProvider.get("Sessions");
+  private static final String PROCESSING_TIME = ContentProvider.get("ProcessingTime")
+          + " [" + ContentProvider.get("MillisecondAbbr") + "]";
   private boolean uiComplete;
 
   public RequestView(DataBeanProvider dataBeanProvider) {
@@ -30,7 +31,7 @@ public class RequestView extends AbstractView {
     ErrorChartDataSource errorDataSource = new ErrorChartDataSource(
             getDataBeanProvider(), null, null, ERRORS);
     ProcessingTimeChartDataSource processingTimeDataSource = new ProcessingTimeChartDataSource(
-            getDataBeanProvider(), null, null, TIME_MS);
+            getDataBeanProvider(), null, null, PROCESSING_TIME);
     SessionChartDataSource sessionDataSource = new SessionChartDataSource(
             getDataBeanProvider(), null, null, SESSIONS);
 
@@ -63,41 +64,19 @@ public class RequestView extends AbstractView {
   }
 
   private String getRequestChartDescription() {
-    StringBuilder sb = new StringBuilder(
-            "The chart shows the number of new requests served by each connector since the last polling");
-    return sb.toString();
+    return ContentProvider.getFormatted("RequestChartDescription");
   }
 
   private String getErrorChartDescription() {
-    StringBuilder sb = new StringBuilder("<html>");
-    sb.append("The chart shows the number of new errors in requests ");
-    sb.append("served by each connector since the last polling,");
-    sb.append(END_LINE);
-    sb.append(" i.e. number of requests with a HTTP response code between 400 and 599");
-    return sb.toString();
+    return ContentProvider.getFormatted("RequestErrorChartDescription");
   }
 
   private String getProcessTimeChartDescription() {
-    StringBuilder sb = new StringBuilder("The chart shows the average processing time for new requests ");
-    sb.append("served by each connector since the last polling");
-    return sb.toString();
+    return ContentProvider.getFormatted("RequestProcessingTimeChartDescription");
   }
 
   private String getSessionChartDescription() {
-    StringBuilder sb = new StringBuilder("<html>");
-    sb.append("The chart shows the infomation about open sessions of Xpert.ivy server");
-    sb.append(END_LINE);
-    sb.append(END_LINE);
-    sb.append("<b>HTTP:</b> Number of HTTP sessions");
-    sb.append(END_LINE);
-    sb.append("<b>Ivy:</b> Number of sessions that run requests against the Xpert.ivy core");
-    sb.append(END_LINE);
-    sb.append("<b>Concurrent users:</b> ");
-    sb.append("Number of Xpert.ivy users that are currently logged-in");
-    sb.append(END_LINE);
-    sb.append("<b>Rich Dialog:</b> Number of Xpert.ivy sessions that use Rich Dialogs");
-    sb.append("</html>");
-    return sb.toString();
+    return ContentProvider.getFormatted("SessionChartDescription");
   }
 
 }

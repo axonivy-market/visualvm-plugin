@@ -1,5 +1,6 @@
 package ch.ivyteam.ivy.visualvm.view.externaldb;
 
+import ch.ivyteam.ivy.visualvm.ContentProvider;
 import ch.ivyteam.ivy.visualvm.chart.ChartsPanel;
 import ch.ivyteam.ivy.visualvm.chart.QueryResult;
 import ch.ivyteam.ivy.visualvm.chart.data.externaldb.ExternalDbConnectionChartDataSource;
@@ -20,10 +21,15 @@ import javax.swing.JPanel;
 
 public class ExternalDbView extends ExternalDbWsCommonView {
 
+  private static final String CHARTS = ContentProvider.get("Charts");
+  private static final String ERRORS = ContentProvider.get("Errors");
+  private static final String SLOW_QUERIES = ContentProvider.get("SlowQueries");
+  private static final String CONNECTIONS = ContentProvider.get("Connections");
+  private static final String TRANSACTIONS = ContentProvider.get("Transactions");
+  private static final String PROCESSING_TIME = ContentProvider.get("ProcessingTime")
+          + " [" + ContentProvider.get("MillisecondAbbr") + "]";
+
   private boolean uiComplete;
-  private static final String CHARTS = "Charts";
-  private static final String ERRORS = "Errors";
-  private static final String SLOW_QUERIES = "Slow Queries";
   private final ExternalDbErrorQueryBuffer fErrorInfoBuffer;
   private final ExternalDbSlowQueryBuffer fSlowQueryBuffer;
 
@@ -44,13 +50,11 @@ public class ExternalDbView extends ExternalDbWsCommonView {
   protected ChartsPanel createChartPanel() {
     ChartsPanel chartPanel = new ChartsPanel(false);
     ExternalDbConnectionChartDataSource connectionDataSource = new ExternalDbConnectionChartDataSource(
-            getDataBeanProvider(), null, null, "Connections");
+            getDataBeanProvider(), null, null, CONNECTIONS);
     ExternalDbTransactionChartDataSource transactionDataSource = new ExternalDbTransactionChartDataSource(
-            getDataBeanProvider(), null, null, "Transactions");
+            getDataBeanProvider(), null, null, TRANSACTIONS);
     ExternalDbProcessingTimeChartDataSource transProcessTimeDataSource
-            = new ExternalDbProcessingTimeChartDataSource(
-                    getDataBeanProvider(), null, null,
-                    "Processing Time [ms]");
+            = new ExternalDbProcessingTimeChartDataSource(getDataBeanProvider(), null, null, PROCESSING_TIME);
 
     configDataSources(IvyJmxConstant.IvyServer.ExternalDatabase.NAME_PATTERN,
             connectionDataSource, transactionDataSource, transProcessTimeDataSource);
@@ -76,8 +80,7 @@ public class ExternalDbView extends ExternalDbWsCommonView {
 
   private void updateConfigTreeNodes() {
     Map<String, Map<String, Set<String>>> appEnvConfMap = DataUtils.getExternalDbConfigs(
-            getDataBeanProvider()
-            .getMBeanServerConnection());
+            getDataBeanProvider().getMBeanServerConnection());
     getUIChartsPanel().setTreeData(appEnvConfMap);
   }
 
@@ -102,44 +105,15 @@ public class ExternalDbView extends ExternalDbWsCommonView {
   private ExternalDbWsCommonPanel fChartsPanel;
 
   private String generateDescriptionForConnectionChart() {
-    StringBuilder builder = new StringBuilder();
-    builder.append("<html>");
-    builder.append("The chart shows the number of open and the number of used connections to the external ");
-    builder.append("database.").append(BR).append(BR);
-    builder.append("<b>Open: </b>").append(ExternalDbConnectionChartDataSource.OPEN_SERIE_DESC)
-            .append(BR);
-    builder.append("<b>Used: </b>").append(ExternalDbConnectionChartDataSource.USED_SERIE_DESC)
-            .append(BR);
-    builder.append("</html>");
-    return builder.toString();
+    return ContentProvider.getFormatted("ExtDbConnectionChartDescription");
   }
 
   private String generateDescriptionForTransactionChart() {
-    StringBuilder builder = new StringBuilder();
-    builder.append("<html>");
-    builder.append("The chart shows the number of transactions to the external database and the number of ");
-    builder.append("them that were erroneous.<br><br>");
-    builder.append("<b>Transactions: </b>").
-            append(ExternalDbTransactionChartDataSource.TRANSACTION_SERIE_DESC).append(BR);
-    builder.append("<b>Errors: </b>").
-            append(ExternalDbTransactionChartDataSource.TRANSACTION_ERROR_SERIE_DESC);
-    builder.append("</html>");
-    return builder.toString();
+    return ContentProvider.getFormatted("ExtDbTransactionChartDescription");
   }
 
   private String generateDescriptionForProcessingTimeChart() {
-    StringBuilder builder = new StringBuilder();
-    builder.append("<html>");
-    builder.append("The chart shows the maximum, the average and the minimum time needed to execute"
-            + " transactions since the last polling.<br><br>");
-    builder.append("<b>Max: </b>").append(ExternalDbProcessingTimeChartDataSource.MAX_SERIE_DESC)
-            .append(BR);
-    builder.append("<b>Avg: </b>").append(ExternalDbProcessingTimeChartDataSource.MEAN_SERIE_DESC)
-            .append(BR);
-    builder.append("<b>Min: </b>").append(ExternalDbProcessingTimeChartDataSource.MIN_SERIE_DESC)
-            .append(BR);
-    builder.append("</html>");
-    return builder.toString();
+    return ContentProvider.getFormatted("ExtDbProcessingTimeChartDescription");
   }
 
   public void refreshErrorTab() {
