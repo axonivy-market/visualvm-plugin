@@ -33,15 +33,15 @@ public class ErrorQueryTest extends AbstractTest {
   private static final int MAX_BUFFER_ITEMS = 50;
   private static DataBeanProvider fProvider;
   private static ExternalDbErrorQueryBuffer fBuffer;
-  private final int fExpectedNumOfErrors;
-  private final Date fFirstDate = new Date();
-  private final Date fLastDate = new Date();
+  private final int fExpectedNumOfErrorQueries;
+  private final Date fFirstItemTime = new Date();
+  private final Date fLastItemTime = new Date();
 
   public ErrorQueryTest(BeanTestData.Dataset dataset, int numOfError, Date firstDate, Date lastDate) {
     super(dataset);
-    fExpectedNumOfErrors = numOfError;
-    fFirstDate.setTime(firstDate.getTime());
-    fLastDate.setTime(lastDate.getTime());
+    fExpectedNumOfErrorQueries = numOfError;
+    fFirstItemTime.setTime(firstDate.getTime());
+    fLastItemTime.setTime(lastDate.getTime());
   }
 
   @Parameterized.Parameters(name = "{index}")
@@ -49,7 +49,9 @@ public class ErrorQueryTest extends AbstractTest {
     SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy hh:mm:ss");
     return TestUtil.createTestData(
             "/ch/ivyteam/ivy/visualvm/test/datasource/externaldb/ComplicatedErrorTest.xml",
+            // There is 1 item that is not error item in the test data. (00:00:12)
             new Object[]{48, format.parse("28/05/2014 00:00:00"), format.parse("28/05/2014 00:00:48")},
+            // The buffer is full, only get the latest 50 items.
             new Object[]{50, format.parse("28/05/2014 00:00:10"), format.parse("28/05/2014 00:01:00")}
     );
   }
@@ -79,20 +81,24 @@ public class ErrorQueryTest extends AbstractTest {
     QueryResult result = query.execute(mockConnection);
     fBuffer.updateValues(result);
 
-    // Assert the buffer size
-    assertEquals(fExpectedNumOfErrors, fBuffer.getBuffer().size());
+    assertEquals(fExpectedNumOfErrorQueries, fBuffer.getBuffer().size());
 
-    // Assert the buffer changes
-    assertEquals(fFirstDate, fBuffer.getBuffer().get(0).getTime());
-    assertEquals(fLastDate, fBuffer.getBuffer().get(fBuffer.getBuffer().size() - 1).getTime());
+    assertFirstAndLastElement();
+    assertDuplicationAndSort();
+  }
 
-    // Assert the buffer duplication and sort
+  private void assertDuplicationAndSort() {
     for (int i = 0; i < fBuffer.getBuffer().size() - 1; i++) {
       for (int j = i + 1; j < fBuffer.getBuffer().size(); j++) {
         assertFalse(fBuffer.getBuffer().get(i).equals(fBuffer.getBuffer().get(j)));
         assertTrue(fBuffer.getBuffer().get(i).getTime().before(fBuffer.getBuffer().get(j).getTime()));
       }
     }
+  }
+
+  private void assertFirstAndLastElement() {
+    assertEquals(fFirstItemTime, fBuffer.getBuffer().get(0).getTime());
+    assertEquals(fLastItemTime, fBuffer.getBuffer().get(fBuffer.getBuffer().size() - 1).getTime());
   }
 
 }

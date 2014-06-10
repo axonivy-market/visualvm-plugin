@@ -33,15 +33,15 @@ public class SlowQueryTest extends AbstractTest {
   private static final int MAX_BUFFER_ITEMS = 50;
   private static DataBeanProvider fProvider;
   private static ExternalDbSlowQueryBuffer fBuffer;
-  private final int fExpectedNumOfSlows;
-  private final Date fFirstDate = new Date();
-  private final Date fLastDate = new Date();
+  private final int fExpectedNumOfSlowQueries;
+  private final Date fFirstItemTime = new Date();
+  private final Date fLastItemTime = new Date();
 
   public SlowQueryTest(BeanTestData.Dataset dataset, int numOfQueries, Date firstDate, Date lastDate) {
     super(dataset);
-    fExpectedNumOfSlows = numOfQueries;
-    fFirstDate.setTime(firstDate.getTime());
-    fLastDate.setTime(lastDate.getTime());
+    fExpectedNumOfSlowQueries = numOfQueries;
+    fFirstItemTime.setTime(firstDate.getTime());
+    fLastItemTime.setTime(lastDate.getTime());
   }
 
   @Parameterized.Parameters(name = "{index}")
@@ -50,7 +50,13 @@ public class SlowQueryTest extends AbstractTest {
     return TestUtil.createTestData(
             "/ch/ivyteam/ivy/visualvm/test/datasource/externaldb/ComplicatedSlowTest.xml",
             new Object[]{48, format.parse("28/05/2014 00:00:00"), format.parse("28/05/2014 00:00:47")},
+            // The buffer is full, only get the latest 50 items.
             new Object[]{50, format.parse("28/05/2014 00:00:06"), format.parse("28/05/2014 00:00:55")},
+            /*
+             * The item [00:01:00] executiontime is 10 => it will be the first item in the buffer. The item
+             * [00:00:59] executiontime is 50. It has the same value with [00:00:50] and will be placed before
+             * [00:00:50] => The last item in the buffer will be [00:00:58]
+             */
             new Object[]{50, format.parse("28/05/2014 00:01:00"), format.parse("28/05/2014 00:00:58")}
     );
   }
@@ -80,14 +86,13 @@ public class SlowQueryTest extends AbstractTest {
     QueryResult result = query.execute(mockConnection);
     fBuffer.updateValues(result);
 
-    // Assert the buffer size
-    assertEquals(fExpectedNumOfSlows, fBuffer.getBuffer().size());
+    assertEquals(fExpectedNumOfSlowQueries, fBuffer.getBuffer().size());
 
-    // Assert the buffer changes
-    assertEquals(fFirstDate, fBuffer.getBuffer().get(0).getTime());
-    assertEquals(fLastDate, fBuffer.getBuffer().get(fBuffer.getBuffer().size() - 1).getTime());
+    assertFirstAndLastElement();
+    assertDuplicationAndSort();
+  }
 
-    // Assert the buffer duplication and sort
+  private void assertDuplicationAndSort() {
     for (int i = 0; i < fBuffer.getBuffer().size() - 1; i++) {
       for (int j = i + 1; j < fBuffer.getBuffer().size(); j++) {
         assertFalse(fBuffer.getBuffer().get(i).equals(fBuffer.getBuffer().get(j)));
@@ -98,6 +103,11 @@ public class SlowQueryTest extends AbstractTest {
         }
       }
     }
+  }
+
+  private void assertFirstAndLastElement() {
+    assertEquals(fFirstItemTime, fBuffer.getBuffer().get(0).getTime());
+    assertEquals(fLastItemTime, fBuffer.getBuffer().get(fBuffer.getBuffer().size() - 1).getTime());
   }
 
 }
