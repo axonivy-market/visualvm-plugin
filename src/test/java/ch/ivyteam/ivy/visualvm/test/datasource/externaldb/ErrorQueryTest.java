@@ -13,6 +13,7 @@ import ch.ivyteam.ivy.visualvm.view.DataBeanProvider;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
@@ -33,20 +34,23 @@ public class ErrorQueryTest extends AbstractTest {
   private static DataBeanProvider fProvider;
   private static ExternalDbErrorQueryBuffer fBuffer;
   private final int fExpectedNumOfErrors;
-  private static final Date fOldestQuery = new Date(0);
+  private final Date fFirstDate = new Date();
+  private final Date fLastDate = new Date();
 
-  public ErrorQueryTest(BeanTestData.Dataset dataset, int max) {
+  public ErrorQueryTest(BeanTestData.Dataset dataset, int numOfError, Date firstDate, Date lastDate) {
     super(dataset);
-    fExpectedNumOfErrors = max;
+    fExpectedNumOfErrors = numOfError;
+    fFirstDate.setTime(firstDate.getTime());
+    fLastDate.setTime(lastDate.getTime());
   }
 
   @Parameterized.Parameters(name = "{index}")
   public static Iterable<Object[]> data() throws JAXBException, URISyntaxException, ParseException {
+    SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy hh:mm:ss");
     return TestUtil.createTestData(
             "/ch/ivyteam/ivy/visualvm/test/datasource/externaldb/ComplicatedErrorTest.xml",
-            new Object[]{50},
-            new Object[]{50},
-            new Object[]{50}
+            new Object[]{48, format.parse("28/05/2014 00:00:00"), format.parse("28/05/2014 00:00:48")},
+            new Object[]{50, format.parse("28/05/2014 00:00:10"), format.parse("28/05/2014 00:01:00")}
     );
   }
 
@@ -79,8 +83,8 @@ public class ErrorQueryTest extends AbstractTest {
     assertEquals(fExpectedNumOfErrors, fBuffer.getBuffer().size());
 
     // Assert the buffer changes
-    assertTrue(fOldestQuery.before(fBuffer.getBuffer().get(0).getTime()));
-    fOldestQuery.setTime(fBuffer.getBuffer().get(0).getTime().getTime());
+    assertEquals(fFirstDate, fBuffer.getBuffer().get(0).getTime());
+    assertEquals(fLastDate, fBuffer.getBuffer().get(fBuffer.getBuffer().size() - 1).getTime());
 
     // Assert the buffer duplication and sort
     for (int i = 0; i < fBuffer.getBuffer().size() - 1; i++) {

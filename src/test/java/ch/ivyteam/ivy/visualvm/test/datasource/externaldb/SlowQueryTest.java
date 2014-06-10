@@ -13,6 +13,7 @@ import ch.ivyteam.ivy.visualvm.view.DataBeanProvider;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
@@ -33,20 +34,24 @@ public class SlowQueryTest extends AbstractTest {
   private static DataBeanProvider fProvider;
   private static ExternalDbSlowQueryBuffer fBuffer;
   private final int fExpectedNumOfSlows;
-  private static final Date fOldestQuery = new Date(0);
+  private final Date fFirstDate = new Date();
+  private final Date fLastDate = new Date();
 
-  public SlowQueryTest(BeanTestData.Dataset dataset, int max) {
+  public SlowQueryTest(BeanTestData.Dataset dataset, int numOfQueries, Date firstDate, Date lastDate) {
     super(dataset);
-    fExpectedNumOfSlows = max;
+    fExpectedNumOfSlows = numOfQueries;
+    fFirstDate.setTime(firstDate.getTime());
+    fLastDate.setTime(lastDate.getTime());
   }
 
   @Parameterized.Parameters(name = "{index}")
   public static Iterable<Object[]> data() throws JAXBException, URISyntaxException, ParseException {
+    SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy hh:mm:ss");
     return TestUtil.createTestData(
             "/ch/ivyteam/ivy/visualvm/test/datasource/externaldb/ComplicatedSlowTest.xml",
-            new Object[]{50},
-            new Object[]{50},
-            new Object[]{50}
+            new Object[]{48, format.parse("28/05/2014 00:00:00"), format.parse("28/05/2014 00:00:47")},
+            new Object[]{50, format.parse("28/05/2014 00:00:06"), format.parse("28/05/2014 00:00:55")},
+            new Object[]{50, format.parse("28/05/2014 00:01:00"), format.parse("28/05/2014 00:00:58")}
     );
   }
 
@@ -79,8 +84,8 @@ public class SlowQueryTest extends AbstractTest {
     assertEquals(fExpectedNumOfSlows, fBuffer.getBuffer().size());
 
     // Assert the buffer changes
-    assertTrue(fOldestQuery.before(fBuffer.getBuffer().get(0).getTime()));
-    fOldestQuery.setTime(fBuffer.getBuffer().get(0).getTime().getTime());
+    assertEquals(fFirstDate, fBuffer.getBuffer().get(0).getTime());
+    assertEquals(fLastDate, fBuffer.getBuffer().get(fBuffer.getBuffer().size() - 1).getTime());
 
     // Assert the buffer duplication and sort
     for (int i = 0; i < fBuffer.getBuffer().size() - 1; i++) {
@@ -88,6 +93,9 @@ public class SlowQueryTest extends AbstractTest {
         assertFalse(fBuffer.getBuffer().get(i).equals(fBuffer.getBuffer().get(j)));
         assertTrue(fBuffer.getBuffer().get(i).getExecutionTime() <= fBuffer.getBuffer().get(j).
                 getExecutionTime());
+        if (fBuffer.getBuffer().get(i).getExecutionTime() == fBuffer.getBuffer().get(j).getExecutionTime()) {
+          assertTrue(fBuffer.getBuffer().get(i).getTime().before(fBuffer.getBuffer().get(j).getTime()));
+        }
       }
     }
   }
