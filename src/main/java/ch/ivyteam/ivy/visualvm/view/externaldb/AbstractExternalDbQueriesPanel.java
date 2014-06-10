@@ -16,7 +16,7 @@ import javax.swing.table.TableColumn;
 public abstract class AbstractExternalDbQueriesPanel extends JPanel {
   private static final Color TABLE_VERTICAL_GRID_COLOR = new Color(214, 223, 247);
   private static final Color TABLE_SELECTION_BACKGROUND_COLOR = new Color(193, 210, 238);
-
+  private static final int TABLE_ROW_HEIGHT = 18;
   private boolean fIsLoaded = false;
   private final ExternalDbView fExternalDbView;
   private final DateTableCellRenderer fDateCellRenderer = new DateTableCellRenderer();
@@ -58,6 +58,7 @@ public abstract class AbstractExternalDbQueriesPanel extends JPanel {
     queriesTable.setGridColor(TABLE_VERTICAL_GRID_COLOR);
     queriesTable.setSelectionBackground(TABLE_SELECTION_BACKGROUND_COLOR);
     queriesTable.setSelectionForeground(queriesTable.getForeground());
+    queriesTable.setRowHeight(TABLE_ROW_HEIGHT);
     queriesTable.repaint();
   }
 
@@ -79,9 +80,7 @@ public abstract class AbstractExternalDbQueriesPanel extends JPanel {
     refreshQueriesTable(sqlInfoList);
     restoreQueriesTableConfig();
     clearDetailsArea();
-    if (!fIsLoaded) {
-      adjustColumns();
-    }
+    adjustColumns();
     setLoaded(true);
     isRefreshing = false;
   }

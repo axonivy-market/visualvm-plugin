@@ -35,7 +35,7 @@ public class EvenOddCellRenderer extends DefaultTableCellRenderer {
     Color gridColor = table.getGridColor();
     Border border = BorderFactory.createCompoundBorder();
     Border borderLine = BorderFactory.createMatteBorder(0, 0, 0, 1, gridColor);
-    Border padding = BorderFactory.createEmptyBorder(10, 4, 10, 4);
+    Border padding = BorderFactory.createEmptyBorder(1, 4, 1, 4);
     border = BorderFactory.createCompoundBorder(border, borderLine);
     border = BorderFactory.createCompoundBorder(border, padding);
     renderer.setBorder(border);
