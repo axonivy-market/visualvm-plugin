@@ -19,7 +19,7 @@ public class EmptyIvyView extends DataSourceView {
   @Override
   protected DataViewComponent createComponent() {
     JLabel label = new JLabel(
-            "<html><div style='text-align:center;padding-bottom:50px'><font color='#F38630' size='3'>"
+            "<html><div style='text-align:center;padding-bottom:50px'><font color='#EF6C00' size='3'>"
             + ContentProvider.getFormatted("UnsupportedIvyVersionServerNotification")
             + "</font></div></html>");
     label.setVerticalAlignment(SwingConstants.CENTER);

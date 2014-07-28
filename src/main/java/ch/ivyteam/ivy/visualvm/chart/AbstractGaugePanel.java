@@ -12,8 +12,8 @@ import java.util.List;
 public abstract class AbstractGaugePanel implements IUpdatableUIObject {
   private final GaugeDataSource fDataSource;
   private final AbstractGauge fGauge;
-  private static final Color[] SECTION_COLORS = new Color[]{new Color(58, 228, 103), new Color(225, 228, 90),
-    new Color(255, 114, 102)};
+  private static final Color[] SECTION_COLORS = new Color[]{new Color(139, 195, 74), new Color(251, 140, 0),
+    new Color(229, 28, 35)};
   private static final Color DEFAULT_COLOR = Color.GRAY;
   private final List<Double> fThresholds;
   private final List<Section> fSections = new ArrayList<>();

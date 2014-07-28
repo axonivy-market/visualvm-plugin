@@ -25,7 +25,7 @@ public class LicenseInformationPanel extends javax.swing.JPanel {
 
   private static final String WARNING_ICON_PATH = "/resources/icons/license_warning.png";
   private static final String ERROR_ICON_PATH = "/resources/icons/license_error.png";
-  private static final String WARNING_COLOR = "#F38630";
+  private static final String WARNING_COLOR = "#EF6C00";
   private static final String ERROR_COLOR = "#FF0000";
   private static final String TABLE_START = "<table border='0' celspacing='5' celpadding='0'>";
   private static final String TABLE_END = "</table>";
@@ -266,7 +266,7 @@ public class LicenseInformationPanel extends javax.swing.JPanel {
     if (serverSessionsLimit > 0) {
       String warningMsg = null;
       String iconPath = WARNING_ICON_PATH;
-      String color = WARNING_COLOR; //yellow
+      String color = WARNING_COLOR;
       int threshold90 = (int) Math.floor(serverSessionsLimit * 0.9);
       int threshold150 = (int) Math.floor(serverSessionsLimit * 1.5);
       if (fConcurrentUsers >= threshold90 && fConcurrentUsers < serverSessionsLimit) {
@@ -292,7 +292,7 @@ public class LicenseInformationPanel extends javax.swing.JPanel {
     if (serverUsersLimit > 0) {
       String warningMsg = null;
       String iconPath = WARNING_ICON_PATH;
-      String color = WARNING_COLOR; //yellow
+      String color = WARNING_COLOR;
       int threshold80 = (int) Math.floor(serverUsersLimit * 0.8);
       int threshold90 = (int) Math.floor(serverUsersLimit * 0.9);
       if (fNamedUsers >= threshold80 && fNamedUsers < threshold90) {
@@ -317,7 +317,7 @@ public class LicenseInformationPanel extends javax.swing.JPanel {
     if (fLicenseInfo.getLicenseValidUntil() != null) {
       String iconPath = null;
       String warningMsg = null;
-      String color = WARNING_COLOR; //yellow
+      String color = WARNING_COLOR;
       String expireDateString = DataUtils.dateToString(fLicenseInfo.getLicenseValidUntil());
 
       if (isLicenseError()) {
