@@ -12,7 +12,7 @@
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <netbeans.run.params.ide/>
     <netbeans.run.params>${netbeans.run.params.ide}</netbeans.run.params>
-        <visualvm.installation>D:\netbeanWorkspace\projects\visualvm_137\</visualvm.installation>
+    <visualvm.installation>C:\plugin-dev\netbeans\visualvm_136\</visualvm.installation>
         
     <visualvm.version>RELEASE135</visualvm.version>
     <junit.version>4.11</junit.version>
@@ -26,33 +26,22 @@
     <repository>
       <id>visualvm</id>
       <name>VisualVM</name>
-      <url>http://bits.netbeans.org/nexus/content/repositories/visualvm/</url>
+      <url>http://server15:8082/artifactory/simple/visualvm-virtual/</url>
+      <!-- <url>http://bits.netbeans.org/nexus/content/repositories/visualvm/</url> -->
     </repository>
-  </repositories>
-
+  </repositories> 
+  
   <dependencies>
-    <!--for netbean-->
-    <dependency>
-      <groupId>com.sun.tools.visualvm.api</groupId>
-      <artifactId>org-netbeans-api-annotations-common</artifactId>
-      <version>${visualvm.version}</version>
-    </dependency>
-    <dependency>
-      <groupId>com.sun.tools.visualvm.api</groupId>
-      <artifactId>org-netbeans-modules-settings</artifactId>
-      <version>${visualvm.version}</version>
-    </dependency>
-        
     <!--for visualvm-->
     <dependency>
       <groupId>com.sun.tools.visualvm.api</groupId>
       <artifactId>com-sun-tools-visualvm-application</artifactId>
-      <version>${visualvm.version}</version>
+      <version>1.4</version>
     </dependency>
     <dependency>
       <groupId>com.sun.tools.visualvm.api</groupId>
       <artifactId>com-sun-tools-visualvm-charts</artifactId>
-      <version>${visualvm.version}</version>
+      <version>1.0</version>
     </dependency>
     <dependency>
       <groupId>com.sun.tools.visualvm.api</groupId>
@@ -64,28 +53,18 @@
     runtime OSGi they are not accessible, so we explicitly declare them -->
     <dependency>
       <groupId>com.sun.tools.visualvm.api</groupId>
-      <artifactId>org-openide-dialogs</artifactId>
-      <version>${visualvm.version}</version>
-    </dependency>
-    <dependency>
-      <groupId>com.sun.tools.visualvm.api</groupId>
       <artifactId>org-openide-awt</artifactId>
-      <version>${visualvm.version}</version>
+      <version>7.31.1</version>
     </dependency>
     <dependency>
       <groupId>com.sun.tools.visualvm.api</groupId>
       <artifactId>org-openide-modules</artifactId>
-      <version>${visualvm.version}</version>
+      <version>7.23.1</version>
     </dependency>
     <dependency>
       <groupId>com.sun.tools.visualvm.api</groupId>
       <artifactId>org-openide-util</artifactId>
-      <version>${visualvm.version}</version>
-    </dependency>
-    <dependency>
-      <groupId>com.sun.tools.visualvm.api</groupId>
-      <artifactId>org-openide-windows</artifactId>
-      <version>${visualvm.version}</version>
+      <version>8.15.1</version>
     </dependency>
     <dependency>
       <groupId>com.sun.tools.visualvm.api</groupId>
@@ -114,11 +93,6 @@
       <groupId>org.bidib.jbidib.eu.hansolo</groupId>
       <artifactId>SteelSeries</artifactId>
       <version>${steelseries.version}</version>
-    </dependency>
-    <dependency>
-      <groupId>com.github.insubstantial</groupId>
-      <artifactId>trident</artifactId>
-      <version>${trident.version}</version>
     </dependency>
     
     <dependency>

@@ -2,11 +2,11 @@ package ch.ivyteam.ivy.visualvm.test.util;
 
 import ch.ivyteam.ivy.visualvm.test.data.JAXBUtils;
 import ch.ivyteam.ivy.visualvm.test.data.model.BeanTestData;
+import java.io.File;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.List;
 import javax.xml.bind.JAXBException;
-import org.openide.util.Utilities;
 
 public final class TestUtil {
   private TestUtil() {
@@ -16,8 +16,7 @@ public final class TestUtil {
           throws JAXBException,
           URISyntaxException {
     BeanTestData testData = JAXBUtils.unmarshall(
-            Utilities.toFile(
-                    TestUtil.class.getResource(filePathForInput).toURI())
+            new File(TestUtil.class.getResource(filePathForInput).toURI())
     );
 
     List<Object[]> testSuite = new ArrayList<>();
