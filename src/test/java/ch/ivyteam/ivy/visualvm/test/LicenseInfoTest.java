@@ -23,44 +23,48 @@ public class LicenseInfoTest extends AbstractTest {
 
   private final String fHtmlLicenseInfo;
 
-  /* CHECKSTYLE:OFF */
+  /*
+   * CHECKSTYLE:OFF
+   */
   @Parameterized.Parameters(name = "{index}: {2}")
   public static Iterable<Object[]> data() throws JAXBException, URISyntaxException {
     Iterable<Object[]> data = TestUtil.createTestData("/ch/ivyteam/ivy/visualvm/test/LicenseInfoTest.xml",
-            new Object[]{
-              "<tr><td>Organization: </td><td>Axon Active Vietnam</td></tr><tr><td>Individual: </td><td>Tung Le</td></tr><tr><td>Host Name: </td><td>aavn-ws-147</td></tr><tr><td>Version: </td><td>5000</td></tr><tr><td>Valid From: </td><td>Tuesday, June 4, 2013</td></tr><tr><td>Expires: </td><td>Monday, June 30, 2014</td></tr><tr><td>Supports RIA: </td><td>Yes</td></tr><tr><td>Elements Limit: </td><td>10</td></tr><tr><td>Named Users Limit: </td><td>10</td></tr><tr><td>Concurrent Users Limit: </td><td>10</td></tr>",
-              "Limitted license"},
-            new Object[]{
-              "<html><body style=\"font-family:tahoma;font-size:11\"><table border='0' celspacing='5' celpadding='0'><tr><td>Organization: </td><td>Axon Active Vietnam</td></tr><tr><td>Individual: </td><td>Tam Thai</td></tr><tr><td>Host Name: </td><td>aavn-ws-175</td></tr><tr><td>Version: </td><td>5000</td></tr><tr><td>Valid From: </td><td>Tuesday, June 4, 2013</td></tr><tr><td>Expires: </td><td>Monday, June 30, 2014</td></tr><tr><td>Supports RIA: </td><td>No</td></tr></table></body></html>",
-              "Un-limitted license"},
-            new Object[]{
-              "Your license will expire on Tuesday, April 15, 2014. If the license is expired the server will no longer start. Please contact your sales representative to request a new license!",
-              "Expired-in-30-days license"},
-            new Object[]{
-              "Your license has expired on Tuesday, March 25, 2014. You will not be able to restart your server. Contact your sales representative to request a new license!",
-              "Expired license"},
-            new Object[]{
-              "The number of users is close to the limit. Please contact your sales representative to request a new license!",
-              "Named users limit nearly exceeded (reach yellow area in the gauge)"},
-            new Object[]{
-              "The number of users has almost reached the license limit. Please contact your sales representative to request a new license!",
-              "Named users limit almost exceeded (reach red area in the gauge)"},
-            new Object[]{
-              "Cannot create more users because the maximum users that are allowed by your license has exceeded. Contact your sales representative to request a new license!",
-              "Named users limit exceeded (reach the end of the the gauge)"},
-            new Object[]{
-              "The number of sessions has almost reached the license limit. Please contact your sales representative to request a new license!",
-              "Concurrent users limit almost exceeded (reach yellow area in the gauge)"},
-            new Object[]{
-              "The maximum sessions that are allowed by your license has been reached. Contact your sales representative to request a new license!",
-              "Concurrent users limit exceeded (reach red area in the gauge)"},
-            new Object[]{
-              "Cannot create more sessions because the maximum session that are allowed by your license has exceeded by a factor of 50%. Contact your sales representative to request a new license!",
-              "Concurrent users limit exceeded 50% (reach the end of the gauge)"});
+                                                      new Object[]{
+                                                        "<tr style='white-space: nowrap;'><td>Organization: </td><td>Axon Active Vietnam</td></tr><tr style='white-space: nowrap;'><td>Individual: </td><td>Tung Le</td></tr><tr style='white-space: nowrap;'><td>Host Name: </td><td>aavn-ws-147</td></tr><tr style='white-space: nowrap;'><td>Version: </td><td>5000</td></tr><tr style='white-space: nowrap;'><td>Valid From: </td><td>Tuesday, June 4, 2013</td></tr><tr style='white-space: nowrap;'><td>Expires: </td><td>Monday, June 30, 2014</td></tr><tr style='white-space: nowrap;'><td>Supports RIA: </td><td>Yes</td></tr><tr style='white-space: nowrap;'><td>Elements Limit: </td><td>10</td></tr><tr style='white-space: nowrap;'><td>Named Users Limit: </td><td>10</td></tr><tr style='white-space: nowrap;'><td>Concurrent Users Limit: </td><td>10</td></tr>",
+                                                        "Limitted license"},
+                                                      new Object[]{
+                                                        "<html><body style=\"font-family:tahoma;font-size:11\"><table border='0' celspacing='5' celpadding='0'><tr style='white-space: nowrap;'><td>Organization: </td><td>Axon Active Vietnam</td></tr><tr style='white-space: nowrap;'><td>Individual: </td><td>Tam Thai</td></tr><tr style='white-space: nowrap;'><td>Host Name: </td><td>aavn-ws-175</td></tr><tr style='white-space: nowrap;'><td>Version: </td><td>5000</td></tr><tr style='white-space: nowrap;'><td>Valid From: </td><td>Tuesday, June 4, 2013</td></tr><tr style='white-space: nowrap;'><td>Expires: </td><td>Monday, June 30, 2014</td></tr><tr style='white-space: nowrap;'><td>Supports RIA: </td><td>No</td></tr></table></body></html>",
+                                                        "Un-limitted license"},
+                                                      new Object[]{
+                                                        "Your license will expire on Tuesday, April 15, 2014. If the license is expired the server will no longer start. Please contact your sales representative to request a new license!",
+                                                        "Expired-in-30-days license"},
+                                                      new Object[]{
+                                                        "Your license has expired on Tuesday, March 25, 2014. You will not be able to restart your server. Contact your sales representative to request a new license!",
+                                                        "Expired license"},
+                                                      new Object[]{
+                                                        "The number of users is close to the limit. Please contact your sales representative to request a new license!",
+                                                        "Named users limit nearly exceeded (reach yellow area in the gauge)"},
+                                                      new Object[]{
+                                                        "The number of users has almost reached the license limit. Please contact your sales representative to request a new license!",
+                                                        "Named users limit almost exceeded (reach red area in the gauge)"},
+                                                      new Object[]{
+                                                        "Cannot create more users because the maximum users that are allowed by your license has exceeded. Contact your sales representative to request a new license!",
+                                                        "Named users limit exceeded (reach the end of the the gauge)"},
+                                                      new Object[]{
+                                                        "The number of sessions has almost reached the license limit. Please contact your sales representative to request a new license!",
+                                                        "Concurrent users limit almost exceeded (reach yellow area in the gauge)"},
+                                                      new Object[]{
+                                                        "The maximum sessions that are allowed by your license has been reached. Contact your sales representative to request a new license!",
+                                                        "Concurrent users limit exceeded (reach red area in the gauge)"},
+                                                      new Object[]{
+                                                        "Cannot create more sessions because the maximum session that are allowed by your license has exceeded by a factor of 50%. Contact your sales representative to request a new license!",
+                                                        "Concurrent users limit exceeded 50% (reach the end of the gauge)"});
     return data;
   }
 
-  /* CHECKSTYLE:ON */
+  /*
+   * CHECKSTYLE:ON
+   */
   public LicenseInfoTest(BeanTestData.Dataset dataset, String htmlLicenseInfo,
           @SuppressWarnings("unused") String description) {
     super(dataset);

@@ -30,6 +30,7 @@ public class LicenseInformationPanel extends javax.swing.JPanel {
   private static final String TABLE_START = "<table border='0' celspacing='5' celpadding='0'>";
   private static final String TABLE_END = "</table>";
   private static final String TR_TD_START = "<tr><td>";
+  private static final String TR_TD_START_WITH_NO_WRAP = "<tr style='white-space: nowrap;'><td>";
   private static final String TD_TR_END = "</td></tr>";
   private static final String TD_START = "<td>";
   private static final String TD_END = "</td>";
@@ -48,21 +49,21 @@ public class LicenseInformationPanel extends javax.swing.JPanel {
   public static final String ORGANIZATION = ContentProvider.get("Organization");
 
   private static final String EXPIRE_IN_30_DAYS_WARNING
-          = ContentProvider.getFormatted("ExpireIn30DaysWarning");
+                              = ContentProvider.getFormatted("ExpireIn30DaysWarning");
   private static final String EXPIRED_WARNING
-          = ContentProvider.getFormatted("ExpiredWarning");
+                              = ContentProvider.getFormatted("ExpiredWarning");
   private static final String USERS_80_PERCENT_EXCEEDED_WARNING
-          = ContentProvider.getFormatted("Exceed80PerCentOfUsersWarning");
+                              = ContentProvider.getFormatted("Exceed80PerCentOfUsersWarning");
   private static final String USERS_90_PERCENT_EXCEEDED_WARNING
-          = ContentProvider.getFormatted("Exceed90PerCentOfUsersWarning");
+                              = ContentProvider.getFormatted("Exceed90PerCentOfUsersWarning");
   private static final String USERS_EXCEEDED_WARNING
-          = ContentProvider.getFormatted("ExceedUsersWarning");
+                              = ContentProvider.getFormatted("ExceedUsersWarning");
   private static final String SESSIONS_90_PERCENT_EXCEEDED_WARNING
-          = ContentProvider.getFormatted("Exceed90PerCentOfSessionsWarning");
+                              = ContentProvider.getFormatted("Exceed90PerCentOfSessionsWarning");
   private static final String SESSIONS_EXCEEDED_WARNING
-          = ContentProvider.getFormatted("ExceedSessionsWarning");
+                              = ContentProvider.getFormatted("ExceedSessionsWarning");
   private static final String SESSIONS_150_PERCENT_EXCEEDED_WARNING
-          = ContentProvider.getFormatted("Exceed150PercentOfSessionsWarning");
+                              = ContentProvider.getFormatted("Exceed150PercentOfSessionsWarning");
 
   private int fNamedUsers;
   private int fConcurrentUsers;
@@ -127,137 +128,57 @@ public class LicenseInformationPanel extends javax.swing.JPanel {
     appendSessionsLimitWarning(html);
 
     html.append(TABLE_START);
-    appendLicenseeOrganisation(html);
-    appendLicenseeIndividual(html);
-    appendHostName(html);
-    appendKeyVersion(html);
-    appendValidFrom(html);
-    appendValidUntil(html);
-    appendSupportRIA(html);
-    appendElementsLimit(html);
-    appendUsersLimit(html);
-    appendSessionsLimit(html);
+    appendStringValue(html);
+    appendNumberValue(html);
 
     html.append(TABLE_END);
     html.append("</body></html>");
     return html.toString();
   }
 
-  private void appendSessionsLimit(StringBuilder html) {
-    if (fLicenseInfo.getServerSessionsLimit() > 0) {
-      html.append(TR_TD_START)
-              .append(CONCURRENT_USERS_LIMIT)
-              .append(CHAR_COLON).append(CHAR_SPACE)
-              .append(TD_END)
-              .append(TD_START)
-              .append(fLicenseInfo.getServerSessionsLimit())
-              .append(TD_TR_END);
-    }
-  }
-
-  private void appendUsersLimit(StringBuilder html) {
-    if (fLicenseInfo.getServerUsersLimit() > 0) {
-      html.append(TR_TD_START)
-              .append(NAMED_USERS_LIMIT)
-              .append(CHAR_COLON).append(CHAR_SPACE)
-              .append(TD_END)
-              .append(TD_START)
-              .append(fLicenseInfo.getServerUsersLimit())
-              .append(TD_TR_END);
-    }
-  }
-
-  private void appendElementsLimit(StringBuilder html) {
-    if (fLicenseInfo.getServerElementsLimit() > 0) {
-      html.append(TR_TD_START)
-              .append(ELEMENTS_LIMIT)
-              .append(CHAR_COLON).append(CHAR_SPACE)
-              .append(TD_END)
-              .append(TD_START)
-              .append(fLicenseInfo.getServerElementsLimit())
-              .append(TD_TR_END);
-    }
-  }
-
-  private void appendSupportRIA(StringBuilder html) {
-    html.append(TR_TD_START)
-            .append(SUPPORTS_RIA)
-            .append(CHAR_COLON).append(CHAR_SPACE)
+  private void appendValue(StringBuilder html, String label, Object value) {
+    html.append(TR_TD_START_WITH_NO_WRAP)
+            .append(label)
+            .append(CHAR_COLON)
+            .append(CHAR_SPACE)
             .append(TD_END)
             .append(TD_START)
-            .append(fLicenseInfo.isServerRIA() ? ContentProvider.get("Yes") : ContentProvider.get("No"))
+            .append(value.toString())
             .append(TD_TR_END);
   }
 
-  private void appendValidUntil(StringBuilder html) {
-    if (fLicenseInfo.getLicenseValidUntil() != null) {
-      html.append(TR_TD_START)
-              .append(EXPIRES)
-              .append(CHAR_COLON).append(CHAR_SPACE)
-              .append(TD_END)
-              .append(TD_START)
-              .append(DataUtils.dateToString(fLicenseInfo.getLicenseValidUntil()))
-              .append(TD_TR_END);
-    }
-  }
-
-  private void appendValidFrom(StringBuilder html) {
-    if (fLicenseInfo.getLicenseValidFrom() != null) {
-      html.append(TR_TD_START)
-              .append(VALID_FROM)
-              .append(CHAR_COLON).append(CHAR_SPACE)
-              .append(TD_END)
-              .append(TD_START)
-              .append(DataUtils.dateToString(fLicenseInfo.getLicenseValidFrom()))
-              .append(TD_TR_END);
-    }
-  }
-
-  private void appendKeyVersion(StringBuilder html) {
-    if (fLicenseInfo.getLicenseKeyVersion() != null) {
-      html.append(TR_TD_START)
-              .append(VERSION)
-              .append(CHAR_COLON).append(CHAR_SPACE)
-              .append(TD_END)
-              .append(TD_START)
-              .append(fLicenseInfo.getLicenseKeyVersion().replace("xpertline/", ""))
-              .append(TD_TR_END);
-    }
-  }
-
-  private void appendHostName(StringBuilder html) {
-    if (fLicenseInfo.getHostName() != null) {
-      html.append(TR_TD_START)
-              .append(HOST_NAME)
-              .append(CHAR_COLON).append(CHAR_SPACE)
-              .append(TD_END)
-              .append(TD_START)
-              .append(fLicenseInfo.getHostName())
-              .append(TD_TR_END);
-    }
-  }
-
-  private void appendLicenseeIndividual(StringBuilder html) {
-    if (fLicenseInfo.getLicenseeIndividual() != null) {
-      html.append(TR_TD_START)
-              .append(INDIVIDUAL)
-              .append(CHAR_COLON).append(CHAR_SPACE)
-              .append(TD_END)
-              .append(TD_START)
-              .append(fLicenseInfo.getLicenseeIndividual())
-              .append(TD_TR_END);
-    }
-  }
-
-  private void appendLicenseeOrganisation(StringBuilder html) {
+  private void appendStringValue(StringBuilder html) {
     if (fLicenseInfo.getLicenseeOrganisation() != null) {
-      html.append(TR_TD_START)
-              .append(ORGANIZATION)
-              .append(CHAR_COLON).append(CHAR_SPACE)
-              .append(TD_END)
-              .append(TD_START)
-              .append(fLicenseInfo.getLicenseeOrganisation())
-              .append(TD_TR_END);
+      appendValue(html, ORGANIZATION, fLicenseInfo.getLicenseeOrganisation());
+    }
+    if (fLicenseInfo.getLicenseeIndividual() != null) {
+      appendValue(html, INDIVIDUAL, fLicenseInfo.getLicenseeIndividual());
+    }
+    if (fLicenseInfo.getHostName() != null) {
+      appendValue(html, HOST_NAME, fLicenseInfo.getHostName());
+    }
+    if (fLicenseInfo.getLicenseKeyVersion() != null) {
+      appendValue(html, VERSION, fLicenseInfo.getLicenseKeyVersion().replace("xpertline/", ""));
+    }
+    if (fLicenseInfo.getLicenseValidFrom() != null) {
+      appendValue(html, VALID_FROM, DataUtils.dateToString(fLicenseInfo.getLicenseValidFrom()));
+    }
+    if (fLicenseInfo.getLicenseValidUntil() != null) {
+      appendValue(html, EXPIRES, DataUtils.dateToString(fLicenseInfo.getLicenseValidUntil()));
+    }
+    String logicString = fLicenseInfo.isServerRIA() ? ContentProvider.get("Yes") : ContentProvider.get("No");
+    appendValue(html, SUPPORTS_RIA, logicString);
+  }
+
+  private void appendNumberValue(StringBuilder html) {
+    if (fLicenseInfo.getServerElementsLimit() > 0) {
+      appendValue(html, ELEMENTS_LIMIT, fLicenseInfo.getServerElementsLimit());
+    }
+    if (fLicenseInfo.getServerUsersLimit() > 0) {
+      appendValue(html, NAMED_USERS_LIMIT, fLicenseInfo.getServerUsersLimit());
+    }
+    if (fLicenseInfo.getServerSessionsLimit() > 0) {
+      appendValue(html, CONCURRENT_USERS_LIMIT, fLicenseInfo.getServerSessionsLimit());
     }
   }
 
@@ -272,7 +193,7 @@ public class LicenseInformationPanel extends javax.swing.JPanel {
       if (fConcurrentUsers >= threshold90 && fConcurrentUsers < serverSessionsLimit) {
         warningMsg = SESSIONS_90_PERCENT_EXCEEDED_WARNING;
       } else if (fConcurrentUsers >= serverSessionsLimit
-              && fConcurrentUsers < threshold150) {
+                 && fConcurrentUsers < threshold150) {
         warningMsg = SESSIONS_EXCEEDED_WARNING;
         color = ERROR_COLOR;
       } else if (fConcurrentUsers >= threshold150) {

@@ -3,6 +3,7 @@
  */
 package ch.ivyteam.ivy.visualvm.view;
 
+import ch.ivyteam.ivy.visualvm.ContentProvider;
 import ch.ivyteam.ivy.visualvm.exception.IvyJmxDataCollectException;
 import ch.ivyteam.ivy.visualvm.model.IvyApplicationInfo;
 import ch.ivyteam.ivy.visualvm.model.OSInfo;
@@ -10,13 +11,10 @@ import ch.ivyteam.ivy.visualvm.model.ServerConnectorInfo;
 import ch.ivyteam.ivy.visualvm.model.SystemDatabaseInfo;
 import ch.ivyteam.ivy.visualvm.service.BasicIvyJmxDataCollector;
 import ch.ivyteam.ivy.visualvm.util.DataUtils;
-import java.awt.GridBagConstraints;
-import java.awt.Insets;
 import java.util.List;
 import java.util.logging.Logger;
 import javax.management.MBeanServerConnection;
 import javax.swing.JComponent;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
 import org.openide.util.NbBundle.Messages;
 
@@ -27,7 +25,15 @@ import org.openide.util.NbBundle.Messages;
 public final class InformationPanelTopComponent extends JPanel {
 
   private static final Logger LOGGER = Logger.getLogger(InformationPanelTopComponent.class.getName());
-  private static final Insets LABEL_INSETS = new Insets(5, 5, 5, 5);
+  private static final String TABLE_START = "<table border='0' celspacing='5' celpadding='0'>";
+  private static final String TABLE_END = "</table>";
+  private static final String TR_TD_START_WITH_NO_WRAP = "<tr style='white-space: nowrap;'><td>";
+  private static final String TD_TR_END = "</td></tr>";
+  private static final String TD_START = "<td>";
+  private static final String TD_END = "</td>";
+
+  private static final char CHAR_COLON = ':';
+  private static final char CHAR_SPACE = ' ';
 
   public InformationPanelTopComponent() {
     initComponents();
@@ -49,48 +55,14 @@ public final class InformationPanelTopComponent extends JPanel {
     java.awt.GridBagConstraints gridBagConstraints;
 
     generalPanel = new javax.swing.JPanel();
-    generalLabel = new javax.swing.JPanel();
-    versionLabel = new javax.swing.JLabel();
-    buildDateLabel = new javax.swing.JLabel();
-    installDirLabel = new javax.swing.JLabel();
-    operatingSystemLabel = new javax.swing.JLabel();
-    filler6 = new javax.swing.Box.Filler(new java.awt.Dimension(0, 0), new java.awt.Dimension(0, 0), new java.awt.Dimension(0, 32767));
-    hostNameLabel = new javax.swing.JLabel();
-    generalValue = new javax.swing.JPanel();
-    version = new javax.swing.JLabel();
-    buildDate = new javax.swing.JLabel();
-    installationDirectory = new javax.swing.JLabel();
-    filler7 = new javax.swing.Box.Filler(new java.awt.Dimension(0, 0), new java.awt.Dimension(0, 0), new java.awt.Dimension(0, 32767));
-    operatingSystem = new javax.swing.JLabel();
-    hostNameValue = new javax.swing.JLabel();
-    sysDbScrollPane = new javax.swing.JScrollPane();
+    jScrollPane1 = new javax.swing.JScrollPane();
+    htmlLabelPanel1 = new ch.ivyteam.ivy.visualvm.view.HtmlLabelPanel();
     sysDbPanel = new javax.swing.JPanel();
-    sysDbLabel = new javax.swing.JPanel();
-    dbIvySysDbVersionLabel = new javax.swing.JLabel();
-    dbTypeLabel = new javax.swing.JLabel();
-    dbVersionLabel = new javax.swing.JLabel();
-    dbDriverNameLabel = new javax.swing.JLabel();
-    dbConnectionUrlLabel = new javax.swing.JLabel();
-    dbCredentialUsernameLabel = new javax.swing.JLabel();
-    dbHostLabel = new javax.swing.JLabel();
-    dbPortLabel = new javax.swing.JLabel();
-    filler2 = new javax.swing.Box.Filler(new java.awt.Dimension(0, 0), new java.awt.Dimension(0, 0), new java.awt.Dimension(0, 32767));
-    dbNameLabel = new javax.swing.JLabel();
-    sysDbValue = new javax.swing.JPanel();
-    dbIvySysDbVersion = new javax.swing.JLabel();
-    dbType = new javax.swing.JLabel();
-    dbVersion = new javax.swing.JLabel();
-    dbDriverName = new javax.swing.JLabel();
-    dbConnectionUrl = new javax.swing.JLabel();
-    dbCredentialUsername = new javax.swing.JLabel();
-    dbHost = new javax.swing.JLabel();
-    dbPort = new javax.swing.JLabel();
-    filler3 = new javax.swing.Box.Filler(new java.awt.Dimension(0, 0), new java.awt.Dimension(0, 0), new java.awt.Dimension(0, 32767));
-    dbName = new javax.swing.JLabel();
-    connectorsContainScrollPane = new javax.swing.JScrollPane();
+    jScrollPane2 = new javax.swing.JScrollPane();
+    htmlLabelPanel2 = new ch.ivyteam.ivy.visualvm.view.HtmlLabelPanel();
     connectorsContainPanel = new javax.swing.JPanel();
-    connectorsPanel = new javax.swing.JPanel();
-    filler1 = new javax.swing.Box.Filler(new java.awt.Dimension(0, 0), new java.awt.Dimension(0, 0), new java.awt.Dimension(0, 32767));
+    jScrollPane3 = new javax.swing.JScrollPane();
+    htmlLabelPanel3 = new ch.ivyteam.ivy.visualvm.view.HtmlLabelPanel();
 
     setLayout(new java.awt.GridBagLayout());
 
@@ -99,135 +71,19 @@ public final class InformationPanelTopComponent extends JPanel {
     generalPanel.setPreferredSize(new java.awt.Dimension(200, 130));
     generalPanel.setLayout(new java.awt.GridBagLayout());
 
-    generalLabel.setBackground(new java.awt.Color(255, 255, 255));
-    generalLabel.setMinimumSize(new java.awt.Dimension(120, 72));
-    generalLabel.setPreferredSize(new java.awt.Dimension(120, 72));
-    generalLabel.setLayout(new java.awt.GridBagLayout());
+    jScrollPane1.setBorder(null);
 
-    org.openide.awt.Mnemonics.setLocalizedText(versionLabel, org.openide.util.NbBundle.getMessage(InformationPanelTopComponent.class, "InformationPanelTopComponent.versionLabel.text")); // NOI18N
-    gridBagConstraints = new java.awt.GridBagConstraints();
-    gridBagConstraints.gridx = 0;
-    gridBagConstraints.gridy = 0;
-    gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-    gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-    gridBagConstraints.weightx = 1.0;
-    gridBagConstraints.insets = new java.awt.Insets(5, 5, 5, 5);
-    generalLabel.add(versionLabel, gridBagConstraints);
+    htmlLabelPanel1.setBorder(null);
+    htmlLabelPanel1.setMinimumSize(new java.awt.Dimension(6, 6));
+    htmlLabelPanel1.setPreferredSize(new java.awt.Dimension(6, 6));
+    jScrollPane1.setViewportView(htmlLabelPanel1);
 
-    org.openide.awt.Mnemonics.setLocalizedText(buildDateLabel, org.openide.util.NbBundle.getMessage(InformationPanelTopComponent.class, "InformationPanelTopComponent.buildDateLabel.text")); // NOI18N
     gridBagConstraints = new java.awt.GridBagConstraints();
-    gridBagConstraints.gridx = 0;
-    gridBagConstraints.gridy = 1;
-    gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-    gridBagConstraints.insets = new java.awt.Insets(5, 5, 5, 5);
-    generalLabel.add(buildDateLabel, gridBagConstraints);
-
-    org.openide.awt.Mnemonics.setLocalizedText(installDirLabel, org.openide.util.NbBundle.getMessage(InformationPanelTopComponent.class, "InformationPanelTopComponent.installDirLabel.text")); // NOI18N
-    gridBagConstraints = new java.awt.GridBagConstraints();
-    gridBagConstraints.gridx = 0;
-    gridBagConstraints.gridy = 2;
-    gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-    gridBagConstraints.insets = new java.awt.Insets(5, 5, 5, 5);
-    generalLabel.add(installDirLabel, gridBagConstraints);
-
-    org.openide.awt.Mnemonics.setLocalizedText(operatingSystemLabel, org.openide.util.NbBundle.getMessage(InformationPanelTopComponent.class, "InformationPanelTopComponent.operatingSystemLabel.text")); // NOI18N
-    gridBagConstraints = new java.awt.GridBagConstraints();
-    gridBagConstraints.gridx = 0;
-    gridBagConstraints.gridy = 3;
-    gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-    gridBagConstraints.insets = new java.awt.Insets(5, 5, 5, 5);
-    generalLabel.add(operatingSystemLabel, gridBagConstraints);
-    gridBagConstraints = new java.awt.GridBagConstraints();
-    gridBagConstraints.gridx = 0;
-    gridBagConstraints.gridy = 10;
     gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
-    gridBagConstraints.weightx = 1.0;
-    gridBagConstraints.weighty = 1.0;
-    generalLabel.add(filler6, gridBagConstraints);
-
-    org.openide.awt.Mnemonics.setLocalizedText(hostNameLabel, org.openide.util.NbBundle.getMessage(InformationPanelTopComponent.class, "InformationPanelTopComponent.hostNameLabel.text")); // NOI18N
-    gridBagConstraints = new java.awt.GridBagConstraints();
-    gridBagConstraints.gridx = 0;
-    gridBagConstraints.gridy = 4;
-    gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-    gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-    gridBagConstraints.weightx = 1.0;
-    gridBagConstraints.insets = new java.awt.Insets(5, 5, 5, 5);
-    generalLabel.add(hostNameLabel, gridBagConstraints);
-
-    gridBagConstraints = new java.awt.GridBagConstraints();
-    gridBagConstraints.gridx = 0;
-    gridBagConstraints.gridy = 0;
-    gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
-    gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
     gridBagConstraints.weightx = 0.01;
     gridBagConstraints.weighty = 1.0;
-    gridBagConstraints.insets = new java.awt.Insets(5, 10, 0, 5);
-    generalPanel.add(generalLabel, gridBagConstraints);
-
-    generalValue.setBackground(new java.awt.Color(255, 255, 255));
-    generalValue.setLayout(new java.awt.GridBagLayout());
-
-    org.openide.awt.Mnemonics.setLocalizedText(version, org.openide.util.NbBundle.getMessage(InformationPanelTopComponent.class, "InformationPanelTopComponent.version.text")); // NOI18N
-    gridBagConstraints = new java.awt.GridBagConstraints();
-    gridBagConstraints.gridx = 0;
-    gridBagConstraints.gridy = 0;
-    gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-    gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-    gridBagConstraints.weightx = 1.0;
-    gridBagConstraints.insets = new java.awt.Insets(5, 5, 5, 5);
-    generalValue.add(version, gridBagConstraints);
-
-    org.openide.awt.Mnemonics.setLocalizedText(buildDate, org.openide.util.NbBundle.getMessage(InformationPanelTopComponent.class, "InformationPanelTopComponent.buildDate.text")); // NOI18N
-    gridBagConstraints = new java.awt.GridBagConstraints();
-    gridBagConstraints.gridx = 0;
-    gridBagConstraints.gridy = 1;
-    gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-    gridBagConstraints.insets = new java.awt.Insets(5, 5, 5, 5);
-    generalValue.add(buildDate, gridBagConstraints);
-
-    org.openide.awt.Mnemonics.setLocalizedText(installationDirectory, org.openide.util.NbBundle.getMessage(InformationPanelTopComponent.class, "InformationPanelTopComponent.installationDirectory.text")); // NOI18N
-    gridBagConstraints = new java.awt.GridBagConstraints();
-    gridBagConstraints.gridx = 0;
-    gridBagConstraints.gridy = 2;
-    gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-    gridBagConstraints.insets = new java.awt.Insets(5, 5, 5, 5);
-    generalValue.add(installationDirectory, gridBagConstraints);
-    gridBagConstraints = new java.awt.GridBagConstraints();
-    gridBagConstraints.gridx = 0;
-    gridBagConstraints.gridy = 10;
-    gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
-    gridBagConstraints.weightx = 1.0;
-    gridBagConstraints.weighty = 1.0;
-    generalValue.add(filler7, gridBagConstraints);
-
-    org.openide.awt.Mnemonics.setLocalizedText(operatingSystem, org.openide.util.NbBundle.getMessage(InformationPanelTopComponent.class, "InformationPanelTopComponent.operatingSystem.text")); // NOI18N
-    gridBagConstraints = new java.awt.GridBagConstraints();
-    gridBagConstraints.gridx = 0;
-    gridBagConstraints.gridy = 3;
-    gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-    gridBagConstraints.insets = new java.awt.Insets(5, 5, 5, 5);
-    generalValue.add(operatingSystem, gridBagConstraints);
-
-    org.openide.awt.Mnemonics.setLocalizedText(hostNameValue, org.openide.util.NbBundle.getMessage(InformationPanelTopComponent.class, "InformationPanelTopComponent.hostNameValue.text")); // NOI18N
-    gridBagConstraints = new java.awt.GridBagConstraints();
-    gridBagConstraints.gridx = 0;
-    gridBagConstraints.gridy = 4;
-    gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-    gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-    gridBagConstraints.weightx = 1.0;
-    gridBagConstraints.insets = new java.awt.Insets(5, 5, 5, 5);
-    generalValue.add(hostNameValue, gridBagConstraints);
-
-    gridBagConstraints = new java.awt.GridBagConstraints();
-    gridBagConstraints.gridx = 1;
-    gridBagConstraints.gridy = 0;
-    gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
-    gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-    gridBagConstraints.weightx = 1.0;
-    gridBagConstraints.weighty = 1.0;
-    gridBagConstraints.insets = new java.awt.Insets(5, 10, 0, 5);
-    generalPanel.add(generalValue, gridBagConstraints);
+    gridBagConstraints.insets = new java.awt.Insets(3, 3, 3, 3);
+    generalPanel.add(jScrollPane1, gridBagConstraints);
 
     gridBagConstraints = new java.awt.GridBagConstraints();
     gridBagConstraints.gridx = 0;
@@ -238,312 +94,51 @@ public final class InformationPanelTopComponent extends JPanel {
     gridBagConstraints.insets = new java.awt.Insets(5, 10, 0, 5);
     add(generalPanel, gridBagConstraints);
 
-    sysDbScrollPane.setBorder(null);
-
     sysDbPanel.setBackground(new java.awt.Color(255, 255, 255));
     sysDbPanel.setMinimumSize(new java.awt.Dimension(500, 230));
     sysDbPanel.setPreferredSize(new java.awt.Dimension(220, 250));
     sysDbPanel.setLayout(new java.awt.GridBagLayout());
 
-    sysDbLabel.setBackground(new java.awt.Color(255, 255, 255));
-    sysDbLabel.setMinimumSize(new java.awt.Dimension(120, 194));
-    sysDbLabel.setPreferredSize(new java.awt.Dimension(120, 194));
-    sysDbLabel.setLayout(new java.awt.GridBagLayout());
+    jScrollPane2.setBorder(null);
+    jScrollPane2.setViewportView(htmlLabelPanel2);
 
-    org.openide.awt.Mnemonics.setLocalizedText(dbIvySysDbVersionLabel, org.openide.util.NbBundle.getMessage(InformationPanelTopComponent.class, "InformationPanelTopComponent.dbIvySysDbVersionLabel.text")); // NOI18N
     gridBagConstraints = new java.awt.GridBagConstraints();
-    gridBagConstraints.gridx = 0;
-    gridBagConstraints.gridy = 0;
-    gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-    gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-    gridBagConstraints.weightx = 1.0;
-    gridBagConstraints.insets = new java.awt.Insets(5, 5, 5, 5);
-    sysDbLabel.add(dbIvySysDbVersionLabel, gridBagConstraints);
-
-    org.openide.awt.Mnemonics.setLocalizedText(dbTypeLabel, org.openide.util.NbBundle.getMessage(InformationPanelTopComponent.class, "InformationPanelTopComponent.dbTypeLabel.text")); // NOI18N
-    dbTypeLabel.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
-    gridBagConstraints = new java.awt.GridBagConstraints();
-    gridBagConstraints.gridx = 0;
-    gridBagConstraints.gridy = 1;
-    gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-    gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-    gridBagConstraints.weightx = 1.0;
-    gridBagConstraints.insets = new java.awt.Insets(5, 5, 5, 5);
-    sysDbLabel.add(dbTypeLabel, gridBagConstraints);
-
-    org.openide.awt.Mnemonics.setLocalizedText(dbVersionLabel, org.openide.util.NbBundle.getMessage(InformationPanelTopComponent.class, "InformationPanelTopComponent.dbVersionLabel.text")); // NOI18N
-    gridBagConstraints = new java.awt.GridBagConstraints();
-    gridBagConstraints.gridx = 0;
-    gridBagConstraints.gridy = 2;
-    gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-    gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-    gridBagConstraints.weightx = 1.0;
-    gridBagConstraints.insets = new java.awt.Insets(5, 5, 5, 5);
-    sysDbLabel.add(dbVersionLabel, gridBagConstraints);
-
-    org.openide.awt.Mnemonics.setLocalizedText(dbDriverNameLabel, org.openide.util.NbBundle.getMessage(InformationPanelTopComponent.class, "InformationPanelTopComponent.dbDriverNameLabel.text")); // NOI18N
-    gridBagConstraints = new java.awt.GridBagConstraints();
-    gridBagConstraints.gridx = 0;
-    gridBagConstraints.gridy = 3;
-    gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-    gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-    gridBagConstraints.weightx = 1.0;
-    gridBagConstraints.insets = new java.awt.Insets(5, 5, 5, 5);
-    sysDbLabel.add(dbDriverNameLabel, gridBagConstraints);
-
-    org.openide.awt.Mnemonics.setLocalizedText(dbConnectionUrlLabel, org.openide.util.NbBundle.getMessage(InformationPanelTopComponent.class, "InformationPanelTopComponent.dbConnectionUrlLabel.text")); // NOI18N
-    gridBagConstraints = new java.awt.GridBagConstraints();
-    gridBagConstraints.gridx = 0;
-    gridBagConstraints.gridy = 8;
-    gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-    gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-    gridBagConstraints.weightx = 1.0;
-    gridBagConstraints.insets = new java.awt.Insets(5, 5, 5, 5);
-    sysDbLabel.add(dbConnectionUrlLabel, gridBagConstraints);
-
-    org.openide.awt.Mnemonics.setLocalizedText(dbCredentialUsernameLabel, org.openide.util.NbBundle.getMessage(InformationPanelTopComponent.class, "InformationPanelTopComponent.dbCredentialUsernameLabel.text")); // NOI18N
-    gridBagConstraints = new java.awt.GridBagConstraints();
-    gridBagConstraints.gridx = 0;
-    gridBagConstraints.gridy = 7;
-    gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-    gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-    gridBagConstraints.weightx = 1.0;
-    gridBagConstraints.insets = new java.awt.Insets(5, 5, 5, 5);
-    sysDbLabel.add(dbCredentialUsernameLabel, gridBagConstraints);
-
-    org.openide.awt.Mnemonics.setLocalizedText(dbHostLabel, org.openide.util.NbBundle.getMessage(InformationPanelTopComponent.class, "InformationPanelTopComponent.dbHostLabel.text")); // NOI18N
-    gridBagConstraints = new java.awt.GridBagConstraints();
-    gridBagConstraints.gridx = 0;
-    gridBagConstraints.gridy = 4;
-    gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-    gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-    gridBagConstraints.weightx = 1.0;
-    gridBagConstraints.insets = new java.awt.Insets(5, 5, 5, 5);
-    sysDbLabel.add(dbHostLabel, gridBagConstraints);
-
-    org.openide.awt.Mnemonics.setLocalizedText(dbPortLabel, org.openide.util.NbBundle.getMessage(InformationPanelTopComponent.class, "InformationPanelTopComponent.dbPortLabel.text")); // NOI18N
-    gridBagConstraints = new java.awt.GridBagConstraints();
-    gridBagConstraints.gridx = 0;
-    gridBagConstraints.gridy = 5;
-    gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-    gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-    gridBagConstraints.weightx = 1.0;
-    gridBagConstraints.insets = new java.awt.Insets(5, 5, 5, 5);
-    sysDbLabel.add(dbPortLabel, gridBagConstraints);
-    gridBagConstraints = new java.awt.GridBagConstraints();
-    gridBagConstraints.gridx = 0;
-    gridBagConstraints.gridy = 10;
     gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
-    gridBagConstraints.weightx = 1.0;
-    gridBagConstraints.weighty = 1.0;
-    sysDbLabel.add(filler2, gridBagConstraints);
-
-    org.openide.awt.Mnemonics.setLocalizedText(dbNameLabel, org.openide.util.NbBundle.getMessage(InformationPanelTopComponent.class, "InformationPanelTopComponent.dbNameLabel.text")); // NOI18N
-    gridBagConstraints = new java.awt.GridBagConstraints();
-    gridBagConstraints.gridx = 0;
-    gridBagConstraints.gridy = 6;
-    gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-    gridBagConstraints.insets = new java.awt.Insets(5, 5, 5, 5);
-    sysDbLabel.add(dbNameLabel, gridBagConstraints);
-
-    gridBagConstraints = new java.awt.GridBagConstraints();
-    gridBagConstraints.gridx = 0;
-    gridBagConstraints.gridy = 0;
-    gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
-    gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
     gridBagConstraints.weightx = 0.01;
     gridBagConstraints.weighty = 1.0;
+    sysDbPanel.add(jScrollPane2, gridBagConstraints);
+
+    gridBagConstraints = new java.awt.GridBagConstraints();
     gridBagConstraints.insets = new java.awt.Insets(5, 10, 0, 5);
-    sysDbPanel.add(sysDbLabel, gridBagConstraints);
-
-    sysDbValue.setBackground(new java.awt.Color(255, 255, 255));
-    sysDbValue.setLayout(new java.awt.GridBagLayout());
-
-    org.openide.awt.Mnemonics.setLocalizedText(dbIvySysDbVersion, org.openide.util.NbBundle.getMessage(InformationPanelTopComponent.class, "InformationPanelTopComponent.dbIvySysDbVersion.text")); // NOI18N
-    gridBagConstraints = new java.awt.GridBagConstraints();
-    gridBagConstraints.gridx = 0;
-    gridBagConstraints.gridy = 0;
-    gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-    gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-    gridBagConstraints.weightx = 1.0;
-    gridBagConstraints.insets = new java.awt.Insets(5, 5, 5, 5);
-    sysDbValue.add(dbIvySysDbVersion, gridBagConstraints);
-
-    dbType.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-    org.openide.awt.Mnemonics.setLocalizedText(dbType, org.openide.util.NbBundle.getMessage(InformationPanelTopComponent.class, "InformationPanelTopComponent.dbType.text")); // NOI18N
-    gridBagConstraints = new java.awt.GridBagConstraints();
-    gridBagConstraints.gridx = 0;
-    gridBagConstraints.gridy = 1;
-    gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-    gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-    gridBagConstraints.weightx = 1.0;
-    gridBagConstraints.insets = new java.awt.Insets(5, 5, 5, 5);
-    sysDbValue.add(dbType, gridBagConstraints);
-
-    dbVersion.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-    org.openide.awt.Mnemonics.setLocalizedText(dbVersion, org.openide.util.NbBundle.getMessage(InformationPanelTopComponent.class, "InformationPanelTopComponent.dbVersion.text")); // NOI18N
-    gridBagConstraints = new java.awt.GridBagConstraints();
-    gridBagConstraints.gridx = 0;
-    gridBagConstraints.gridy = 2;
-    gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-    gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-    gridBagConstraints.weightx = 1.0;
-    gridBagConstraints.insets = new java.awt.Insets(5, 5, 5, 5);
-    sysDbValue.add(dbVersion, gridBagConstraints);
-
-    dbDriverName.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-    org.openide.awt.Mnemonics.setLocalizedText(dbDriverName, org.openide.util.NbBundle.getMessage(InformationPanelTopComponent.class, "InformationPanelTopComponent.dbDriverName.text")); // NOI18N
-    gridBagConstraints = new java.awt.GridBagConstraints();
-    gridBagConstraints.gridx = 0;
-    gridBagConstraints.gridy = 3;
-    gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-    gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-    gridBagConstraints.weightx = 1.0;
-    gridBagConstraints.insets = new java.awt.Insets(5, 5, 5, 5);
-    sysDbValue.add(dbDriverName, gridBagConstraints);
-
-    dbConnectionUrl.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-    org.openide.awt.Mnemonics.setLocalizedText(dbConnectionUrl, org.openide.util.NbBundle.getMessage(InformationPanelTopComponent.class, "InformationPanelTopComponent.dbConnectionUrl.text")); // NOI18N
-    gridBagConstraints = new java.awt.GridBagConstraints();
-    gridBagConstraints.gridx = 0;
-    gridBagConstraints.gridy = 8;
-    gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-    gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-    gridBagConstraints.weightx = 1.0;
-    gridBagConstraints.insets = new java.awt.Insets(5, 5, 5, 5);
-    sysDbValue.add(dbConnectionUrl, gridBagConstraints);
-
-    org.openide.awt.Mnemonics.setLocalizedText(dbCredentialUsername, org.openide.util.NbBundle.getMessage(InformationPanelTopComponent.class, "InformationPanelTopComponent.dbCredentialUsername.text")); // NOI18N
-    gridBagConstraints = new java.awt.GridBagConstraints();
-    gridBagConstraints.gridx = 0;
-    gridBagConstraints.gridy = 7;
-    gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-    gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-    gridBagConstraints.weightx = 1.0;
-    gridBagConstraints.insets = new java.awt.Insets(5, 5, 5, 5);
-    sysDbValue.add(dbCredentialUsername, gridBagConstraints);
-
-    org.openide.awt.Mnemonics.setLocalizedText(dbHost, org.openide.util.NbBundle.getMessage(InformationPanelTopComponent.class, "InformationPanelTopComponent.dbHost.text")); // NOI18N
-    gridBagConstraints = new java.awt.GridBagConstraints();
-    gridBagConstraints.gridx = 0;
-    gridBagConstraints.gridy = 4;
-    gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-    gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-    gridBagConstraints.weightx = 1.0;
-    gridBagConstraints.insets = new java.awt.Insets(5, 5, 5, 5);
-    sysDbValue.add(dbHost, gridBagConstraints);
-
-    org.openide.awt.Mnemonics.setLocalizedText(dbPort, org.openide.util.NbBundle.getMessage(InformationPanelTopComponent.class, "InformationPanelTopComponent.dbPort.text")); // NOI18N
-    gridBagConstraints = new java.awt.GridBagConstraints();
-    gridBagConstraints.gridx = 0;
-    gridBagConstraints.gridy = 5;
-    gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-    gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-    gridBagConstraints.weightx = 1.0;
-    gridBagConstraints.insets = new java.awt.Insets(5, 5, 5, 5);
-    sysDbValue.add(dbPort, gridBagConstraints);
-    gridBagConstraints = new java.awt.GridBagConstraints();
-    gridBagConstraints.gridx = 0;
-    gridBagConstraints.gridy = 10;
-    gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
-    gridBagConstraints.weightx = 1.0;
-    gridBagConstraints.weighty = 1.0;
-    sysDbValue.add(filler3, gridBagConstraints);
-
-    org.openide.awt.Mnemonics.setLocalizedText(dbName, org.openide.util.NbBundle.getMessage(InformationPanelTopComponent.class, "InformationPanelTopComponent.dbName.text")); // NOI18N
-    gridBagConstraints = new java.awt.GridBagConstraints();
-    gridBagConstraints.gridx = 0;
-    gridBagConstraints.gridy = 6;
-    gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-    gridBagConstraints.insets = new java.awt.Insets(5, 5, 5, 5);
-    sysDbValue.add(dbName, gridBagConstraints);
-
-    gridBagConstraints = new java.awt.GridBagConstraints();
-    gridBagConstraints.gridx = 1;
-    gridBagConstraints.gridy = 0;
-    gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
-    gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-    gridBagConstraints.weightx = 1.0;
-    gridBagConstraints.weighty = 1.0;
-    gridBagConstraints.insets = new java.awt.Insets(5, 10, 0, 5);
-    sysDbPanel.add(sysDbValue, gridBagConstraints);
-
-    sysDbScrollPane.setViewportView(sysDbPanel);
-
-    add(sysDbScrollPane, new java.awt.GridBagConstraints());
-
-    connectorsContainScrollPane.setBorder(null);
+    add(sysDbPanel, gridBagConstraints);
 
     connectorsContainPanel.setBackground(new java.awt.Color(255, 255, 255));
     connectorsContainPanel.setLayout(new java.awt.GridBagLayout());
 
-    connectorsPanel.setBackground(new java.awt.Color(255, 255, 255));
-    connectorsPanel.setLayout(new java.awt.GridBagLayout());
+    jScrollPane3.setBorder(null);
+    jScrollPane3.setViewportView(htmlLabelPanel3);
+
     gridBagConstraints = new java.awt.GridBagConstraints();
-    gridBagConstraints.gridx = 0;
-    gridBagConstraints.gridy = 0;
-    gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-    gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-    gridBagConstraints.weightx = 1.0;
-    gridBagConstraints.insets = new java.awt.Insets(5, 10, 0, 5);
-    connectorsContainPanel.add(connectorsPanel, gridBagConstraints);
-    gridBagConstraints = new java.awt.GridBagConstraints();
-    gridBagConstraints.gridx = 0;
-    gridBagConstraints.gridy = 1;
     gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
-    gridBagConstraints.weightx = 1.0;
+    gridBagConstraints.weightx = 0.01;
     gridBagConstraints.weighty = 1.0;
-    connectorsContainPanel.add(filler1, gridBagConstraints);
+    connectorsContainPanel.add(jScrollPane3, gridBagConstraints);
 
-    connectorsContainScrollPane.setViewportView(connectorsContainPanel);
-
-    add(connectorsContainScrollPane, new java.awt.GridBagConstraints());
+    gridBagConstraints = new java.awt.GridBagConstraints();
+    gridBagConstraints.insets = new java.awt.Insets(5, 10, 0, 5);
+    add(connectorsContainPanel, gridBagConstraints);
   }// </editor-fold>//GEN-END:initComponents
 
   // Variables declaration - do not modify//GEN-BEGIN:variables
-  private javax.swing.JLabel buildDate;
-  private javax.swing.JLabel buildDateLabel;
   private javax.swing.JPanel connectorsContainPanel;
-  private javax.swing.JScrollPane connectorsContainScrollPane;
-  private javax.swing.JPanel connectorsPanel;
-  private javax.swing.JLabel dbConnectionUrl;
-  private javax.swing.JLabel dbConnectionUrlLabel;
-  private javax.swing.JLabel dbCredentialUsername;
-  private javax.swing.JLabel dbCredentialUsernameLabel;
-  private javax.swing.JLabel dbDriverName;
-  private javax.swing.JLabel dbDriverNameLabel;
-  private javax.swing.JLabel dbHost;
-  private javax.swing.JLabel dbHostLabel;
-  private javax.swing.JLabel dbIvySysDbVersion;
-  private javax.swing.JLabel dbIvySysDbVersionLabel;
-  private javax.swing.JLabel dbName;
-  private javax.swing.JLabel dbNameLabel;
-  private javax.swing.JLabel dbPort;
-  private javax.swing.JLabel dbPortLabel;
-  private javax.swing.JLabel dbType;
-  private javax.swing.JLabel dbTypeLabel;
-  private javax.swing.JLabel dbVersion;
-  private javax.swing.JLabel dbVersionLabel;
-  private javax.swing.Box.Filler filler1;
-  private javax.swing.Box.Filler filler2;
-  private javax.swing.Box.Filler filler3;
-  private javax.swing.Box.Filler filler6;
-  private javax.swing.Box.Filler filler7;
-  private javax.swing.JPanel generalLabel;
   private javax.swing.JPanel generalPanel;
-  private javax.swing.JPanel generalValue;
-  private javax.swing.JLabel hostNameLabel;
-  private javax.swing.JLabel hostNameValue;
-  private javax.swing.JLabel installDirLabel;
-  private javax.swing.JLabel installationDirectory;
-  private javax.swing.JLabel operatingSystem;
-  private javax.swing.JLabel operatingSystemLabel;
-  private javax.swing.JPanel sysDbLabel;
+  private ch.ivyteam.ivy.visualvm.view.HtmlLabelPanel htmlLabelPanel1;
+  private ch.ivyteam.ivy.visualvm.view.HtmlLabelPanel htmlLabelPanel2;
+  private ch.ivyteam.ivy.visualvm.view.HtmlLabelPanel htmlLabelPanel3;
+  private javax.swing.JScrollPane jScrollPane1;
+  private javax.swing.JScrollPane jScrollPane2;
+  private javax.swing.JScrollPane jScrollPane3;
   private javax.swing.JPanel sysDbPanel;
-  private javax.swing.JScrollPane sysDbScrollPane;
-  private javax.swing.JPanel sysDbValue;
-  private javax.swing.JLabel version;
-  private javax.swing.JLabel versionLabel;
   // End of variables declaration//GEN-END:variables
 
   void writeProperties(java.util.Properties p) {
@@ -560,101 +155,105 @@ public final class InformationPanelTopComponent extends JPanel {
     MBeanServerConnection connection = dataBeanProvider.getMBeanServerConnection();
     BasicIvyJmxDataCollector collector = new BasicIvyJmxDataCollector();
 
-    IvyApplicationInfo basicInfo = dataBeanProvider.getGenericData().getApplicationInfo();
-    if (basicInfo != null) {
-      setLabelText(versionLabel, version, basicInfo.getVersion());
-      setLabelText(buildDateLabel, buildDate, DataUtils.dateToString(basicInfo.getBuildDate()));
-      setLabelText(installDirLabel, installationDirectory, basicInfo.getInstallationDirectory());
-    } else {
-      hideInfoLabels(versionLabel, version);
-      hideInfoLabels(buildDateLabel, buildDate);
-      hideInfoLabels(installDirLabel, installationDirectory);
-    }
-
     try {
+      IvyApplicationInfo basicInfo = dataBeanProvider.getGenericData().getApplicationInfo();
       OSInfo osInfo = collector.getOSInfo(connection);
-      setLabelText(operatingSystemLabel, operatingSystem, osInfo.getName());
-    } catch (IvyJmxDataCollectException ex) {
-      hideInfoLabels(operatingSystemLabel, operatingSystem);
-      LOGGER.warning(ex.getMessage());
-    }
-
-    try {
-      SystemDatabaseInfo sysDbInfo = collector.getSystemDatabaseInfo(connection);
-      setLabelText(dbIvySysDbVersionLabel, dbIvySysDbVersion, sysDbInfo.getIvySystemDbVersion());
-      setLabelText(dbTypeLabel, dbType, sysDbInfo.getType());
-      setLabelText(dbVersionLabel, dbVersion, sysDbInfo.getVersion());
-      setLabelText(dbDriverNameLabel, dbDriverName, sysDbInfo.getDriver());
-      setLabelText(dbHostLabel, dbHost, DataUtils.getHostFromConnectionUrl(sysDbInfo.getConnectionUrl()));
-      setLabelText(dbPortLabel, dbPort, DataUtils.getPortFromConnectionUrl(sysDbInfo.getConnectionUrl()));
-      setLabelText(dbNameLabel, dbName, DataUtils.getSchemaFromConnectionUrl(sysDbInfo.getConnectionUrl()));
-      setLabelText(dbConnectionUrlLabel, dbConnectionUrl, sysDbInfo.getConnectionUrl());
-
-      String username = sysDbInfo.getUsername();
-      if ((username == null) || "".equals(username.trim())) {
-        hideInfoLabels(dbCredentialUsernameLabel, dbCredentialUsername);
-      } else {
-        dbCredentialUsernameLabel.setVisible(true);
-        dbCredentialUsername.setText(username);
-        dbCredentialUsername.setVisible(true);
-      }
-    } catch (IvyJmxDataCollectException ex) {
-      hideInfoLabels(dbIvySysDbVersionLabel, dbIvySysDbVersion);
-      hideInfoLabels(dbTypeLabel, dbType);
-      hideInfoLabels(dbVersionLabel, dbVersion);
-      hideInfoLabels(dbDriverNameLabel, dbDriverName);
-      hideInfoLabels(dbHostLabel, dbHost);
-      hideInfoLabels(dbPortLabel, dbPort);
-      hideInfoLabels(dbNameLabel, dbName);
-      hideInfoLabels(dbConnectionUrlLabel, dbConnectionUrl);
-      hideInfoLabels(dbCredentialUsernameLabel, dbCredentialUsername);
-      LOGGER.warning(ex.getMessage());
-    }
-
-    List<ServerConnectorInfo> connectorInfo = dataBeanProvider.getGenericData().getServerConnectors();
-    connectorsPanel.removeAll();
-    if (connectorInfo.size() > 0) {
-      int index = 0;
-      for (ServerConnectorInfo connector : connectorInfo) {
-        JLabel label = new JLabel(connector.getDisplayProtocol() + " - " + connector.getPort());
-        connectorsPanel.add(label, new GridBagConstraints(0, index++, 1, 1, 1, 1,
-                GridBagConstraints.NORTHWEST, GridBagConstraints.NONE, LABEL_INSETS, 0, 0));
-      }
-    } else {
-      JLabel label = new JLabel("No connector!");
-      connectorsPanel.add(label, new GridBagConstraints(0, 0, 1, 1, 0, 0, GridBagConstraints.NORTHWEST,
-              GridBagConstraints.NONE, LABEL_INSETS, 0, 0));
-    }
-
-    try {
       String hostInfo = collector.getHostInfo(connection);
-      setLabelText(hostNameLabel, hostNameValue, hostInfo);
+      htmlLabelPanel1.setText(toGeneralHtmlString(basicInfo, osInfo, hostInfo));
+
+      SystemDatabaseInfo sysDbInfo = collector.getSystemDatabaseInfo(connection);
+      htmlLabelPanel2.setText(toSystemDBInfoHtmlString(sysDbInfo));
+
+      List<ServerConnectorInfo> connectorInfo = dataBeanProvider.getGenericData().getServerConnectors();
+      htmlLabelPanel3.setText(toConnectorsHtmlString(connectorInfo));
+
     } catch (IvyJmxDataCollectException ex) {
       LOGGER.warning(ex.getMessage());
     }
   }
 
-  private void setLabelText(JLabel titleLabel, JLabel valueLabel, Object data) {
-    if (data != null) {
-      titleLabel.setVisible(true);
-      valueLabel.setVisible(true);
-      if (data instanceof String) {
-        valueLabel.setText((String) data);
-      } else {
-        valueLabel.setText(data.toString());
-      }
-    } else {
-      hideInfoLabels(titleLabel, valueLabel);
+  private String toGeneralHtmlString(IvyApplicationInfo basicInfo,
+          OSInfo osInfo, String hostInfo) {
+    StringBuilder html = beginHTML();
+    if (basicInfo != null) {
+      appendValue(html, ContentProvider.get("IvyVersion"), basicInfo.getVersion());
+      appendValue(html, ContentProvider.get("BuildDate"), DataUtils.dateToString(basicInfo.getBuildDate()));
+      appendValue(html, ContentProvider.get("InstallationDirectory"), basicInfo.getInstallationDirectory());
     }
+    if (osInfo != null) {
+      appendValue(html, ContentProvider.get("OperatingSystem"), osInfo.getName());
+    }
+    appendValue(html, ContentProvider.get("IvyHostName"), hostInfo);
+    endHTML(html);
+    return html.toString();
   }
 
-  private void hideInfoLabels(JLabel titleLabel, JLabel valueLabel) {
-    titleLabel.setVisible(false);
-    valueLabel.setVisible(false);
+  private String toSystemDBInfoHtmlString(SystemDatabaseInfo sysDbInfo) {
+    StringBuilder html = beginHTML();
+    if (sysDbInfo != null) {
+      appendValue(html, ContentProvider.get("IvyDatabaseVersion"), sysDbInfo.getIvySystemDbVersion());
+      appendValue(html, ContentProvider.get("DatabaseProduct"), sysDbInfo.getType());
+      appendValue(html, ContentProvider.get("DatabaseVersion"), sysDbInfo.getVersion());
+      appendValue(html, ContentProvider.get("DatabaseDriver"), sysDbInfo.getDriver());
+      appendValue(html, ContentProvider.get("DatabaseHost"), DataUtils.getHostFromConnectionUrl(sysDbInfo.
+              getConnectionUrl()));
+      appendValue(html, ContentProvider.get("DatabasePort"), DataUtils.getPortFromConnectionUrl(sysDbInfo.
+              getConnectionUrl()));
+      appendValue(html, ContentProvider.get("DatabaseName"), DataUtils.getSchemaFromConnectionUrl(sysDbInfo.
+              getConnectionUrl()));
+      String username = sysDbInfo.getUsername();
+      if (username != null && !"".equals(username.trim())) {
+        appendValue(html, ContentProvider.get("DatabaseUserName"), username);
+      }
+      appendValue(html, ContentProvider.get("ConnectionURL"), sysDbInfo.getConnectionUrl());
+    }
+    endHTML(html);
+    return html.toString();
+  }
+
+  private String toConnectorsHtmlString(List<ServerConnectorInfo> connectorInfo) {
+    StringBuilder html = beginHTML();
+    if (connectorInfo.size() > 0) {
+      for (ServerConnectorInfo connector : connectorInfo) {
+        html.append(TR_TD_START_WITH_NO_WRAP)
+                .append(connector.getDisplayProtocol())
+                .append(" - ")
+                .append(connector.getPort())
+                .append(TD_TR_END);
+      }
+    } else {
+      html.append(TR_TD_START_WITH_NO_WRAP)
+              .append(ContentProvider.get("NoConnector"))
+              .append(TD_TR_END);
+    }
+    endHTML(html);
+    return html.toString();
+  }
+
+  private StringBuilder beginHTML() {
+    StringBuilder html = new StringBuilder("<html><body style=\"font-family:tahoma;font-size:11\">");
+    html.append(TABLE_START);
+    return html;
+  }
+
+  private void endHTML(StringBuilder html) {
+    html.append(TABLE_END);
+    html.append("</body></html>");
+  }
+
+  private void appendValue(StringBuilder html, String label, String value) {
+    html.append(TR_TD_START_WITH_NO_WRAP)
+            .append(label)
+            .append(CHAR_COLON)
+            .append(CHAR_SPACE)
+            .append(TD_END)
+            .append(TD_START)
+            .append(value)
+            .append(TD_TR_END);
   }
 
   public JComponent getConnectorsPanel() {
-    return connectorsContainScrollPane;
+    return connectorsContainPanel;
   }
 
   public JComponent getGeneralPanel() {
@@ -662,7 +261,7 @@ public final class InformationPanelTopComponent extends JPanel {
   }
 
   public JComponent getSysDbPanel() {
-    return sysDbScrollPane;
+    return sysDbPanel;
   }
 
 }
