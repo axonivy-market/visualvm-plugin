@@ -25,7 +25,6 @@ import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeCellRenderer;
 import javax.swing.tree.DefaultTreeModel;
 import javax.swing.tree.ExpandVetoException;
-import javax.swing.tree.MutableTreeNode;
 import javax.swing.tree.TreePath;
 import javax.swing.tree.TreeSelectionModel;
 import org.apache.commons.lang.StringUtils;
@@ -65,6 +64,7 @@ public class ExternalDbWsCommonPanel extends javax.swing.JPanel {
    * the root node
    */
   private final AppEnvConfigNode fRootNode;
+
   /**
    * the main view to interact when selection changed
    */
@@ -184,13 +184,12 @@ public class ExternalDbWsCommonPanel extends javax.swing.JPanel {
     mainSplitpane.setDividerLocation(oldDividerLoc);
   }
 
-  // init data for the tree
   public void setTreeData(Map<String, Map<String, Set<String>>> appEnvConfMap) {
-    fAppEnvConfigWsMap = appEnvConfMap;
-    // reset the current tree
-    for (int i = 0; i < fRootNode.getChildCount(); i++) {
-      fEnvTreeModel.removeNodeFromParent((MutableTreeNode) fRootNode.getChildAt(i));
+    if (appEnvConfMap == null) {
+      throw new IllegalArgumentException("The parameter must be not null");
     }
+    fAppEnvConfigWsMap = appEnvConfMap;
+    fRootNode.removeAllChildren();
     initTreeData();
     expandAllTreeNodes();
   }
@@ -393,5 +392,9 @@ public class ExternalDbWsCommonPanel extends javax.swing.JPanel {
       return resultLabel;
     }
 
+  }
+
+  public AppEnvConfigNode getRootNode() {
+    return fRootNode;
   }
 }
