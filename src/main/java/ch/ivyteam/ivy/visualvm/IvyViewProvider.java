@@ -1,6 +1,7 @@
 package ch.ivyteam.ivy.visualvm;
 
 import ch.ivyteam.ivy.visualvm.model.IvyApplicationInfo;
+import ch.ivyteam.ivy.visualvm.model.IvyJmxConstant;
 import ch.ivyteam.ivy.visualvm.util.DataUtils;
 import ch.ivyteam.ivy.visualvm.view.DataBeanProvider;
 import com.sun.tools.visualvm.application.Application;
@@ -9,7 +10,11 @@ import com.sun.tools.visualvm.core.ui.DataSourceViewProvider;
 import com.sun.tools.visualvm.core.ui.DataSourceViewsManager;
 import com.sun.tools.visualvm.tools.jmx.JmxModel;
 import com.sun.tools.visualvm.tools.jmx.JmxModelFactory;
+import java.io.IOException;
+import javax.management.AttributeList;
+import javax.management.InstanceNotFoundException;
 import javax.management.MBeanServerConnection;
+import javax.management.ReflectionException;
 
 public class IvyViewProvider extends DataSourceViewProvider<Application> {
 
@@ -27,10 +32,7 @@ public class IvyViewProvider extends DataSourceViewProvider<Application> {
         result = checkAppropriateIvyApp(fDataBeanProvider);
       }
     }
-    if (!result) {
-      fDataBeanProvider = null;
-    }
-    return true;
+    return result;
   }
 
   public boolean checkAppropriateIvyApp(DataBeanProvider dataBeanProvider) {
@@ -39,6 +41,18 @@ public class IvyViewProvider extends DataSourceViewProvider<Application> {
     if ((appInfo != null) && DataUtils.checkIvyVersion(appInfo.getVersion(), 5, 1)) {
       result = IvyApplicationInfo.IVY_SERVER_APP_NAME.equals(appInfo.getApplicationName())
               || IvyApplicationInfo.IVY_DESIGNER_APP_NAME.equals(appInfo.getApplicationName());
+    }
+    if (!result) {
+      try {
+        AttributeList attributes
+                = dataBeanProvider.getMBeanServerConnection().getAttributes(IvyJmxConstant.ENGINE,
+                        new String[]{});
+        if (attributes != null) {
+          fDataBeanProvider = null;
+          result = true;
+        }
+      } catch (InstanceNotFoundException | ReflectionException | IOException ex) {
+      }
     }
     return result;
   }

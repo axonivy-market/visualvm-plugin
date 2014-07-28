@@ -38,38 +38,6 @@
       <dataset>
         <property>
           <name>version</name>
-          <value>5.0.0.44832</value>
-        </property>
-        <property>
-          <name>applicationName</name>
-          <value>Xpert.ivy Server</value>
-        </property>
-      </dataset>
-    </property>
-  </dataset>
-  
-  <dataset>
-    <property>
-      <name>Xpert.ivy Server:type=Server</name>
-      <dataset>
-        <property>
-          <name>version</name>
-          <value>4.3.0.44832</value>
-        </property>
-        <property>
-          <name>applicationName</name>
-          <value>Xpert.ivy Server</value>
-        </property>
-      </dataset>
-    </property>
-  </dataset>
-  
-  <dataset>
-    <property>
-      <name>Xpert.ivy Server:type=Server</name>
-      <dataset>
-        <property>
-          <name>version</name>
           <value>5.2.0.44832</value>
         </property>
         <property>
@@ -98,31 +66,53 @@
   
   <dataset>
     <property>
-      <name>Xpert.ivy Server:type=Server</name>
-      <dataset>
+        <name>Apache:type=Info</name>
+        <dataset>
         <property>
           <name>version</name>
-          <value>5.0.0.44832</value>
+          <value>5.2.3</value>
         </property>
         <property>
           <name>applicationName</name>
-          <value>Xpert.ivy Designer</value>
+          <value>Apache Server</value>
         </property>
       </dataset>
+    </property>   
+    <property>
+        <name>ivy:type=Engine</name>
+        <dataset>
+            <property>
+                <name>name</name>
+                <value>ivy</value>
+            </property>
+        </dataset>
     </property>
   </dataset>
   
   <dataset>
     <property>
-      <name>Xpert.ivy Server:type=Server</name>
-      <dataset>
+        <name>Apache:type=Info</name>
+        <dataset>
         <property>
           <name>version</name>
-          <value>4.3.0.44832</value>
+          <value>5.2.3</value>
         </property>
         <property>
           <name>applicationName</name>
-          <value>Xpert.ivy Designer</value>
+          <value>Apache Server</value>
+        </property>
+      </dataset>
+    </property>      
+    <property>
+      <name>Apache:type=Server</name>
+      <dataset>
+        <property>
+          <name>version</name>
+          <value>5.2.3</value>
+        </property>
+        <property>
+          <name>applicationName</name>
+          <value>Apache Server</value>
         </property>
       </dataset>
     </property>

@@ -5,6 +5,7 @@ import ch.ivyteam.ivy.visualvm.exception.IvyJmxDataCollectException;
 import ch.ivyteam.ivy.visualvm.test.data.model.BeanTestData;
 import ch.ivyteam.ivy.visualvm.test.util.TestUtil;
 import ch.ivyteam.ivy.visualvm.view.DataBeanProvider;
+import ch.ivyteam.ivy.visualvm.view.GenericData;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import javax.management.InstanceNotFoundException;
@@ -17,6 +18,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 import static org.mockito.Matchers.anyObject;
+import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 @RunWith(Parameterized.class)
@@ -31,10 +33,8 @@ public class VersionCompatibilitiesTest extends AbstractTest {
     Iterable<Object[]> data = TestUtil.createTestData(
             "/ch/ivyteam/ivy/visualvm/test/VersionCompatibilitiesTest.xml",
             new Object[]{true}, new Object[]{true},
-            new Object[]{false}, new Object[]{false},
             new Object[]{true}, new Object[]{true},
-            new Object[]{false}, new Object[]{false},
-            new Object[]{false});
+            new Object[]{true}, new Object[]{false}, new Object[]{false});
     return data;
   }
 
@@ -48,15 +48,23 @@ public class VersionCompatibilitiesTest extends AbstractTest {
           IOException, IvyJmxDataCollectException, InstanceNotFoundException, ReflectionException {
 
     MBeanServerConnection mockedMBeanServer = createMockConnection();
+    IvyViewProvider ivyViewProvider = new IvyViewProvider();
+    DataBeanProvider dataBeanProvider = new DataBeanProvider(mockedMBeanServer);
+
     if (getDataset().getProperty().size() > 0) {
       addTestData(mockedMBeanServer, getDataset());
+      if (getDataset().getProperty().size() == 2) {
+        dataBeanProvider = mock(DataBeanProvider.class);
+        GenericData mockedGenericData = mock(GenericData.class);
+        when(mockedGenericData.getApplicationInfo()).thenReturn(null);
+        when(dataBeanProvider.getMBeanServerConnection()).thenReturn(mockedMBeanServer);
+        when(dataBeanProvider.getGenericData()).thenReturn(mockedGenericData);
+      }
     } else {
       when(mockedMBeanServer.getAttributes((ObjectName) anyObject(), (String[]) anyObject()))
               .thenThrow(new InstanceNotFoundException());
     }
 
-    IvyViewProvider ivyViewProvider = new IvyViewProvider();
-    DataBeanProvider dataBeanProvider = new DataBeanProvider(mockedMBeanServer);
     boolean isIvy = ivyViewProvider.checkAppropriateIvyApp(dataBeanProvider);
     assertEquals(fResult, isIvy);
   }

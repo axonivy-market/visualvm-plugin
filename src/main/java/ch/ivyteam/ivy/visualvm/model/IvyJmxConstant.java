@@ -4,8 +4,12 @@ import java.util.logging.Logger;
 import javax.management.MalformedObjectNameException;
 import javax.management.ObjectName;
 
-public class IvyJmxConstant {
+public final class IvyJmxConstant {
   private static final Logger LOGGER = Logger.getLogger(IvyJmxConstant.class.getName());
+  public static final ObjectName ENGINE = initObjectName("ivy:type=Engine");
+
+  private IvyJmxConstant() {
+  }
 
   private static ObjectName initObjectName(String name) {
     ObjectName result = null;
