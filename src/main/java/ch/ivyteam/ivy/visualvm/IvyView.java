@@ -40,7 +40,6 @@ class IvyView extends DataSourceView {
   public static final String EXT_DB_ICON_IMAGE_PATH = "resources/icons/ext_db_icon.png";
   public static final String WEB_SERVICE_ICON_IMAGE_PATH = "resources/icons/web_services_icon.png";
   public static final String USER_REQ_IMAGE_PATH = "resources/icons/user_req.png";
-  public static final String USER_DEF_IMAGE_PATH = "resources/icons/user_def.png";
   public static final String LICENSE_IMAGE_PATH = "resources/icons/license.png";
 
   private ScheduledTask updateTask;

@@ -37,7 +37,7 @@ public class XYChartPanel extends JPanel implements IUpdatableUIObject {
   private static final int CHART_MAIN_AREA_INDEX = 1;
   private static final int CHART_MAIN_AREA_YAXIS_INDEX = 2;
   private static final int CHART_YAXIS_LABEL_INDEX = 0;
-  private static final String ICON_HELP_URL = "/resources/icons/question16_with_padding.png";
+  private static final String ICON_HELP_URL = "/resources/icons/question16.png";
 
   private SimpleXYChartSupport fChart;
   private HtmlLabelComponent fHtmlLabel;
