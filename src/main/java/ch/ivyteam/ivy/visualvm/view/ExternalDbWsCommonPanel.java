@@ -8,14 +8,18 @@ import ch.ivyteam.ivy.visualvm.chart.ChartsPanel;
 import java.awt.Component;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 import javax.swing.Icon;
+import javax.swing.JLabel;
 import javax.swing.JTree;
+import javax.swing.SwingUtilities;
 import javax.swing.event.TreeExpansionEvent;
-import javax.swing.event.TreeSelectionEvent;
-import javax.swing.event.TreeSelectionListener;
 import javax.swing.event.TreeWillExpandListener;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeCellRenderer;
@@ -226,33 +230,46 @@ public class ExternalDbWsCommonPanel extends javax.swing.JPanel {
   private void initTree() {
     envJTree.setCellRenderer(new EnvTreeCellRenderer());
     envJTree.getSelectionModel().setSelectionMode(TreeSelectionModel.SINGLE_TREE_SELECTION);
-    envJTree.setToggleClickCount(1);
-    addSelectionListener();
+    envJTree.setShowsRootHandles(true);
+    addMouseClickListener();
+    addKeyListener();
     keepSelectionWhenCollapse();
   }
 
-  private void addSelectionListener() {
-    envJTree.addTreeSelectionListener(new TreeSelectionListener() {
+  private void addKeyListener() {
+    envJTree.addKeyListener(new KeyAdapter() {
+
       @Override
-      public void valueChanged(TreeSelectionEvent selectionEvent) {
-        preventSelection(selectionEvent);
-        createChartsPanel();
+      public void keyReleased(KeyEvent e) {
+        TreePath selectedPath = envJTree.getSelectionPath();
+        if (e.getKeyCode() == KeyEvent.VK_ENTER && selectedPath != null) {
+          AppEnvConfigNode node = (AppEnvConfigNode) selectedPath.getLastPathComponent();
+          createChartsPanel(node);
+        }
       }
 
     });
   }
 
-  private void preventSelection(TreeSelectionEvent e) {
-    TreePath oldPath = e.getOldLeadSelectionPath();
-    TreePath newPath = e.getNewLeadSelectionPath();
-    if (newPath != null) {
-      AppEnvConfigNode node = (AppEnvConfigNode) newPath.getLastPathComponent();
-      if (node.isLeaf()) {
-        envJTree.setSelectionPath(newPath);
-      } else {
-        envJTree.setSelectionPath(oldPath);
+  private void addMouseClickListener() {
+    envJTree.addMouseListener(new MouseAdapter() {
+
+      @Override
+      public void mouseClicked(MouseEvent e) {
+        TreePath clickedPath = envJTree.getPathForLocation(e.getX(), e.getY());
+        if (clickedPath != null) {
+          AppEnvConfigNode node = (AppEnvConfigNode) clickedPath.getLastPathComponent();
+          if (node != null && (node.isNodeOpened() || isDoubleClick(e))) {
+            createChartsPanel(node);
+          }
+        }
       }
-    }
+
+      private boolean isDoubleClick(MouseEvent e) {
+        return SwingUtilities.isLeftMouseButton(e) && e.getClickCount() > 1;
+      }
+
+    });
   }
 
   private void keepSelectionWhenCollapse() {
@@ -289,12 +306,7 @@ public class ExternalDbWsCommonPanel extends javax.swing.JPanel {
     });
   }
 
-  private void createChartsPanel() {
-    TreePath selectedPath = envJTree.getSelectionPath();
-    if (selectedPath == null) {
-      return;
-    }
-    AppEnvConfigNode node = (AppEnvConfigNode) selectedPath.getLastPathComponent();
+  private void createChartsPanel(AppEnvConfigNode node) {
     if (node != null && node.isLeaf()) {
       String appName = node.getParent().getParent().toString();
       String envName = node.getParent().toString();
@@ -367,17 +379,18 @@ public class ExternalDbWsCommonPanel extends javax.swing.JPanel {
     @Override
     public Component getTreeCellRendererComponent(JTree tree, Object value, boolean sel, boolean expanded,
             boolean leaf, int row, boolean hasFocus) {
-      super.getTreeCellRendererComponent(tree, value, sel, expanded, leaf, row, hasFocus);
+      JLabel resultLabel
+              = (JLabel) super.getTreeCellRendererComponent(tree, value, sel, expanded, leaf, row, hasFocus);
 
       if (value instanceof AppEnvConfigNode) {
         AppEnvConfigNode node = (AppEnvConfigNode) value;
-        setIcon(node.getNodeIcon());
-        setText((String) node.getUserObject());
+        resultLabel.setIcon(node.getNodeIcon());
+        resultLabel.setText((String) node.getUserObject());
         if (node.isNodeOpened()) {
-          setIcon(fRecordingIcon);
+          resultLabel.setIcon(fRecordingIcon);
         }
       }
-      return this;
+      return resultLabel;
     }
 
   }
