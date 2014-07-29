@@ -129,9 +129,9 @@ public class ExternalDbView extends ExternalDbWsCommonView {
     fireCreateChartsAction(appName, envName, configName);
     if (!fChartsPanel.containsNode(appName, envName, configName)) {
       updateConfigTreeNodes();
-      fChartsPanel.refreshOpenedNodes();
     }
     setSelectedNode(appName, envName, configName);
+    fChartsPanel.refreshOpenedNodes();
   }
 
   @Override
