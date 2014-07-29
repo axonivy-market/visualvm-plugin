@@ -49,21 +49,21 @@ public class LicenseInformationPanel extends javax.swing.JPanel {
   public static final String ORGANIZATION = ContentProvider.get("Organization");
 
   private static final String EXPIRE_IN_30_DAYS_WARNING
-                              = ContentProvider.getFormatted("ExpireIn30DaysWarning");
+          = ContentProvider.getFormatted("ExpireIn30DaysWarning");
   private static final String EXPIRED_WARNING
-                              = ContentProvider.getFormatted("ExpiredWarning");
+          = ContentProvider.getFormatted("ExpiredWarning");
   private static final String USERS_80_PERCENT_EXCEEDED_WARNING
-                              = ContentProvider.getFormatted("Exceed80PerCentOfUsersWarning");
+          = ContentProvider.getFormatted("Exceed80PerCentOfUsersWarning");
   private static final String USERS_90_PERCENT_EXCEEDED_WARNING
-                              = ContentProvider.getFormatted("Exceed90PerCentOfUsersWarning");
+          = ContentProvider.getFormatted("Exceed90PerCentOfUsersWarning");
   private static final String USERS_EXCEEDED_WARNING
-                              = ContentProvider.getFormatted("ExceedUsersWarning");
+          = ContentProvider.getFormatted("ExceedUsersWarning");
   private static final String SESSIONS_90_PERCENT_EXCEEDED_WARNING
-                              = ContentProvider.getFormatted("Exceed90PerCentOfSessionsWarning");
+          = ContentProvider.getFormatted("Exceed90PerCentOfSessionsWarning");
   private static final String SESSIONS_EXCEEDED_WARNING
-                              = ContentProvider.getFormatted("ExceedSessionsWarning");
+          = ContentProvider.getFormatted("ExceedSessionsWarning");
   private static final String SESSIONS_150_PERCENT_EXCEEDED_WARNING
-                              = ContentProvider.getFormatted("Exceed150PercentOfSessionsWarning");
+          = ContentProvider.getFormatted("Exceed150PercentOfSessionsWarning");
 
   private int fNamedUsers;
   private int fConcurrentUsers;
@@ -192,10 +192,11 @@ public class LicenseInformationPanel extends javax.swing.JPanel {
       int threshold150 = (int) Math.floor(serverSessionsLimit * 1.5);
       if (fConcurrentUsers >= threshold90 && fConcurrentUsers < serverSessionsLimit) {
         warningMsg = SESSIONS_90_PERCENT_EXCEEDED_WARNING;
-      } else if (fConcurrentUsers >= serverSessionsLimit
-                 && fConcurrentUsers < threshold150) {
+      } else if (fConcurrentUsers > serverSessionsLimit
+              && fConcurrentUsers < threshold150) {
         warningMsg = SESSIONS_EXCEEDED_WARNING;
         color = ERROR_COLOR;
+        iconPath = ERROR_ICON_PATH;
       } else if (fConcurrentUsers >= threshold150) {
         warningMsg = SESSIONS_150_PERCENT_EXCEEDED_WARNING;
         color = ERROR_COLOR;
