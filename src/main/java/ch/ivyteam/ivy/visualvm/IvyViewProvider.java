@@ -5,6 +5,8 @@ import ch.ivyteam.ivy.visualvm.model.IvyJmxConstant;
 import ch.ivyteam.ivy.visualvm.util.DataUtils;
 import ch.ivyteam.ivy.visualvm.view.DataBeanProvider;
 import com.sun.tools.visualvm.application.Application;
+import com.sun.tools.visualvm.application.type.ApplicationType;
+import com.sun.tools.visualvm.application.type.ApplicationTypeFactory;
 import com.sun.tools.visualvm.core.ui.DataSourceView;
 import com.sun.tools.visualvm.core.ui.DataSourceViewProvider;
 import com.sun.tools.visualvm.core.ui.DataSourceViewsManager;
@@ -30,6 +32,13 @@ public class IvyViewProvider extends DataSourceViewProvider<Application> {
       if (mbsc != null) {
         fDataBeanProvider = new DataBeanProvider(mbsc);
         result = checkAppropriateIvyApp(fDataBeanProvider);
+      }
+    }
+    if (!result) {
+      ApplicationType applicationType = ApplicationTypeFactory.getApplicationTypeFor(application);
+      if (applicationType instanceof IvyApplicationType) {
+        fDataBeanProvider = null;
+        result = true;
       }
     }
     return result;
