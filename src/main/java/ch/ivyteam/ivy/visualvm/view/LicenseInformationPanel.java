@@ -190,7 +190,7 @@ public class LicenseInformationPanel extends javax.swing.JPanel {
       String color = WARNING_COLOR;
       int threshold90 = (int) Math.floor(serverSessionsLimit * 0.9);
       int threshold150 = (int) Math.floor(serverSessionsLimit * 1.5);
-      if (fConcurrentUsers >= threshold90 && fConcurrentUsers < serverSessionsLimit) {
+      if (fConcurrentUsers >= threshold90 && fConcurrentUsers <= serverSessionsLimit) {
         warningMsg = SESSIONS_90_PERCENT_EXCEEDED_WARNING;
       } else if (fConcurrentUsers > serverSessionsLimit
               && fConcurrentUsers < threshold150) {
