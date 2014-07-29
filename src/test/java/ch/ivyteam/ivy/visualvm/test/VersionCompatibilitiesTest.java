@@ -65,7 +65,7 @@ public class VersionCompatibilitiesTest extends AbstractTest {
               .thenThrow(new InstanceNotFoundException());
     }
 
-    boolean isIvy = ivyViewProvider.checkAppropriateIvyApp(dataBeanProvider);
+    boolean isIvy = ivyViewProvider.isSupportedIvyApp50AndLater(dataBeanProvider);
     assertEquals(fResult, isIvy);
   }
 

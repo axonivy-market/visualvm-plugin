@@ -5,7 +5,6 @@ import ch.ivyteam.ivy.visualvm.model.IvyJmxConstant;
 import ch.ivyteam.ivy.visualvm.util.DataUtils;
 import ch.ivyteam.ivy.visualvm.view.DataBeanProvider;
 import com.sun.tools.visualvm.application.Application;
-import com.sun.tools.visualvm.application.type.ApplicationType;
 import com.sun.tools.visualvm.application.type.ApplicationTypeFactory;
 import com.sun.tools.visualvm.core.ui.DataSourceView;
 import com.sun.tools.visualvm.core.ui.DataSourceViewProvider;
@@ -26,44 +25,57 @@ public class IvyViewProvider extends DataSourceViewProvider<Application> {
   @Override
   protected boolean supportsViewFor(Application application) {
     JmxModel jmx = JmxModelFactory.getJmxModelFor(application);
-    boolean result = false;
+    boolean isSupported = false;
     if (jmx != null) {
       MBeanServerConnection mbsc = jmx.getMBeanServerConnection();
       if (mbsc != null) {
         fDataBeanProvider = new DataBeanProvider(mbsc);
-        result = checkAppropriateIvyApp(fDataBeanProvider);
+        isSupported = isSupportedIvyApp50AndLater(fDataBeanProvider);
       }
     }
-    if (!result) {
-      ApplicationType applicationType = ApplicationTypeFactory.getApplicationTypeFor(application);
-      if (applicationType instanceof IvyApplicationType) {
-        fDataBeanProvider = null;
-        result = true;
-      }
+    if (!isSupported && isIvyApplicationType(application)) {
+      // Ivy 4.x
+      isSupported = true;
+      fDataBeanProvider = null;
     }
-    return result;
+    return isSupported;
   }
 
-  public boolean checkAppropriateIvyApp(DataBeanProvider dataBeanProvider) {
-    boolean result = false;
-    IvyApplicationInfo appInfo = dataBeanProvider.getGenericData().getApplicationInfo();
-    if ((appInfo != null) && DataUtils.checkIvyVersion(appInfo.getVersion(), 5, 1)) {
-      result = IvyApplicationInfo.IVY_SERVER_APP_NAME.equals(appInfo.getApplicationName())
-              || IvyApplicationInfo.IVY_DESIGNER_APP_NAME.equals(appInfo.getApplicationName());
-    }
-    if (!result) {
-      try {
-        AttributeList attributes
-                = dataBeanProvider.getMBeanServerConnection().getAttributes(IvyJmxConstant.ENGINE,
-                        new String[]{});
-        if (attributes != null) {
-          fDataBeanProvider = null;
-          result = true;
-        }
-      } catch (InstanceNotFoundException | ReflectionException | IOException ex) {
+  private boolean isIvyApplicationType(Application application) {
+    return ApplicationTypeFactory.getApplicationTypeFor(application) instanceof IvyApplicationType;
+  }
+
+  public boolean isSupportedIvyApp50AndLater(DataBeanProvider dataBeanProvider) {
+    boolean isSupported = isSupportedIvyApp51AndLater(dataBeanProvider);
+    if (!isSupported) {
+      isSupported = isSupportedIvyApp50(dataBeanProvider);
+      if (isSupported) {
+        fDataBeanProvider = null;
       }
     }
-    return result;
+    return isSupported;
+  }
+
+  private boolean isSupportedIvyApp50(DataBeanProvider dataBeanProvider) {
+    boolean isIvyApp;
+    try {
+      AttributeList attributes
+              = dataBeanProvider.getMBeanServerConnection().getAttributes(IvyJmxConstant.ENGINE,
+                      new String[]{});
+      isIvyApp = attributes != null;
+    } catch (InstanceNotFoundException | ReflectionException | IOException ex) {
+      isIvyApp = false;
+    }
+    return isIvyApp;
+  }
+
+  private boolean isSupportedIvyApp51AndLater(DataBeanProvider dataBeanProvider) {
+    IvyApplicationInfo appInfo = dataBeanProvider.getGenericData().getApplicationInfo();
+    if ((appInfo != null) && DataUtils.checkIvyVersion(appInfo.getVersion(), 5, 1)) {
+      return IvyApplicationInfo.IVY_SERVER_APP_NAME.equals(appInfo.getApplicationName())
+              || IvyApplicationInfo.IVY_DESIGNER_APP_NAME.equals(appInfo.getApplicationName());
+    }
+    return false;
   }
 
   @Override
