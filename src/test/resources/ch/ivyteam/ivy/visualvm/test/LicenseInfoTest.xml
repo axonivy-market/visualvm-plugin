@@ -297,7 +297,7 @@
             </property>
             <property>
               <name>server.sessions.limit</name>
-              <value>9</value>
+              <value>8</value>
             </property>
             <property>
               <name>server.users.limit</name>
