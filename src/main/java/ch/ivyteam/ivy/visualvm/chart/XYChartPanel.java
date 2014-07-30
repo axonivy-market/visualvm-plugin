@@ -15,9 +15,7 @@ import java.awt.Component;
 import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.Font;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
-import java.awt.Insets;
+import java.util.Arrays;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
@@ -30,8 +28,10 @@ import javax.swing.JPanel;
 import javax.swing.plaf.basic.BasicHTML;
 import javax.swing.text.View;
 import org.apache.commons.lang.StringUtils;
-
-public class XYChartPanel extends JPanel implements IUpdatableUIObject {
+/**
+ * This is just a composite of UI components. Not a JPanel.
+ */
+public class XYChartPanel implements IUpdatableUIObject {
 
   private static final int CONTAINER_CHART_INDEX = 1;
   private static final int CHART_MAIN_AREA_INDEX = 1;
@@ -50,12 +50,24 @@ public class XYChartPanel extends JPanel implements IUpdatableUIObject {
   private String fYAxisTooltip;
 
   private final List<StorageItem> fStorage;
+  /**
+   * topValue: the maximum value has appeared in the chart. It only change when
+   * the chart is re-created (e.g. changing periodCache size / re-create chart
+   * UI)
+   */
+  private long topValue = 0;
+  /**
+   * maxValue: the maximum value at this moment in the chart.
+   */
+  private long maxValue = 0;
+  private final ChartsPanel fchartsContainer;
 
-  XYChartPanel(XYChartDataSource dataSource) {
-    this(dataSource, null);
+  XYChartPanel(ChartsPanel chartsContainer, XYChartDataSource dataSource) {
+    this(chartsContainer, dataSource, null);
   }
 
-  XYChartPanel(XYChartDataSource dataSource, String yAxisTooltip) {
+  XYChartPanel(ChartsPanel chartsContainer, XYChartDataSource dataSource, String yAxisTooltip) {
+    fchartsContainer = chartsContainer;
     fDataSource = dataSource;
     fStorage = new LinkedList<>();
     fYAxisTooltip = yAxisTooltip;
@@ -63,7 +75,7 @@ public class XYChartPanel extends JPanel implements IUpdatableUIObject {
   }
 
   private void createUI() {
-    removeAll();
+//    removeAll();
     createChart();
     createYAxisHeader(fYAxisTooltip);
     createLegendTooltips();
@@ -75,17 +87,9 @@ public class XYChartPanel extends JPanel implements IUpdatableUIObject {
     SimpleXYChartDescriptor chartDescriptor = SimpleXYChartDescriptor.decimal(10, true,
             60 * monitoredDataCache);
     configureChart(chartDescriptor);
+    
     fChart = ChartFactory.createSimpleXYChart(chartDescriptor);
-
-    setLayout(new GridBagLayout());
-    setBackground(Color.WHITE);
-    add(fChart.getChart(), new GridBagConstraints(
-            0, 0, 1, 1, 1, 1, GridBagConstraints.WEST, GridBagConstraints.BOTH,
-            new Insets(0, 0, 0, 0), 0, 0));
     fHtmlLabel = new HtmlLabelComponent();
-    add(fHtmlLabel, new GridBagConstraints(
-            1, 0, 0, 0, 0, 0, GridBagConstraints.WEST, GridBagConstraints.BOTH,
-            new Insets(0, 0, 0, 0), 0, 0));
     fYAxis = identifyYAxis();
     fXAxis = identifyXAxis();
     fChartArea = identifyChartMainArea();
@@ -95,7 +99,11 @@ public class XYChartPanel extends JPanel implements IUpdatableUIObject {
   public void updateValues(QueryResult result) {
     long[] values = fDataSource.getValues(result);
     long currentTime = System.currentTimeMillis();
-    fChart.addValues(currentTime, values);
+
+    if (needRecreateUI()) {
+      recreateUI();
+    }
+    addValuesToChart(currentTime, values);
 
     long[] labels = fDataSource.calculateDetailValues(result);
     fHtmlLabel.updateValues(labels);
@@ -106,6 +114,23 @@ public class XYChartPanel extends JPanel implements IUpdatableUIObject {
     }
 
     addStorageItem(currentTime, values);
+  }
+
+  private boolean needRecreateUI() {
+    boolean rs = false;
+    if (this.topValue > 0) {
+      rs = (this.maxValue <= this.topValue / 2);
+    }
+    return rs;
+  }
+
+  private void recreateUI() {
+    createUI();
+    long currentTime = System.currentTimeMillis();
+    restoreDataFromStorage(currentTime);
+    fchartsContainer.recreateUIAlignedXYCharts();
+    this.topValue = 0;
+    this.maxValue = 0;
   }
 
   @Override
@@ -190,7 +215,19 @@ public class XYChartPanel extends JPanel implements IUpdatableUIObject {
   private void restoreDataFromStorage(long currentTime) {
     removeOutOfDateStorageItem(currentTime);
     for (StorageItem item : fStorage) {
-      fChart.addValues(item.getTimestamp(), item.getValues());
+      addValuesToChart(item.getTimestamp(), item.getValues());
+    }
+  }
+
+  private void addValuesToChart(long currentTime, long[] values) {
+    fChart.addValues(currentTime, values);
+    for (long l : values) {
+      if (this.topValue < l) {
+        this.topValue = l;
+        this.maxValue = l;
+      } else if (this.maxValue < l) {
+        this.maxValue = l;
+      }
     }
   }
 
@@ -206,8 +243,32 @@ public class XYChartPanel extends JPanel implements IUpdatableUIObject {
       StorageItem item = iterator.next();
       if (item.getTimestamp() + cachePeriod < currentTime) {
         iterator.remove();
+        //Only recalculate maxValue if values of removed item >= current maxValue
+        for (long l : item.fValues) {
+          if (l >= this.maxValue) {
+            this.recalculateMaxValueInCache();
+            break;
+          }
+        }
       } else {
         break;
+      }
+    }
+  }
+
+//  private void log(String s) {
+//    if (this.fDataSource instanceof RequestChartDataSource) {
+//      LogUtils.printChild(s);
+//    }
+//  }
+
+  private void recalculateMaxValueInCache() {
+    this.maxValue = 0;
+    for (StorageItem storageItem : fStorage) {
+      for (long l : storageItem.fValues) {
+        if (this.maxValue < l) {
+          this.maxValue = l;
+        }
       }
     }
   }
@@ -263,6 +324,7 @@ public class XYChartPanel extends JPanel implements IUpdatableUIObject {
   }
 
   private class StorageItem {
+
     private final long fTimestamp;
     private final long[] fValues;
 
@@ -280,6 +342,10 @@ public class XYChartPanel extends JPanel implements IUpdatableUIObject {
       return fValues;
     }
 
+    public String toString() {
+//      return ""+ fTimestamp + ", values: "+Arrays.toString(fValues);
+      return Arrays.toString(fValues);
+    }
   }
 
 }

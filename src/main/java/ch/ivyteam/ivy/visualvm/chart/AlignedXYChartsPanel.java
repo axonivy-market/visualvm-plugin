@@ -19,7 +19,11 @@ public class AlignedXYChartsPanel extends JPanel {
     fCharts = new ArrayList<>();
     setBackground(Color.WHITE);
   }
-
+  /**
+   * @param chart 
+   * In the future, we should dedicate below layout code to XYChartPanel.
+   * This methods should layout only charts, not components inside the charts.
+   */
   public void addChart(XYChartPanel chart) {
     int index = fCharts.size();
     chart.getYAxisDescription().setPreferredSize(new Dimension(18, 0));

@@ -24,8 +24,8 @@ public class ChartsPanel implements IUpdatableUIObject {
   /**
    * Constructor
    *
-   * @param horizontalOrVertical <code>true</code> to lay charts horizontally, <code>false</code> to lay
-   *                             charts vertically
+   * @param horizontalOrVertical <code>true</code> to lay charts horizontally,
+   * <code>false</code> to lay charts vertically
    */
   public ChartsPanel(boolean horizontalOrVertical) {
     LayoutManager layout;
@@ -62,7 +62,7 @@ public class ChartsPanel implements IUpdatableUIObject {
   }
 
   public void addChart(XYChartDataSource dataSource, String yAxisMessage) {
-    final XYChartPanel chart = new XYChartPanel(dataSource, yAxisMessage);
+    final XYChartPanel chart = new XYChartPanel(this, dataSource, yAxisMessage);
     fUpdatableObjects.add(chart);
     addXYChartToAlignedXYChartsPanel(chart);
   }
@@ -94,6 +94,16 @@ public class ChartsPanel implements IUpdatableUIObject {
     }
   }
 
+  public void recreateUIAlignedXYCharts() {
+    fAlignedXYChartsPanel.removeAll();
+    for (IUpdatableUIObject object : fUpdatableObjects) {
+      if (object instanceof XYChartPanel) {
+        XYChartPanel chart = (XYChartPanel) object;
+        addXYChartToAlignedXYChartsPanel(chart);
+      }
+    }
+  }
+
   private void updateChartsCachePeriod() {
     fAlignedXYChartsPanel.removeAll();
     for (IUpdatableUIObject object : fUpdatableObjects) {
@@ -106,6 +116,7 @@ public class ChartsPanel implements IUpdatableUIObject {
   }
 
   private class CacheSettingChangeListener implements PreferenceChangeListener {
+
     @Override
     public void preferenceChange(PreferenceChangeEvent evt) {
       updateChartsCachePeriod();
