@@ -23,6 +23,7 @@ import javax.swing.AbstractButton;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
+import javax.swing.JCheckBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.plaf.basic.BasicHTML;
@@ -157,7 +158,39 @@ public class XYChartPanel implements IUpdatableUIObject {
   }
 
   private Component identifyLegend() {
+    Component legendPanelVerion138 = identifyLegend138AndLater();
+    if (legendPanelVerion138 != null) {
+      return legendPanelVerion138;
+    }
+
+    Component legendPanelVersion137 = identifyLegend137AndBefore();
+    if (isLegendContainer(legendPanelVersion137)) {
+      return legendPanelVersion137;
+    }
+    return null;
+  }
+
+  private Component identifyLegend138AndLater() {
+    JPanel chartPanel = (JPanel) fChart.getChart();
+    return (Component) chartPanel.getClientProperty("legendPanel");
+  }
+
+  private Component identifyLegend137AndBefore() {
     return fChart.getChart().getComponent(2);
+  }
+
+  private boolean isLegendContainer(Component component) {
+    if (component != null && component instanceof JPanel) {
+      JPanel legendContainer = (JPanel) component;
+      Component legendPanelComponent = legendContainer.getComponent(0);
+      if (legendPanelComponent != null && legendPanelComponent instanceof JPanel) {
+        JPanel legendPanel = (JPanel) legendPanelComponent;
+        if (legendPanel.getComponentCount() > 0 && legendPanel.getComponent(0) instanceof JCheckBox) {
+          return true;
+        }
+      }
+    }
+    return false;
   }
 
   public Component getYAxis() {
