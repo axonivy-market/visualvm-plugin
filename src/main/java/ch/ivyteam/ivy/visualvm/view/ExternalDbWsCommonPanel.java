@@ -309,7 +309,8 @@ public class ExternalDbWsCommonPanel extends javax.swing.JPanel {
     if (node != null && node.isLeaf()) {
       String appName = node.getParent().getParent().toString();
       String envName = node.getParent().toString();
-      fExternalDbWsView.fireCreateChartsAction(appName, envName, node.getRealName());
+      String configName = cutNodeTextToView(node.getRealName());
+      fExternalDbWsView.fireCreateChartsAction(appName, envName, configName);
       node.setIsOpened(true);
     }
   }
@@ -333,6 +334,15 @@ public class ExternalDbWsCommonPanel extends javax.swing.JPanel {
     return fLeaves.get(appName + "_" + envName + "_" + confWsName) != null;
   }
 
+  private String cutNodeTextToView(String realNodeText) {
+    String cut = StringUtils.substringBetween(realNodeText, "\"", " (");
+    if (StringUtils.isEmpty(cut)) {
+      return realNodeText;
+    } else {
+      return cut;
+    }
+  }
+
   private class AppEnvConfigNode extends DefaultMutableTreeNode {
 
     private final Icon fNodeIcon;
@@ -341,7 +351,7 @@ public class ExternalDbWsCommonPanel extends javax.swing.JPanel {
 
     public AppEnvConfigNode(Object userObject, Icon icon) {
       fRealNodeText = (String) userObject;
-      setUserObject(cutNodeTextToView());
+      setUserObject(cutNodeTextToView(fRealNodeText));
       fNodeIcon = icon;
       setAllowsChildren(true);
     }
@@ -361,16 +371,6 @@ public class ExternalDbWsCommonPanel extends javax.swing.JPanel {
     public String getRealName() {
       return fRealNodeText;
     }
-
-    private String cutNodeTextToView() {
-      String cut = StringUtils.substringBetween(fRealNodeText, "\"", " (");
-      if (StringUtils.isEmpty(cut)) {
-        return fRealNodeText;
-      } else {
-        return cut;
-      }
-    }
-
   }
 
   private class EnvTreeCellRenderer extends DefaultTreeCellRenderer {
@@ -391,7 +391,6 @@ public class ExternalDbWsCommonPanel extends javax.swing.JPanel {
       }
       return resultLabel;
     }
-
   }
 
   public AppEnvConfigNode getRootNode() {

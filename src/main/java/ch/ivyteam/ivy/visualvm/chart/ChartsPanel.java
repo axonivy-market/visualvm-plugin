@@ -4,6 +4,7 @@ import ch.ivyteam.ivy.visualvm.chart.data.GaugeDataSource;
 import ch.ivyteam.ivy.visualvm.chart.data.XYChartDataSource;
 import ch.ivyteam.ivy.visualvm.view.IUpdatableUIObject;
 import com.sun.tools.visualvm.core.options.GlobalPreferences;
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.GridLayout;
 import java.awt.LayoutManager;
@@ -11,23 +12,32 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.prefs.PreferenceChangeEvent;
 import java.util.prefs.PreferenceChangeListener;
+import javax.swing.BorderFactory;
 import javax.swing.JComponent;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
+import org.apache.commons.lang.StringUtils;
 
 public class ChartsPanel implements IUpdatableUIObject {
 
   private final List<IUpdatableUIObject> fUpdatableObjects = new ArrayList<>();
+  private JPanel fContentPanel;
   private final JPanel fChartPanel;
   private final AlignedXYChartsPanel fAlignedXYChartsPanel;
   private final CacheSettingChangeListener fCacheSettingChangeListener = new CacheSettingChangeListener();
 
   /**
    * Constructor
-   *
-   * @param horizontalOrVertical <code>true</code> to lay charts horizontally,
-   * <code>false</code> to lay charts vertically
+   * 
+   * @param horizontalOrVertical <code>true</code> to lay charts horizontally, <code>false</code> to lay
+   *          charts vertically
    */
+
   public ChartsPanel(boolean horizontalOrVertical) {
+    this(horizontalOrVertical, null);
+  }
+
+  public ChartsPanel(boolean horizontalOrVertical, String title) {
     LayoutManager layout;
     if (horizontalOrVertical) {
       layout = new GridLayout(1, 0);
@@ -38,10 +48,17 @@ public class ChartsPanel implements IUpdatableUIObject {
     fChartPanel.setBackground(Color.WHITE);
     fAlignedXYChartsPanel = new AlignedXYChartsPanel();
     GlobalPreferences.sharedInstance().watchMonitoredDataCache(fCacheSettingChangeListener);
+    fContentPanel = new JPanel(new BorderLayout());
+    fContentPanel.add(fChartPanel, BorderLayout.CENTER);
+    if (!StringUtils.isEmpty(title)) {
+      JLabel lblTitle = new JLabel(title);
+      lblTitle.setBorder(BorderFactory.createEmptyBorder(5, 10, 5, 5));
+      fContentPanel.add(lblTitle, BorderLayout.NORTH);
+    }
   }
 
   public JComponent getUIComponent() {
-    return fChartPanel;
+    return fContentPanel;
   }
 
   public void setLayoutOrientation(boolean horizontalOrVertical) {
@@ -116,7 +133,6 @@ public class ChartsPanel implements IUpdatableUIObject {
   }
 
   private class CacheSettingChangeListener implements PreferenceChangeListener {
-
     @Override
     public void preferenceChange(PreferenceChangeEvent evt) {
       updateChartsCachePeriod();

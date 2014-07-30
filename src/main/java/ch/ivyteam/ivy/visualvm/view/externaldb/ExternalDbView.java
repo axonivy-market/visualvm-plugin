@@ -45,16 +45,20 @@ public class ExternalDbView extends ExternalDbWsCommonView {
     registerScheduledUpdate(fSlowQueryBuffer);
   }
 
-  // call when user select environment & db configuration
   @Override
-  protected ChartsPanel createChartPanel() {
-    ChartsPanel chartPanel = new ChartsPanel(false);
+  protected ChartsPanel createChartPanel(String title) {
+    ChartsPanel chartPanel;
+    if (title != null) {
+      chartPanel = new ChartsPanel(false, title);
+    } else {
+      chartPanel = new ChartsPanel(false);
+    }
     ExternalDbConnectionChartDataSource connectionDataSource = new ExternalDbConnectionChartDataSource(
             getDataBeanProvider(), null, null, CONNECTIONS);
     ExternalDbTransactionChartDataSource transactionDataSource = new ExternalDbTransactionChartDataSource(
             getDataBeanProvider(), null, null, TRANSACTIONS);
-    ExternalDbProcessingTimeChartDataSource transProcessTimeDataSource
-            = new ExternalDbProcessingTimeChartDataSource(getDataBeanProvider(), null, null, PROCESSING_TIME);
+    ExternalDbProcessingTimeChartDataSource transProcessTimeDataSource = new ExternalDbProcessingTimeChartDataSource(
+            getDataBeanProvider(), null, null, PROCESSING_TIME);
 
     configDataSources(IvyJmxConstant.IvyServer.ExternalDatabase.NAME_PATTERN,
             connectionDataSource, transactionDataSource, transProcessTimeDataSource);

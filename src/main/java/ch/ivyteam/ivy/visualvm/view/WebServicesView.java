@@ -27,13 +27,17 @@ public class WebServicesView extends ExternalDbWsCommonView {
   }
 
   @Override
-  protected ChartsPanel createChartPanel() {
-    ChartsPanel chartPanel = new ChartsPanel(false);
+  protected ChartsPanel createChartPanel(String title) {
+    ChartsPanel chartPanel;
+    if (title != null) {
+      chartPanel = new ChartsPanel(false, title);
+    } else {
+      chartPanel = new ChartsPanel(false);
+    }
     WebServiceCallsChartDataSource callsDataSource = new WebServiceCallsChartDataSource(
             getDataBeanProvider(), null, null, CALLS);
-    WebServiceProcessingTimeChartDataSource processTimeDataSource
-            = new WebServiceProcessingTimeChartDataSource(getDataBeanProvider(), null, null,
-                    PROCESSING_TIME);
+    WebServiceProcessingTimeChartDataSource processTimeDataSource = new WebServiceProcessingTimeChartDataSource(
+            getDataBeanProvider(), null, null, PROCESSING_TIME);
 
     configDataSources(IvyJmxConstant.IvyServer.WebService.NAME_PATTERN,
             callsDataSource, processTimeDataSource);
@@ -60,5 +64,4 @@ public class WebServicesView extends ExternalDbWsCommonView {
   private String generateDescriptionForProcessingTimeChart() {
     return ContentProvider.getFormatted("WebServiceProcessingTimeChartDescription");
   }
-
 }
