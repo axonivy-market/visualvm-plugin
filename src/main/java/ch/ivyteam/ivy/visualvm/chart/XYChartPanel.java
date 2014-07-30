@@ -218,7 +218,14 @@ public class XYChartPanel implements IUpdatableUIObject {
       addValuesToChart(item.getTimestamp(), item.getValues());
     }
   }
-
+  
+  /**
+   * Please do not call fChart.addValues(currentTime, values) directly.
+   * Please use this method so that 
+   * it can automatically calculate the topValue and maxValue
+   * @param currentTime
+   * @param values 
+   */
   private void addValuesToChart(long currentTime, long[] values) {
     fChart.addValues(currentTime, values);
     for (long l : values) {
@@ -255,12 +262,6 @@ public class XYChartPanel implements IUpdatableUIObject {
       }
     }
   }
-
-//  private void log(String s) {
-//    if (this.fDataSource instanceof RequestChartDataSource) {
-//      LogUtils.printChild(s);
-//    }
-//  }
 
   private void recalculateMaxValueInCache() {
     this.maxValue = 0;
