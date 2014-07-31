@@ -42,8 +42,8 @@ class IvyView extends DataSourceView {
   public static final String USER_REQ_IMAGE_PATH = "resources/icons/user_req.png";
   public static final String LICENSE_IMAGE_PATH = "resources/icons/license.png";
 
-  private ScheduledTask updateTask;
-  private final List<AbstractView> views = new ArrayList<>();
+  private ScheduledTask fUpdateTask;
+  private final List<AbstractView> fViews = new ArrayList<>();
   private final DataPollSettingChangeListener fPollSettingChangeListener
           = new DataPollSettingChangeListener();
   private DataBeanProvider fDataBeanProvider;
@@ -71,7 +71,7 @@ class IvyView extends DataSourceView {
     addWebServicesView(fDataBeanProvider, tabbed);
 
     // init scheduler
-    updateTask = Scheduler.sharedInstance().schedule(new UpdateChartTask(),
+    fUpdateTask = Scheduler.sharedInstance().schedule(new UpdateChartTask(),
             Quantum.seconds(GlobalPreferences.sharedInstance().getMonitoredDataPoll()), true);
     GlobalPreferences.sharedInstance().watchMonitoredDataPoll(fPollSettingChangeListener);
     return dvcRoot;
@@ -79,7 +79,7 @@ class IvyView extends DataSourceView {
 
   private void addInformationView(DataBeanProvider dataBeanProvider, JTabbedPane tabbed) {
     InformationView infoView = new InformationView(dataBeanProvider);
-    views.add(infoView);
+    fViews.add(infoView);
     tabbed.addTab(ContentProvider.get("Information"),
             (Icon) ImageUtilities.loadImage(INFO_IMAGE_PATH, true),
             infoView.getViewComponent());
@@ -88,7 +88,7 @@ class IvyView extends DataSourceView {
   private void addLicenseView(DataBeanProvider dataBeanProvider, JTabbedPane tabbed) {
     if (fDataBeanProvider.getGenericData().getApplicationInfo().isServer()) {
       LicenseView licenseView = new LicenseView(dataBeanProvider);
-      views.add(licenseView);
+      fViews.add(licenseView);
       tabbed.addTab(ContentProvider.get("License"),
               (Icon) ImageUtilities.loadImage(LICENSE_IMAGE_PATH, true),
               licenseView.getViewComponent());
@@ -97,7 +97,7 @@ class IvyView extends DataSourceView {
 
   private void addRequestView(DataBeanProvider dataBeanProvider, JTabbedPane tabbed) {
     RequestView requestViewNew = new RequestView(dataBeanProvider);
-    views.add(requestViewNew);
+    fViews.add(requestViewNew);
     tabbed.addTab(ContentProvider.get("UserRequests"),
             (Icon) ImageUtilities.loadImage(USER_REQ_IMAGE_PATH, true),
             requestViewNew.getViewComponent());
@@ -105,7 +105,7 @@ class IvyView extends DataSourceView {
 
   private void addSystemDBView(DataBeanProvider dataBeanProvider, JTabbedPane tabbed) {
     SystemDbView systemDbView = new SystemDbView(dataBeanProvider);
-    views.add(systemDbView);
+    fViews.add(systemDbView);
     tabbed.addTab(ContentProvider.get("SystemDatabase"),
             (Icon) ImageUtilities.loadImage(DB_ICON_IMAGE_PATH, true),
             systemDbView.getViewComponent());
@@ -113,7 +113,7 @@ class IvyView extends DataSourceView {
 
   private void addExternalDBView(DataBeanProvider dataBeanProvider, JTabbedPane tabbed) {
     ExternalDbView extDbView = new ExternalDbView(dataBeanProvider);
-    views.add(extDbView);
+    fViews.add(extDbView);
     tabbed.addTab(ContentProvider.get("ExternalDatabases"),
             (Icon) ImageUtilities.loadImage(EXT_DB_ICON_IMAGE_PATH, true),
             extDbView.getViewComponent());
@@ -121,7 +121,7 @@ class IvyView extends DataSourceView {
 
   private void addWebServicesView(DataBeanProvider dataBeanProvider, JTabbedPane tabbed) {
     WebServicesView wsView = new WebServicesView(dataBeanProvider);
-    views.add(wsView);
+    fViews.add(wsView);
     tabbed.addTab(ContentProvider.get("WebServices"), (Icon) ImageUtilities.loadImage(
             WEB_SERVICE_ICON_IMAGE_PATH, true),
             wsView.getViewComponent());
@@ -142,20 +142,26 @@ class IvyView extends DataSourceView {
     fDataBeanProvider = dataBeanProvider;
   }
 
+  @Override
+  protected void removed() {
+    super.removed();
+    fUpdateTask.suspend();
+  }
+
   private class UpdateChartTask implements SchedulerTask {
 
     @Override
     public void onSchedule(long l) {
       Query query = new Query();
-      for (AbstractView view : views) {
+      for (AbstractView view : fViews) {
         view.updateQuery(query);
       }
       QueryResult result = query.execute(fDataBeanProvider.getMBeanServerConnection());
-      for (AbstractView view : views) {
+      for (AbstractView view : fViews) {
         try {
           view.updateDisplay(result);
         } catch (ClosedIvyServerConnectionException ex) {
-          updateTask.suspend();
+          fUpdateTask.suspend();
           LOGGER.warning(ex.getMessage());
           break;
         }
@@ -168,7 +174,7 @@ class IvyView extends DataSourceView {
 
     @Override
     public void preferenceChange(PreferenceChangeEvent evt) {
-      updateTask.setInterval(Quantum.seconds(GlobalPreferences.sharedInstance().
+      fUpdateTask.setInterval(Quantum.seconds(GlobalPreferences.sharedInstance().
               getMonitoredDataPoll()));
     }
 
