@@ -309,8 +309,7 @@ public class ExternalDbWsCommonPanel extends javax.swing.JPanel {
     if (node != null && node.isLeaf()) {
       String appName = node.getParent().getParent().toString();
       String envName = node.getParent().toString();
-      String configName = cutNodeTextToView(node.getRealName());
-      fExternalDbWsView.fireCreateChartsAction(appName, envName, configName);
+      fExternalDbWsView.fireCreateChartsAction(appName, envName, node.getRealName());
       node.setIsOpened(true);
     }
   }
@@ -334,7 +333,7 @@ public class ExternalDbWsCommonPanel extends javax.swing.JPanel {
     return fLeaves.get(appName + "_" + envName + "_" + confWsName) != null;
   }
 
-  private String cutNodeTextToView(String realNodeText) {
+  public static String cutNodeTextToView(String realNodeText) {
     String cut = StringUtils.substringBetween(realNodeText, "\"", " (");
     if (StringUtils.isEmpty(cut)) {
       return realNodeText;

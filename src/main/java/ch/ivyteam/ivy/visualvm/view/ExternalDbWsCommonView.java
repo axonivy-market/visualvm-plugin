@@ -30,7 +30,9 @@ public abstract class ExternalDbWsCommonView extends AbstractView {
     if (fCreatedCharts.containsKey(chartKey)) {
       fUIChartsPanel.setChartPanelToVisible(fCreatedCharts.get(chartKey));
     } else {
-      String title = "<html><b>" + appName + " > " + envName + " > " + configName + "</b></html>";
+      String title = "<html><b>" + appName + " > " + envName + " > "
+              + ExternalDbWsCommonPanel.cutNodeTextToView(configName)
+              + "</b></html>";
       ChartsPanel chartsPanel = createChartPanel(title);
       fUIChartsPanel.setChartPanelToVisible(chartsPanel);
       fCreatedCharts.put(chartKey, chartsPanel);
