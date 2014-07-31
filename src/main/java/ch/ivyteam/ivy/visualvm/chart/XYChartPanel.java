@@ -271,20 +271,23 @@ public class XYChartPanel implements IUpdatableUIObject {
   private void removeOutOfDateStorageItem(long currentTime) {
     long cachePeriod = GlobalPreferences.sharedInstance().getMonitoredDataCache() * 60 * 1000;
     Iterator<StorageItem> iterator = fStorage.iterator();
+    boolean needRecalculateMaxValue = false;
     while (iterator.hasNext()) {
       StorageItem item = iterator.next();
       if (item.getTimestamp() + cachePeriod < currentTime) {
         iterator.remove();
-        //Only recalculate maxValue if values of removed item >= current maxValue
-        for (long l : item.fValues) {
-          if (l >= this.fMaxValueBeingDisplayed) {
-            this.recalculateMaxValueInCache();
+        for (long removedValue : item.fValues) {
+          if (removedValue >= fMaxValueBeingDisplayed) {
+            needRecalculateMaxValue = true;
             break;
           }
         }
       } else {
         break;
       }
+    }
+    if (needRecalculateMaxValue) {
+      recalculateMaxValueInCache();
     }
   }
 
