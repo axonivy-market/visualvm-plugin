@@ -1,6 +1,3 @@
-/*
- * To change this template, choose Tools | Templates and open the template in the editor.
- */
 package ch.ivyteam.ivy.visualvm.chart.data;
 
 import ch.ivyteam.ivy.visualvm.chart.Query;
@@ -33,7 +30,7 @@ class MeanDataSource extends SerieDataSource {
     if (count == 0L) {
       return 0L;
     }
-    return toScaledLong(totalValue / count);
+    return totalValue / count;
   }
 
 }

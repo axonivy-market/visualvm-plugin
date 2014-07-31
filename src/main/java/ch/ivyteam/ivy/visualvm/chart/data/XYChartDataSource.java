@@ -142,7 +142,7 @@ public class XYChartDataSource {
   public void addDeltaMeanSerie(String serie, String description, SerieStyle style, ObjectName mBeanName,
           String totalValueAttribute, String countAttribute) {
     SerieDataSource totalValueDataSource = new DeltaAttributeDataSource(
-            serie, 1L, SerieStyle.LINE, mBeanName, totalValueAttribute);
+            serie, fScaleFactor, SerieStyle.LINE, mBeanName, totalValueAttribute);
     SerieDataSource countDataSource = new DeltaAttributeDataSource(serie,
             1L, SerieStyle.LINE, mBeanName, countAttribute);
     addMeanSerie(serie, description, style, totalValueDataSource, countDataSource);

@@ -14,10 +14,13 @@ public class DeltaAttributeDataSource extends AttributeDataSource {
 
   @Override
   public long getValue(QueryResult result) {
-    long latestValue = super.getValue(result);
+    long latestValue = toScaledLong(getRawValue(result));
+    if (latestValue < 0) {
+      return 0;
+    }
     long deltaValue = toDeltaValue(latestValue);
     storeLatestValue(latestValue);
-    return toScaledLong(deltaValue);
+    return deltaValue;
   }
 
   private long toDeltaValue(long paramVal) {

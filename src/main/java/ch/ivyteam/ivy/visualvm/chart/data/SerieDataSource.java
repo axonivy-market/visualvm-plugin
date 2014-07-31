@@ -29,7 +29,7 @@ public abstract class SerieDataSource {
     if (value instanceof Number) {
       return ((Number) value).longValue() / fScaleFactor;
     }
-    return 0L;
+    return -1L;
   }
 
   public void configureSerie(SimpleXYChartDescriptor chartDescriptor) {

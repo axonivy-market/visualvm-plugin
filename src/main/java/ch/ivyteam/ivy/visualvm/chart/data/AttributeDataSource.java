@@ -38,9 +38,16 @@ class AttributeDataSource extends SerieDataSource {
     if (fFixedValue > -1) {
       value = fFixedValue;
     } else {
-      value = toScaledLong(result.getValue(fMBeanName, fAttribute));
+      value = toScaledLong(getRawValue(result));
+      if (value < 0) {
+        value = 0;
+      }
     }
     return value;
+  }
+
+  protected Object getRawValue(QueryResult result) {
+    return result.getValue(fMBeanName, fAttribute);
   }
 
 }
