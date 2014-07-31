@@ -19,6 +19,8 @@ import javax.management.ReflectionException;
 
 public class IvyViewProvider extends DataSourceViewProvider<Application> {
 
+  private DataSourceView ivyView;
+  private EmptyIvyView emptyView;
   private static final DataSourceViewProvider<Application> INSTANCE = new IvyViewProvider();
   private DataBeanProvider fDataBeanProvider;
 
@@ -82,10 +84,16 @@ public class IvyViewProvider extends DataSourceViewProvider<Application> {
   protected DataSourceView createView(Application application) {
     DataSourceView view;
     if (fDataBeanProvider != null) {
-      view = new IvyView(application);
-      ((IvyView) view).setDataBeanProvider(fDataBeanProvider);
+      if (this.ivyView == null) {
+        this.ivyView = new IvyView(application);
+        ((IvyView) this.ivyView).setDataBeanProvider(fDataBeanProvider);
+      }
+      view = this.ivyView;
     } else {
-      view = new EmptyIvyView(application);
+      if (this.emptyView == null) {
+        this.emptyView = new EmptyIvyView(application);
+      }
+      view = this.emptyView;
     }
     return view;
   }
