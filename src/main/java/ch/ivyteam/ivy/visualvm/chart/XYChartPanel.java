@@ -120,10 +120,10 @@ public class XYChartPanel implements IUpdatableUIObject {
   private void recreateUI() {
     createUI();
     long currentTime = System.currentTimeMillis();
-    restoreDataFromStorage(currentTime);
-    fchartsContainer.recreateUIAlignedXYCharts();
     fMaxValueFromChartCreated = 0;
     fMaxValueBeingDisplayed = 0;
+    restoreDataFromStorage(currentTime);
+    fchartsContainer.recreateUIAlignedXYCharts();
   }
 
   @Override
@@ -253,12 +253,12 @@ public class XYChartPanel implements IUpdatableUIObject {
    */
   private void addValuesToChart(long currentTime, long[] values) {
     fChart.addValues(currentTime, values);
-    for (long l : values) {
-      if (this.fMaxValueFromChartCreated < l) {
-        this.fMaxValueFromChartCreated = l;
-        this.fMaxValueBeingDisplayed = l;
-      } else if (this.fMaxValueBeingDisplayed < l) {
-        this.fMaxValueBeingDisplayed = l;
+    for (long val : values) {
+      if (this.fMaxValueFromChartCreated < val) {
+        this.fMaxValueFromChartCreated = val;
+        this.fMaxValueBeingDisplayed = val;
+      } else if (this.fMaxValueBeingDisplayed < val) {
+        this.fMaxValueBeingDisplayed = val;
       }
     }
   }
@@ -294,9 +294,9 @@ public class XYChartPanel implements IUpdatableUIObject {
   private void recalculateMaxValueInCache() {
     this.fMaxValueBeingDisplayed = 0;
     for (StorageItem storageItem : fStorage) {
-      for (long l : storageItem.fValues) {
-        if (this.fMaxValueBeingDisplayed < l) {
-          this.fMaxValueBeingDisplayed = l;
+      for (long val : storageItem.fValues) {
+        if (this.fMaxValueBeingDisplayed < val) {
+          this.fMaxValueBeingDisplayed = val;
         }
       }
     }
