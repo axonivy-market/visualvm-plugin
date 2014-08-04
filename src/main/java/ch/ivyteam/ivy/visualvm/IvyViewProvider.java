@@ -12,13 +12,20 @@ import com.sun.tools.visualvm.core.ui.DataSourceViewsManager;
 import com.sun.tools.visualvm.tools.jmx.JmxModel;
 import com.sun.tools.visualvm.tools.jmx.JmxModelFactory;
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 import javax.management.AttributeList;
 import javax.management.InstanceNotFoundException;
 import javax.management.MBeanServerConnection;
 import javax.management.ReflectionException;
 
 public class IvyViewProvider extends DataSourceViewProvider<Application> {
-
+  /**
+   * Super class has a viewsCache. But in method createView(), calling 
+   * getCachedView(application) always returns null. That's why we have to
+   * create our own cached.
+   */
+  private final Map<Application, DataSourceView> cachedViews = new HashMap<>();
   private DataSourceView ivyView;
   private EmptyIvyView emptyView;
   private static final DataSourceViewProvider<Application> INSTANCE = new IvyViewProvider();
@@ -82,19 +89,19 @@ public class IvyViewProvider extends DataSourceViewProvider<Application> {
 
   @Override
   protected DataSourceView createView(Application application) {
-    DataSourceView view;
+    DataSourceView view = this.cachedViews.get(application);
+    if (view != null) {
+      return view;
+    }
     if (fDataBeanProvider != null) {
-      if (this.ivyView == null) {
-        this.ivyView = new IvyView(application);
-        ((IvyView) this.ivyView).setDataBeanProvider(fDataBeanProvider);
-      }
+      this.ivyView = new IvyView(application);
+      ((IvyView) this.ivyView).setDataBeanProvider(fDataBeanProvider);
       view = this.ivyView;
     } else {
-      if (this.emptyView == null) {
-        this.emptyView = new EmptyIvyView(application);
-      }
+      this.emptyView = new EmptyIvyView(application);
       view = this.emptyView;
     }
+    this.cachedViews.put(application, view);
     return view;
   }
 
