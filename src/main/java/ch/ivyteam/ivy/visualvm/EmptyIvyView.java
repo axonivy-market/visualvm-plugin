@@ -11,7 +11,7 @@ import org.openide.util.ImageUtilities;
 public class EmptyIvyView extends DataSourceView {
 
   public EmptyIvyView(Application application) {
-    super(application, ContentProvider.get("XpertIvy"),
+    super(application, ContentProvider.get("AxonIvy"),
             new ImageIcon(ImageUtilities.loadImage(IvyView.IVY_IMAGE_PATH, true)).getImage(),
             60, false);
   }

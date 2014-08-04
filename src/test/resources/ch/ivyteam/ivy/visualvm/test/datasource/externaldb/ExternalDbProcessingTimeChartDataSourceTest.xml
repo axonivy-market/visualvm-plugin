@@ -2,7 +2,7 @@
 <beanTestData>
   <dataset>
     <property>
-      <name>Xpert.ivy Server:type=External Database,application=test,environment=enviroment1,name=DBConfig1</name>
+      <name>ivy Engine:type=External Database,application=test,environment=enviroment1,name=DBConfig1</name>
       <dataset>
         <property>
           <name>transactionsMaxExecutionTimeDeltaInMicroSeconds</name>
@@ -26,7 +26,7 @@
   
   <dataset>
     <property>
-      <name>Xpert.ivy Server:type=External Database,application=test,environment=enviroment1,name=DBConfig1</name>
+      <name>ivy Engine:type=External Database,application=test,environment=enviroment1,name=DBConfig1</name>
       <dataset>
         <property>
           <name>transactionsMaxExecutionTimeDeltaInMicroSeconds</name>
@@ -50,7 +50,7 @@
   
   <dataset>
     <property>
-      <name>Xpert.ivy Server:type=External Database,application=test,environment=enviroment1,name=DBConfig1</name>
+      <name>ivy Engine:type=External Database,application=test,environment=enviroment1,name=DBConfig1</name>
       <dataset>
         <property>
           <name>transactionsMaxExecutionTimeDeltaInMicroSeconds</name>
@@ -74,7 +74,7 @@
   
   <dataset>
     <property>
-      <name>Xpert.ivy Server:type=External Database,application=test,environment=enviroment1,name=DBConfig1</name>
+      <name>ivy Engine:type=External Database,application=test,environment=enviroment1,name=DBConfig1</name>
       <dataset>
         <property>
           <name>transactionsMaxExecutionTimeDeltaInMicroSeconds</name>
@@ -98,7 +98,7 @@
   
   <dataset>
     <property>
-      <name>Xpert.ivy Server:type=External Database,application=test,environment=enviroment1,name=DBConfig1</name>
+      <name>ivy Engine:type=External Database,application=test,environment=enviroment1,name=DBConfig1</name>
       <dataset>
         <property>
           <name>transactionsMaxExecutionTimeDeltaInMicroSeconds</name>

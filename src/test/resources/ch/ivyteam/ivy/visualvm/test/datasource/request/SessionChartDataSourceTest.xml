@@ -12,7 +12,7 @@
     </property>
     
     <property>
-      <name>Xpert.ivy Server:type=Security Manager</name>
+      <name>ivy Engine:type=Security Manager</name>
       <dataset>
         <property>
           <name>sessions</name>
@@ -26,7 +26,7 @@
     </property>
     
     <property>
-      <name>Xpert.ivy Server:type=Rich Dialog Execution Manager</name>
+      <name>ivy Engine:type=Rich Dialog Execution Manager</name>
       <dataset>
         <property>
           <name>richDialogSessions</name>
@@ -48,7 +48,7 @@
     </property>
     
     <property>
-      <name>Xpert.ivy Server:type=Security Manager</name>
+      <name>ivy Engine:type=Security Manager</name>
       <dataset>
         <property>
           <name>sessions</name>
@@ -62,7 +62,7 @@
     </property>
     
     <property>
-      <name>Xpert.ivy Server:type=Rich Dialog Execution Manager</name>
+      <name>ivy Engine:type=Rich Dialog Execution Manager</name>
       <dataset>
         <property>
           <name>richDialogSessions</name>
@@ -84,7 +84,7 @@
     </property>
     
     <property>
-      <name>Xpert.ivy Server:type=Security Manager</name>
+      <name>ivy Engine:type=Security Manager</name>
       <dataset>
         <property>
           <name>sessions</name>
@@ -98,7 +98,7 @@
     </property>
     
     <property>
-      <name>Xpert.ivy Server:type=Rich Dialog Execution Manager</name>
+      <name>ivy Engine:type=Rich Dialog Execution Manager</name>
       <dataset>
         <property>
           <name>richDialogSessions</name>

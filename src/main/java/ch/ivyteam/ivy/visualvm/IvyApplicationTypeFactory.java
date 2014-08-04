@@ -22,7 +22,7 @@ class IvyApplicationTypeFactory extends MainClassApplicationTypeFactory {
   public ApplicationType createApplicationTypeFor(Application app, Jvm jvm,
           String mainClass) {
     if (isIvyServer(mainClass)) {
-      return new IvyApplicationType(app.getPid(), IvyApplicationInfo.IVY_SERVER_APP_NAME);
+      return new IvyApplicationType(app.getPid(), IvyApplicationInfo.IVY_ENGINE_APP_NAME);
     } else if (isIvyDesigner(mainClass, jvm)) {
       return new IvyApplicationType(app.getPid(), IvyApplicationInfo.IVY_DESIGNER_APP_NAME);
     }
@@ -43,7 +43,7 @@ class IvyApplicationTypeFactory extends MainClassApplicationTypeFactory {
   }
 
   private boolean isDesignerInstallation(String mainClass) {
-    return "XpertIvyDesigner".equals(mainClass);
+    return "AxonIvyDesigner".equals(mainClass);
   }
 
 }

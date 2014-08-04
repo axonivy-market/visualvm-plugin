@@ -23,8 +23,8 @@ import static org.mockito.Mockito.when;
 
 @RunWith(Parameterized.class)
 public class VersionCompatibilitiesTest extends AbstractTest {
-  public static final String IVYDESIGNER = "Xpert.ivy Designer";
-  public static final String IVYSERVER = "Xpert.ivy Server";
+  public static final String IVYDESIGNER = "Axon.ivy Designer";
+  public static final String IVYENGINE = "Axon.ivy Engine";
 
   private final boolean fResult;
 

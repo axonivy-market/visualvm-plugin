@@ -158,7 +158,7 @@ public class LicenseInformationPanel extends javax.swing.JPanel {
       appendValue(html, HOST_NAME, fLicenseInfo.getHostName());
     }
     if (fLicenseInfo.getLicenseKeyVersion() != null) {
-      appendValue(html, VERSION, fLicenseInfo.getLicenseKeyVersion().replace("xpertline/", ""));
+      appendValue(html, VERSION, fLicenseInfo.getLicenseKeyVersion().replace("axonivy/", ""));
     }
     if (fLicenseInfo.getLicenseValidFrom() != null) {
       appendValue(html, VALID_FROM, DataUtils.dateToString(fLicenseInfo.getLicenseValidFrom()));

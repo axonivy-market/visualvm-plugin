@@ -2,7 +2,7 @@
 <beanTestData>
   <dataset>  
     <property>
-      <name>Xpert.ivy Server:type=Security Manager</name>
+      <name>ivy Engine:type=Security Manager</name>
       <dataset>
         <property>
           <name>licensedUsers</name>
@@ -15,7 +15,7 @@
   
   <dataset>    
     <property>
-      <name>Xpert.ivy Server:type=Security Manager</name>
+      <name>ivy Engine:type=Security Manager</name>
       <dataset>        
         <property>
           <name>licensedUsers</name>
@@ -27,7 +27,7 @@
   
   <dataset>
     <property>
-      <name>Xpert.ivy Server:type=Security Manager</name>
+      <name>ivy Engine:type=Security Manager</name>
       <dataset>
         <property>
           <name>licensedUsers</name>

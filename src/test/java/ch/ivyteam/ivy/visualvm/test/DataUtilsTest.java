@@ -11,7 +11,7 @@ import org.junit.Test;
 public class DataUtilsTest {
 
 //  private static final Logger LOGGER = Logger.getLogger(DataUtilsTest.class.getName());
-  private static final String XPERT_IVY_SYSTEM_DATABASE = "XpertIvySystemDatabase";
+  private static final String AXON_IVY_SYSTEM_DATABASE = "AxonIvySystemDatabase";
 
   public DataUtilsTest() {
   }
@@ -73,46 +73,46 @@ public class DataUtilsTest {
   @Test
   public void testGetHostFromConnectionUrl() {
     assertEquals("localhost", DataUtils.getHostFromConnectionUrl(
-            "jdbc:mysql://localhost:5432/XpertIvySystemDatabase"));
+            "jdbc:mysql://localhost:5432/AxonIvySystemDatabase"));
     assertEquals("localhost", DataUtils.getHostFromConnectionUrl(
-            "jdbc:oracle:thin:tam/thai@localhost:1521:XpertIvySystemDatabase"));
-    assertEquals(null, DataUtils.getHostFromConnectionUrl("jdbc:oracle:oci:@XpertIvySystemDatabase"));
-    assertEquals(null, DataUtils.getHostFromConnectionUrl("jdbc:db2:XpertIvySystemDatabase"));
+            "jdbc:oracle:thin:tam/thai@localhost:1521:AxonIvySystemDatabase"));
+    assertEquals(null, DataUtils.getHostFromConnectionUrl("jdbc:oracle:oci:@AxonIvySystemDatabase"));
+    assertEquals(null, DataUtils.getHostFromConnectionUrl("jdbc:db2:AxonIvySystemDatabase"));
     assertEquals("localhost", DataUtils.getHostFromConnectionUrl(
-            "jdbc:microsoft:sqlserver://localhost:1443;databaseName= XpertIvySystemDatabase;"
+            "jdbc:microsoft:sqlserver://localhost:1443;databaseName= AxonIvySystemDatabase;"
             + "SelectMethod=cursor"));
-    assertEquals(null, DataUtils.getHostFromConnectionUrl("jdbc:hsqldb:mem:XpertIvySystemDatabase"));
+    assertEquals(null, DataUtils.getHostFromConnectionUrl("jdbc:hsqldb:mem:AxonIvySystemDatabase"));
   }
 
   @Test
   public void testGetPortFromConnectionUrl() {
     assertEquals("5432", DataUtils.getPortFromConnectionUrl(
-            "jdbc:mysql://localhost:5432/XpertIvySystemDatabase"));
+            "jdbc:mysql://localhost:5432/AxonIvySystemDatabase"));
     assertEquals("1521", DataUtils.getPortFromConnectionUrl(
-            "jdbc:oracle:thin:tam/thai@localhost:1521:XpertIvySystemDatabase"));
-    assertEquals(null, DataUtils.getPortFromConnectionUrl("jdbc:oracle:oci:@XpertIvySystemDatabase"));
-    assertEquals(null, DataUtils.getPortFromConnectionUrl("jdbc:db2:XpertIvySystemDatabase"));
+            "jdbc:oracle:thin:tam/thai@localhost:1521:AxonIvySystemDatabase"));
+    assertEquals(null, DataUtils.getPortFromConnectionUrl("jdbc:oracle:oci:@AxonIvySystemDatabase"));
+    assertEquals(null, DataUtils.getPortFromConnectionUrl("jdbc:db2:AxonIvySystemDatabase"));
     assertEquals("1443", DataUtils.getPortFromConnectionUrl(
-            "jdbc:microsoft:sqlserver://localhost:1443;databaseName=XpertIvySystemDatabase;"
+            "jdbc:microsoft:sqlserver://localhost:1443;databaseName=AxonIvySystemDatabase;"
             + "SelectMethod=cursor"));
-    assertEquals(null, DataUtils.getPortFromConnectionUrl("jdbc:hsqldb:mem:XpertIvySystemDatabase"));
+    assertEquals(null, DataUtils.getPortFromConnectionUrl("jdbc:hsqldb:mem:AxonIvySystemDatabase"));
   }
 
   @Test
   public void testGetSchemaFromConnectionUrl() {
-    assertEquals(XPERT_IVY_SYSTEM_DATABASE, DataUtils.getSchemaFromConnectionUrl(
-            "jdbc:mysql://localhost:5432/XpertIvySystemDatabase"));
-    assertEquals(XPERT_IVY_SYSTEM_DATABASE, DataUtils.getSchemaFromConnectionUrl(
-            "jdbc:oracle:thin:tam/thai@localhost:1521:XpertIvySystemDatabase"));
-    assertEquals(XPERT_IVY_SYSTEM_DATABASE, DataUtils.getSchemaFromConnectionUrl(
-            "jdbc:oracle:oci:@XpertIvySystemDatabase"));
-    assertEquals(XPERT_IVY_SYSTEM_DATABASE, DataUtils.getSchemaFromConnectionUrl(
-            "jdbc:db2:XpertIvySystemDatabase"));
-    assertEquals(XPERT_IVY_SYSTEM_DATABASE, DataUtils.getSchemaFromConnectionUrl(
-            "jdbc:microsoft:sqlserver://localhost:1443;databaseName=XpertIvySystemDatabase;"
+    assertEquals(AXON_IVY_SYSTEM_DATABASE, DataUtils.getSchemaFromConnectionUrl(
+            "jdbc:mysql://localhost:5432/AxonIvySystemDatabase"));
+    assertEquals(AXON_IVY_SYSTEM_DATABASE, DataUtils.getSchemaFromConnectionUrl(
+            "jdbc:oracle:thin:tam/thai@localhost:1521:AxonIvySystemDatabase"));
+    assertEquals(AXON_IVY_SYSTEM_DATABASE, DataUtils.getSchemaFromConnectionUrl(
+            "jdbc:oracle:oci:@AxonIvySystemDatabase"));
+    assertEquals(AXON_IVY_SYSTEM_DATABASE, DataUtils.getSchemaFromConnectionUrl(
+            "jdbc:db2:AxonIvySystemDatabase"));
+    assertEquals(AXON_IVY_SYSTEM_DATABASE, DataUtils.getSchemaFromConnectionUrl(
+            "jdbc:microsoft:sqlserver://localhost:1443;databaseName=AxonIvySystemDatabase;"
             + "SelectMethod=cursor"));
-    assertEquals(XPERT_IVY_SYSTEM_DATABASE, DataUtils.getSchemaFromConnectionUrl(
-            "jdbc:hsqldb:mem:XpertIvySystemDatabase"));
+    assertEquals(AXON_IVY_SYSTEM_DATABASE, DataUtils.getSchemaFromConnectionUrl(
+            "jdbc:hsqldb:mem:AxonIvySystemDatabase"));
   }
 
 }

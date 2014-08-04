@@ -2,7 +2,7 @@
 <beanTestData>
   <dataset>
     <property>
-      <name>Xpert.ivy Server:type=External Web Service,application=test,environment=enviroment1,name=WSConfig1</name>
+      <name>ivy Engine:type=External Web Service,application=test,environment=enviroment1,name=WSConfig1</name>
       <dataset>
         <property>
           <name>calls</name>
@@ -18,7 +18,7 @@
   
   <dataset>
     <property>
-      <name>Xpert.ivy Server:type=External Web Service,application=test,environment=enviroment1,name=WSConfig1</name>
+      <name>ivy Engine:type=External Web Service,application=test,environment=enviroment1,name=WSConfig1</name>
       <dataset>
         <property>
           <name>calls</name>
@@ -34,7 +34,7 @@
   
   <dataset>
     <property>
-      <name>Xpert.ivy Server:type=External Web Service,application=test,environment=enviroment1,name=WSConfig1</name>
+      <name>ivy Engine:type=External Web Service,application=test,environment=enviroment1,name=WSConfig1</name>
       <dataset>
         <property>
           <name>calls</name>

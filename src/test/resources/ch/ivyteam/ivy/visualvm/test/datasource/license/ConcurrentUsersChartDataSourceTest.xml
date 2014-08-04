@@ -2,7 +2,7 @@
 <beanTestData>
   <dataset>  
     <property>
-      <name>Xpert.ivy Server:type=Server</name>
+      <name>ivy Engine:type=Server</name>
       <dataset>
         <property>
           <name>licenceParameters</name>
@@ -16,7 +16,7 @@
       </dataset>
     </property>
     <property>
-      <name>Xpert.ivy Server:type=Security Manager</name>
+      <name>ivy Engine:type=Security Manager</name>
       <dataset>
         <property>
           <name>licensedSessions</name>
@@ -29,7 +29,7 @@
   
   <dataset>    
     <property>
-      <name>Xpert.ivy Server:type=Server</name>
+      <name>ivy Engine:type=Server</name>
       <dataset>
         <property>
           <name>licenceParameters</name>
@@ -43,7 +43,7 @@
       </dataset>
     </property>
     <property>
-      <name>Xpert.ivy Server:type=Security Manager</name>
+      <name>ivy Engine:type=Security Manager</name>
       <dataset>        
         <property>
           <name>licensedSessions</name>
@@ -55,7 +55,7 @@
   
   <dataset>
     <property>
-      <name>Xpert.ivy Server:type=Server</name>
+      <name>ivy Engine:type=Server</name>
       <dataset>
         <property>
           <name>licenceParameters</name>
@@ -69,7 +69,7 @@
       </dataset>
     </property>
     <property>
-      <name>Xpert.ivy Server:type=Security Manager</name>
+      <name>ivy Engine:type=Security Manager</name>
       <dataset>
         <property>
           <name>licensedSessions</name>

@@ -32,12 +32,12 @@ import static org.mockito.Mockito.when;
 public class ServerInformationTest extends AbstractTest {
 
   private static final String VERSION_CUSTOM = "5.1.0 (revision 44832)";
-  private static final String INSTALL_DIR = "D:\\teamup\\XpertIvyServer5.1.0.44832_Windows_x64";
-  private static final String APPLICATION_NAME = "Xpert.ivy Server";
+  private static final String INSTALL_DIR = "D:\\teamup\\AxonIvyEngine5.1.0.44832_Windows_x64";
+  private static final String APPLICATION_NAME = "Axon.ivy Engine";
   private static final String DB_PRODUCT_NAME = "MySQL";
   private static final String DB_PRODUCT_VERSION = "5.5.21";
   private static final String DB_IVY_SYSDB_VERSION = "33";
-  private static final String DB_CONNECTION_URL = "jdbc:mysql://localhost:3306/XpertIvySystemDatabase_jmx";
+  private static final String DB_CONNECTION_URL = "jdbc:mysql://localhost:3306/AxonIvySystemDatabase_jmx";
   private static final String DB_DRIVER_NAME = "com.jdbc.mysql.Driver";
   private static final String DB_USERNAME = "root";
 

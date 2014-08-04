@@ -2,7 +2,7 @@
 <beanTestData>
   <dataset>
     <property>
-      <name>Xpert.ivy Server:type=Server</name>
+      <name>ivy Engine:type=Server</name>
       <dataset>
         <property>
           <name>licenceParameters</name>
@@ -13,7 +13,7 @@
             </property>
             <property>
               <name>licence.keyversion</name>
-              <value>xpertline/5000</value>
+              <value>axonivy/5100</value>
             </property>
             <property>
               <name>licence.valid.from</name>
@@ -54,7 +54,7 @@
   </dataset>
   <dataset>
     <property>
-      <name>Xpert.ivy Server:type=Server</name>
+      <name>ivy Engine:type=Server</name>
       <dataset>
         <property>
           <name>licenceParameters</name>
@@ -65,7 +65,7 @@
             </property>
             <property>
               <name>licence.keyversion</name>
-              <value>xpertline/5000</value>
+              <value>axonivy/5100</value>
             </property>
             <property>
               <name>licence.valid.from</name>
@@ -106,7 +106,7 @@
   </dataset>
   <dataset>
     <property>
-      <name>Xpert.ivy Server:type=Server</name>
+      <name>ivy Engine:type=Server</name>
       <dataset>
         <property>
           <name>licenceParameters</name>
@@ -138,7 +138,7 @@
   </dataset>
   <dataset>
     <property>
-      <name>Xpert.ivy Server:type=Server</name>
+      <name>ivy Engine:type=Server</name>
       <dataset>
         <property>
           <name>licenceParameters</name>
@@ -170,7 +170,7 @@
   </dataset>
   <dataset>
     <property>
-      <name>Xpert.ivy Server:type=Server</name>
+      <name>ivy Engine:type=Server</name>
       <dataset>
         <property>
           <name>licenceParameters</name>
@@ -198,7 +198,7 @@
   </dataset>
   <dataset>
     <property>
-      <name>Xpert.ivy Server:type=Server</name>
+      <name>ivy Engine:type=Server</name>
       <dataset>
         <property>
           <name>licenceParameters</name>
@@ -226,7 +226,7 @@
   </dataset>
   <dataset>
     <property>
-      <name>Xpert.ivy Server:type=Server</name>
+      <name>ivy Engine:type=Server</name>
       <dataset>
         <property>
           <name>licenceParameters</name>
@@ -254,7 +254,7 @@
   </dataset>
   <dataset>
     <property>
-      <name>Xpert.ivy Server:type=Server</name>
+      <name>ivy Engine:type=Server</name>
       <dataset>
         <property>
           <name>licenceParameters</name>
@@ -282,7 +282,7 @@
   </dataset>
   <dataset>
     <property>
-      <name>Xpert.ivy Server:type=Server</name>
+      <name>ivy Engine:type=Server</name>
       <dataset>
         <property>
           <name>licenceParameters</name>
@@ -310,7 +310,7 @@
   </dataset>
   <dataset>
     <property>
-      <name>Xpert.ivy Server:type=Server</name>
+      <name>ivy Engine:type=Server</name>
       <dataset>
         <property>
           <name>licenceParameters</name>

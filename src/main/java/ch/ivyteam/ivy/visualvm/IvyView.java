@@ -49,7 +49,7 @@ class IvyView extends DataSourceView {
   private DataBeanProvider fDataBeanProvider;
 
   public IvyView(Application application) {
-    super(application, ContentProvider.get("XpertIvy"),
+    super(application, ContentProvider.get("AxonIvy"),
             new ImageIcon(ImageUtilities.loadImage(IVY_IMAGE_PATH, true)).getImage(), 60, false);
   }
 

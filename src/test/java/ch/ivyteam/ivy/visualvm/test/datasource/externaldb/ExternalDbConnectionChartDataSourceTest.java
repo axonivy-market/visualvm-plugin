@@ -59,7 +59,7 @@ public class ExternalDbConnectionChartDataSourceTest extends AbstractTest {
           ReflectionException, MBeanException, AttributeNotFoundException, InstanceNotFoundException {
     final MBeanServerConnection mockConnection = createMockConnection();
     addTestData(mockConnection, getDataset());
-    ObjectName objectName = new ObjectName("Xpert.ivy Server:type=External Database,application="
+    ObjectName objectName = new ObjectName("ivy Engine:type=External Database,application="
             + fConfigs[0] + ",environment=" + fConfigs[1] + ",name=" + fConfigs[2]);
     when(mockConnection.getAttribute(objectName,
             IvyJmxConstant.IvyServer.ExternalDatabase.KEY_MAX_CONNECTION)).thenReturn(fMaxConnection);

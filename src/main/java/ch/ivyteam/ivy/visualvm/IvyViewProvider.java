@@ -81,7 +81,7 @@ public class IvyViewProvider extends DataSourceViewProvider<Application> {
   private boolean isSupportedIvyApp51AndLater(DataBeanProvider dataBeanProvider) {
     IvyApplicationInfo appInfo = dataBeanProvider.getGenericData().getApplicationInfo();
     if ((appInfo != null) && DataUtils.checkIvyVersion(appInfo.getVersion(), 5, 1)) {
-      return IvyApplicationInfo.IVY_SERVER_APP_NAME.equals(appInfo.getApplicationName())
+      return IvyApplicationInfo.IVY_ENGINE_APP_NAME.equals(appInfo.getApplicationName())
               || IvyApplicationInfo.IVY_DESIGNER_APP_NAME.equals(appInfo.getApplicationName());
     }
     return false;

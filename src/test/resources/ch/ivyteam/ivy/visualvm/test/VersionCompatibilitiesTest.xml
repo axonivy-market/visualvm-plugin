@@ -2,7 +2,7 @@
 <beanTestData>
   <dataset>
     <property>
-      <name>Xpert.ivy Server:type=Server</name>
+      <name>ivy Engine:type=Server</name>
       <dataset>
         <property>
           <name>version</name>
@@ -10,7 +10,7 @@
         </property>
         <property>
           <name>applicationName</name>
-          <value>Xpert.ivy Server</value>
+          <value>Axon.ivy Engine</value>
         </property>
       </dataset>
     </property>
@@ -18,7 +18,7 @@
     
   <dataset>
     <property>
-      <name>Xpert.ivy Server:type=Server</name>
+      <name>ivy Engine:type=Server</name>
       <dataset>
         <property>
           <name>version</name>
@@ -26,7 +26,7 @@
         </property>
         <property>
           <name>applicationName</name>
-          <value>Xpert.ivy Server</value>
+          <value>Axon.ivy Engine</value>
         </property>
       </dataset>
     </property>
@@ -34,7 +34,7 @@
   
   <dataset>
     <property>
-      <name>Xpert.ivy Server:type=Server</name>
+      <name>ivy Engine:type=Server</name>
       <dataset>
         <property>
           <name>version</name>
@@ -42,7 +42,7 @@
         </property>
         <property>
           <name>applicationName</name>
-          <value>Xpert.ivy Designer</value>
+          <value>Axon.ivy Designer</value>
         </property>
       </dataset>
     </property>
@@ -50,7 +50,7 @@
   
   <dataset>
     <property>
-      <name>Xpert.ivy Server:type=Server</name>
+      <name>ivy Engine:type=Server</name>
       <dataset>
         <property>
           <name>version</name>
@@ -58,7 +58,7 @@
         </property>
         <property>
           <name>applicationName</name>
-          <value>Xpert.ivy Designer</value>
+          <value>Axon.ivy Designer</value>
         </property>
       </dataset>
     </property>

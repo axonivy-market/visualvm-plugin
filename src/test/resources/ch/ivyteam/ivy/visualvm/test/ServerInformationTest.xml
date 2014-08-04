@@ -2,7 +2,7 @@
 <beanTestData>
   <dataset>
     <property>
-      <name>Xpert.ivy Server:type=Server</name>
+      <name>ivy Engine:type=Server</name>
       <dataset>
         <property>
           <name>version</name>
@@ -14,7 +14,7 @@
         </property>
         <property>
           <name>installationDirectory</name>
-          <value>D:\teamup\XpertIvyServer5.1.0.44832_Windows_x64</value>
+          <value>D:\teamup\AxonIvyEngine5.1.0.44832_Windows_x64</value>
         </property>
         <property>
           <name>developerMode</name>
@@ -26,7 +26,7 @@
         </property>
         <property>
           <name>applicationName</name>
-          <value>Xpert.ivy Server</value>
+          <value>Axon.ivy Engine</value>
         </property>
       </dataset>
     </property>
@@ -46,7 +46,7 @@
     </property>
     
     <property>
-      <name>Xpert.ivy Server:type=Database Persistency Service</name>
+      <name>ivy Engine:type=Database Persistency Service</name>
       <dataset>
         <property>
           <name>databaseProductName</name>
@@ -62,7 +62,7 @@
         </property>
         <property>
           <name>connectionUrl</name>
-          <value>jdbc:mysql://localhost:3306/XpertIvySystemDatabase_jmx</value>
+          <value>jdbc:mysql://localhost:3306/AxonIvySystemDatabase_jmx</value>
         </property>
         <property>
           <name>driverName</name>

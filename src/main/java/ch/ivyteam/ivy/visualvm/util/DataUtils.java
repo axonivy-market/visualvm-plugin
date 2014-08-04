@@ -25,7 +25,7 @@ public final class DataUtils {
   private static final String APP_STRING_KEY = "application";
   private static final String ENVIRONMENT_STRING_KEY = "environment";
   private static final String CONFIG_STRING_KEY = "name";
-  private static final String FILTER_STRING = "Xpert.ivy Server:type={0},application=*,environment=*,name=*";
+  private static final String FILTER_STRING = "ivy Engine:type={0},application=*,environment=*,name=*";
   private static final String WS_FILTER_STRING = FILTER_STRING.replace("{0}", "External Web Service");
   private static final String EXT_DB_FILTER_STRING = FILTER_STRING.replace("{0}", "External Database");
 

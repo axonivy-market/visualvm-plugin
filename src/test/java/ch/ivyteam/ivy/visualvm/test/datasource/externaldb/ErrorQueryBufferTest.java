@@ -109,9 +109,9 @@ public class ErrorQueryBufferTest extends AbstractTest {
     addTestData(mockConnection, getDataset());
     Set<ObjectName> extDbObjNames = new HashSet<>();
     extDbObjNames.add(new ObjectName(
-            "Xpert.ivy Server:type=External Database,application=app1,environment=env1,name=config1"));
+            "ivy Engine:type=External Database,application=app1,environment=env1,name=config1"));
     extDbObjNames.add(new ObjectName(
-            "Xpert.ivy Server:type=External Database,application=app1,environment=env1,name=config2"));
+            "ivy Engine:type=External Database,application=app1,environment=env1,name=config2"));
     when(mockConnection.queryNames(IvyJmxConstant.IvyServer.ExternalDatabase.NAME_FILTER, null))
             .thenReturn(extDbObjNames);
 

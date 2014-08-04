@@ -2,7 +2,7 @@
 <beanTestData>
     <dataset>
         <property>
-            <name>Xpert.ivy Server:type=External Database,application=app1,environment=env1,name=config1</name>
+            <name>ivy Engine:type=External Database,application=app1,environment=env1,name=config1</name>
             <dataset>
                 <property>
                     <name>executionHistory</name>
@@ -50,7 +50,7 @@
             </dataset>
         </property>
         <property>
-            <name>Xpert.ivy Server:type=External Database,application=app1,environment=env1,name=config2</name>
+            <name>ivy Engine:type=External Database,application=app1,environment=env1,name=config2</name>
             <dataset>
                 <property>
                     <name>executionHistory</name>
@@ -84,7 +84,7 @@
     
     <dataset>
         <property>
-            <name>Xpert.ivy Server:type=External Database,application=app1,environment=env1,name=config1</name>
+            <name>ivy Engine:type=External Database,application=app1,environment=env1,name=config1</name>
             <dataset>
                 <property>
                     <name>executionHistory</name>
@@ -173,7 +173,7 @@
             </dataset>
         </property>
         <property>
-            <name>Xpert.ivy Server:type=External Database,application=app1,environment=env1,name=config2</name>
+            <name>ivy Engine:type=External Database,application=app1,environment=env1,name=config2</name>
             <dataset>
                 <property>
                     <name>executionHistory</name>
@@ -207,7 +207,7 @@
     
     <dataset>
         <property>
-            <name>Xpert.ivy Server:type=External Database,application=app1,environment=env1,name=config1</name>
+            <name>ivy Engine:type=External Database,application=app1,environment=env1,name=config1</name>
             <dataset>
                 <property>
                     <name>executionHistory</name>
@@ -336,7 +336,7 @@
             </dataset>
         </property>
         <property>
-            <name>Xpert.ivy Server:type=External Database,application=app1,environment=env1,name=config2</name>
+            <name>ivy Engine:type=External Database,application=app1,environment=env1,name=config2</name>
             <dataset>
                 <property>
                     <name>executionHistory</name>

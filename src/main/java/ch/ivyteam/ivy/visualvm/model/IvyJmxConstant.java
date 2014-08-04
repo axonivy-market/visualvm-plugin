@@ -25,7 +25,7 @@ public final class IvyJmxConstant {
 
     public static final class Server {
 
-      public static final ObjectName NAME = initObjectName("Xpert.ivy Server:type=Server");
+      public static final ObjectName NAME = initObjectName("ivy Engine:type=Server");
       public static final String KEY_VERSION = "version";
       public static final String KEY_BUILD_DATE = "buildDate";
       public static final String KEY_APPLICATION_NAME = "applicationName";
@@ -52,7 +52,7 @@ public final class IvyJmxConstant {
 
     public static final class SecurityManager {
 
-      public static final ObjectName NAME = initObjectName("Xpert.ivy Server:type=Security Manager");
+      public static final ObjectName NAME = initObjectName("ivy Engine:type=Security Manager");
       public static final String KEY_LICENSED_USERS = "licensedUsers";
       public static final String KEY_LICENSED_SESSIONS = "licensedSessions";
       public static final String KEY_SESSIONS = "sessions";
@@ -61,7 +61,7 @@ public final class IvyJmxConstant {
     public static final class RichDialogExecution {
 
       public static final ObjectName NAME = initObjectName(
-              "Xpert.ivy Server:type=Rich Dialog Execution Manager");
+              "ivy Engine:type=Rich Dialog Execution Manager");
       public static final String KEY_RD_SESSIONS = "richDialogSessions";
 
     }
@@ -69,7 +69,7 @@ public final class IvyJmxConstant {
     public static final class DatabasePersistency {
 
       public static final ObjectName NAME = initObjectName(
-              "Xpert.ivy Server:type=Database Persistency Service");
+              "ivy Engine:type=Database Persistency Service");
       public static final String KEY_PRODUCT_NAME = "databaseProductName";
       public static final String KEY_PRODUCT_VERSION = "databaseProductVersion";
       public static final String KEY_IVY_SYSDB_VERSION = "version";
@@ -92,8 +92,8 @@ public final class IvyJmxConstant {
 
     public static final class ExternalDatabase {
       public static final ObjectName NAME_FILTER = initObjectName(
-              "Xpert.ivy Server:type=External Database,application=*,environment=*,name=*");
-      public static final String NAME_PATTERN = "Xpert.ivy Server:type=External Database,application=%s,"
+              "ivy Engine:type=External Database,application=*,environment=*,name=*");
+      public static final String NAME_PATTERN = "ivy Engine:type=External Database,application=%s,"
               + "environment=%s,name=%s";
       public static final String KEY_PRODUCT_NAME = "databaseProductName";
       public static final String KEY_PRODUCT_VERSION = "databaseProductVersion";
@@ -130,7 +130,7 @@ public final class IvyJmxConstant {
     }
 
     public static final class WebService {
-      public static final String NAME_PATTERN = "Xpert.ivy Server:type=External Web Service,"
+      public static final String NAME_PATTERN = "ivy Engine:type=External Web Service,"
               + "application=%s,environment=%s,name=%s";
       public static final String KEY_AUTHENTICATION_TYPE = "authenticationType";
       public static final String KEY_CALLS = "calls";

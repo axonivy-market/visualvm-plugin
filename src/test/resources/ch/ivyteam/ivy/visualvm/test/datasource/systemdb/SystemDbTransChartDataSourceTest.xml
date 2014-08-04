@@ -2,7 +2,7 @@
 <beanTestData>
   <dataset>
     <property>
-      <name>Xpert.ivy Server:type=Database Persistency Service</name>
+      <name>ivy Engine:type=Database Persistency Service</name>
       <dataset>
         <property>
           <name>transactions</name>
@@ -17,7 +17,7 @@
   </dataset>
   <dataset>
     <property>
-      <name>Xpert.ivy Server:type=Database Persistency Service</name>
+      <name>ivy Engine:type=Database Persistency Service</name>
       <dataset>
         <property>
           <name>transactions</name>
@@ -32,7 +32,7 @@
   </dataset>
   <dataset>
     <property>
-      <name>Xpert.ivy Server:type=Database Persistency Service</name>
+      <name>ivy Engine:type=Database Persistency Service</name>
       <dataset>
         <property>
           <name>transactions</name>
