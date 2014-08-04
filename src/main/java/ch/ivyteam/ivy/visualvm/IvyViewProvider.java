@@ -20,15 +20,14 @@ import javax.management.MBeanServerConnection;
 import javax.management.ReflectionException;
 
 public class IvyViewProvider extends DataSourceViewProvider<Application> {
+
+  private static final DataSourceViewProvider<Application> INSTANCE = new IvyViewProvider();
   /**
-   * Super class has a viewsCache. But in method createView(), calling 
+   * Super class has a viewsCache. But in method createView(), calling
    * getCachedView(application) always returns null. That's why we have to
    * create our own cached.
    */
   private final Map<Application, DataSourceView> cachedViews = new HashMap<>();
-  private DataSourceView ivyView;
-  private EmptyIvyView emptyView;
-  private static final DataSourceViewProvider<Application> INSTANCE = new IvyViewProvider();
   private DataBeanProvider fDataBeanProvider;
 
   @Override
@@ -94,12 +93,10 @@ public class IvyViewProvider extends DataSourceViewProvider<Application> {
       return view;
     }
     if (fDataBeanProvider != null) {
-      this.ivyView = new IvyView(application);
-      ((IvyView) this.ivyView).setDataBeanProvider(fDataBeanProvider);
-      view = this.ivyView;
+      view = new IvyView(application);
+      ((IvyView) view).setDataBeanProvider(fDataBeanProvider);
     } else {
-      this.emptyView = new EmptyIvyView(application);
-      view = this.emptyView;
+      view = new EmptyIvyView(application);
     }
     this.cachedViews.put(application, view);
     return view;
