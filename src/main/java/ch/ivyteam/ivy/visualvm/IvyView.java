@@ -142,10 +142,15 @@ class IvyView extends DataSourceView {
     fDataBeanProvider = dataBeanProvider;
   }
 
+  /**
+   * This method will be invoked when user close IvyView tab.
+   * At this moment, we cannot clear the instance of IvyView after closing it.
+   * So we have to continuous updating data to the chart on the background.
+   */
   @Override
   protected void removed() {
     super.removed();
-    fUpdateTask.suspend();
+//    fUpdateTask.suspend();
   }
 
   private class UpdateChartTask implements SchedulerTask {
