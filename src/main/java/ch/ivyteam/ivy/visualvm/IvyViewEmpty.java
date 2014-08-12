@@ -3,17 +3,14 @@ package ch.ivyteam.ivy.visualvm;
 import com.sun.tools.visualvm.application.Application;
 import com.sun.tools.visualvm.core.ui.DataSourceView;
 import com.sun.tools.visualvm.core.ui.components.DataViewComponent;
-import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
-import org.openide.util.ImageUtilities;
 
-public class EmptyIvyView extends DataSourceView {
+public class IvyViewEmpty extends DataSourceView {
 
-  public EmptyIvyView(Application application) {
-    super(application, ContentProvider.get("AxonIvy"),
-            new ImageIcon(ImageUtilities.loadImage(IvyView.IVY_IMAGE_PATH, true)).getImage(),
-            60, false);
+  public IvyViewEmpty(Application application) {
+    super(application, IvyViewHelper.getViewName(application), IvyViewHelper.getViewIcon(application), 60,
+            false);
   }
 
   @Override

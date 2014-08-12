@@ -25,7 +25,6 @@ import java.util.logging.Logger;
 import java.util.prefs.PreferenceChangeEvent;
 import java.util.prefs.PreferenceChangeListener;
 import javax.swing.Icon;
-import javax.swing.ImageIcon;
 import javax.swing.JComponent;
 import javax.swing.JTabbedPane;
 import org.openide.util.ImageUtilities;
@@ -34,7 +33,6 @@ class IvyView extends DataSourceView {
 
   private static final Logger LOGGER = Logger.getLogger(IvyView.class.getName());
 
-  public static final String IVY_IMAGE_PATH = "resources/icons/ivy16.png";
   public static final String INFO_IMAGE_PATH = "resources/icons/info.png";
   public static final String DB_ICON_IMAGE_PATH = "resources/icons/db_icon.png";
   public static final String EXT_DB_ICON_IMAGE_PATH = "resources/icons/ext_db_icon.png";
@@ -49,8 +47,8 @@ class IvyView extends DataSourceView {
   private DataBeanProvider fDataBeanProvider;
 
   public IvyView(Application application) {
-    super(application, ContentProvider.get("AxonIvy"),
-            new ImageIcon(ImageUtilities.loadImage(IVY_IMAGE_PATH, true)).getImage(), 60, false);
+    super(application, IvyViewHelper.getViewName(application), IvyViewHelper.getViewIcon(application), 60,
+            false);
   }
 
   @Override
@@ -143,9 +141,8 @@ class IvyView extends DataSourceView {
   }
 
   /**
-   * This method will be invoked when user close IvyView tab.
-   * At this moment, we cannot clear the instance of IvyView after closing it.
-   * So we have to continuous updating data to the chart on the background.
+   * This method will be invoked when user close IvyView tab. At this moment, we cannot clear the instance of
+   * IvyView after closing it. So we have to continuous updating data to the chart on the background.
    */
   @Override
   protected void removed() {

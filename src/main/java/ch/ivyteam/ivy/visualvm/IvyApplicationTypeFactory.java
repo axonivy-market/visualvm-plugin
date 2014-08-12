@@ -8,6 +8,7 @@ import com.sun.tools.visualvm.application.type.ApplicationTypeFactory;
 import com.sun.tools.visualvm.application.type.MainClassApplicationTypeFactory;
 
 class IvyApplicationTypeFactory extends MainClassApplicationTypeFactory {
+
   private static final IvyApplicationTypeFactory INSTANCE = new IvyApplicationTypeFactory();
 
   static void initialize() {
@@ -23,8 +24,9 @@ class IvyApplicationTypeFactory extends MainClassApplicationTypeFactory {
           String mainClass) {
     if (isIvyServer(mainClass)) {
       return new IvyApplicationType(app.getPid(), IvyApplicationInfo.IVY_ENGINE_APP_NAME);
-    } else if (isIvyDesigner(mainClass, jvm)) {
-      return new IvyApplicationType(app.getPid(), IvyApplicationInfo.IVY_DESIGNER_APP_NAME);
+    } else if (isDesigner(mainClass, jvm)) {
+      return new IvyApplicationType(app.getPid(), isXpertIvyDesigner(mainClass)
+              ? IvyApplicationInfo.IVY_DESIGNER_APP_NAME_OLD : IvyApplicationInfo.IVY_DESIGNER_APP_NAME);
     }
     return null;
   }
@@ -32,8 +34,8 @@ class IvyApplicationTypeFactory extends MainClassApplicationTypeFactory {
   private boolean isIvyServer(String mainClass) {
     return "ch.ivyteam.ivy.server.ServerLauncher".equals(mainClass);
   }
-
-  private boolean isIvyDesigner(String mainClass, Jvm jvm) {
+  
+  private boolean isDesigner(String mainClass, Jvm jvm) {
     return isDesignerInstallation(mainClass) || isDesignerStartedFromIde(mainClass, jvm);
   }
 
@@ -43,6 +45,14 @@ class IvyApplicationTypeFactory extends MainClassApplicationTypeFactory {
   }
 
   private boolean isDesignerInstallation(String mainClass) {
+    return isAxonIvyDesigner(mainClass) || isXpertIvyDesigner(mainClass);
+  }
+
+  private boolean isXpertIvyDesigner(String mainClass) {
+    return "XpertIvyDesigner".equals(mainClass);
+  }
+
+  private boolean isAxonIvyDesigner(String mainClass) {
     return "AxonIvyDesigner".equals(mainClass);
   }
 

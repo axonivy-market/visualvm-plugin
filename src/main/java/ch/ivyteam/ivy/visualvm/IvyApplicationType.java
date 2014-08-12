@@ -1,10 +1,12 @@
 package ch.ivyteam.ivy.visualvm;
 
+import ch.ivyteam.ivy.visualvm.model.IvyApplicationInfo;
 import com.sun.tools.visualvm.application.type.ApplicationType;
 import java.awt.Image;
 import org.openide.util.ImageUtilities;
 
 class IvyApplicationType extends ApplicationType {
+
   private final int fAppPID;
   private final String fName;
 
@@ -29,12 +31,29 @@ class IvyApplicationType extends ApplicationType {
 
   @Override
   public String getDescription() {
-    return ContentProvider.get("AxonIvy");
+    return ContentProvider.get("IvyApplication");
   }
 
   @Override
   public Image getIcon() {
-    return ImageUtilities.loadImage(IvyView.IVY_IMAGE_PATH, true);
+    return ImageUtilities.loadImage(isXpertIvyDesigner() ? IvyViewHelper.IVY_IMAGE_PATH_OLD
+            : IvyViewHelper.IVY_IMAGE_PATH, true);
+  }
+
+  public boolean isIvyEngine() {
+    return fName.equals(IvyApplicationInfo.IVY_ENGINE_APP_NAME);
+  }
+
+  public boolean isIvyDesigner() {
+    return isAxonIvyDesigner() || isXpertIvyDesigner();
+  }
+
+  public boolean isAxonIvyDesigner() {
+    return fName.equals(IvyApplicationInfo.IVY_DESIGNER_APP_NAME);
+  }
+
+  public boolean isXpertIvyDesigner() {
+    return fName.equals(IvyApplicationInfo.IVY_DESIGNER_APP_NAME_OLD);
   }
 
 }

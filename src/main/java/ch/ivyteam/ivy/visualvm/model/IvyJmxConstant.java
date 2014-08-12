@@ -6,7 +6,7 @@ import javax.management.ObjectName;
 
 public final class IvyJmxConstant {
   private static final Logger LOGGER = Logger.getLogger(IvyJmxConstant.class.getName());
-  public static final ObjectName ENGINE = initObjectName("ivy:type=Engine");
+  public static final ObjectName IVY_ENGINE = initObjectName("ivy Engine:type=Server");
 
   private IvyJmxConstant() {
   }

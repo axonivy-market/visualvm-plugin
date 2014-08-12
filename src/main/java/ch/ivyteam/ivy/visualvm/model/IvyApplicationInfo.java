@@ -4,8 +4,10 @@ import ch.ivyteam.ivy.visualvm.ContentProvider;
 import java.util.Date;
 
 public class IvyApplicationInfo {
+
   public static final String IVY_ENGINE_APP_NAME = ContentProvider.get("IvyEngineApp");
   public static final String IVY_DESIGNER_APP_NAME = ContentProvider.get("IvyDesignerApp");
+  public static final String IVY_DESIGNER_APP_NAME_OLD = ContentProvider.get("IvyDesignerApp_old");
 
   private String fApplicationName;
   private String fVersion;

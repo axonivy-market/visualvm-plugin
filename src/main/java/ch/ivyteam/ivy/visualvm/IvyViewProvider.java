@@ -1,8 +1,6 @@
 package ch.ivyteam.ivy.visualvm;
 
-import ch.ivyteam.ivy.visualvm.model.IvyApplicationInfo;
 import ch.ivyteam.ivy.visualvm.model.IvyJmxConstant;
-import ch.ivyteam.ivy.visualvm.util.DataUtils;
 import ch.ivyteam.ivy.visualvm.view.DataBeanProvider;
 import com.sun.tools.visualvm.application.Application;
 import com.sun.tools.visualvm.application.type.ApplicationTypeFactory;
@@ -23,28 +21,24 @@ public class IvyViewProvider extends DataSourceViewProvider<Application> {
 
   private static final DataSourceViewProvider<Application> INSTANCE = new IvyViewProvider();
   /**
-   * Super class has a viewsCache. But in method createView(), calling
-   * getCachedView(application) always returns null. That's why we have to
-   * create our own cached.
+   * Super class has a viewsCache. But in method createView(), calling getCachedView(application) always
+   * returns null. That's why we have to create our own cached.
    */
   private final Map<Application, DataSourceView> cachedViews = new HashMap<>();
   private DataBeanProvider fDataBeanProvider;
 
   @Override
   protected boolean supportsViewFor(Application application) {
+    boolean isSupported = isIvyApplicationType(application);
     JmxModel jmx = JmxModelFactory.getJmxModelFor(application);
-    boolean isSupported = false;
     if (jmx != null) {
       MBeanServerConnection mbsc = jmx.getMBeanServerConnection();
       if (mbsc != null) {
         fDataBeanProvider = new DataBeanProvider(mbsc);
-        isSupported = isSupportedIvyApp50AndLater(fDataBeanProvider);
+        if (!isAxonIvyApp(fDataBeanProvider)) {
+          fDataBeanProvider = null;
+        }
       }
-    }
-    if (!isSupported && isIvyApplicationType(application)) {
-      // Ivy 4.x
-      isSupported = true;
-      fDataBeanProvider = null;
     }
     return isSupported;
   }
@@ -53,37 +47,17 @@ public class IvyViewProvider extends DataSourceViewProvider<Application> {
     return ApplicationTypeFactory.getApplicationTypeFor(application) instanceof IvyApplicationType;
   }
 
-  public boolean isSupportedIvyApp50AndLater(DataBeanProvider dataBeanProvider) {
-    boolean isSupported = isSupportedIvyApp51AndLater(dataBeanProvider);
-    if (!isSupported) {
-      isSupported = isSupportedIvyApp50(dataBeanProvider);
-      if (isSupported) {
-        fDataBeanProvider = null;
-      }
-    }
-    return isSupported;
-  }
-
-  private boolean isSupportedIvyApp50(DataBeanProvider dataBeanProvider) {
-    boolean isIvyApp;
+  public boolean isAxonIvyApp(DataBeanProvider dataBeanProvider) {
+    boolean isAxonIvyApp;
     try {
       AttributeList attributes
-              = dataBeanProvider.getMBeanServerConnection().getAttributes(IvyJmxConstant.ENGINE,
+              = dataBeanProvider.getMBeanServerConnection().getAttributes(IvyJmxConstant.IVY_ENGINE,
                       new String[]{});
-      isIvyApp = attributes != null;
+      isAxonIvyApp = attributes != null;
     } catch (InstanceNotFoundException | ReflectionException | IOException ex) {
-      isIvyApp = false;
+      isAxonIvyApp = false;
     }
-    return isIvyApp;
-  }
-
-  private boolean isSupportedIvyApp51AndLater(DataBeanProvider dataBeanProvider) {
-    IvyApplicationInfo appInfo = dataBeanProvider.getGenericData().getApplicationInfo();
-    if ((appInfo != null) && DataUtils.checkIvyVersion(appInfo.getVersion(), 5, 1)) {
-      return IvyApplicationInfo.IVY_ENGINE_APP_NAME.equals(appInfo.getApplicationName())
-              || IvyApplicationInfo.IVY_DESIGNER_APP_NAME.equals(appInfo.getApplicationName());
-    }
-    return false;
+    return isAxonIvyApp;
   }
 
   @Override
@@ -96,7 +70,7 @@ public class IvyViewProvider extends DataSourceViewProvider<Application> {
       view = new IvyView(application);
       ((IvyView) view).setDataBeanProvider(fDataBeanProvider);
     } else {
-      view = new EmptyIvyView(application);
+      view = new IvyViewEmpty(application);
     }
     this.cachedViews.put(application, view);
     return view;

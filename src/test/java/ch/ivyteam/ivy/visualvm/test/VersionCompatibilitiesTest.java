@@ -23,8 +23,6 @@ import static org.mockito.Mockito.when;
 
 @RunWith(Parameterized.class)
 public class VersionCompatibilitiesTest extends AbstractTest {
-  public static final String IVYDESIGNER = "Axon.ivy Designer";
-  public static final String IVYENGINE = "Axon.ivy Engine";
 
   private final boolean fResult;
 
@@ -34,7 +32,7 @@ public class VersionCompatibilitiesTest extends AbstractTest {
             "/ch/ivyteam/ivy/visualvm/test/VersionCompatibilitiesTest.xml",
             new Object[]{true}, new Object[]{true},
             new Object[]{true}, new Object[]{true},
-            new Object[]{true}, new Object[]{false}, new Object[]{false});
+            new Object[]{false}, new Object[]{false}, new Object[]{false});
     return data;
   }
 
@@ -65,7 +63,7 @@ public class VersionCompatibilitiesTest extends AbstractTest {
               .thenThrow(new InstanceNotFoundException());
     }
 
-    boolean isIvy = ivyViewProvider.isSupportedIvyApp50AndLater(dataBeanProvider);
+    boolean isIvy = ivyViewProvider.isAxonIvyApp(dataBeanProvider);
     assertEquals(fResult, isIvy);
   }
 
