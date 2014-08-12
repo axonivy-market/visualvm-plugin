@@ -16,20 +16,20 @@ public final class IvyViewHelper {
   public static String getViewName(Application application) {
     IvyApplicationType applicationType = (IvyApplicationType) ApplicationTypeFactory
             .getApplicationTypeFor(application);
-    if (applicationType.isXpertIvyDesigner()) {
-      return ContentProvider.get("XpertIvy");
-    } else {
+    if (applicationType.isAxonIvyApplicaton()) {
       return ContentProvider.get("AxonIvy");
+    } else {
+      return ContentProvider.get("XpertIvy");
     }
   }
 
   public static Image getViewIcon(Application application) {
     IvyApplicationType applicationType = (IvyApplicationType) ApplicationTypeFactory
             .getApplicationTypeFor(application);
-    if (applicationType.isXpertIvyDesigner()) {
-      return new ImageIcon(ImageUtilities.loadImage(IVY_IMAGE_PATH_OLD, true)).getImage();
-    } else {
+    if (applicationType.isAxonIvyApplicaton()) {
       return new ImageIcon(ImageUtilities.loadImage(IVY_IMAGE_PATH, true)).getImage();
+    } else {
+      return new ImageIcon(ImageUtilities.loadImage(IVY_IMAGE_PATH_OLD, true)).getImage();
     }
   }
 

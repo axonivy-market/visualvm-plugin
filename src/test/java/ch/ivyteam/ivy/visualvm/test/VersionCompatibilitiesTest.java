@@ -1,6 +1,6 @@
 package ch.ivyteam.ivy.visualvm.test;
 
-import ch.ivyteam.ivy.visualvm.IvyViewProvider;
+import ch.ivyteam.ivy.visualvm.IvyApplicationTypeFactory;
 import ch.ivyteam.ivy.visualvm.exception.IvyJmxDataCollectException;
 import ch.ivyteam.ivy.visualvm.test.data.model.BeanTestData;
 import ch.ivyteam.ivy.visualvm.test.util.TestUtil;
@@ -46,7 +46,7 @@ public class VersionCompatibilitiesTest extends AbstractTest {
           IOException, IvyJmxDataCollectException, InstanceNotFoundException, ReflectionException {
 
     MBeanServerConnection mockedMBeanServer = createMockConnection();
-    IvyViewProvider ivyViewProvider = new IvyViewProvider();
+    IvyApplicationTypeFactory ivyAppTypeFactory = new IvyApplicationTypeFactory();
     DataBeanProvider dataBeanProvider = new DataBeanProvider(mockedMBeanServer);
 
     if (getDataset().getProperty().size() > 0) {
@@ -63,7 +63,7 @@ public class VersionCompatibilitiesTest extends AbstractTest {
               .thenThrow(new InstanceNotFoundException());
     }
 
-    boolean isIvy = ivyViewProvider.isAxonIvyApp(dataBeanProvider);
+    boolean isIvy = ivyAppTypeFactory.isAxonIvyAppMBeanProvider(dataBeanProvider);
     assertEquals(fResult, isIvy);
   }
 
