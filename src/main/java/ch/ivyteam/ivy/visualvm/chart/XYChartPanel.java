@@ -168,9 +168,7 @@ public class XYChartPanel implements IUpdatableUIObject {
   }
 
   private void addStorageItem(long currentTime, long[] values) {
-    synchronized (fStorage) {
-      fStorage.add(new StorageItem(currentTime, values));
-    }
+    fStorage.add(new StorageItem(currentTime, values));
     removeOutOfDateStorageItem(currentTime);
   }
 
