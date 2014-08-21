@@ -15,6 +15,7 @@ import java.awt.Component;
 import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.Font;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
@@ -63,7 +64,7 @@ public class XYChartPanel implements IUpdatableUIObject {
   XYChartPanel(ChartsPanel chartsContainer, XYChartDataSource dataSource, String yAxisTooltip) {
     fchartsContainer = chartsContainer;
     fDataSource = dataSource;
-    fStorage = new LinkedList<>();
+    fStorage = Collections.synchronizedList(new LinkedList<StorageItem>());
     fYAxisTooltip = yAxisTooltip;
     createUI();
   }
@@ -77,8 +78,9 @@ public class XYChartPanel implements IUpdatableUIObject {
 
   private void createChart() {
     int monitoredDataCache = GlobalPreferences.sharedInstance().getMonitoredDataCache();
-    SimpleXYChartDescriptor chartDescriptor = SimpleXYChartDescriptor.decimal(10, true,
-            60 * monitoredDataCache);
+    int monitoredDataPoll = GlobalPreferences.sharedInstance().getMonitoredDataPoll();
+    int chartPoints = 60 * monitoredDataCache / monitoredDataPoll;
+    SimpleXYChartDescriptor chartDescriptor = SimpleXYChartDescriptor.decimal(10, true, chartPoints);
     configureChart(chartDescriptor);
 
     fChart = ChartFactory.createSimpleXYChart(chartDescriptor);
@@ -86,27 +88,6 @@ public class XYChartPanel implements IUpdatableUIObject {
     fYAxis = identifyYAxis();
     fXAxis = identifyXAxis();
     fChartArea = identifyChartMainArea();
-  }
-
-  @Override
-  public void updateValues(QueryResult result) {
-    long[] values = fDataSource.getValues(result);
-    long currentTime = System.currentTimeMillis();
-
-    if (needRecreateUI()) {
-      recreateUI();
-    }
-    addValuesToChart(currentTime, values);
-
-    long[] labels = fDataSource.calculateDetailValues(result);
-    fHtmlLabel.updateValues(labels);
-    View view = (View) fHtmlLabel.getClientProperty(BasicHTML.propertyKey);
-    if (view != null) {
-      int w = (int) view.getPreferredSpan(View.X_AXIS);
-      fHtmlLabel.setPreferredSize(new Dimension(w, 0));
-    }
-
-    addStorageItem(currentTime, values);
   }
 
   private boolean needRecreateUI() {
@@ -127,10 +108,114 @@ public class XYChartPanel implements IUpdatableUIObject {
   }
 
   @Override
+  public void updateValues(QueryResult result) {
+    long[] values = fDataSource.getValues(result);
+    long currentTime = System.currentTimeMillis();
+
+    if (needRecreateUI()) {
+      recreateUI();
+    }
+    addValuesToChart(currentTime, values);
+
+    long[] labels = fDataSource.calculateDetailValues(result);
+    fHtmlLabel.updateValues(labels);
+    View view = (View) fHtmlLabel.getClientProperty(BasicHTML.propertyKey);
+    if (view != null) {
+      int w = (int) view.getPreferredSpan(View.X_AXIS);
+      fHtmlLabel.setPreferredSize(new Dimension(w, 0));
+    }
+    addStorageItem(currentTime, values);
+  }
+
+  @Override
   public void updateQuery(Query query) {
     fDataSource.updateQuery(query);
   }
 
+  public void updateCachePeriod() {
+    createUI();
+    long currentTime = System.currentTimeMillis();
+    restoreDataFromStorage(currentTime);
+  }
+
+  private void restoreDataFromStorage(long currentTime) {
+    removeOutOfDateStorageItem(currentTime);
+    synchronized (fStorage) {
+      for (StorageItem item : fStorage) {
+        addValuesToChart(item.getTimestamp(), item.getValues());
+      }
+    }
+  }
+
+  /**
+   * Please do not call fChart.addValues(currentTime, values) directly. Please
+   * use this method so that it can automatically calculate the topValue and
+   * maxValue
+   *
+   * @param currentTime
+   * @param values
+   */
+  private void addValuesToChart(long currentTime, long[] values) {
+    fChart.addValues(currentTime, values);
+    for (long val : values) {
+      if (this.fMaxValueFromChartCreated < val) {
+        this.fMaxValueFromChartCreated = val;
+        this.fMaxValueBeingDisplayed = val;
+      } else if (this.fMaxValueBeingDisplayed < val) {
+        this.fMaxValueBeingDisplayed = val;
+      }
+    }
+  }
+
+  private void addStorageItem(long currentTime, long[] values) {
+    synchronized (fStorage) {
+      fStorage.add(new StorageItem(currentTime, values));
+    }
+    removeOutOfDateStorageItem(currentTime);
+  }
+
+  private void removeOutOfDateStorageItem(long currentTime) {
+    long cachePeriod = GlobalPreferences.sharedInstance().getMonitoredDataCache() * 60 * 1000;
+    boolean needRecalculateMaxValue = false;
+    synchronized (fStorage) {
+      Iterator<StorageItem> iterator = fStorage.iterator();
+      while (iterator.hasNext()) {
+        StorageItem item = iterator.next();
+        if (item.getTimestamp() + cachePeriod < currentTime) {
+          iterator.remove();
+          for (long removedValue : item.fValues) {
+            if (removedValue >= fMaxValueBeingDisplayed) {
+              needRecalculateMaxValue = true;
+              break;
+            }
+          }
+        } else {
+          break;
+        }
+      }
+    }
+    if (needRecalculateMaxValue) {
+      recalculateMaxValueInCache();
+    }
+
+  }
+
+  private void recalculateMaxValueInCache() {
+    this.fMaxValueBeingDisplayed = 0;
+    synchronized (fStorage) {
+      Iterator<StorageItem> iterator = fStorage.iterator();
+      while (iterator.hasNext()) {
+        StorageItem storageItem = iterator.next();
+        for (long val : storageItem.fValues) {
+          if (this.fMaxValueBeingDisplayed < val) {
+            this.fMaxValueBeingDisplayed = val;
+          }
+        }
+      }
+    }
+  }
+
+  //<editor-fold defaultstate="collapsed" desc="UI Components">
   private Component identifyYAxis() {
     Container container = (Container) fChart.getChart().getComponent(CONTAINER_CHART_INDEX);
     Container mainArea = (Container) container.getComponent(CHART_MAIN_AREA_INDEX);
@@ -231,77 +316,6 @@ public class XYChartPanel implements IUpdatableUIObject {
     return yAxisDescriptorPanel;
   }
 
-  public void updateCachePeriod() {
-    createUI();
-    long currentTime = System.currentTimeMillis();
-    restoreDataFromStorage(currentTime);
-  }
-
-  private void restoreDataFromStorage(long currentTime) {
-    removeOutOfDateStorageItem(currentTime);
-    for (StorageItem item : fStorage) {
-      addValuesToChart(item.getTimestamp(), item.getValues());
-    }
-  }
-
-  /**
-   * Please do not call fChart.addValues(currentTime, values) directly. Please use this method so that it can
-   * automatically calculate the topValue and maxValue
-   *
-   * @param currentTime
-   * @param values
-   */
-  private void addValuesToChart(long currentTime, long[] values) {
-    fChart.addValues(currentTime, values);
-    for (long val : values) {
-      if (this.fMaxValueFromChartCreated < val) {
-        this.fMaxValueFromChartCreated = val;
-        this.fMaxValueBeingDisplayed = val;
-      } else if (this.fMaxValueBeingDisplayed < val) {
-        this.fMaxValueBeingDisplayed = val;
-      }
-    }
-  }
-
-  private void addStorageItem(long currentTime, long[] values) {
-    fStorage.add(new StorageItem(currentTime, values));
-    removeOutOfDateStorageItem(currentTime);
-  }
-
-  private void removeOutOfDateStorageItem(long currentTime) {
-    long cachePeriod = GlobalPreferences.sharedInstance().getMonitoredDataCache() * 60 * 1000;
-    Iterator<StorageItem> iterator = fStorage.iterator();
-    boolean needRecalculateMaxValue = false;
-    while (iterator.hasNext()) {
-      StorageItem item = iterator.next();
-      if (item.getTimestamp() + cachePeriod < currentTime) {
-        iterator.remove();
-        for (long removedValue : item.fValues) {
-          if (removedValue >= fMaxValueBeingDisplayed) {
-            needRecalculateMaxValue = true;
-            break;
-          }
-        }
-      } else {
-        break;
-      }
-    }
-    if (needRecalculateMaxValue) {
-      recalculateMaxValueInCache();
-    }
-  }
-
-  private void recalculateMaxValueInCache() {
-    this.fMaxValueBeingDisplayed = 0;
-    for (StorageItem storageItem : fStorage) {
-      for (long val : storageItem.fValues) {
-        if (this.fMaxValueBeingDisplayed < val) {
-          this.fMaxValueBeingDisplayed = val;
-        }
-      }
-    }
-  }
-
   private void configureChart(SimpleXYChartDescriptor chartDescriptor) {
     if (fDataSource.getChartName() != null) {
       chartDescriptor.setChartTitle(fDataSource.getChartName());
@@ -351,7 +365,9 @@ public class XYChartPanel implements IUpdatableUIObject {
       fHtmlLabel.addInfo("key", calc.getText(), "0", calc.getUnit(), calc.getTooltip());
     }
   }
+  //</editor-fold>
 
+  //<editor-fold defaultstate="collapsed" desc="Inner classes">
   private class StorageItem {
 
     private final long fTimestamp;
@@ -372,5 +388,6 @@ public class XYChartPanel implements IUpdatableUIObject {
     }
 
   }
+  //</editor-fold>
 
 }
