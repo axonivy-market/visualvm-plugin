@@ -21,6 +21,8 @@ public abstract class AbstractExternalDbQueriesPanel extends JPanel {
   private final ExternalDbView fExternalDbView;
   private final DateTableCellRenderer fDateCellRenderer = new DateTableCellRenderer();
   private final NumberTableCellRenderer fNumberCellRenderer = new NumberTableCellRenderer();
+  private final MultiLineMergeTableCellRenderer fmultiLineCellRenderer = new MultiLineMergeTableCellRenderer();
+  
   private final List<Integer> fColumnsWidths = new ArrayList<>();
   private List<? extends RowSorter.SortKey> fSortKeys;
   private volatile boolean isRefreshing = false;
@@ -131,6 +133,10 @@ public abstract class AbstractExternalDbQueriesPanel extends JPanel {
       SQLInfo info = getSQLInfoList().get(getQueriesTable().convertRowIndexToModel(selectedRow));
       getExternalDbView().showChart(info.getApplication(), info.getEnvironment(), info.getConfigName());
     }
+  }
+
+  public MultiLineMergeTableCellRenderer getMultiLineCellRenderer() {
+    return fmultiLineCellRenderer;
   }
 
 }
