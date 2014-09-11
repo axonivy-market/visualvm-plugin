@@ -11,7 +11,7 @@ class MultiLineMergeTableCellRenderer extends EvenOddCellRenderer {
     String stringValue = null;
     if (value != null) {
       stringValue = value.toString();
-      stringValue = stringValue.replaceAll("[\\t\\n\\r]", " ");
+      stringValue = stringValue.replaceAll("[\\t\\r\\n]+", " ");
     }
     return super.getTableCellRendererComponent(table, stringValue, isSelected, hasFocus, row, column);
   }
