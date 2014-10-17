@@ -78,8 +78,7 @@ class IvyView extends DataSourceView {
   private void addInformationView(DataBeanProvider dataBeanProvider, JTabbedPane tabbed) {
     InformationView infoView = new InformationView(dataBeanProvider);
     fViews.add(infoView);
-    tabbed.addTab(ContentProvider.get("Information"),
-            (Icon) ImageUtilities.loadImage(INFO_IMAGE_PATH, true),
+    tabbed.addTab(ContentProvider.get("Information"), (Icon) ImageUtilities.loadImage(INFO_IMAGE_PATH, true),
             infoView.getViewComponent());
   }
 
@@ -88,8 +87,7 @@ class IvyView extends DataSourceView {
       LicenseView licenseView = new LicenseView(dataBeanProvider);
       fViews.add(licenseView);
       tabbed.addTab(ContentProvider.get("License"),
-              (Icon) ImageUtilities.loadImage(LICENSE_IMAGE_PATH, true),
-              licenseView.getViewComponent());
+              (Icon) ImageUtilities.loadImage(LICENSE_IMAGE_PATH, true), licenseView.getViewComponent());
     }
   }
 
@@ -97,57 +95,42 @@ class IvyView extends DataSourceView {
     RequestView requestViewNew = new RequestView(dataBeanProvider);
     fViews.add(requestViewNew);
     tabbed.addTab(ContentProvider.get("UserRequests"),
-            (Icon) ImageUtilities.loadImage(USER_REQ_IMAGE_PATH, true),
-            requestViewNew.getViewComponent());
+            (Icon) ImageUtilities.loadImage(USER_REQ_IMAGE_PATH, true), requestViewNew.getViewComponent());
   }
 
   private void addSystemDBView(DataBeanProvider dataBeanProvider, JTabbedPane tabbed) {
     SystemDbView systemDbView = new SystemDbView(dataBeanProvider);
     fViews.add(systemDbView);
     tabbed.addTab(ContentProvider.get("SystemDatabase"),
-            (Icon) ImageUtilities.loadImage(DB_ICON_IMAGE_PATH, true),
-            systemDbView.getViewComponent());
+            (Icon) ImageUtilities.loadImage(DB_ICON_IMAGE_PATH, true), systemDbView.getViewComponent());
   }
 
   private void addExternalDBView(DataBeanProvider dataBeanProvider, JTabbedPane tabbed) {
     ExternalDbView extDbView = new ExternalDbView(dataBeanProvider);
     fViews.add(extDbView);
     tabbed.addTab(ContentProvider.get("ExternalDatabases"),
-            (Icon) ImageUtilities.loadImage(EXT_DB_ICON_IMAGE_PATH, true),
-            extDbView.getViewComponent());
+            (Icon) ImageUtilities.loadImage(EXT_DB_ICON_IMAGE_PATH, true), extDbView.getViewComponent());
   }
 
   private void addWebServicesView(DataBeanProvider dataBeanProvider, JTabbedPane tabbed) {
     WebServicesView wsView = new WebServicesView(dataBeanProvider);
     fViews.add(wsView);
-    tabbed.addTab(ContentProvider.get("WebServices"), (Icon) ImageUtilities.loadImage(
-            WEB_SERVICE_ICON_IMAGE_PATH, true),
-            wsView.getViewComponent());
+    tabbed.addTab(ContentProvider.get("WebServices"),
+            (Icon) ImageUtilities.loadImage(WEB_SERVICE_ICON_IMAGE_PATH, true), wsView.getViewComponent());
   }
 
   private DataViewComponent createDVC(String masterViewTitle, JComponent comp) {
     // Add the master view and configuration view to the component:
-    DataViewComponent.MasterView masterView = new DataViewComponent.MasterView(
-            masterViewTitle, "", comp);
+    DataViewComponent.MasterView masterView = new DataViewComponent.MasterView(masterViewTitle, "", comp);
 
     // Configuration of master view:
-    DataViewComponent.MasterViewConfiguration masterConfiguration
-            = new DataViewComponent.MasterViewConfiguration(false);
+    DataViewComponent.MasterViewConfiguration masterConfiguration = 
+            new DataViewComponent.MasterViewConfiguration(false);
     return new DataViewComponent(masterView, masterConfiguration);
   }
 
   public void setDataBeanProvider(DataBeanProvider dataBeanProvider) {
     fDataBeanProvider = dataBeanProvider;
-  }
-
-  /**
-   * This method will be invoked when user close IvyView tab. At this moment, we cannot clear the instance of
-   * IvyView after closing it. So we have to continuous updating data to the chart on the background.
-   */
-  @Override
-  protected void removed() {
-    super.removed();
-//    fUpdateTask.suspend();
   }
 
   private class UpdateChartTask implements SchedulerTask {
@@ -176,8 +159,7 @@ class IvyView extends DataSourceView {
 
     @Override
     public void preferenceChange(PreferenceChangeEvent evt) {
-      fUpdateTask.setInterval(Quantum.seconds(GlobalPreferences.sharedInstance().
-              getMonitoredDataPoll()));
+      fUpdateTask.setInterval(Quantum.seconds(GlobalPreferences.sharedInstance().getMonitoredDataPoll()));
     }
 
   }

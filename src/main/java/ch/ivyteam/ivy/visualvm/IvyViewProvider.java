@@ -2,15 +2,13 @@ package ch.ivyteam.ivy.visualvm;
 
 import ch.ivyteam.ivy.visualvm.view.DataBeanProvider;
 import com.sun.tools.visualvm.application.Application;
+import com.sun.tools.visualvm.application.type.ApplicationType;
 import com.sun.tools.visualvm.application.type.ApplicationTypeFactory;
 import com.sun.tools.visualvm.core.ui.DataSourceView;
 import com.sun.tools.visualvm.core.ui.DataSourceViewProvider;
 import com.sun.tools.visualvm.core.ui.DataSourceViewsManager;
-import com.sun.tools.visualvm.tools.jmx.JmxModel;
-import com.sun.tools.visualvm.tools.jmx.JmxModelFactory;
 import java.util.HashMap;
 import java.util.Map;
-import javax.management.MBeanServerConnection;
 
 public class IvyViewProvider extends DataSourceViewProvider<Application> {
 
@@ -24,33 +22,33 @@ public class IvyViewProvider extends DataSourceViewProvider<Application> {
 
   @Override
   protected boolean supportsViewFor(Application application) {
-    if (isIvyApplicationType(application)) {
-      IvyApplicationType appType = (IvyApplicationType) ApplicationTypeFactory
-              .getApplicationTypeFor(application);
+    DataBeanProvider tmpProvider = IvyViewHelper.createMbeanProvider(application);
 
-      if (appType.isAxonIvyApplicaton()) {
-        fDataBeanProvider = createMbeanProvider(application);
+    ApplicationType appType = ApplicationTypeFactory.getApplicationTypeFor(application);
+    if (appType instanceof IvyApplicationType) {
+      IvyApplicationType ivyAppType = (IvyApplicationType) appType;
+      if (ivyAppType.isAxonIvyApplication()) {
+        fDataBeanProvider = tmpProvider;
+        return true;
       } else {
+        return false;
+      }
+    }
+
+    if (tmpProvider != null) {
+      if (IvyViewHelper.isRemoteIvyAppication51OrYounger(tmpProvider)) {
+        fDataBeanProvider = tmpProvider;
+        return true;
+      } else if (IvyViewHelper.isRemoteIvyApplication50OrOlder(tmpProvider)) {
         fDataBeanProvider = null;
+        return true;
+      } else {
+        return false;
       }
-      return true;
     }
+
+    fDataBeanProvider = null;
     return false;
-  }
-
-  private DataBeanProvider createMbeanProvider(Application application) {
-    JmxModel jmx = JmxModelFactory.getJmxModelFor(application);
-    if (jmx != null) {
-      MBeanServerConnection mbsc = jmx.getMBeanServerConnection();
-      if (mbsc != null) {
-        return new DataBeanProvider(mbsc);
-      }
-    }
-    return null;
-  }
-
-  private boolean isIvyApplicationType(Application application) {
-    return ApplicationTypeFactory.getApplicationTypeFor(application) instanceof IvyApplicationType;
   }
 
   @Override
@@ -76,5 +74,4 @@ public class IvyViewProvider extends DataSourceViewProvider<Application> {
   static void unregister() {
     DataSourceViewsManager.sharedInstance().removeViewProvider(INSTANCE);
   }
-
 }

@@ -36,11 +36,11 @@ class IvyApplicationType extends ApplicationType {
 
   @Override
   public Image getIcon() {
-    return ImageUtilities.loadImage(isAxonIvyApplicaton() ? IvyViewHelper.IVY_IMAGE_PATH
+    return ImageUtilities.loadImage(isAxonIvyApplication() ? IvyViewHelper.IVY_IMAGE_PATH
             : IvyViewHelper.IVY_IMAGE_PATH_OLD, true);
   }
   
-  public boolean isAxonIvyApplicaton() {
+  public boolean isAxonIvyApplication() {
     return isAxonIvyEngine() || isAxonIvyDesigner();
   }
 
@@ -63,5 +63,4 @@ class IvyApplicationType extends ApplicationType {
   public boolean isXpertIvyDesigner() {
     return fName.equals(IvyApplicationInfo.IVY_DESIGNER_APP_NAME_OLD);
   }
-
 }
