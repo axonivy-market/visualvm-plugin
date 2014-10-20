@@ -27,13 +27,12 @@ public class IvyViewProvider extends DataSourceViewProvider<Application> {
     ApplicationType appType = ApplicationTypeFactory.getApplicationTypeFor(application);
     if (appType instanceof IvyApplicationType) {
       IvyApplicationType ivyAppType = (IvyApplicationType) appType;
-      if (ivyAppType.isAxonIvyApplication()) {
+      if (ivyAppType.isAxonIvyApplication()) { // >= 5.1
         fDataBeanProvider = tmpProvider;
-        return true;
       } else {
         fDataBeanProvider = null;
-        return true;
       }
+      return true;
     }
 
     if (tmpProvider != null) {
@@ -43,8 +42,6 @@ public class IvyViewProvider extends DataSourceViewProvider<Application> {
       } else if (IvyViewHelper.isRemoteIvyApplication50OrOlder(tmpProvider)) {
         fDataBeanProvider = null;
         return true;
-      } else {
-        return false;
       }
     }
 
