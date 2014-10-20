@@ -57,8 +57,8 @@ public class ExternalDbView extends ExternalDbWsCommonView {
             getDataBeanProvider(), null, null, CONNECTIONS);
     ExternalDbTransactionChartDataSource transactionDataSource = new ExternalDbTransactionChartDataSource(
             getDataBeanProvider(), null, null, TRANSACTIONS);
-    ExternalDbProcessingTimeChartDataSource transProcessTimeDataSource = new ExternalDbProcessingTimeChartDataSource(
-            getDataBeanProvider(), null, null, PROCESSING_TIME);
+    ExternalDbProcessingTimeChartDataSource transProcessTimeDataSource = 
+            new ExternalDbProcessingTimeChartDataSource(getDataBeanProvider(), null, null, PROCESSING_TIME);
 
     configDataSources(IvyJmxConstant.IvyServer.ExternalDatabase.NAME_PATTERN,
             connectionDataSource, transactionDataSource, transProcessTimeDataSource);

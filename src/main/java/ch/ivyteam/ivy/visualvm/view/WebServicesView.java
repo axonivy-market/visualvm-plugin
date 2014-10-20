@@ -36,13 +36,13 @@ public class WebServicesView extends ExternalDbWsCommonView {
     }
     WebServiceCallsChartDataSource callsDataSource = new WebServiceCallsChartDataSource(
             getDataBeanProvider(), null, null, CALLS);
-    WebServiceProcessingTimeChartDataSource processTimeDataSource = new WebServiceProcessingTimeChartDataSource(
+    WebServiceProcessingTimeChartDataSource processTimeDataSrc = new WebServiceProcessingTimeChartDataSource(
             getDataBeanProvider(), null, null, PROCESSING_TIME);
 
     configDataSources(IvyJmxConstant.IvyServer.WebService.NAME_PATTERN,
-            callsDataSource, processTimeDataSource);
+            callsDataSource, processTimeDataSrc);
     chartPanel.addChart(callsDataSource, generateDescriptionForCallsChart());
-    chartPanel.addChart(processTimeDataSource, generateDescriptionForProcessingTimeChart());
+    chartPanel.addChart(processTimeDataSrc, generateDescriptionForProcessingTimeChart());
     registerScheduledUpdate(chartPanel);
     return chartPanel;
   }
