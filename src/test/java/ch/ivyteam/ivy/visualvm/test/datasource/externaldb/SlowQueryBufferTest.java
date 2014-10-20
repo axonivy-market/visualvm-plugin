@@ -1,16 +1,8 @@
 package ch.ivyteam.ivy.visualvm.test.datasource.externaldb;
 
-import ch.ivyteam.ivy.visualvm.chart.Query;
-import ch.ivyteam.ivy.visualvm.chart.QueryResult;
-import ch.ivyteam.ivy.visualvm.model.IvyJmxConstant;
-import ch.ivyteam.ivy.visualvm.model.SQLInfo;
-import ch.ivyteam.ivy.visualvm.service.ExternalDbSlowQueryBuffer;
-import ch.ivyteam.ivy.visualvm.test.AbstractTest;
-import static ch.ivyteam.ivy.visualvm.test.AbstractTest.addTestData;
-import static ch.ivyteam.ivy.visualvm.test.AbstractTest.createMockConnection;
-import ch.ivyteam.ivy.visualvm.test.data.model.BeanTestData;
-import ch.ivyteam.ivy.visualvm.test.util.TestUtil;
-import ch.ivyteam.ivy.visualvm.view.DataBeanProvider;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
+
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.text.ParseException;
@@ -19,16 +11,25 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+
 import javax.management.MBeanServerConnection;
 import javax.management.MalformedObjectNameException;
 import javax.management.ObjectName;
 import javax.xml.bind.JAXBException;
-import static junit.framework.TestCase.assertEquals;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
+
+import ch.ivyteam.ivy.visualvm.chart.Query;
+import ch.ivyteam.ivy.visualvm.chart.QueryResult;
+import ch.ivyteam.ivy.visualvm.model.IvyJmxConstant;
+import ch.ivyteam.ivy.visualvm.model.SQLInfo;
+import ch.ivyteam.ivy.visualvm.service.ExternalDbSlowQueryBuffer;
+import ch.ivyteam.ivy.visualvm.test.AbstractTest;
+import ch.ivyteam.ivy.visualvm.test.data.model.BeanTestData;
+import ch.ivyteam.ivy.visualvm.test.util.TestUtil;
+import ch.ivyteam.ivy.visualvm.view.DataBeanProvider;
 
 @RunWith(Parameterized.class)
 public class SlowQueryBufferTest extends AbstractTest {
@@ -50,39 +51,41 @@ public class SlowQueryBufferTest extends AbstractTest {
     SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
 
     SQLInfo sqlInfo1 = new SQLInfo();
-    sqlInfo1.setApplication("app1");
-    sqlInfo1.setEnvironment("env1");
+    String app1String = "app1";
+    sqlInfo1.setApplication(app1String);
+    String env1String = "env1";
+    sqlInfo1.setEnvironment(env1String);
     sqlInfo1.setConfigName("config1");
-    sqlInfo1.setProcessElementId("144918C0A385EAC6-f7-bean");
+    String processElementId = "144918C0A385EAC6-f7-bean";
+    sqlInfo1.setProcessElementId(processElementId);
     sqlInfo1.setTime(dateFormat.parse("28/05/2014 10:45:11"));
     sqlInfo1.setExecutionTime(123456);
-    sqlInfo1.setStatement(
-            "INSERT INTO authors (last_name, first_name) VALUES ('\"upteam\"', '\"ivyteam\"')");
+    sqlInfo1.setStatement("INSERT INTO authors (last_name, first_name) VALUES ('\"upteam\"', '\"ivyteam\"')");
 
     SQLInfo sqlInfoConfig2 = new SQLInfo();
-    sqlInfoConfig2.setApplication("app1");
-    sqlInfoConfig2.setEnvironment("env1");
+    sqlInfoConfig2.setApplication(app1String);
+    sqlInfoConfig2.setEnvironment(env1String);
     sqlInfoConfig2.setConfigName("config2");
-    sqlInfoConfig2.setProcessElementId("144918C0A385EAC6-f7-bean");
+    sqlInfoConfig2.setProcessElementId(processElementId);
     sqlInfoConfig2.setTime(dateFormat.parse("28/05/2014 10:45:12"));
     sqlInfoConfig2.setExecutionTime(123456);
-    sqlInfoConfig2.setStatement(
-            "INSERT INTO authors (last_name, first_name) VALUES ('\"upteam2\"', '\"ivyteam2\"')");
+    sqlInfoConfig2.setStatement("INSERT INTO authors (last_name, first_name) VALUES"
+            + " ('\"upteam2\"', '\"ivyteam2\"')");
 
     SQLInfo sqlInfo2 = new SQLInfo();
-    sqlInfo2.setApplication("app1");
-    sqlInfo2.setEnvironment("env1");
+    sqlInfo2.setApplication(app1String);
+    sqlInfo2.setEnvironment(env1String);
     sqlInfo2.setConfigName("config1");
-    sqlInfo2.setProcessElementId("144918C0A385EAC6-f7-bean");
+    sqlInfo2.setProcessElementId(processElementId);
     sqlInfo2.setTime(dateFormat.parse("28/05/2014 11:35:32"));
     sqlInfo2.setExecutionTime(123457);
     sqlInfo2.setStatement("INSERT INTO authors (last_name, first_name) VALUES ('\"up\"', '\"ivy\"')");
 
     SQLInfo sqlInfo3 = new SQLInfo();
-    sqlInfo3.setApplication("app1");
-    sqlInfo3.setEnvironment("env1");
+    sqlInfo3.setApplication(app1String);
+    sqlInfo3.setEnvironment(env1String);
     sqlInfo3.setConfigName("config1");
-    sqlInfo3.setProcessElementId("144918C0A385EAC6-f7-bean");
+    sqlInfo3.setProcessElementId(processElementId);
     sqlInfo3.setTime(dateFormat.parse("28/05/2014 14:57:41"));
     sqlInfo3.setExecutionTime(123458);
     sqlInfo3.setStatement("INSERT INTO authors (last_name, first_name) VALUES ('\"up\"', '\"team\"')");
@@ -99,12 +102,8 @@ public class SlowQueryBufferTest extends AbstractTest {
     sqlInfos3.add(sqlInfo2);
     sqlInfos3.add(sqlInfo3);
 
-    return TestUtil.createTestData(
-            "/ch/ivyteam/ivy/visualvm/test/datasource/externaldb/SlowQueryTest.xml",
-            new Object[]{2, sqlInfos1},
-            new Object[]{2, sqlInfos2},
-            new Object[]{2, sqlInfos3}
-    );
+    return TestUtil.createTestData("/ch/ivyteam/ivy/visualvm/test/datasource/externaldb/SlowQueryTest.xml",
+            new Object[] {2, sqlInfos1}, new Object[] {2, sqlInfos2}, new Object[] {2, sqlInfos3});
   }
 
   @Test
@@ -116,8 +115,8 @@ public class SlowQueryBufferTest extends AbstractTest {
             "ivy Engine:type=External Database,application=app1,environment=env1,name=config1"));
     extDbObjNames.add(new ObjectName(
             "ivy Engine:type=External Database,application=app1,environment=env1,name=config2"));
-    when(mockConnection.queryNames(IvyJmxConstant.IvyServer.ExternalDatabase.NAME_FILTER, null))
-            .thenReturn(extDbObjNames);
+    when(mockConnection.queryNames(IvyJmxConstant.IvyServer.ExternalDatabase.NAME_FILTER, null)).thenReturn(
+            extDbObjNames);
 
     if (fProvider == null) {
       fProvider = mock(DataBeanProvider.class);

@@ -1,29 +1,31 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * To change this license header, choose License Headers in Project Properties. To change this template file,
+ * choose Tools | Templates and open the template in the editor.
  */
 package ch.ivyteam.ivy.visualvm.test.datasource.externaldb;
 
-import ch.ivyteam.ivy.visualvm.view.ExternalDbWsCommonPanel;
-import ch.ivyteam.ivy.visualvm.view.ExternalDbWsCommonView;
+import static org.junit.Assert.assertEquals;
+import static org.mockito.Mockito.mock;
+
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
+
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.TreeNode;
+
 import org.junit.Assert;
-import static org.junit.Assert.assertEquals;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
-import static org.mockito.Mockito.mock;
+
+import ch.ivyteam.ivy.visualvm.view.ExternalDbWsCommonPanel;
+import ch.ivyteam.ivy.visualvm.view.ExternalDbWsCommonView;
 
 public class ExternalDbWsCommonPanelTest {
-  private ExternalDbWsCommonView externalView;
   private ExternalDbWsCommonPanel externaPanel;
   private Map<String, Map<String, Set<String>>> appEnvConfMap;
 
@@ -32,8 +34,7 @@ public class ExternalDbWsCommonPanelTest {
 
   @Before
   public void setUp() {
-    externalView = mock(ExternalDbWsCommonView.class);
-    externaPanel = new ExternalDbWsCommonPanel(externalView);
+    externaPanel = new ExternalDbWsCommonPanel(mock(ExternalDbWsCommonView.class));
     appEnvConfMap = new HashMap<>();
   }
 
@@ -60,17 +61,14 @@ public class ExternalDbWsCommonPanelTest {
 
     Assert.assertNotNull(externaPanel.getRootNode());
 
-    assertEquals(
-            "+ Server+ app2+ app1+ Default+ Default  - DBConfig1  "
-                    + "- DBConfig3  - DBConfig1  - DBConfig2  - DBConfig3",
-            mapToString(externaPanel.getRootNode()));
+    assertEquals("+ Server+ app2+ app1+ Default+ Default  - DBConfig1  "
+            + "- DBConfig3  - DBConfig1  - DBConfig2  - DBConfig3", mapToString(externaPanel.getRootNode()));
 
     configs2.add("DBConfig2");
     externaPanel.setTreeData(appEnvConfMap);
 
-    assertEquals(
-            "+ Server+ app2+ app1+ Default+ Default  - DBConfig1  "
-                    + "- DBConfig2  - DBConfig3  - DBConfig1  - DBConfig2  - DBConfig3",
+    assertEquals("+ Server+ app2+ app1+ Default+ Default  - DBConfig1  "
+            + "- DBConfig2  - DBConfig3  - DBConfig1  - DBConfig2  - DBConfig3",
             mapToString(externaPanel.getRootNode()));
   }
 
@@ -89,6 +87,7 @@ public class ExternalDbWsCommonPanelTest {
 
   private String mapToString(DefaultMutableTreeNode rootNode) {
     StringBuilder expectedResult = new StringBuilder();
+    @SuppressWarnings("unchecked")
     Enumeration<DefaultMutableTreeNode> en1 = rootNode.breadthFirstEnumeration();
     while (en1.hasMoreElements()) {
       DefaultMutableTreeNode node = en1.nextElement();

@@ -1,18 +1,21 @@
 package ch.ivyteam.ivy.visualvm.view.externaldb;
 
-import ch.ivyteam.ivy.visualvm.model.SQLInfo;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.List;
+
 import javax.swing.JPanel;
 import javax.swing.JTable;
 import javax.swing.RowSorter;
 import javax.swing.SortOrder;
 import javax.swing.table.TableColumn;
 
+import ch.ivyteam.ivy.visualvm.model.SQLInfo;
+
+@SuppressWarnings("serial")
 public abstract class AbstractExternalDbQueriesPanel extends JPanel {
   private static final Color TABLE_VERTICAL_GRID_COLOR = new Color(214, 223, 247);
   private static final Color TABLE_SELECTION_BACKGROUND_COLOR = new Color(193, 210, 238);
@@ -21,8 +24,8 @@ public abstract class AbstractExternalDbQueriesPanel extends JPanel {
   private final ExternalDbView fExternalDbView;
   private final DateTableCellRenderer fDateCellRenderer = new DateTableCellRenderer();
   private final NumberTableCellRenderer fNumberCellRenderer = new NumberTableCellRenderer();
-  private final MultiLineMergeTableCellRenderer fmultiLineCellRenderer = new MultiLineMergeTableCellRenderer();
-  
+  private final MultiLineMergeTableCellRenderer fMultiLineRenderer = new MultiLineMergeTableCellRenderer();
+
   private final List<Integer> fColumnsWidths = new ArrayList<>();
   private List<? extends RowSorter.SortKey> fSortKeys;
   private volatile boolean isRefreshing = false;
@@ -65,7 +68,7 @@ public abstract class AbstractExternalDbQueriesPanel extends JPanel {
   }
 
   protected List<RowSorter.SortKey> createDefaultSortKey(int columnIndex, SortOrder order) {
-    List<RowSorter.SortKey> sortKeys = new ArrayList();
+    List<RowSorter.SortKey> sortKeys = new ArrayList<>();
     RowSorter.SortKey sortKey = new RowSorter.SortKey(columnIndex, order);
     sortKeys.add(sortKey);
     return sortKeys;
@@ -74,7 +77,7 @@ public abstract class AbstractExternalDbQueriesPanel extends JPanel {
   public void refresh(List<SQLInfo> sqlInfoList) {
     synchronized (this) {
       if (isRefreshing) {
-        return;//prevent other threads from calling this method when there is a running thread.
+        return;// prevent other threads from calling this method when there is a running thread.
       }
       isRefreshing = true;
     }
@@ -114,8 +117,8 @@ public abstract class AbstractExternalDbQueriesPanel extends JPanel {
   protected void restoreQueriesTableConfig() {
     JTable queriesTable = getQueriesTable();
     if (fSortKeys.isEmpty()) {
-      queriesTable.getRowSorter().setSortKeys(createDefaultSortKey(getDefaultSortColumnIndex(),
-              SortOrder.DESCENDING));
+      queriesTable.getRowSorter().setSortKeys(
+              createDefaultSortKey(getDefaultSortColumnIndex(), SortOrder.DESCENDING));
     } else {
       queriesTable.getRowSorter().setSortKeys(fSortKeys);
     }
@@ -136,7 +139,7 @@ public abstract class AbstractExternalDbQueriesPanel extends JPanel {
   }
 
   public MultiLineMergeTableCellRenderer getMultiLineCellRenderer() {
-    return fmultiLineCellRenderer;
+    return fMultiLineRenderer;
   }
 
 }
