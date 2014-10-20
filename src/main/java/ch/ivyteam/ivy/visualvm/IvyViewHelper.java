@@ -72,10 +72,11 @@ public final class IvyViewHelper {
     try {
       MBeanServerConnection conn = dataBeanProvider.getMBeanServerConnection();
       if (conn != null) {
-        AttributeList attributes = conn.getAttributes(new ObjectName("ivy:type=Engine"), new String[]{});
+        AttributeList attributes = conn.getAttributes(new ObjectName("ivy:type=Engine"), new String[] {});
         isIvyApp = attributes != null;
       }
-    } catch (MalformedObjectNameException | IOException | InstanceNotFoundException | ReflectionException ex) {
+    } catch (MalformedObjectNameException | IOException | InstanceNotFoundException | 
+            ReflectionException ex) {
       isIvyApp = false;
     }
     return isIvyApp;
