@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<beanTestData>
+  <dataset>
+    <property>
+      <name>ivy:type=Engine</name>
+      <dataset>
+        <property>
+          <name>version</name>
+          <value>5.1.0.44832</value>
+        </property>
+        <property>
+          <name>applicationName</name>
+          <value>some server</value>
+        </property>
+      </dataset>
+    </property>
+  </dataset>
+  
+  <dataset>
+    <property>
+      <name>something:abc=test</name>
+      <dataset>
+        <property>
+          <name>version</name>
+          <value>5.0.21255</value>
+        </property>
+        <property>
+          <name>applicationName</name>
+          <value>Xpert.ivy Server</value>
+        </property>
+      </dataset>
+    </property>
+  </dataset>
+  
+  <dataset>
+    <property>
+      <name>ivy Engine:type=Server</name>
+      <dataset>
+        <property>
+          <name>version</name>
+          <value>6.0.44832</value>
+        </property>
+        <property>
+          <name>applicationName</name>
+          <value>Axon.ivy Designer</value>
+        </property>
+      </dataset>
+    </property>
+  </dataset>
+  
+  <dataset>
+    <property>
+      <name>ivy Engine:type=Server</name>
+      <dataset>
+        <property>
+          <name>version</name>
+          <value>5.0.0.44832</value>
+        </property>
+        <property>
+          <name>applicationName</name>
+          <value>Xpert.ivy Server</value>
+        </property>
+      </dataset>
+    </property>
+  </dataset>
+</beanTestData>

@@ -31,7 +31,8 @@ public class IvyViewProvider extends DataSourceViewProvider<Application> {
         fDataBeanProvider = tmpProvider;
         return true;
       } else {
-        return false;
+        fDataBeanProvider = null;
+        return true;
       }
     }
 

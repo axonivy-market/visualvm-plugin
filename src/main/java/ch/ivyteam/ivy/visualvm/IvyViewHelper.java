@@ -10,10 +10,12 @@ import com.sun.tools.visualvm.tools.jmx.JmxModel;
 import com.sun.tools.visualvm.tools.jmx.JmxModelFactory;
 import java.awt.Image;
 import java.io.IOException;
-import java.util.Set;
+import javax.management.AttributeList;
+import javax.management.InstanceNotFoundException;
 import javax.management.MBeanServerConnection;
 import javax.management.MalformedObjectNameException;
 import javax.management.ObjectName;
+import javax.management.ReflectionException;
 import javax.swing.ImageIcon;
 import org.openide.util.ImageUtilities;
 
@@ -62,12 +64,18 @@ public final class IvyViewHelper {
    * younger
    */
   public static boolean isRemoteIvyApplication50OrOlder(DataBeanProvider dataBeanProvider) {
-    boolean isIvyApp;
+    if (dataBeanProvider == null) {
+      return false;
+    }
+
+    boolean isIvyApp = false;
     try {
-      final MBeanServerConnection conn = dataBeanProvider.getMBeanServerConnection();
-      Set<ObjectName> test = conn.queryNames(new ObjectName("ivy:*"), null);
-      isIvyApp = test.size() > 0;
-    } catch (MalformedObjectNameException | IOException ex) {
+      MBeanServerConnection conn = dataBeanProvider.getMBeanServerConnection();
+      if (conn != null) {
+        AttributeList attributes = conn.getAttributes(new ObjectName("ivy:type=Engine"), new String[]{});
+        isIvyApp = attributes != null;
+      }
+    } catch (MalformedObjectNameException | IOException | InstanceNotFoundException | ReflectionException ex) {
       isIvyApp = false;
     }
     return isIvyApp;
