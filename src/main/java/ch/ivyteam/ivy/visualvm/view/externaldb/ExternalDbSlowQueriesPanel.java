@@ -96,6 +96,8 @@ public class ExternalDbSlowQueriesPanel extends AbstractExternalDbQueriesPanel {
     txtSQL.setColumns(20);
     txtSQL.setFont(new java.awt.Font("Monospaced", 0, 12)); // NOI18N
     txtSQL.setRows(5);
+    txtSQL.setLineWrap(true);
+    txtSQL.setWrapStyleWord(true);
 
     org.jdesktop.beansbinding.Binding binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ, tableSlowQueries, org.jdesktop.beansbinding.ELProperty.create("${selectedElement.statement}"), txtSQL, org.jdesktop.beansbinding.BeanProperty.create("text"), "bindingSQL");
     bindingGroup.addBinding(binding);

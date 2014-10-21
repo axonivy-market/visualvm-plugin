@@ -93,6 +93,8 @@ public class ExternalDbErrorsPanel extends AbstractExternalDbQueriesPanel {
     txtDetails.setColumns(20);
     txtDetails.setFont(new java.awt.Font("Monospaced", 0, 12)); // NOI18N
     txtDetails.setRows(5);
+    txtDetails.setLineWrap(true);
+    txtDetails.setWrapStyleWord(true);
 
     org.jdesktop.beansbinding.Binding binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ, tableErrors, org.jdesktop.beansbinding.ELProperty.create("${selectedElement.errorMessage}\n\n${selectedElement.statement}"), txtDetails, org.jdesktop.beansbinding.BeanProperty.create("text"));
     bindingGroup.addBinding(binding);
