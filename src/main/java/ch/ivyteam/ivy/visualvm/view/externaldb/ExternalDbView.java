@@ -1,5 +1,10 @@
 package ch.ivyteam.ivy.visualvm.view.externaldb;
 
+import java.util.Map;
+import java.util.Set;
+
+import javax.swing.JPanel;
+
 import ch.ivyteam.ivy.visualvm.ContentProvider;
 import ch.ivyteam.ivy.visualvm.chart.ChartsPanel;
 import ch.ivyteam.ivy.visualvm.chart.QueryResult;
@@ -13,11 +18,9 @@ import ch.ivyteam.ivy.visualvm.util.DataUtils;
 import ch.ivyteam.ivy.visualvm.view.DataBeanProvider;
 import ch.ivyteam.ivy.visualvm.view.ExternalDbWsCommonPanel;
 import ch.ivyteam.ivy.visualvm.view.ExternalDbWsCommonView;
+
 import com.sun.tools.visualvm.core.ui.components.DataViewComponent;
 import com.sun.tools.visualvm.core.ui.components.DataViewComponent.DetailsView;
-import java.util.Map;
-import java.util.Set;
-import javax.swing.JPanel;
 
 public class ExternalDbView extends ExternalDbWsCommonView {
 
@@ -26,8 +29,8 @@ public class ExternalDbView extends ExternalDbWsCommonView {
   private static final String SLOW_QUERIES = ContentProvider.get("SlowQueries");
   private static final String CONNECTIONS = ContentProvider.get("Connections");
   private static final String TRANSACTIONS = ContentProvider.get("Transactions");
-  private static final String PROCESSING_TIME = ContentProvider.get("ProcessingTime")
-          + " [" + ContentProvider.get("MillisecondAbbr") + "]";
+  private static final String PROCESSING_TIME = ContentProvider.get("ProcessingTime") + " ["
+          + ContentProvider.get("MillisecondAbbr") + "]";
 
   private boolean uiComplete;
   private final ExternalDbErrorQueryBuffer fErrorInfoBuffer;
@@ -57,11 +60,11 @@ public class ExternalDbView extends ExternalDbWsCommonView {
             getDataBeanProvider(), null, null, CONNECTIONS);
     ExternalDbTransactionChartDataSource transactionDataSource = new ExternalDbTransactionChartDataSource(
             getDataBeanProvider(), null, null, TRANSACTIONS);
-    ExternalDbProcessingTimeChartDataSource transProcessTimeDataSource = new ExternalDbProcessingTimeChartDataSource(
-            getDataBeanProvider(), null, null, PROCESSING_TIME);
+    ExternalDbProcessingTimeChartDataSource transProcessTimeDataSource 
+	= new ExternalDbProcessingTimeChartDataSource(getDataBeanProvider(), null, null, PROCESSING_TIME);
 
-    configDataSources(IvyJmxConstant.IvyServer.ExternalDatabase.NAME_PATTERN,
-            connectionDataSource, transactionDataSource, transProcessTimeDataSource);
+    configDataSources(IvyJmxConstant.IvyServer.ExternalDatabase.NAME_PATTERN, connectionDataSource,
+            transactionDataSource, transProcessTimeDataSource);
     chartPanel.addChart(connectionDataSource, generateDescriptionForConnectionChart());
     chartPanel.addChart(transactionDataSource, generateDescriptionForTransactionChart());
     chartPanel.addChart(transProcessTimeDataSource, generateDescriptionForProcessingTimeChart());
@@ -83,8 +86,8 @@ public class ExternalDbView extends ExternalDbWsCommonView {
   }
 
   private void updateConfigTreeNodes() {
-    Map<String, Map<String, Set<String>>> appEnvConfMap = DataUtils.getExternalDbConfigs(
-            getDataBeanProvider().getMBeanServerConnection());
+    Map<String, Map<String, Set<String>>> appEnvConfMap = DataUtils
+            .getExternalDbConfigs(getDataBeanProvider().getMBeanServerConnection());
     getUIChartsPanel().setTreeData(appEnvConfMap);
   }
 
@@ -98,9 +101,8 @@ public class ExternalDbView extends ExternalDbWsCommonView {
     DetailsView fErrorsDetailsView = new DetailsView(ERRORS, null, 10, fUIErrorPanel, null);
     DetailsView fSlowQueriesView = new DetailsView(SLOW_QUERIES, null, 10, fUISlowQueriesPanel, null);
 
-    super.getViewComponent().configureDetailsArea(new DataViewComponent.DetailsAreaConfiguration(null,
-            false),
-            DataViewComponent.TOP_LEFT);
+    super.getViewComponent().configureDetailsArea(
+            new DataViewComponent.DetailsAreaConfiguration(null, false), DataViewComponent.TOP_LEFT);
     super.getViewComponent().addDetailsView(fChartsDetailsView, DataViewComponent.TOP_LEFT);
     super.getViewComponent().addDetailsView(fErrorsDetailsView, DataViewComponent.TOP_LEFT);
     super.getViewComponent().addDetailsView(fSlowQueriesView, DataViewComponent.TOP_LEFT);
