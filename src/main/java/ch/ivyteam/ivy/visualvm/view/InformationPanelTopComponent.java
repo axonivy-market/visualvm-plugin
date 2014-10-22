@@ -16,6 +16,7 @@ import java.util.logging.Logger;
 import javax.management.MBeanServerConnection;
 import javax.swing.JComponent;
 import javax.swing.JPanel;
+import org.apache.commons.lang.StringUtils;
 import org.openide.util.NbBundle.Messages;
 
 @Messages({"CTL_InformationPanelAction=InformationPanel",
@@ -197,14 +198,22 @@ public final class InformationPanelTopComponent extends JPanel {
       appendValue(html, ContentProvider.get("DatabaseDriver"), sysDbInfo.getDriver());
       appendValue(html, ContentProvider.get("DatabaseHost"), DataUtils.getHostFromConnectionUrl(sysDbInfo.
               getConnectionUrl()));
-      appendValue(html, ContentProvider.get("DatabasePort"), DataUtils.getPortFromConnectionUrl(sysDbInfo.
-              getConnectionUrl()));
-      appendValue(html, ContentProvider.get("DatabaseName"), DataUtils.getSchemaFromConnectionUrl(sysDbInfo.
-              getConnectionUrl()));
+
+      String port = DataUtils.getPortFromConnectionUrl(sysDbInfo.getConnectionUrl());
+      if (!StringUtils.isEmpty(port)) {
+        appendValue(html, ContentProvider.get("DatabasePort"), port);
+      }
+
+      String dbName = DataUtils.getSchemaFromConnectionUrl(sysDbInfo.getConnectionUrl());
+      if (!StringUtils.isEmpty(dbName)) {
+        appendValue(html, ContentProvider.get("DatabaseName"), dbName);
+      }
+
       String username = sysDbInfo.getUsername();
-      if (username != null && !"".equals(username.trim())) {
+      if (!StringUtils.isEmpty(username.trim())) {
         appendValue(html, ContentProvider.get("DatabaseUserName"), username);
       }
+
       appendValue(html, ContentProvider.get("ConnectionURL"), sysDbInfo.getConnectionUrl());
     }
     endHTML(html);
