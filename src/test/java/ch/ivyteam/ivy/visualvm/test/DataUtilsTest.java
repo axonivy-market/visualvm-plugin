@@ -59,17 +59,17 @@ public class DataUtilsTest {
   @Test
   public void testDateTimeToString() {
     Calendar calendar = Calendar.getInstance();
-    calendar.set(2014, 1, 13,8,12,56);
+    calendar.set(2014, 1, 13, 8, 12, 56);
     Locale formatLocale = DataUtils.getFormatLocale();
-    if ("de_CH".equals(formatLocale.toString())){
+    if ("de_CH".equals(formatLocale.toString())) {
       assertEquals("13.01.14 08:12:56", DataUtils.dateTimeToString(calendar.getTime()));
-    }else if ("en_US".equals(""+formatLocale.toString())){
+    } else if ("en_US".equals("" + formatLocale.toString())) {
       assertEquals("2/13/14 8:12:56 AM", DataUtils.dateTimeToString(calendar.getTime()));
-    }else if ("es_US".equals(""+formatLocale.toString())){
+    } else if ("es_US".equals("" + formatLocale.toString())) {
       assertEquals("2/13/14 8:12:56 a.m.", DataUtils.dateTimeToString(calendar.getTime()));
     }
   }
-  
+
   @Test
   public void testGetHostFromConnectionUrl() {
     assertEquals("localhost", DataUtils.getHostFromConnectionUrl(
@@ -82,6 +82,8 @@ public class DataUtilsTest {
             "jdbc:microsoft:sqlserver://localhost:1443;databaseName= AxonIvySystemDatabase;"
             + "SelectMethod=cursor"));
     assertEquals(null, DataUtils.getHostFromConnectionUrl("jdbc:hsqldb:mem:AxonIvySystemDatabase"));
+    assertEquals("zugtstdbsmss", DataUtils.getHostFromConnectionUrl(
+            "jdbc:jtds:sqlserver://zugtstdbsmss/Tmp_zugtstivy_Tst_XpertIvySystemDatabase_Server_Deployment"));
   }
 
   @Test
@@ -96,6 +98,8 @@ public class DataUtilsTest {
             "jdbc:microsoft:sqlserver://localhost:1443;databaseName=AxonIvySystemDatabase;"
             + "SelectMethod=cursor"));
     assertEquals(null, DataUtils.getPortFromConnectionUrl("jdbc:hsqldb:mem:AxonIvySystemDatabase"));
+    assertEquals(null, DataUtils.getPortFromConnectionUrl(
+            "jdbc:jtds:sqlserver://zugtstdbsmss/Tmp_zugtstivy_Tst_XpertIvySystemDatabase_Server_Deployment"));
   }
 
   @Test

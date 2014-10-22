@@ -217,7 +217,7 @@ public final class DataUtils {
       String port = compactedURL.substring(0, index);
       int endIndex = firstDigitFromEnd(port);
       if (endIndex < 0) {
-        return null;
+        return getHost(index, compactedURL);
       }
       int startIndex;
       for (startIndex = endIndex; startIndex >= 0; startIndex--) {
@@ -235,6 +235,7 @@ public final class DataUtils {
 
   private static String getHost(int portIndex, String url) {
     String tmpHost;
+    String host;
     if (portIndex > 0) {
       tmpHost = url.substring(0, portIndex);
       int endIndex;
@@ -252,11 +253,16 @@ public final class DataUtils {
           break;
         }
       }
-      tmpHost = tmpHost.substring(startIndex + 1, endIndex + 1);
+      host = tmpHost.substring(startIndex + 1, endIndex + 1);
+      char charBeforeHost = tmpHost.charAt(startIndex);
+      if (charBeforeHost != '@' && charBeforeHost != '/') {
+        host = null;
+      }
+
     } else {
-      tmpHost = null;
+      host = null;
     }
-    return tmpHost;
+    return host;
   }
 
   private static int firstDigitFromEnd(String port) {
