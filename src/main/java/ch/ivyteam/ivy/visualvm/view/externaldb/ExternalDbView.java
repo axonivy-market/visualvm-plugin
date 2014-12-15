@@ -57,11 +57,11 @@ public class ExternalDbView extends ExternalDbWsCommonView {
             getDataBeanProvider(), null, null, CONNECTIONS);
     ExternalDbTransactionChartDataSource transactionDataSource = new ExternalDbTransactionChartDataSource(
             getDataBeanProvider(), null, null, TRANSACTIONS);
-    ExternalDbProcessingTimeChartDataSource transProcessTimeDataSource = 
-            new ExternalDbProcessingTimeChartDataSource(getDataBeanProvider(), null, null, PROCESSING_TIME);
+    ExternalDbProcessingTimeChartDataSource transProcessTimeDataSource
+            = new ExternalDbProcessingTimeChartDataSource(getDataBeanProvider(), null, null, PROCESSING_TIME);
 
-    configDataSources(IvyJmxConstant.IvyServer.ExternalDatabase.NAME_PATTERN,
-            connectionDataSource, transactionDataSource, transProcessTimeDataSource);
+    configDataSources(IvyJmxConstant.IvyServer.ExternalDatabase.NAME_PATTERN, connectionDataSource,
+            transactionDataSource, transProcessTimeDataSource);
     chartPanel.addChart(connectionDataSource, generateDescriptionForConnectionChart());
     chartPanel.addChart(transactionDataSource, generateDescriptionForTransactionChart());
     chartPanel.addChart(transProcessTimeDataSource, generateDescriptionForProcessingTimeChart());
@@ -98,8 +98,7 @@ public class ExternalDbView extends ExternalDbWsCommonView {
     DetailsView fErrorsDetailsView = new DetailsView(ERRORS, null, 10, fUIErrorPanel, null);
     DetailsView fSlowQueriesView = new DetailsView(SLOW_QUERIES, null, 10, fUISlowQueriesPanel, null);
 
-    super.getViewComponent().configureDetailsArea(new DataViewComponent.DetailsAreaConfiguration(null,
-            false),
+    super.getViewComponent().configureDetailsArea(new DataViewComponent.DetailsAreaConfiguration(null, false),
             DataViewComponent.TOP_LEFT);
     super.getViewComponent().addDetailsView(fChartsDetailsView, DataViewComponent.TOP_LEFT);
     super.getViewComponent().addDetailsView(fErrorsDetailsView, DataViewComponent.TOP_LEFT);

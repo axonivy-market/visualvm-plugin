@@ -3,7 +3,7 @@
   <groupId>ch.ivyteam</groupId> 
   <artifactId>visualvm-6.0</artifactId> 
   <name>visualvm-6.0</name> 
-  <version>1.0</version> 
+  <version>1.1</version> 
   <properties> 
     <sonar.importSources>true</sonar.importSources>
     <sonar.phase>generate-sources</sonar.phase> 

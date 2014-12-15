@@ -1,14 +1,12 @@
 package ch.ivyteam.ivy.visualvm.view.externaldb;
 
 import ch.ivyteam.ivy.visualvm.model.SQLInfo;
-
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.List;
-
 import javax.swing.JPanel;
 import javax.swing.JTable;
 import javax.swing.RowSorter;
@@ -17,6 +15,7 @@ import javax.swing.table.TableColumn;
 
 @SuppressWarnings("serial")
 public abstract class AbstractExternalDbQueriesPanel extends JPanel {
+
   private static final Color TABLE_VERTICAL_GRID_COLOR = new Color(214, 223, 247);
   private static final Color TABLE_SELECTION_BACKGROUND_COLOR = new Color(193, 210, 238);
   private static final int TABLE_ROW_HEIGHT = 18;
@@ -24,8 +23,8 @@ public abstract class AbstractExternalDbQueriesPanel extends JPanel {
   private final ExternalDbView fExternalDbView;
   private final DateTableCellRenderer fDateCellRenderer = new DateTableCellRenderer();
   private final NumberTableCellRenderer fNumberCellRenderer = new NumberTableCellRenderer();
-  private final MultiLineMergeTableCellRenderer fmultiLineRenderer = new MultiLineMergeTableCellRenderer();
-  
+  private final MultiLineMergeTableCellRenderer fMultiLineRenderer = new MultiLineMergeTableCellRenderer();
+
   private final List<Integer> fColumnsWidths = new ArrayList<>();
   private List<? extends RowSorter.SortKey> fSortKeys;
   private volatile boolean isRefreshing = false;
@@ -77,7 +76,7 @@ public abstract class AbstractExternalDbQueriesPanel extends JPanel {
   public void refresh(List<SQLInfo> sqlInfoList) {
     synchronized (this) {
       if (isRefreshing) {
-        return;//prevent other threads from calling this method when there is a running thread.
+        return;// prevent other threads from calling this method when there is a running thread.
       }
       isRefreshing = true;
     }
@@ -139,7 +138,7 @@ public abstract class AbstractExternalDbQueriesPanel extends JPanel {
   }
 
   public MultiLineMergeTableCellRenderer getMultiLineCellRenderer() {
-    return fmultiLineRenderer;
+    return fMultiLineRenderer;
   }
 
 }

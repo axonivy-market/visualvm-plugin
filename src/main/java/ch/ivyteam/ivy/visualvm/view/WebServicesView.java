@@ -15,9 +15,10 @@ import javax.swing.Icon;
 import org.openide.util.ImageUtilities;
 
 public class WebServicesView extends ExternalDbWsCommonView {
+
   private static final String CALLS = ContentProvider.get("Calls");
-  private static final String PROCESSING_TIME = ContentProvider.get("ProcessingTime")
-          + " [" + ContentProvider.get("MillisecondAbbr") + "]";
+  private static final String PROCESSING_TIME = ContentProvider.get("ProcessingTime") + " ["
+          + ContentProvider.get("MillisecondAbbr") + "]";
 
   public WebServicesView(DataBeanProvider dataBeanProvider) {
     super(dataBeanProvider);
@@ -39,8 +40,7 @@ public class WebServicesView extends ExternalDbWsCommonView {
     WebServiceProcessingTimeChartDataSource processTimeDataSrc = new WebServiceProcessingTimeChartDataSource(
             getDataBeanProvider(), null, null, PROCESSING_TIME);
 
-    configDataSources(IvyJmxConstant.IvyServer.WebService.NAME_PATTERN,
-            callsDataSource, processTimeDataSrc);
+    configDataSources(IvyJmxConstant.IvyServer.WebService.NAME_PATTERN, callsDataSource, processTimeDataSrc);
     chartPanel.addChart(callsDataSource, generateDescriptionForCallsChart());
     chartPanel.addChart(processTimeDataSrc, generateDescriptionForProcessingTimeChart());
     registerScheduledUpdate(chartPanel);
@@ -51,8 +51,8 @@ public class WebServicesView extends ExternalDbWsCommonView {
   public DataViewComponent getViewComponent() {
     DataViewComponent viewComponent = super.getViewComponent();
     viewComponent.add(getUIChartsPanel());
-    Map<String, Map<String, Set<String>>> appEnvWs = DataUtils.getWebServicesConfigs(
-            getDataBeanProvider().getMBeanServerConnection());
+    Map<String, Map<String, Set<String>>> appEnvWs = DataUtils.getWebServicesConfigs(getDataBeanProvider()
+            .getMBeanServerConnection());
     getUIChartsPanel().setTreeData(appEnvWs);
     return viewComponent;
   }
