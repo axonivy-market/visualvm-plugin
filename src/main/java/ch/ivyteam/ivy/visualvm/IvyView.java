@@ -21,6 +21,7 @@ import com.sun.tools.visualvm.core.ui.DataSourceView;
 import com.sun.tools.visualvm.core.ui.components.DataViewComponent;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.prefs.PreferenceChangeEvent;
 import java.util.prefs.PreferenceChangeListener;
@@ -61,13 +62,12 @@ class IvyView extends DataSourceView {
     dvcRoot.add(tabbed);
 
     // add views
-    addInformationView(fDataBeanProvider, tabbed);
-    addLicenseView(fDataBeanProvider, tabbed);
-    addRequestView(fDataBeanProvider, tabbed);
-    addSystemDBView(fDataBeanProvider, tabbed);
-    addExternalDBView(fDataBeanProvider, tabbed);
-    addWebServicesView(fDataBeanProvider, tabbed);
-
+    addInformationView(tabbed);
+    addLicenseView(tabbed);
+    addRequestView(tabbed);
+    addSystemDBView(tabbed);
+    addExternalDBView(tabbed);
+    addWebServicesView(tabbed);
     // init scheduler
     fUpdateTask = Scheduler.sharedInstance().schedule(new UpdateChartTask(),
             Quantum.seconds(GlobalPreferences.sharedInstance().getMonitoredDataPoll()), true);
@@ -75,62 +75,99 @@ class IvyView extends DataSourceView {
     return dvcRoot;
   }
 
-  private void addInformationView(DataBeanProvider dataBeanProvider, JTabbedPane tabbed) {
-    InformationView infoView = new InformationView(dataBeanProvider);
-    fViews.add(infoView);
-    tabbed.addTab(ContentProvider.get("Information"), (Icon) ImageUtilities.loadImage(INFO_IMAGE_PATH, true),
-            infoView.getViewComponent());
-  }
-
-  private void addLicenseView(DataBeanProvider dataBeanProvider, JTabbedPane tabbed) {
-    if (fDataBeanProvider.getGenericData().getApplicationInfo().isServer()) {
-      LicenseView licenseView = new LicenseView(dataBeanProvider);
-      fViews.add(licenseView);
-      tabbed.addTab(ContentProvider.get("License"),
-              (Icon) ImageUtilities.loadImage(LICENSE_IMAGE_PATH, true), licenseView.getViewComponent());
+  //CHECKSTYLE:OFF
+  private void addInformationView(JTabbedPane tabbed) {
+    String viewName = "Information";
+    try {
+      InformationView infoView = new InformationView(fDataBeanProvider);
+      fViews.add(infoView);
+      tabbed.addTab(ContentProvider.get(viewName),
+              (Icon) ImageUtilities.loadImage(INFO_IMAGE_PATH, true), infoView.getViewComponent());
+    } catch (Exception ex) {
+      writeLogException(viewName, ex);
     }
   }
 
-  private void addRequestView(DataBeanProvider dataBeanProvider, JTabbedPane tabbed) {
-    RequestView requestViewNew = new RequestView(dataBeanProvider);
-    fViews.add(requestViewNew);
-    tabbed.addTab(ContentProvider.get("UserRequests"),
-            (Icon) ImageUtilities.loadImage(USER_REQ_IMAGE_PATH, true), requestViewNew.getViewComponent());
+  private void addLicenseView(JTabbedPane tabbed) {
+    String viewName = "License";
+    try {
+      if (fDataBeanProvider.getGenericData().getApplicationInfo().isServer()) {
+        LicenseView licenseView = new LicenseView(fDataBeanProvider);
+        fViews.add(licenseView);
+        tabbed.addTab(ContentProvider.get(viewName),
+                (Icon) ImageUtilities.loadImage(LICENSE_IMAGE_PATH, true), licenseView.getViewComponent());
+      }
+    } catch (Exception ex) {
+      writeLogException(viewName, ex);
+    }
   }
 
-  private void addSystemDBView(DataBeanProvider dataBeanProvider, JTabbedPane tabbed) {
-    SystemDbView systemDbView = new SystemDbView(dataBeanProvider);
-    fViews.add(systemDbView);
-    tabbed.addTab(ContentProvider.get("SystemDatabase"),
-            (Icon) ImageUtilities.loadImage(DB_ICON_IMAGE_PATH, true), systemDbView.getViewComponent());
+  private void addRequestView(JTabbedPane tabbed) {
+    String viewName = "UserRequests";
+    try {
+      RequestView requestViewNew = new RequestView(fDataBeanProvider);
+      fViews.add(requestViewNew);
+      tabbed.addTab(ContentProvider.get(viewName),
+              (Icon) ImageUtilities.loadImage(USER_REQ_IMAGE_PATH, true), requestViewNew.getViewComponent());
+    } catch (Exception ex) {
+      writeLogException(viewName, ex);
+    }
   }
 
-  private void addExternalDBView(DataBeanProvider dataBeanProvider, JTabbedPane tabbed) {
-    ExternalDbView extDbView = new ExternalDbView(dataBeanProvider);
-    fViews.add(extDbView);
-    tabbed.addTab(ContentProvider.get("ExternalDatabases"),
-            (Icon) ImageUtilities.loadImage(EXT_DB_ICON_IMAGE_PATH, true), extDbView.getViewComponent());
+  private void addSystemDBView(JTabbedPane tabbed) {
+    String viewName = "SystemDatabase";
+    try {
+      SystemDbView systemDbView = new SystemDbView(fDataBeanProvider);
+      fViews.add(systemDbView);
+      tabbed.addTab(ContentProvider.get("SystemDatabase"),
+              (Icon) ImageUtilities.loadImage(DB_ICON_IMAGE_PATH, true), systemDbView.getViewComponent());
+    } catch (Exception ex) {
+      writeLogException(viewName, ex);
+    }
   }
 
-  private void addWebServicesView(DataBeanProvider dataBeanProvider, JTabbedPane tabbed) {
-    WebServicesView wsView = new WebServicesView(dataBeanProvider);
-    fViews.add(wsView);
-    tabbed.addTab(ContentProvider.get("WebServices"),
-            (Icon) ImageUtilities.loadImage(WEB_SERVICE_ICON_IMAGE_PATH, true), wsView.getViewComponent());
+  private void addExternalDBView(JTabbedPane tabbed) {
+    String viewName = "ExternalDatabases";
+    try {
+      ExternalDbView extDbView = new ExternalDbView(fDataBeanProvider);
+      fViews.add(extDbView);
+      tabbed.addTab(ContentProvider.get(viewName),
+              (Icon) ImageUtilities.loadImage(EXT_DB_ICON_IMAGE_PATH, true), extDbView.getViewComponent());
+    } catch (Exception ex) {
+      writeLogException(viewName, ex);
+    }
   }
+
+  private void addWebServicesView(JTabbedPane tabbed) {
+    String viewName = "WebServices";
+    try {
+      WebServicesView wsView = new WebServicesView(fDataBeanProvider);
+      fViews.add(wsView);
+      tabbed.addTab(ContentProvider.get(viewName),
+              (Icon) ImageUtilities.loadImage(WEB_SERVICE_ICON_IMAGE_PATH, true), wsView.getViewComponent());
+    } catch (Exception ex) {
+      writeLogException(viewName, ex);
+    }
+  }
+  //CHECKSTYLE:ON
 
   private DataViewComponent createDVC(String masterViewTitle, JComponent comp) {
     // Add the master view and configuration view to the component:
     DataViewComponent.MasterView masterView = new DataViewComponent.MasterView(masterViewTitle, "", comp);
 
     // Configuration of master view:
-    DataViewComponent.MasterViewConfiguration masterConfiguration = 
-            new DataViewComponent.MasterViewConfiguration(false);
+    DataViewComponent.MasterViewConfiguration masterConfiguration
+            = new DataViewComponent.MasterViewConfiguration(false);
     return new DataViewComponent(masterView, masterConfiguration);
   }
 
   public void setDataBeanProvider(DataBeanProvider dataBeanProvider) {
     fDataBeanProvider = dataBeanProvider;
+  }
+
+  private void writeLogException(String viewName, Throwable cause) {
+    String message = "An exception occurred when adding " + viewName + " view";
+    LOGGER.log(Level.WARNING, message, cause);
   }
 
   private class UpdateChartTask implements SchedulerTask {
@@ -152,7 +189,6 @@ class IvyView extends DataSourceView {
         }
       }
     }
-
   }
 
   private class DataPollSettingChangeListener implements PreferenceChangeListener {
@@ -161,6 +197,5 @@ class IvyView extends DataSourceView {
     public void preferenceChange(PreferenceChangeEvent evt) {
       fUpdateTask.setInterval(Quantum.seconds(GlobalPreferences.sharedInstance().getMonitoredDataPoll()));
     }
-
   }
 }
