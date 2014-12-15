@@ -1,22 +1,21 @@
 package ch.ivyteam.ivy.visualvm.view.externaldb;
 
+import ch.ivyteam.ivy.visualvm.model.SQLInfo;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.List;
-
 import javax.swing.JPanel;
 import javax.swing.JTable;
 import javax.swing.RowSorter;
 import javax.swing.SortOrder;
 import javax.swing.table.TableColumn;
 
-import ch.ivyteam.ivy.visualvm.model.SQLInfo;
-
 @SuppressWarnings("serial")
 public abstract class AbstractExternalDbQueriesPanel extends JPanel {
+
   private static final Color TABLE_VERTICAL_GRID_COLOR = new Color(214, 223, 247);
   private static final Color TABLE_SELECTION_BACKGROUND_COLOR = new Color(193, 210, 238);
   private static final int TABLE_ROW_HEIGHT = 18;
@@ -117,8 +116,8 @@ public abstract class AbstractExternalDbQueriesPanel extends JPanel {
   protected void restoreQueriesTableConfig() {
     JTable queriesTable = getQueriesTable();
     if (fSortKeys.isEmpty()) {
-      queriesTable.getRowSorter().setSortKeys(
-              createDefaultSortKey(getDefaultSortColumnIndex(), SortOrder.DESCENDING));
+      queriesTable.getRowSorter().setSortKeys(createDefaultSortKey(getDefaultSortColumnIndex(),
+              SortOrder.DESCENDING));
     } else {
       queriesTable.getRowSorter().setSortKeys(fSortKeys);
     }

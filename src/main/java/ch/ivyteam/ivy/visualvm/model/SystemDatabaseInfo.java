@@ -2,12 +2,12 @@ package ch.ivyteam.ivy.visualvm.model;
 
 public class SystemDatabaseInfo {
 
-  private String fType;
-  private String fVersion;
-  private String fIvySystemDbVersion;
-  private String fDriver;
-  private String fConnectionUrl;
-  private String fUsername;
+  private String fType = "";
+  private String fVersion = "";
+  private String fIvySystemDbVersion = "";
+  private String fDriver = "";
+  private String fConnectionUrl = "";
+  private String fUsername = "";
 
   public String getType() {
     return fType;

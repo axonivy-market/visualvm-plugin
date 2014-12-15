@@ -196,8 +196,11 @@ public final class InformationPanelTopComponent extends JPanel {
       appendValue(html, ContentProvider.get("DatabaseProduct"), sysDbInfo.getType());
       appendValue(html, ContentProvider.get("DatabaseVersion"), sysDbInfo.getVersion());
       appendValue(html, ContentProvider.get("DatabaseDriver"), sysDbInfo.getDriver());
-      appendValue(html, ContentProvider.get("DatabaseHost"), DataUtils.getHostFromConnectionUrl(sysDbInfo.
-              getConnectionUrl()));
+
+      String hostName = DataUtils.getHostFromConnectionUrl(sysDbInfo.getConnectionUrl());
+      if (!StringUtils.isEmpty(hostName)) {
+        appendValue(html, ContentProvider.get("DatabaseHost"), hostName);
+      }
 
       String port = DataUtils.getPortFromConnectionUrl(sysDbInfo.getConnectionUrl());
       if (!StringUtils.isEmpty(port)) {
@@ -210,7 +213,7 @@ public final class InformationPanelTopComponent extends JPanel {
       }
 
       String username = sysDbInfo.getUsername();
-      if (!StringUtils.isEmpty(username.trim())) {
+      if (!StringUtils.isEmpty(StringUtils.trim(username))) {
         appendValue(html, ContentProvider.get("DatabaseUserName"), username);
       }
 
