@@ -3,8 +3,8 @@
   <modelVersion>4.0.0</modelVersion>
 
   <groupId>ch.ivyteam.ivy</groupId>
-  <artifactId>visualvm</artifactId>
-  <version>1.1-SNAPSHOT</version>
+  <artifactId>visualvm-plugin</artifactId>
+  <version>6.0.0-SNAPSHOT</version>
   <packaging>nbm</packaging>
 
   <name>Axon.ivy Engine Monitor_6.0</name>
