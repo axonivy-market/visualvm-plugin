@@ -13,9 +13,9 @@
   <property name="cert.alias" value="axon ivy ag" />
   <property name="cert.tsaurl" value="http://tsa.quovadisglobal.com/TSS/HttpTspServer" description="URL for a timestamp authority"/>
   
-  <property name="deploy.url" value="http://zugprorepo/repository/buildIntegration" />
-  <property name="deploy.username" value="build" />
-  <property name="deploy.password" value="ivybuild1234" />
+  <property name="deploy.url" value="http://192.168.3.122/nexus/content/repositories/build-vn-snapshots" />
+  <property name="deploy.username" value="build-teamUP" />
+  <property name="deploy.password" value="buildivyup123" />
   
   <target name="deploy" if="is.deploy">
 	<!-- Find the NBM file -->
