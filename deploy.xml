@@ -7,10 +7,10 @@
            uri="antlib:org.apache.maven.artifact.ant"
            classpath="antlibs/maven-ant-tasks-2.1.3.jar" />
 		   
-  <property name="cert.location" value="D:/VN_TEAM_UP/certificate/AXON_IVY_AG.p12" />
-  <property name="cert.type" value="pkcs12" />
-  <property name="cert.password" value="57HcQ:erorHY" />
-  <property name="cert.alias" value="axon ivy ag" />
+  <property name="cert.location" value="D:/VN_TEAM_UP/certificate/keystore.jks" />
+  <property name="cert.type" value="jks" />
+  <property name="cert.password" value="PzS1r@c5jlM4Tw" />
+  <property name="cert.alias" value="AXON IVY AG" />
   <property name="cert.tsaurl" value="http://tsa.quovadisglobal.com/TSS/HttpTspServer" description="URL for a timestamp authority"/>
   
   <property name="deploy.url" value="http://192.168.3.122/nexus/content/repositories/build-vn-snapshots" />
