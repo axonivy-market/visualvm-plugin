@@ -7,7 +7,7 @@
            uri="antlib:org.apache.maven.artifact.ant"
            classpath="antlibs/maven-ant-tasks-2.1.3.jar" />
 		   
-  <property name="cert.location" value="D:/VN_TEAM_UP/certificate/keystore.jks" />
+  <property name="cert.location" value="D:/VN_TEAM_UP/share/cert/keystore.jks" />
   <property name="cert.type" value="jks" />
   <property name="cert.password" value="PzS1r@c5jlM4Tw" />
   <property name="cert.alias" value="AXON IVY AG" />
