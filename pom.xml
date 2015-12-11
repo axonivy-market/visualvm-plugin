@@ -4,15 +4,15 @@
 
   <groupId>ch.ivyteam.ivy</groupId>
   <artifactId>visualvm-plugin</artifactId>
-  <version>6.0.0-SNAPSHOT</version>
+  <version>6.1.0-SNAPSHOT</version>
   <packaging>nbm</packaging>
 
-  <name>Axon.ivy Engine Monitor_6.0</name>
+  <name>Axon.ivy Engine Monitor_6.1</name>
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <netbeans.run.params.ide/>
     <netbeans.run.params>${netbeans.run.params.ide}</netbeans.run.params>
-    <visualvm.installation>C:\teamup\svn\6.0\ivyvisualvm\visualvm_137</visualvm.installation>
+    <visualvm.installation>C:\teamup\svn\6.1\ivyvisualvm\visualvm_137</visualvm.installation>
         
     <visualvm.version>RELEASE135</visualvm.version>
     <junit.version>4.11</junit.version>
