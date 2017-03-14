@@ -31,7 +31,7 @@ public class IvyApplicationTypeFactory extends MainClassApplicationTypeFactory {
   @Override
   public ApplicationType createApplicationTypeFor(Application app, Jvm jvm,
           String mainClass) {
-    if (isIvyServer(mainClass)) {
+    if (isIvyServer(mainClass, jvm)) {
       return new IvyApplicationType(app.getPid(), isAxonIvyApp(app) ? IvyApplicationInfo.IVY_ENGINE_APP_NAME
               : IvyApplicationInfo.IVY_ENGINE_APP_NAME_OLD);
     } else if (isDesigner(mainClass, jvm)) {
@@ -41,9 +41,17 @@ public class IvyApplicationTypeFactory extends MainClassApplicationTypeFactory {
     return null;
   }
 
-  private boolean isIvyServer(String mainClass) {
-    return "ch.ivyteam.ivy.server.ServerLauncher".equals(mainClass);
+  private boolean isIvyServer(String mainClass, Jvm jvm) {
+    return isOldTypeIvyEngine(mainClass) || isOSGiBasedIvyEngine(mainClass, jvm);
   }
+
+    private boolean isOldTypeIvyEngine(String mainClass) {
+        return "ch.ivyteam.ivy.server.ServerLauncher".equals(mainClass);
+    }
+
+    private boolean isOSGiBasedIvyEngine(String mainClass, Jvm jvm) {
+        return "org.eclipse.equinox.launcher.Main".equals(mainClass) && jvm.getCommandLine().contains("-application ch.ivyteam.ivy.server.exec.engine");
+    }
 
   private boolean isDesigner(String mainClass, Jvm jvm) {
     return isDesignerInstallation(mainClass) || isDesignerStartedFromIde(mainClass, jvm);
