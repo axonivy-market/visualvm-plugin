@@ -24,7 +24,7 @@ public class GenericData {
     if (fServerConnectors == null) {
       BasicIvyJmxDataCollector collector = new BasicIvyJmxDataCollector();
       try {
-        fServerConnectors = collector.getMappedConnectors(fMBeanServerConnection);
+        fServerConnectors = collector.getMappedConnectors(fMBeanServerConnection, getApplicationInfo());
       } catch (IvyJmxDataCollectException ex) {
         LOGGER.warning(ex.getMessage());
       }

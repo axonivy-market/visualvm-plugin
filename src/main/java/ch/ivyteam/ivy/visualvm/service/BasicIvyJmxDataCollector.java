@@ -127,7 +127,7 @@ public class BasicIvyJmxDataCollector {
     return osInfo;
   }
 
-  public List<ServerConnectorInfo> getMappedConnectors(MBeanServerConnection connection) throws
+  public List<ServerConnectorInfo> getMappedConnectors(MBeanServerConnection connection, IvyApplicationInfo ivyApplicationInfo) throws
           IvyJmxDataCollectException {
     List<ServerConnectorInfo> mappedConnectors = new ArrayList<>();
     try {
@@ -137,7 +137,7 @@ public class BasicIvyJmxDataCollector {
         IvyJmxConstant.Ivy.Connector.KEY_PORT,
         IvyJmxConstant.Ivy.Connector.KEY_SCHEME};
       for (ObjectName beanName : mbeanNames) {
-        ServerConnectorInfo connector = new ServerConnectorInfo();
+        ServerConnectorInfo connector = new ServerConnectorInfo(ivyApplicationInfo);
         AttributeList attributes = connection.getAttributes(beanName, attributeNames);
         for (Attribute attribute : attributes.asList()) {
           if (attribute.getValue() != null) {

@@ -108,7 +108,7 @@ public class ServerInformationTest extends AbstractTest {
     assertEquals(DB_USERNAME, sysDbInfo.getUsername());
 
 //     verify connectors
-    List<ServerConnectorInfo> connectorInfo = collector.getMappedConnectors(mockedMBeanServer);
+    List<ServerConnectorInfo> connectorInfo = collector.getMappedConnectors(mockedMBeanServer, basicInformation);
     assertEquals(PORT_8009, connectorInfo.get(0).getPort());
     assertEquals(AJP_13, connectorInfo.get(0).getProtocol());
     assertEquals(HTTP, connectorInfo.get(0).getScheme());

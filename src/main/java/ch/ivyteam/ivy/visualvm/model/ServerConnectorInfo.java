@@ -1,5 +1,6 @@
 package ch.ivyteam.ivy.visualvm.model;
 
+import ch.ivyteam.ivy.visualvm.util.DataUtils;
 import java.text.MessageFormat;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -8,12 +9,18 @@ import javax.management.ObjectName;
 
 public class ServerConnectorInfo {
   private static final Logger LOGGER = Logger.getLogger(ServerConnectorInfo.class.getName());
-
+  private static final String GLOBAL_REQUEST_PROCESSOR_NAME_OLD = "ivy:type=GlobalRequestProcessor,name=\"{0}-bio-{1}\"";
+  private static final String GLOBAL_REQUEST_PROCESSOR_NAME_NEW = "ivy:type=GlobalRequestProcessor,name=\"{0}-nio-{1}\"";
   private String fProtocol;
   private String fDisplayProtocol;
   private String fPort;
   private String fScheme;
   private ObjectName fGlobalRequestProcessorName;
+  private IvyApplicationInfo fIvyApplicationInfo;
+  
+  public ServerConnectorInfo(IvyApplicationInfo ivyApplicationInfo) {
+    fIvyApplicationInfo = ivyApplicationInfo;
+  }
 
   public String getProtocol() {
     return fProtocol;
@@ -65,8 +72,13 @@ public class ServerConnectorInfo {
         } else {
           fDisplayProtocol = "https".equals(fScheme) ? "HTTPS" : "HTTP";
         }
-        fGlobalRequestProcessorName = new ObjectName(MessageFormat.format(
-                "ivy:type=GlobalRequestProcessor,name=\"{0}-bio-{1}\"", protocol, fPort));
+        if (fIvyApplicationInfo != null && !DataUtils.checkIvyVersion(fIvyApplicationInfo.getVersion(), 6, 2)) {
+          fGlobalRequestProcessorName = new ObjectName(MessageFormat.format(
+                GLOBAL_REQUEST_PROCESSOR_NAME_OLD, protocol, fPort)); 
+        } else {
+          fGlobalRequestProcessorName = new ObjectName(MessageFormat.format(
+                GLOBAL_REQUEST_PROCESSOR_NAME_NEW, protocol, fPort));
+        }
       } catch (MalformedObjectNameException ex) {
         LOGGER.log(Level.WARNING, ex.getMessage(), ex);
       }

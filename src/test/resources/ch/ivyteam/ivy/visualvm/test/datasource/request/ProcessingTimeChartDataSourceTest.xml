@@ -1,6 +1,35 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <beanTestData>
   <dataset>
+    <property>
+      <name>ivy Engine:type=Server</name>
+      <dataset>
+        <property>
+          <name>version</name>
+          <value>5.1.0.44832</value>
+        </property>
+        <property>
+          <name>buildDate</name>
+          <value type="java.util.Date">11/09/2014</value>
+        </property>
+        <property>
+          <name>installationDirectory</name>
+          <value>D:\teamup\AxonIvyEngine5.1.0.44832_Windows_x64</value>
+        </property>
+        <property>
+          <name>developerMode</name>
+          <value></value>
+        </property>
+        <property>
+          <name>releaseCandidate</name>
+          <value></value>
+        </property>
+        <property>
+          <name>applicationName</name>
+          <value>Axon.ivy Engine</value>
+        </property>
+      </dataset>
+    </property>
     <!-- connectors info: start -->
     <property>
       <name>ivy:type=Connector,port=8009</name>

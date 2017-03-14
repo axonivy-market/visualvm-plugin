@@ -6,15 +6,15 @@
       <dataset>
         <property>
           <name>version</name>
-          <value>5.1.0.44832</value>
+          <value>6.4.0.52683</value>
         </property>
         <property>
           <name>buildDate</name>
-          <value type="java.util.Date">11/09/2014</value>
+          <value type="java.util.Date">27/10/2016</value>
         </property>
         <property>
           <name>installationDirectory</name>
-          <value>D:\teamup\AxonIvyEngine5.1.0.44832_Windows_x64</value>
+          <value>D:\teamup\AxonIvyEngine6.4.0.52683_Windows_x64</value>
         </property>
         <property>
           <name>developerMode</name>
@@ -85,7 +85,7 @@
     <!-- connectors info: end -->
       
     <property>
-      <name>ivy:type=GlobalRequestProcessor,name="ajp-bio-8009"</name>
+      <name>ivy:type=GlobalRequestProcessor,name="ajp-nio-8009"</name>
       <dataset>
         <property>
           <name>requestCount</name>
@@ -105,7 +105,7 @@
     </property>
     
     <property>
-      <name>ivy:type=GlobalRequestProcessor,name="http-bio-8080"</name>
+      <name>ivy:type=GlobalRequestProcessor,name="http-nio-8080"</name>
       <dataset>
         <property>
           <name>requestCount</name>
@@ -125,7 +125,7 @@
     </property>
     
     <property>
-      <name>ivy:type=GlobalRequestProcessor,name="http-bio-8443"</name>
+      <name>ivy:type=GlobalRequestProcessor,name="http-nio-8443"</name>
       <dataset>
         <property>
           <name>requestCount</name>
@@ -147,7 +147,7 @@
   
   <dataset>
     <property>
-      <name>ivy:type=GlobalRequestProcessor,name="ajp-bio-8009"</name>
+      <name>ivy:type=GlobalRequestProcessor,name="ajp-nio-8009"</name>
       <dataset>
         <property>
           <name>requestCount</name>
@@ -167,7 +167,7 @@
     </property>
     
     <property>
-      <name>ivy:type=GlobalRequestProcessor,name="http-bio-8080"</name>
+      <name>ivy:type=GlobalRequestProcessor,name="http-nio-8080"</name>
       <dataset>
         <property>
           <name>requestCount</name>
@@ -187,7 +187,7 @@
     </property>
     
     <property>
-      <name>ivy:type=GlobalRequestProcessor,name="http-bio-8443"</name>
+      <name>ivy:type=GlobalRequestProcessor,name="http-nio-8443"</name>
       <dataset>
         <property>
           <name>requestCount</name>
@@ -209,7 +209,7 @@
   
   <dataset>
     <property>
-      <name>ivy:type=GlobalRequestProcessor,name="ajp-bio-8009"</name>
+      <name>ivy:type=GlobalRequestProcessor,name="ajp-nio-8009"</name>
       <dataset>
         <property>
           <name>requestCount</name>
@@ -229,7 +229,7 @@
     </property>
     
     <property>
-      <name>ivy:type=GlobalRequestProcessor,name="http-bio-8080"</name>
+      <name>ivy:type=GlobalRequestProcessor,name="http-nio-8080"</name>
       <dataset>
         <property>
           <name>requestCount</name>
@@ -249,7 +249,7 @@
     </property>
     
     <property>
-      <name>ivy:type=GlobalRequestProcessor,name="http-bio-8443"</name>
+      <name>ivy:type=GlobalRequestProcessor,name="http-nio-8443"</name>
       <dataset>
         <property>
           <name>requestCount</name>
@@ -271,7 +271,7 @@
   
   <dataset>
     <property>
-      <name>ivy:type=GlobalRequestProcessor,name="ajp-bio-8009"</name>
+      <name>ivy:type=GlobalRequestProcessor,name="ajp-nio-8009"</name>
       <dataset>
         <property>
           <name>requestCount</name>
@@ -291,7 +291,7 @@
     </property>
     
     <property>
-      <name>ivy:type=GlobalRequestProcessor,name="http-bio-8080"</name>
+      <name>ivy:type=GlobalRequestProcessor,name="http-nio-8080"</name>
       <dataset>
         <property>
           <name>requestCount</name>
@@ -311,7 +311,7 @@
     </property>
     
     <property>
-      <name>ivy:type=GlobalRequestProcessor,name="http-bio-8443"</name>
+      <name>ivy:type=GlobalRequestProcessor,name="http-nio-8443"</name>
       <dataset>
         <property>
           <name>requestCount</name>
@@ -333,7 +333,7 @@
   
   <dataset>
     <property>
-      <name>ivy:type=GlobalRequestProcessor,name="ajp-bio-8009"</name>
+      <name>ivy:type=GlobalRequestProcessor,name="ajp-nio-8009"</name>
       <dataset>
         <property>
           <name>requestCount</name>
@@ -353,7 +353,7 @@
     </property>
     
     <property>
-      <name>ivy:type=GlobalRequestProcessor,name="http-bio-8080"</name>
+      <name>ivy:type=GlobalRequestProcessor,name="http-nio-8080"</name>
       <dataset>
         <property>
           <name>requestCount</name>
@@ -373,7 +373,7 @@
     </property>
     
     <property>
-      <name>ivy:type=GlobalRequestProcessor,name="http-bio-8443"</name>
+      <name>ivy:type=GlobalRequestProcessor,name="http-nio-8443"</name>
       <dataset>
         <property>
           <name>requestCount</name>
