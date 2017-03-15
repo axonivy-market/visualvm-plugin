@@ -7,6 +7,7 @@ import javax.management.ObjectName;
 public final class IvyJmxConstant {
   private static final Logger LOGGER = Logger.getLogger(IvyJmxConstant.class.getName());
   public static final ObjectName IVY_ENGINE = initObjectName("ivy Engine:type=Server");
+  public static final ObjectName XPERT_IVY_ENGINE = initObjectName("Xpert.ivy Server:type=Application,name=System");
 
   private IvyJmxConstant() {
   }
