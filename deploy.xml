@@ -17,7 +17,7 @@
   <property name="deploy.username" value="build-teamUP" />
   <property name="deploy.password" value="buildivyup123" />
   
-  <target name="deploy" if="is.deploy">
+  <target name="deploy" if="${is.deploy}">
 	<!-- Find the NBM file -->
 	<fileset id="fileset.des.nbm" dir="target/nbm">
       <include name="*SNAPSHOT.nbm" />
