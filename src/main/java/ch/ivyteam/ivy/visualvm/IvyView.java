@@ -1,5 +1,18 @@
 package ch.ivyteam.ivy.visualvm;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import java.util.prefs.PreferenceChangeEvent;
+import java.util.prefs.PreferenceChangeListener;
+
+import javax.swing.Icon;
+import javax.swing.JComponent;
+import javax.swing.JTabbedPane;
+
+import org.openide.util.ImageUtilities;
+
 import ch.ivyteam.ivy.visualvm.chart.Query;
 import ch.ivyteam.ivy.visualvm.chart.QueryResult;
 import ch.ivyteam.ivy.visualvm.exception.ClosedIvyServerConnectionException;
@@ -7,10 +20,12 @@ import ch.ivyteam.ivy.visualvm.view.AbstractView;
 import ch.ivyteam.ivy.visualvm.view.DataBeanProvider;
 import ch.ivyteam.ivy.visualvm.view.InformationView;
 import ch.ivyteam.ivy.visualvm.view.LicenseView;
+import ch.ivyteam.ivy.visualvm.view.RESTWebServicesView;
 import ch.ivyteam.ivy.visualvm.view.RequestView;
+import ch.ivyteam.ivy.visualvm.view.SOAPWebServicesView;
 import ch.ivyteam.ivy.visualvm.view.SystemDbView;
-import ch.ivyteam.ivy.visualvm.view.WebServicesView;
 import ch.ivyteam.ivy.visualvm.view.externaldb.ExternalDbView;
+
 import com.sun.tools.visualvm.application.Application;
 import com.sun.tools.visualvm.core.options.GlobalPreferences;
 import com.sun.tools.visualvm.core.scheduler.Quantum;
@@ -19,16 +34,6 @@ import com.sun.tools.visualvm.core.scheduler.Scheduler;
 import com.sun.tools.visualvm.core.scheduler.SchedulerTask;
 import com.sun.tools.visualvm.core.ui.DataSourceView;
 import com.sun.tools.visualvm.core.ui.components.DataViewComponent;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import java.util.prefs.PreferenceChangeEvent;
-import java.util.prefs.PreferenceChangeListener;
-import javax.swing.Icon;
-import javax.swing.JComponent;
-import javax.swing.JTabbedPane;
-import org.openide.util.ImageUtilities;
 
 class IvyView extends DataSourceView {
 
@@ -43,8 +48,7 @@ class IvyView extends DataSourceView {
 
   private ScheduledTask fUpdateTask;
   private final List<AbstractView> fViews = new ArrayList<>();
-  private final DataPollSettingChangeListener fPollSettingChangeListener
-          = new DataPollSettingChangeListener();
+  private final DataPollSettingChangeListener fPollSettingChangeListener = new DataPollSettingChangeListener();
   private DataBeanProvider fDataBeanProvider;
 
   public IvyView(Application application) {
@@ -68,6 +72,7 @@ class IvyView extends DataSourceView {
     addSystemDBView(tabbed);
     addExternalDBView(tabbed);
     addWebServicesView(tabbed);
+    addRESTWebServicesView(tabbed);
     // init scheduler
     fUpdateTask = Scheduler.sharedInstance().schedule(new UpdateChartTask(),
             Quantum.seconds(GlobalPreferences.sharedInstance().getMonitoredDataPoll()), true);
@@ -75,7 +80,7 @@ class IvyView extends DataSourceView {
     return dvcRoot;
   }
 
-  //CHECKSTYLE:OFF
+  // CHECKSTYLE:OFF
   private void addInformationView(JTabbedPane tabbed) {
     String viewName = "Information";
     try {
@@ -139,9 +144,9 @@ class IvyView extends DataSourceView {
   }
 
   private void addWebServicesView(JTabbedPane tabbed) {
-    String viewName = "WebServices";
+    String viewName = "SOAPWebServices";
     try {
-      WebServicesView wsView = new WebServicesView(fDataBeanProvider);
+      SOAPWebServicesView wsView = new SOAPWebServicesView(fDataBeanProvider);
       fViews.add(wsView);
       tabbed.addTab(ContentProvider.get(viewName),
               (Icon) ImageUtilities.loadImage(WEB_SERVICE_ICON_IMAGE_PATH, true), wsView.getViewComponent());
@@ -149,15 +154,27 @@ class IvyView extends DataSourceView {
       writeLogException(viewName, ex);
     }
   }
-  //CHECKSTYLE:ON
+
+  private void addRESTWebServicesView(JTabbedPane tabbed) {
+    String viewName = "RESTWebServices";
+    try {
+      RESTWebServicesView restWSView = new RESTWebServicesView(fDataBeanProvider);
+      fViews.add(restWSView);
+      tabbed.addTab(ContentProvider.get(viewName),
+              (Icon) ImageUtilities.loadImage(WEB_SERVICE_ICON_IMAGE_PATH, true), restWSView.getViewComponent());
+    } catch (Exception ex) {
+      writeLogException(viewName, ex);
+    }
+  }
+
+  // CHECKSTYLE:ON
 
   private DataViewComponent createDVC(String masterViewTitle, JComponent comp) {
     // Add the master view and configuration view to the component:
     DataViewComponent.MasterView masterView = new DataViewComponent.MasterView(masterViewTitle, "", comp);
 
     // Configuration of master view:
-    DataViewComponent.MasterViewConfiguration masterConfiguration
-            = new DataViewComponent.MasterViewConfiguration(false);
+    DataViewComponent.MasterViewConfiguration masterConfiguration = new DataViewComponent.MasterViewConfiguration(false);
     return new DataViewComponent(masterView, masterConfiguration);
   }
 

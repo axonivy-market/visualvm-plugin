@@ -26,12 +26,13 @@ public final class DataUtils {
   private static final String ENVIRONMENT_STRING_KEY = "environment";
   private static final String CONFIG_STRING_KEY = "name";
   private static final String FILTER_STRING = "ivy Engine:type={0},application=*,environment=*,name=*";
-  private static final String WS_FILTER_STRING = FILTER_STRING.replace("{0}", "External Web Service");
+  private static final String SOAP_WS_FILTER_STRING = FILTER_STRING.replace("{0}", "External Web Service");
+  private static final String REST_WS_FILTER_STRING = FILTER_STRING.replace("{0}", "External REST Web Service");
   private static final String EXT_DB_FILTER_STRING = FILTER_STRING.replace("{0}", "External Database");
 
   private static final Logger LOGGER = Logger.getLogger(DataUtils.class.getName());
-  private static final String[] DATABASE_PREFIXES = new String[]{
-    "database=", "databasename=", "schema="};
+  private static final String[] DATABASE_PREFIXES = new String[] {
+      "database=", "databasename=", "schema="};
 
   private DataUtils() {
   }
@@ -296,25 +297,26 @@ public final class DataUtils {
   }
 
   public static Map<String, Map<String, Set<String>>> getExternalDbConfigs(MBeanServerConnection conn) {
-    Set<ObjectName> externalDbConfigs = new TreeSet<>();
-    try {
-      ObjectName objName = new ObjectName(EXT_DB_FILTER_STRING);
-      externalDbConfigs = conn.queryNames(objName, null);
-    } catch (IOException | MalformedObjectNameException ex) {
-      LOGGER.warning(ex.getMessage());
-    }
-    return createDataMap(externalDbConfigs);
+    return getConfigurationsFor(conn, EXT_DB_FILTER_STRING);
   }
 
-  public static Map<String, Map<String, Set<String>>> getWebServicesConfigs(MBeanServerConnection conn) {
-    Set<ObjectName> webServicesConfigs = new TreeSet<>();
+  public static Map<String, Map<String, Set<String>>> getSOAPWebServicesConfigs(MBeanServerConnection conn) {
+    return getConfigurationsFor(conn, SOAP_WS_FILTER_STRING);
+  }
+
+  public static Map<String, Map<String, Set<String>>> getRESTWebServicesConfigs(MBeanServerConnection conn) {
+    return getConfigurationsFor(conn, REST_WS_FILTER_STRING);
+  }
+
+  private static Map<String, Map<String, Set<String>>> getConfigurationsFor(MBeanServerConnection conn, String configurationName) {
+    Set<ObjectName> configs = new TreeSet<>();
     try {
-      ObjectName objName = new ObjectName(WS_FILTER_STRING);
-      webServicesConfigs = conn.queryNames(objName, null);
+      ObjectName objName = new ObjectName(configurationName);
+      configs = conn.queryNames(objName, null);
     } catch (IOException | MalformedObjectNameException ex) {
       LOGGER.warning(ex.getMessage());
     }
-    return createDataMap(webServicesConfigs);
+    return createDataMap(configs);
   }
 
   private static Map<String, Map<String, Set<String>>> createDataMap(Set<ObjectName> externalDbConfigs) {

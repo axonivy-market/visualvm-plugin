@@ -45,10 +45,10 @@ public class ExternalWSCallChartDataSourceTest extends AbstractTest {
   public static Iterable<Object[]> data() throws JAXBException, URISyntaxException {
     return TestUtil.createTestData(
             DATA_FILE_PATH,
-            new Object[]{new String[]{"test", "enviroment1", "WSConfig1"}, 0, 0, 0, 0},
-            new Object[]{new String[]{"test", "enviroment1", "WSConfig1"}, 2, 1, 2, 1},
-            new Object[]{new String[]{"test", "enviroment1", "WSConfig1"}, 1, 0, 2, 1}
-    );
+            new Object[] {new String[] {"test", "enviroment1", "WSConfig1"}, 0, 0, 0, 0},
+            new Object[] {new String[] {"test", "enviroment1", "WSConfig1"}, 2, 1, 2, 1},
+            new Object[] {new String[] {"test", "enviroment1", "WSConfig1"}, 1, 0, 2, 1}
+            );
   }
 
   public ExternalWSCallChartDataSourceTest(BeanTestData.Dataset dataset,
@@ -73,13 +73,12 @@ public class ExternalWSCallChartDataSourceTest extends AbstractTest {
     when(fProvider.getMBeanServerConnection()).thenReturn(mockConnection);
 
     if (fDataSource == null) {
-      fDataSource
-              = new WebServiceCallsChartDataSource(fProvider, "",
-                      "", "");
+      fDataSource = new WebServiceCallsChartDataSource(fProvider, "",
+              "", "");
       fDataSource.setApplication(fConfigs[0]);
       fDataSource.setEnvironment(fConfigs[1]);
       fDataSource.setConfigName(fConfigs[2]);
-      fDataSource.setNamePattern(IvyJmxConstant.IvyServer.WebService.NAME_PATTERN);
+      fDataSource.setNamePattern(IvyJmxConstant.IvyServer.SOAPWebService.NAME_PATTERN);
       fDataSource.init();
       fLabelCalcSupports = fDataSource.getLabelCalcSupports();
 

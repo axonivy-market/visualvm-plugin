@@ -84,10 +84,8 @@ public final class IvyJmxConstant {
       public static final String KEY_TRANS_NUMBER = "transactions";
       public static final String KEY_TRANS_TOTAL_EXE_TIME = "transactionsTotalExecutionTimeInMicroSeconds";
       public static final String KEY_TRANS_MAX_EXE_TIME = "transactionsMaxExecutionTimeInMicroSeconds";
-      public static final String KEY_TRANS_MAX_EXE_DELTA_TIME
-              = "transactionsMaxExecutionTimeDeltaInMicroSeconds";
-      public static final String KEY_TRANS_MIN_EXE_DELTA_TIME
-              = "transactionsMinExecutionTimeDeltaInMicroSeconds";
+      public static final String KEY_TRANS_MAX_EXE_DELTA_TIME = "transactionsMaxExecutionTimeDeltaInMicroSeconds";
+      public static final String KEY_TRANS_MIN_EXE_DELTA_TIME = "transactionsMinExecutionTimeDeltaInMicroSeconds";
       public static final String KEY_TRANS_MIN_EXE_TIME = "transactionsMinExecutionTimeInMicroSeconds";
     }
 
@@ -109,10 +107,8 @@ public final class IvyJmxConstant {
       public static final String KEY_ERROR_NUMBER = "errors";
       public static final String KEY_TRANS_TOTAL_EXE_TIME = "transactionsTotalExecutionTimeInMicroSeconds";
       public static final String KEY_TRANS_MAX_EXE_TIME = "transactionsMaxExecutionTimeInMicroSeconds";
-      public static final String KEY_TRANS_MAX_EXE_DELTA_TIME
-              = "transactionsMaxExecutionTimeDeltaInMicroSeconds";
-      public static final String KEY_TRANS_MIN_EXE_DELTA_TIME
-              = "transactionsMinExecutionTimeDeltaInMicroSeconds";
+      public static final String KEY_TRANS_MAX_EXE_DELTA_TIME = "transactionsMaxExecutionTimeDeltaInMicroSeconds";
+      public static final String KEY_TRANS_MIN_EXE_DELTA_TIME = "transactionsMinExecutionTimeDeltaInMicroSeconds";
       public static final String KEY_TRANS_MIN_EXE_TIME = "transactionsMinExecutionTimeInMicroSeconds";
 
       public static final String KEY_EXECUTION_HISTORY = "executionHistory";
@@ -131,8 +127,6 @@ public final class IvyJmxConstant {
     }
 
     public static final class WebService {
-      public static final String NAME_PATTERN = "ivy Engine:type=External Web Service,"
-              + "application=%s,environment=%s,name=%s";
       public static final String KEY_AUTHENTICATION_TYPE = "authenticationType";
       public static final String KEY_CALLS = "calls";
       public static final String KEY_DESCRIPTION = "description";
@@ -147,6 +141,16 @@ public final class IvyJmxConstant {
       public static final String KEY_CALL_MAX_EXE_TIME_DELTA = "callsMaxExecutionTimeDeltaInMicroSeconds";
       public static final String KEY_CALL_MIN_EXE_TIME = "callsMinExecutionTimeInMicroSeconds";
       public static final String KEY_CALL_MIN_EXE_TIME_DELTA = "callsMinExecutionTimeDeltaInMicroSeconds";
+    }
+
+    public static final class SOAPWebService {
+      public static final String NAME_PATTERN = "ivy Engine:type=External Web Service,"
+              + "application=%s,environment=%s,name=%s";
+    }
+
+    public static final class RESTWebService {
+      public static final String NAME_PATTERN = "ivy Engine:type=External REST Web Service,"
+              + "application=%s,environment=%s,name=%s";
     }
   }
 

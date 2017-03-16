@@ -41,9 +41,9 @@ public class ExternalWSCallingTimeChartDataSourceTest extends AbstractTest {
     return TestUtil
             .createTestData(
                     DATA_FILE_PATH,
-                    new Object[]{new String[]{"test", "enviroment1", "WSConfig1"}, 5, 0, 3, 5, 0},
-                    new Object[]{new String[]{"test", "enviroment1", "WSConfig1"}, 5, 6, 2, 5, 6},
-                    new Object[]{new String[]{"test", "enviroment1", "WSConfig1"}, 6, 3, 2, 6, 4}
+                    new Object[] {new String[] {"test", "enviroment1", "WSConfig1"}, 5, 0, 3, 5, 0},
+                    new Object[] {new String[] {"test", "enviroment1", "WSConfig1"}, 5, 6, 2, 5, 6},
+                    new Object[] {new String[] {"test", "enviroment1", "WSConfig1"}, 6, 3, 2, 6, 4}
             );
   }
 
@@ -75,7 +75,7 @@ public class ExternalWSCallingTimeChartDataSourceTest extends AbstractTest {
       fDataSource.setApplication(fConfigs[0]);
       fDataSource.setEnvironment(fConfigs[1]);
       fDataSource.setConfigName(fConfigs[2]);
-      fDataSource.setNamePattern(IvyJmxConstant.IvyServer.WebService.NAME_PATTERN);
+      fDataSource.setNamePattern(IvyJmxConstant.IvyServer.SOAPWebService.NAME_PATTERN);
       fDataSource.init();
       fLabelCalcSupports = fDataSource.getLabelCalcSupports();
 

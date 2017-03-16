@@ -1,26 +1,35 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+
 package ch.ivyteam.ivy.visualvm.view;
+
+import static ch.ivyteam.ivy.visualvm.view.ExternalDbWsCommonPanel.WS_ICON_PATH;
+import static ch.ivyteam.ivy.visualvm.view.ExternalDbWsCommonPanel.WS_RECORDING_ICON_PATH;
+
+import java.util.Map;
+import java.util.Set;
+
+import javax.swing.Icon;
+
+import org.openide.util.ImageUtilities;
 
 import ch.ivyteam.ivy.visualvm.ContentProvider;
 import ch.ivyteam.ivy.visualvm.chart.ChartsPanel;
 import ch.ivyteam.ivy.visualvm.chart.data.webservice.WebServiceCallsChartDataSource;
 import ch.ivyteam.ivy.visualvm.chart.data.webservice.WebServiceProcessingTimeChartDataSource;
-import ch.ivyteam.ivy.visualvm.model.IvyJmxConstant;
-import ch.ivyteam.ivy.visualvm.util.DataUtils;
-import static ch.ivyteam.ivy.visualvm.view.ExternalDbWsCommonPanel.WS_ICON_PATH;
-import static ch.ivyteam.ivy.visualvm.view.ExternalDbWsCommonPanel.WS_RECORDING_ICON_PATH;
-import com.sun.tools.visualvm.core.ui.components.DataViewComponent;
-import java.util.Map;
-import java.util.Set;
-import javax.swing.Icon;
-import org.openide.util.ImageUtilities;
 
-public class WebServicesView extends ExternalDbWsCommonView {
+import com.sun.tools.visualvm.core.ui.components.DataViewComponent;
+
+public abstract class AbtractWebServicesView extends ExternalDbWsCommonView {
 
   private static final String CALLS = ContentProvider.get("Calls");
   private static final String PROCESSING_TIME = ContentProvider.get("ProcessingTime") + " ["
           + ContentProvider.get("MillisecondAbbr") + "]";
 
-  public WebServicesView(DataBeanProvider dataBeanProvider) {
+  public AbtractWebServicesView(DataBeanProvider dataBeanProvider) {
     super(dataBeanProvider);
     setUIChartsPanel(new ExternalDbWsCommonPanel(this));
     getUIChartsPanel().setWsIcon((Icon) ImageUtilities.loadImage(WS_ICON_PATH, true));
@@ -40,7 +49,7 @@ public class WebServicesView extends ExternalDbWsCommonView {
     WebServiceProcessingTimeChartDataSource processTimeDataSrc = new WebServiceProcessingTimeChartDataSource(
             getDataBeanProvider(), null, null, PROCESSING_TIME);
 
-    configDataSources(IvyJmxConstant.IvyServer.WebService.NAME_PATTERN, callsDataSource, processTimeDataSrc);
+    configDataSources(getWebServiceNamePattern(), callsDataSource, processTimeDataSrc);
     chartPanel.addChart(callsDataSource, generateDescriptionForCallsChart());
     chartPanel.addChart(processTimeDataSrc, generateDescriptionForProcessingTimeChart());
     registerScheduledUpdate(chartPanel);
@@ -50,12 +59,17 @@ public class WebServicesView extends ExternalDbWsCommonView {
   @Override
   public DataViewComponent getViewComponent() {
     DataViewComponent viewComponent = super.getViewComponent();
-    viewComponent.add(getUIChartsPanel());
-    Map<String, Map<String, Set<String>>> appEnvWs = DataUtils.getWebServicesConfigs(getDataBeanProvider()
-            .getMBeanServerConnection());
-    getUIChartsPanel().setTreeData(appEnvWs);
+    addPanelsToView(viewComponent);
+    Map<String, Map<String, Set<String>>> appEnvRESTWs = getWebServicesConfigs();
+    getUIChartsPanel().setTreeData(appEnvRESTWs);
     return viewComponent;
   }
+
+  protected abstract void addPanelsToView(DataViewComponent viewComponent);
+
+  protected abstract Map<String, Map<String, Set<String>>> getWebServicesConfigs();
+
+  protected abstract String getWebServiceNamePattern();
 
   private String generateDescriptionForCallsChart() {
     return ContentProvider.getFormatted("WebServiceCallChartDescription");
