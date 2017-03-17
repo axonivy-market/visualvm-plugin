@@ -58,21 +58,24 @@ src/main/java/ch/ivyteam/ivy/visualvm/chart/ui/RotateLabel.java -text
 src/main/java/ch/ivyteam/ivy/visualvm/exception/ClosedIvyServerConnectionException.java -text
 src/main/java/ch/ivyteam/ivy/visualvm/exception/IvyJmxDataCollectException.java -text
 src/main/java/ch/ivyteam/ivy/visualvm/exception/IvyVisualVMRuntimeException.java -text
+src/main/java/ch/ivyteam/ivy/visualvm/model/ErrorMessage.java -text svneol=unset#text/plain
+src/main/java/ch/ivyteam/ivy/visualvm/model/IExecutionInfo.java -text svneol=unset#text/plain
 src/main/java/ch/ivyteam/ivy/visualvm/model/IvyApplicationInfo.java -text
 src/main/java/ch/ivyteam/ivy/visualvm/model/IvyJmxConstant.java -text
 src/main/java/ch/ivyteam/ivy/visualvm/model/IvyLicenseInfo.java -text
 src/main/java/ch/ivyteam/ivy/visualvm/model/OSInfo.java -text
+src/main/java/ch/ivyteam/ivy/visualvm/model/RESTWebServiceInfo.java -text svneol=unset#text/plain
 src/main/java/ch/ivyteam/ivy/visualvm/model/SQLInfo.java -text
 src/main/java/ch/ivyteam/ivy/visualvm/model/ServerConnectorInfo.java -text
 src/main/java/ch/ivyteam/ivy/visualvm/model/SystemDatabaseInfo.java -text
-src/main/java/ch/ivyteam/ivy/visualvm/panel/webservices/rest/AbstractWSCallsPanel.java -text
-src/main/java/ch/ivyteam/ivy/visualvm/panel/webservices/rest/CallsHistoryPanel.java -text
-src/main/java/ch/ivyteam/ivy/visualvm/panel/webservices/rest/SlowestCallsPanel.java -text
 src/main/java/ch/ivyteam/ivy/visualvm/service/AbstractExternalDbQueryBuffer.java -text
 src/main/java/ch/ivyteam/ivy/visualvm/service/BasicIvyJmxDataCollector.java -text
 src/main/java/ch/ivyteam/ivy/visualvm/service/ExternalDbErrorQueryBuffer.java -text
 src/main/java/ch/ivyteam/ivy/visualvm/service/ExternalDbSlowQueryBuffer.java -text
 src/main/java/ch/ivyteam/ivy/visualvm/service/LicenseInfoCollector.java -text
+src/main/java/ch/ivyteam/ivy/visualvm/service/restwebservice/AbstractRESTExecutionBuffer.java -text svneol=unset#text/plain
+src/main/java/ch/ivyteam/ivy/visualvm/service/restwebservice/RESTErrorExecutionBuffer.java -text svneol=unset#text/plain
+src/main/java/ch/ivyteam/ivy/visualvm/service/restwebservice/RESTSlowExecutiontBuffer.java -text svneol=unset#text/plain
 src/main/java/ch/ivyteam/ivy/visualvm/util/DataUtils.java -text
 src/main/java/ch/ivyteam/ivy/visualvm/view/AbstractView.java -text
 src/main/java/ch/ivyteam/ivy/visualvm/view/AbtractWebServicesView.java -text
@@ -90,7 +93,6 @@ src/main/java/ch/ivyteam/ivy/visualvm/view/InformationView.java -text
 src/main/java/ch/ivyteam/ivy/visualvm/view/LicenseInformationPanel.form -text
 src/main/java/ch/ivyteam/ivy/visualvm/view/LicenseInformationPanel.java -text
 src/main/java/ch/ivyteam/ivy/visualvm/view/LicenseView.java -text
-src/main/java/ch/ivyteam/ivy/visualvm/view/RESTWebServicesView.java -text
 src/main/java/ch/ivyteam/ivy/visualvm/view/RequestView.java -text
 src/main/java/ch/ivyteam/ivy/visualvm/view/SOAPWebServicesView.java -text
 src/main/java/ch/ivyteam/ivy/visualvm/view/SystemDbView.java -text
@@ -106,6 +108,12 @@ src/main/java/ch/ivyteam/ivy/visualvm/view/externaldb/MultiLineMergeTableCellRen
 src/main/java/ch/ivyteam/ivy/visualvm/view/externaldb/NumberTableCellRenderer.java -text
 src/main/java/ch/ivyteam/ivy/visualvm/view/externaldb/TableColumnAdjuster.java -text
 src/main/java/ch/ivyteam/ivy/visualvm/view/html/TableGenerator.java -text
+src/main/java/ch/ivyteam/ivy/visualvm/view/restwebservice/AbstractRESTWebServiceExecutionPanel.java -text svneol=unset#text/plain
+src/main/java/ch/ivyteam/ivy/visualvm/view/restwebservice/RESTWebServiceErrorExecutionPanel.form -text
+src/main/java/ch/ivyteam/ivy/visualvm/view/restwebservice/RESTWebServiceErrorExecutionPanel.java -text svneol=unset#text/plain
+src/main/java/ch/ivyteam/ivy/visualvm/view/restwebservice/RESTWebServiceSlowExecutionPanel.form -text
+src/main/java/ch/ivyteam/ivy/visualvm/view/restwebservice/RESTWebServiceSlowExecutionPanel.java -text svneol=unset#text/plain
+src/main/java/ch/ivyteam/ivy/visualvm/view/restwebservice/RESTWebServicesView.java -text
 src/main/nbm/manifest.mf -text
 src/main/resources/ch/ivyteam/ivy/visualvm/Bundle.properties -text
 src/main/resources/ch/ivyteam/ivy/visualvm/FormattedMessage.properties -text

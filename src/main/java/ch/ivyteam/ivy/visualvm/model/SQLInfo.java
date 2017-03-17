@@ -2,8 +2,8 @@ package ch.ivyteam.ivy.visualvm.model;
 
 import java.util.Date;
 
-public class SQLInfo {
-  private static final String BACKSLASH = "\\";
+public class SQLInfo implements IExecutionInfo {
+  
   private String fApplication;
   private String fEnvironment;
   private String fConfigName;
@@ -29,6 +29,7 @@ public class SQLInfo {
     this.fProcessElementId = processElementId;
   }
 
+  @Override
   public Date getTime() {
     return fTimestamp;
   }
@@ -69,6 +70,7 @@ public class SQLInfo {
     this.fConfigName = databaseName;
   }
 
+  @Override
   public long getExecutionTime() {
     return fExecutionTime;
   }

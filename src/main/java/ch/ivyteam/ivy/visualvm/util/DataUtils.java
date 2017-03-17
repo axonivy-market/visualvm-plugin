@@ -1,6 +1,5 @@
 package ch.ivyteam.ivy.visualvm.util;
 
-import ch.ivyteam.ivy.visualvm.model.SQLInfo;
 import java.io.IOException;
 import java.text.DateFormat;
 import java.text.MessageFormat;
@@ -16,9 +15,12 @@ import java.util.Set;
 import java.util.TreeMap;
 import java.util.TreeSet;
 import java.util.logging.Logger;
+
 import javax.management.MBeanServerConnection;
 import javax.management.MalformedObjectNameException;
 import javax.management.ObjectName;
+
+import ch.ivyteam.ivy.visualvm.model.IExecutionInfo;
 
 public final class DataUtils {
 
@@ -347,12 +349,12 @@ public final class DataUtils {
     return appEnvConfMap;
   }
 
-  public static void sort(List<? extends SQLInfo> c, final Comparator<SQLInfo>... comparators) {
-    Collections.sort(c, new Comparator<SQLInfo>() {
+  public static void sort(List<? extends IExecutionInfo> c, final Comparator<IExecutionInfo>... comparators) {
+    Collections.sort(c, new Comparator<IExecutionInfo>() {
 
       @Override
-      public int compare(SQLInfo a, SQLInfo b) {
-        for (Comparator<SQLInfo> cmp : comparators) {
+      public int compare(IExecutionInfo a, IExecutionInfo b) {
+        for (Comparator<IExecutionInfo> cmp : comparators) {
           int delta = cmp.compare(a, b);
           if (delta != 0) {
             return delta;

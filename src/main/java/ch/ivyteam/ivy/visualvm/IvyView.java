@@ -13,19 +13,6 @@ import javax.swing.JTabbedPane;
 
 import org.openide.util.ImageUtilities;
 
-import ch.ivyteam.ivy.visualvm.chart.Query;
-import ch.ivyteam.ivy.visualvm.chart.QueryResult;
-import ch.ivyteam.ivy.visualvm.exception.ClosedIvyServerConnectionException;
-import ch.ivyteam.ivy.visualvm.view.AbstractView;
-import ch.ivyteam.ivy.visualvm.view.DataBeanProvider;
-import ch.ivyteam.ivy.visualvm.view.InformationView;
-import ch.ivyteam.ivy.visualvm.view.LicenseView;
-import ch.ivyteam.ivy.visualvm.view.RESTWebServicesView;
-import ch.ivyteam.ivy.visualvm.view.RequestView;
-import ch.ivyteam.ivy.visualvm.view.SOAPWebServicesView;
-import ch.ivyteam.ivy.visualvm.view.SystemDbView;
-import ch.ivyteam.ivy.visualvm.view.externaldb.ExternalDbView;
-
 import com.sun.tools.visualvm.application.Application;
 import com.sun.tools.visualvm.core.options.GlobalPreferences;
 import com.sun.tools.visualvm.core.scheduler.Quantum;
@@ -34,6 +21,19 @@ import com.sun.tools.visualvm.core.scheduler.Scheduler;
 import com.sun.tools.visualvm.core.scheduler.SchedulerTask;
 import com.sun.tools.visualvm.core.ui.DataSourceView;
 import com.sun.tools.visualvm.core.ui.components.DataViewComponent;
+
+import ch.ivyteam.ivy.visualvm.chart.Query;
+import ch.ivyteam.ivy.visualvm.chart.QueryResult;
+import ch.ivyteam.ivy.visualvm.exception.ClosedIvyServerConnectionException;
+import ch.ivyteam.ivy.visualvm.view.AbstractView;
+import ch.ivyteam.ivy.visualvm.view.DataBeanProvider;
+import ch.ivyteam.ivy.visualvm.view.InformationView;
+import ch.ivyteam.ivy.visualvm.view.LicenseView;
+import ch.ivyteam.ivy.visualvm.view.RequestView;
+import ch.ivyteam.ivy.visualvm.view.SOAPWebServicesView;
+import ch.ivyteam.ivy.visualvm.view.SystemDbView;
+import ch.ivyteam.ivy.visualvm.view.externaldb.ExternalDbView;
+import ch.ivyteam.ivy.visualvm.view.restwebservice.RESTWebServicesView;
 
 class IvyView extends DataSourceView {
 

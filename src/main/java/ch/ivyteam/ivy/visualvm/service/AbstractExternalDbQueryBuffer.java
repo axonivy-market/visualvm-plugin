@@ -1,11 +1,5 @@
 package ch.ivyteam.ivy.visualvm.service;
 
-import ch.ivyteam.ivy.visualvm.chart.Query;
-import ch.ivyteam.ivy.visualvm.chart.QueryResult;
-import ch.ivyteam.ivy.visualvm.model.IvyJmxConstant.IvyServer.ExternalDatabase;
-import ch.ivyteam.ivy.visualvm.model.SQLInfo;
-import ch.ivyteam.ivy.visualvm.util.DataUtils;
-import ch.ivyteam.ivy.visualvm.view.IUpdatableUIObject;
 import java.io.IOException;
 import java.util.Comparator;
 import java.util.Date;
@@ -13,9 +7,18 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.logging.Logger;
+
 import javax.management.MBeanServerConnection;
 import javax.management.ObjectName;
 import javax.management.openmbean.CompositeData;
+
+import ch.ivyteam.ivy.visualvm.chart.Query;
+import ch.ivyteam.ivy.visualvm.chart.QueryResult;
+import ch.ivyteam.ivy.visualvm.model.IExecutionInfo;
+import ch.ivyteam.ivy.visualvm.model.IvyJmxConstant.IvyServer.ExternalDatabase;
+import ch.ivyteam.ivy.visualvm.model.SQLInfo;
+import ch.ivyteam.ivy.visualvm.util.DataUtils;
+import ch.ivyteam.ivy.visualvm.view.IUpdatableUIObject;
 
 public abstract class AbstractExternalDbQueryBuffer implements IUpdatableUIObject {
   private static final Logger LOGGER
@@ -24,8 +27,8 @@ public abstract class AbstractExternalDbQueryBuffer implements IUpdatableUIObjec
 
   private final int fMaxBufferSize;
   private final MBeanServerConnection fConnection;
-  private final Comparator<SQLInfo> fTimeComparator = new TimeComparator();
-  private final List<ObjectName> fObjectNames = new CopyOnWriteArrayList();
+  private final Comparator<IExecutionInfo> fTimeComparator = new IExecutionInfo.TimeComparator();
+  private final List<ObjectName> fObjectNames = new CopyOnWriteArrayList<>();
   private final List<SQLInfo> fSQLInfoBuffer = new CopyOnWriteArrayList<>();
 
   public AbstractExternalDbQueryBuffer(MBeanServerConnection mBeanServerConnection, int maxBufferSize) {
@@ -105,17 +108,8 @@ public abstract class AbstractExternalDbQueryBuffer implements IUpdatableUIObjec
     return fSQLInfoBuffer;
   }
 
-  public Comparator<SQLInfo> getTimeComparator() {
+  public Comparator<IExecutionInfo> getTimeComparator() {
     return fTimeComparator;
-  }
-
-  private class TimeComparator implements Comparator<SQLInfo> {
-
-    @Override
-    public int compare(SQLInfo o1, SQLInfo o2) {
-      return ((Date) o1.getTime()).compareTo((Date) o2.getTime());
-    }
-
   }
 
 }

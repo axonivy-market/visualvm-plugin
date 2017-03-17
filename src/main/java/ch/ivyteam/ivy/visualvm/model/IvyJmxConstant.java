@@ -151,7 +151,29 @@ public final class IvyJmxConstant {
     public static final class RESTWebService {
       public static final String NAME_PATTERN = "ivy Engine:type=External REST Web Service,"
               + "application=%s,environment=%s,name=%s";
+      public static final ObjectName NAME_FILTER = initObjectName("ivy Engine:type=External REST Web Service,"
+              + "application=*,environment=*,name=*");
+      public static final String EXECUTION_TIME = "executionTimeInMicroSeconds";
+      public static final String TIMESTAMP = "executionTimestamp";
+      public static final String PROCESS_ELEMENT_ID = "processElementId";
+      public static final String PMV_VERSION_NAME = "processModelVersionVersionName";
+      public static final String REQUEST_METHOD = "requestMethod";
+      public static final String REQUEST_URL = "requestUrl";
+      public static final String RESPONSE_STATUS = "responseStatusReasonPhrase";
+      public static final String KEY_ERROR = "error";
+      public static final String KEY_APP = "application";
+      public static final String KEY_ENVIRONMENT = "environment";
+      public static final String KEY_CONFIG = "name";
+      public static final String KEY_EXECUTION_SLOWEST = "slowestCalls";
+      public static final String KEY_EXECUTION_HISTORY = "callHistory";
+
     }
+  }
+  
+  public static final class ErrorKey {
+      public static final String KEY_MESSAGE = "message";
+      public static final String KEY_STACK_TRACE = "stackTrace";
+      public static final String KEY_TYPE = "type";
   }
 
   public static final class JavaLang {
