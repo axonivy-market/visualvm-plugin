@@ -3,29 +3,30 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package ch.ivyteam.ivy.visualvm.view.restwebservice;
 
+import ch.ivyteam.ivy.visualvm.model.IExecutionInfo;
 import ch.ivyteam.ivy.visualvm.model.RESTWebServiceInfo;
+import ch.ivyteam.ivy.visualvm.view.common.NumberTableCellRenderer;
 import java.util.List;
+import javax.swing.JButton;
 import javax.swing.JTable;
+import javax.swing.table.TableColumnModel;
 import org.jdesktop.beansbinding.Binding;
 
-/**
- *
- * @author ntnam
- */
-public class RESTWebServiceErrorExecutionPanel extends AbstractRESTWebServiceExecutionPanel {
-  
+// CHECKSTYLE:OFF
+@SuppressWarnings("PMD")
+public class RESTWebServiceExecutionHistoryPanel extends AbstractRESTWebServiceExecutionPanel {
 
-  /**
-   * Creates new customizer RESTWebServiceErrorExecutionPanel
-   */
-  public RESTWebServiceErrorExecutionPanel(RESTWebServicesView view) {
+  public static final int COL_EXEC_TIME = 3;
+  private final NumberTableCellRenderer fNumberCellRenderer = new NumberTableCellRenderer();
+
+  public RESTWebServiceExecutionHistoryPanel(RESTWebServicesView view) {
     super(view);
     initComponents();
+    initTableCellRenderer();
+    initListeners();
   }
-  
 
   /**
    * This method is called from within the constructor to initialize the form.
@@ -37,16 +38,21 @@ public class RESTWebServiceErrorExecutionPanel extends AbstractRESTWebServiceExe
     java.awt.GridBagConstraints gridBagConstraints;
     bindingGroup = new org.jdesktop.beansbinding.BindingGroup();
 
-    fErrorExecutionInfos = new java.util.ArrayList<RESTWebServiceInfo>();
-    lblEmpty = new javax.swing.JLabel();
+    fExecutionsInfos = new java.util.ArrayList<RESTWebServiceInfo>();
     btnRefresh = new javax.swing.JButton();
-    jSplitPane1 = new javax.swing.JSplitPane();
+    lblEmpty = new javax.swing.JLabel();
     jScrollPane1 = new javax.swing.JScrollPane();
-    tableErrorExecution = new javax.swing.JTable();
-    jScrollPane2 = new javax.swing.JScrollPane();
-    txtErrorDetail = new javax.swing.JTextArea();
+    tableExecution = new javax.swing.JTable();
 
+    setBackground(new java.awt.Color(255, 255, 255));
     setLayout(new java.awt.GridBagLayout());
+
+    btnRefresh.setText("Refresh");
+    gridBagConstraints = new java.awt.GridBagConstraints();
+    gridBagConstraints.gridx = 1;
+    gridBagConstraints.gridy = 0;
+    gridBagConstraints.insets = new java.awt.Insets(5, 5, 5, 5);
+    add(btnRefresh, gridBagConstraints);
     gridBagConstraints = new java.awt.GridBagConstraints();
     gridBagConstraints.gridx = 0;
     gridBagConstraints.gridy = 0;
@@ -54,18 +60,10 @@ public class RESTWebServiceErrorExecutionPanel extends AbstractRESTWebServiceExe
     gridBagConstraints.weightx = 1.0;
     add(lblEmpty, gridBagConstraints);
 
-    btnRefresh.setText("Refresh");
-    gridBagConstraints = new java.awt.GridBagConstraints();
-    gridBagConstraints.gridx = 2;
-    gridBagConstraints.insets = new java.awt.Insets(5, 5, 5, 5);
-    add(btnRefresh, gridBagConstraints);
+    tableExecution.setAutoCreateRowSorter(true);
+    tableExecution.getTableHeader().setReorderingAllowed(false);
 
-    jSplitPane1.setBackground(new java.awt.Color(255, 255, 255));
-    jSplitPane1.setBorder(null);
-    jSplitPane1.setDividerLocation(200);
-    jSplitPane1.setOrientation(javax.swing.JSplitPane.VERTICAL_SPLIT);
-
-    org.jdesktop.swingbinding.JTableBinding jTableBinding = org.jdesktop.swingbinding.SwingBindings.createJTableBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ, fErrorExecutionInfos, tableErrorExecution, "bindingErrorExecutionTable");
+    org.jdesktop.swingbinding.JTableBinding jTableBinding = org.jdesktop.swingbinding.SwingBindings.createJTableBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ, fExecutionsInfos, tableExecution, "bindingExecutionTable");
     org.jdesktop.swingbinding.JTableBinding.ColumnBinding columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${time}"));
     columnBinding.setColumnName("Time");
     columnBinding.setColumnClass(java.util.Date.class);
@@ -77,47 +75,34 @@ public class RESTWebServiceErrorExecutionPanel extends AbstractRESTWebServiceExe
     columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${processElementId}"));
     columnBinding.setColumnName("Process Element Id");
     columnBinding.setColumnClass(String.class);
+    columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${executionTime}"));
+    columnBinding.setColumnName("Execution Time (ms)");
+    columnBinding.setColumnClass(Long.class);
     columnBinding.setEditable(false);
     columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${requestMethod}"));
-    columnBinding.setColumnName("Request Method");
+    columnBinding.setColumnName("Method");
+    columnBinding.setColumnClass(String.class);
+    columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${requestUrl}"));
+    columnBinding.setColumnName("Request Url");
     columnBinding.setColumnClass(String.class);
     columnBinding.setEditable(false);
     columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${responseStatus}"));
     columnBinding.setColumnName("Response Status");
     columnBinding.setColumnClass(String.class);
     columnBinding.setEditable(false);
-    columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${requestUrl}"));
-    columnBinding.setColumnName("Request Url");
-    columnBinding.setColumnClass(String.class);
-    columnBinding.setEditable(false);
-    columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${errorMessage.message}"));
-    columnBinding.setColumnName("Error Message");
-    columnBinding.setColumnClass(String.class);
-    columnBinding.setEditable(false);
     bindingGroup.addBinding(jTableBinding);
     jTableBinding.bind();
-    jScrollPane1.setViewportView(tableErrorExecution);
-
-    jSplitPane1.setTopComponent(jScrollPane1);
-
-    txtErrorDetail.setColumns(20);
-    txtErrorDetail.setRows(5);
-
-    org.jdesktop.beansbinding.Binding binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ, tableErrorExecution, org.jdesktop.beansbinding.ELProperty.create("${selectedElement.errorDetail}"), txtErrorDetail, org.jdesktop.beansbinding.BeanProperty.create("text"), "bindingErrorExecutionMessage");
-    bindingGroup.addBinding(binding);
-
-    jScrollPane2.setViewportView(txtErrorDetail);
-
-    jSplitPane1.setRightComponent(jScrollPane2);
+    jScrollPane1.setViewportView(tableExecution);
 
     gridBagConstraints = new java.awt.GridBagConstraints();
     gridBagConstraints.gridx = 0;
     gridBagConstraints.gridy = 1;
     gridBagConstraints.gridwidth = java.awt.GridBagConstraints.REMAINDER;
+    gridBagConstraints.gridheight = java.awt.GridBagConstraints.REMAINDER;
     gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
     gridBagConstraints.weightx = 1.0;
     gridBagConstraints.weighty = 1.0;
-    add(jSplitPane1, gridBagConstraints);
+    add(jScrollPane1, gridBagConstraints);
 
     bindingGroup.bind();
   }// </editor-fold>//GEN-END:initComponents
@@ -125,28 +110,47 @@ public class RESTWebServiceErrorExecutionPanel extends AbstractRESTWebServiceExe
 
   // Variables declaration - do not modify//GEN-BEGIN:variables
   private javax.swing.JButton btnRefresh;
-  private java.util.ArrayList<RESTWebServiceInfo> fErrorExecutionInfos;
+  private java.util.ArrayList<RESTWebServiceInfo> fExecutionsInfos;
   private javax.swing.JScrollPane jScrollPane1;
-  private javax.swing.JScrollPane jScrollPane2;
-  private javax.swing.JSplitPane jSplitPane1;
   private javax.swing.JLabel lblEmpty;
-  private javax.swing.JTable tableErrorExecution;
-  private javax.swing.JTextArea txtErrorDetail;
+  private javax.swing.JTable tableExecution;
   private org.jdesktop.beansbinding.BindingGroup bindingGroup;
   // End of variables declaration//GEN-END:variables
 
   @Override
-  protected JTable getExecutionsTable() {
-    return tableErrorExecution;
+  protected JTable getTable() {
+    return tableExecution;
   }
 
   @Override
-  protected void refreshQueriesTable(List<RESTWebServiceInfo> webServiceInfoList) {
-    Binding binding = bindingGroup.getBinding("bindingErrorExecutionTable");
+  protected JButton getRefreshButton() {
+    return btnRefresh;
+  }
+
+  @Override
+  protected void refreshTable() {
+    Binding binding = bindingGroup.getBinding("bindingExecutionTable");
     binding.unbind();
-    fErrorExecutionInfos.clear();
-    fErrorExecutionInfos.addAll(webServiceInfoList);
+    fExecutionsInfos.clear();
+    fExecutionsInfos.addAll(getBuffer());
     binding.bind();
-    tableErrorExecution.repaint();
+    TableColumnModel columnModel = tableExecution.getColumnModel();
+    columnModel.getColumn(COL_TIME).setCellRenderer(getDateCellRenderer());
+    columnModel.getColumn(COL_EXEC_TIME).setCellRenderer(fNumberCellRenderer);
+    tableExecution.repaint();
+  }
+  
+  protected List<RESTWebServiceInfo> getBuffer() {
+    return getRESTWebServicesView().getExecutionHistoryInfoBuffer();
+  }
+
+  @Override
+  protected List<? extends IExecutionInfo> getTableModelList() {
+    return fExecutionsInfos;
+  }
+
+  @Override
+  protected int getDefaultSortColumnIndex() {
+    return COL_TIME;
   }
 }

@@ -16,7 +16,13 @@ import ch.ivyteam.ivy.visualvm.view.DataBeanProvider;
 
 public class RESTWebServicesView extends AbtractWebServicesView {
 
-  private RESTWebServiceSlowExecutionPanel fCallsHistoryPanel;
+  private static final String CHARTS = ContentProvider.get("Charts");
+  private static final String ERRORS = ContentProvider.get("Errors");
+  private static final String SLOW_CALLS = ContentProvider.get("SlowCalls");
+  private static final String CALLS_HISTORY = ContentProvider.get("CallsHistory");
+
+  private DetailsView chartsDetailsTab;
+  private RESTWebServiceExecutionHistoryPanel fExecutionHistoryPanel;
   private RESTWebServiceSlowExecutionPanel fSlowExecutionPanel;
   private RESTWebServiceErrorExecutionPanel fErrorExecutionPanel;
   private RESTSlowExecutiontBuffer fSlowExecutionBuffer;
@@ -44,7 +50,7 @@ public class RESTWebServicesView extends AbtractWebServicesView {
   protected void addPanelsToView(DataViewComponent viewComponent) {
     viewComponent.configureDetailsArea(new DataViewComponent.DetailsAreaConfiguration(null, false), DataViewComponent.TOP_LEFT);
 
-    fCallsHistoryPanel = new RESTWebServiceSlowExecutionPanel(this);
+    fExecutionHistoryPanel = new RESTWebServiceExecutionHistoryPanel(this);
     fSlowExecutionPanel = new RESTWebServiceSlowExecutionPanel(this);
     fErrorExecutionPanel = new RESTWebServiceErrorExecutionPanel(this);
     DetailsView chartsDetailsTab = new DataViewComponent.DetailsView("Charts", null, 10, getUIChartsPanel(), null);
@@ -77,5 +83,14 @@ public class RESTWebServicesView extends AbtractWebServicesView {
   public void refreshErrorExecutionTable() {
     fErrorExecutionPanel.refresh(fErrorExecutionBuffer.getBuffer());
   }
-  
+
+  public List<RESTWebServiceInfo> getSlowExecutionInfoBuffer() {
+    return fSlowExecutionBuffer.getBuffer();
+  }
+
+  @Override
+  protected DetailsView getChartsDetailsView() {
+    return chartsDetailsTab;
+  }
+
 }

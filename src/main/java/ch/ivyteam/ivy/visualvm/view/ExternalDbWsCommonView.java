@@ -71,5 +71,19 @@ public abstract class ExternalDbWsCommonView extends AbstractView {
   public Set<String> getCreatedChartKeySet() {
     return fCreatedCharts.keySet();
   }
-
+  
+  public void showChart(String appName, String envName, String configName) {
+    getViewComponent().selectDetailsView(getChartsDetailsView());
+    fireCreateChartsAction(appName, envName, configName);
+    if (!getUIChartsPanel().containsNode(appName, envName, configName)) {
+      updateConfigTreeNodes();
+    }
+    setSelectedNode(appName, envName, configName);
+    getUIChartsPanel().refreshOpenedNodes();
+  }
+  
+  protected DataViewComponent.DetailsView getChartsDetailsView() {
+    return null;
+  }
+  
 }

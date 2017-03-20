@@ -111,7 +111,8 @@ src/main/java/ch/ivyteam/ivy/visualvm/view/html/TableGenerator.java -text
 src/main/java/ch/ivyteam/ivy/visualvm/view/restwebservice/AbstractRESTWebServiceExecutionPanel.java -text svneol=unset#text/plain
 src/main/java/ch/ivyteam/ivy/visualvm/view/restwebservice/RESTWebServiceErrorExecutionPanel.form -text
 src/main/java/ch/ivyteam/ivy/visualvm/view/restwebservice/RESTWebServiceErrorExecutionPanel.java -text svneol=unset#text/plain
-src/main/java/ch/ivyteam/ivy/visualvm/view/restwebservice/RESTWebServiceSlowExecutionPanel.form -text
+src/main/java/ch/ivyteam/ivy/visualvm/view/restwebservice/RESTWebServiceExecutionHistoryPanel.form -text
+src/main/java/ch/ivyteam/ivy/visualvm/view/restwebservice/RESTWebServiceExecutionHistoryPanel.java -text svneol=unset#text/plain
 src/main/java/ch/ivyteam/ivy/visualvm/view/restwebservice/RESTWebServiceSlowExecutionPanel.java -text svneol=unset#text/plain
 src/main/java/ch/ivyteam/ivy/visualvm/view/restwebservice/RESTWebServicesView.java -text
 src/main/nbm/manifest.mf -text
