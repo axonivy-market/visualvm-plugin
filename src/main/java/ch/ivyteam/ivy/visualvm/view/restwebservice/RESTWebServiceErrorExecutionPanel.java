@@ -46,6 +46,7 @@ public class RESTWebServiceErrorExecutionPanel extends AbstractRESTWebServiceExe
     jScrollPane2 = new javax.swing.JScrollPane();
     txtErrorDetail = new javax.swing.JTextArea();
 
+    setBackground(new java.awt.Color(255, 255, 255));
     setLayout(new java.awt.GridBagLayout());
     gridBagConstraints = new java.awt.GridBagConstraints();
     gridBagConstraints.gridx = 0;
