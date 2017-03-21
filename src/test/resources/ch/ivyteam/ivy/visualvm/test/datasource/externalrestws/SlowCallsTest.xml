@@ -1,0 +1,434 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<beanTestData>
+  <dataset>
+    <property>
+      <name>ivy Engine:type=External REST Web Service,application=designer,environment=Default,name=personService</name>
+      <dataset>
+        <property>
+          <name>slowestCalls</name>
+          <dataset type="javax.management.openmbean.CompositeData">
+            <property>
+                <name>executionTimeInMicroSeconds</name>
+                <value type="java.lang.Long">17856586</value>
+            </property>
+            <property>
+                <name>executionTimestamp</name>
+                <value type="java.util.Date">21/03/2017 09:17:12</value>
+            </property>
+            <property>
+                <name>processElementId</name>
+                <value>154616078A1D629D-f14</value>
+            </property>
+            <property>
+                <name>processModelVersionVersionName</name>
+                <value>designer/ConnectivityDemos$1</value>
+            </property>
+            <property>
+                <name>requestMethod</name>
+                <value>GET</value>
+            </property>
+            <property>
+                <name>requestUrl</name>
+                <value>http://127.0.0.1:8081/ivy/api/designer/persons</value>
+            </property>
+            <property>
+                <name>responseStatusCode</name>
+                <value type="java.lang.Integer">200</value>
+            </property>
+            <property>
+                <name>responseStatusReasonPhrase</name>
+                <value>OK</value>
+            </property>
+          </dataset>
+        </property>
+      </dataset>
+    </property>
+    <property>
+      <name>ivy Engine:type=External REST Web Service,application=designer,environment=Default,name=approvalService</name>
+      <dataset>
+        <property>
+          <name>slowestCalls</name>
+          <dataset type="javax.management.openmbean.CompositeData">
+            <property>
+                <name>executionTimeInMicroSeconds</name>
+                <value type="java.lang.Long">10347299</value>
+            </property>
+            <property>
+                <name>executionTimestamp</name>
+                <value type="java.util.Date">21/03/2017 09:17:20</value>
+            </property>
+            <property>
+                <name>processElementId</name>
+                <value>1549FE9E911A1812-f14</value>
+            </property>
+            <property>
+                <name>processModelVersionVersionName</name>
+                <value>designer/ConnectivityDemos$1</value>
+            </property>
+            <property>
+                <name>requestMethod</name>
+                <value>PUT</value>
+            </property>
+            <property>
+                <name>requestUrl</name>
+                <value>http://127.0.0.1:8081/ivy/api/designer/approve</value>
+            </property>
+            <property>
+                <name>responseStatusCode</name>
+                <value type="java.lang.Integer">201</value>
+            </property>
+            <property>
+                <name>responseStatusReasonPhrase</name>
+                <value>Created</value>
+            </property>
+          </dataset>
+        </property>
+      </dataset>
+    </property>
+    
+  </dataset>
+  
+  <dataset>
+    <property>
+      <name>ivy Engine:type=External REST Web Service,application=designer,environment=Default,name=personService</name>
+      <dataset>
+        <property>
+          <name>slowestCalls</name>
+          <dataset type="javax.management.openmbean.CompositeData">
+            <property>
+                <name>executionTimeInMicroSeconds</name>
+                <value type="java.lang.Long">17856586</value>
+            </property>
+            <property>
+                <name>executionTimestamp</name>
+                <value type="java.util.Date">21/03/2017 09:17:12</value>
+            </property>
+            <property>
+                <name>processElementId</name>
+                <value>154616078A1D629D-f14</value>
+            </property>
+            <property>
+                <name>processModelVersionVersionName</name>
+                <value>designer/ConnectivityDemos$1</value>
+            </property>
+            <property>
+                <name>requestMethod</name>
+                <value>GET</value>
+            </property>
+            <property>
+                <name>requestUrl</name>
+                <value>http://127.0.0.1:8081/ivy/api/designer/persons</value>
+            </property>
+            <property>
+                <name>responseStatusCode</name>
+                <value type="java.lang.Integer">200</value>
+            </property>
+            <property>
+                <name>responseStatusReasonPhrase</name>
+                <value>OK</value>
+            </property>
+          </dataset>
+          <dataset type="javax.management.openmbean.CompositeData">
+            <property>
+                <name>executionTimeInMicroSeconds</name>
+                <value type="java.lang.Long">9358874</value>
+            </property>
+            <property>
+                <name>executionTimestamp</name>
+                <value type="java.util.Date">21/03/2017 09:17:21</value>
+            </property>
+            <property>
+                <name>processElementId</name>
+                <value>15470DE765DF45FC-f19</value>
+            </property>
+            <property>
+                <name>processModelVersionVersionName</name>
+                <value>designer/ConnectivityDemos$1</value>
+            </property>
+            <property>
+                <name>requestMethod</name>
+                <value>GET</value>
+            </property>
+            <property>
+                <name>requestUrl</name>
+                <value>http://127.0.0.1:8081/ivy/api/designer/persons</value>
+            </property>
+            <property>
+                <name>responseStatusCode</name>
+                <value type="java.lang.Integer">200</value>
+            </property>
+            <property>
+                <name>responseStatusReasonPhrase</name>
+                <value>OK</value>
+            </property>
+          </dataset>
+        </property>
+      </dataset>
+    </property>
+    <property>
+      <name>ivy Engine:type=External REST Web Service,application=designer,environment=Default,name=approvalService</name>
+      <dataset>
+        <property>
+          <name>slowestCalls</name>
+          <dataset type="javax.management.openmbean.CompositeData">
+            <property>
+                <name>executionTimeInMicroSeconds</name>
+                <value type="java.lang.Long">10347299</value>
+            </property>
+            <property>
+                <name>executionTimestamp</name>
+                <value type="java.util.Date">21/03/2017 09:17:20</value>
+            </property>
+            <property>
+                <name>processElementId</name>
+                <value>1549FE9E911A1812-f14</value>
+            </property>
+            <property>
+                <name>processModelVersionVersionName</name>
+                <value>designer/ConnectivityDemos$1</value>
+            </property>
+            <property>
+                <name>requestMethod</name>
+                <value>PUT</value>
+            </property>
+            <property>
+                <name>requestUrl</name>
+                <value>http://127.0.0.1:8081/ivy/api/designer/approve</value>
+            </property>
+            <property>
+                <name>responseStatusCode</name>
+                <value type="java.lang.Integer">201</value>
+            </property>
+            <property>
+                <name>responseStatusReasonPhrase</name>
+                <value>Created</value>
+            </property>
+          </dataset>
+        </property>
+      </dataset>
+    </property>
+  </dataset>
+  
+  <dataset>
+    <property>
+      <name>ivy Engine:type=External REST Web Service,application=designer,environment=Default,name=personService</name>
+      <dataset>
+        <property>
+          <name>slowestCalls</name>
+          <dataset type="javax.management.openmbean.CompositeData">
+            <property>
+                <name>executionTimeInMicroSeconds</name>
+                <value type="java.lang.Long">17856586</value>
+            </property>
+            <property>
+                <name>executionTimestamp</name>
+                <value type="java.util.Date">21/03/2017 09:17:12</value>
+            </property>
+            <property>
+                <name>processElementId</name>
+                <value>154616078A1D629D-f14</value>
+            </property>
+            <property>
+                <name>processModelVersionVersionName</name>
+                <value>designer/ConnectivityDemos$1</value>
+            </property>
+            <property>
+                <name>requestMethod</name>
+                <value>GET</value>
+            </property>
+            <property>
+                <name>requestUrl</name>
+                <value>http://127.0.0.1:8081/ivy/api/designer/persons</value>
+            </property>
+            <property>
+                <name>responseStatusCode</name>
+                <value type="java.lang.Integer">200</value>
+            </property>
+            <property>
+                <name>responseStatusReasonPhrase</name>
+                <value>OK</value>
+            </property>
+          </dataset>
+          <dataset type="javax.management.openmbean.CompositeData">
+            <property>
+                <name>executionTimeInMicroSeconds</name>
+                <value type="java.lang.Long">9358874</value>
+            </property>
+            <property>
+                <name>executionTimestamp</name>
+                <value type="java.util.Date">21/03/2017 09:17:21</value>
+            </property>
+            <property>
+                <name>processElementId</name>
+                <value>15470DE765DF45FC-f19</value>
+            </property>
+            <property>
+                <name>processModelVersionVersionName</name>
+                <value>designer/ConnectivityDemos$1</value>
+            </property>
+            <property>
+                <name>requestMethod</name>
+                <value>GET</value>
+            </property>
+            <property>
+                <name>requestUrl</name>
+                <value>http://127.0.0.1:8081/ivy/api/designer/persons</value>
+            </property>
+            <property>
+                <name>responseStatusCode</name>
+                <value type="java.lang.Integer">200</value>
+            </property>
+            <property>
+                <name>responseStatusReasonPhrase</name>
+                <value>OK</value>
+            </property>
+          </dataset>
+        </property>
+      </dataset>
+    </property>
+    <property>
+      <name>ivy Engine:type=External REST Web Service,application=designer,environment=Default,name=approvalService</name>
+      <dataset>
+        <property>
+          <name>slowestCalls</name>
+          <dataset type="javax.management.openmbean.CompositeData">
+            <property>
+                <name>executionTimeInMicroSeconds</name>
+                <value type="java.lang.Long">10347299</value>
+            </property>
+            <property>
+                <name>executionTimestamp</name>
+                <value type="java.util.Date">21/03/2017 09:17:20</value>
+            </property>
+            <property>
+                <name>processElementId</name>
+                <value>1549FE9E911A1812-f14</value>
+            </property>
+            <property>
+                <name>processModelVersionVersionName</name>
+                <value>designer/ConnectivityDemos$1</value>
+            </property>
+            <property>
+                <name>requestMethod</name>
+                <value>PUT</value>
+            </property>
+            <property>
+                <name>requestUrl</name>
+                <value>http://127.0.0.1:8081/ivy/api/designer/approve</value>
+            </property>
+            <property>
+                <name>responseStatusCode</name>
+                <value type="java.lang.Integer">201</value>
+            </property>
+            <property>
+                <name>responseStatusReasonPhrase</name>
+                <value>Created</value>
+            </property>
+          </dataset>
+          <dataset type="javax.management.openmbean.CompositeData">
+            <property>
+                <name>error</name>
+                <dataset type="javax.management.openmbean.CompositeData">
+                    <property>
+                        <name>message</name>
+                        <value>ivy:error:script</value>
+                    </property>
+                    <property>
+                        <name>type</name>
+                        <value>ch.ivyteam.ivy.bpm.error.BpmError</value>
+                    </property>
+                    <property>
+                        <name>stackTrace</name>
+                        <value>BpmError ivy:error:script  Unique ID: 15AEEA814764B74E</value>
+                    </property>
+                </dataset>
+            </property>
+            <property>
+                <name>executionTimeInMicroSeconds</name>
+                <value type="java.lang.Long">35016698</value>
+            </property>
+            <property>
+                <name>executionTimestamp</name>
+                <value type="java.util.Date">21/03/2017 09:17:22</value>
+            </property>
+            <property>
+                <name>processElementId</name>
+                <value>157B33AB7587F1F1-f6</value>
+            </property>
+            <property>
+                <name>processModelVersionVersionName</name>
+                <value>designer/ConnectivityDemos$1</value>
+            </property>
+            <property>
+                <name>requestMethod</name>
+                <value>GET</value>
+            </property>
+            <property>
+                <name>requestUrl</name>
+                <value>http://127.0.0.1:8081/ivy/api/designer/approve</value>
+            </property>
+            <property>
+                <name>responseStatusCode</name>
+                <value type="java.lang.Integer">-1</value>
+            </property>
+            <property>
+                <name>responseStatusReasonPhrase</name>
+                <value></value>
+            </property>
+          </dataset>
+          <dataset type="javax.management.openmbean.CompositeData">
+            <property>
+                <name>error</name>
+                <dataset type="javax.management.openmbean.CompositeData">
+                    <property>
+                        <name>message</name>
+                        <value>ivy:error:script</value>
+                    </property>
+                    <property>
+                        <name>type</name>
+                        <value>ch.ivyteam.ivy.bpm.error.BpmError</value>
+                    </property>
+                    <property>
+                        <name>stackTrace</name>
+                        <value>BpmError ivy:error:script  Unique ID: 15AEEA814764B74E</value>
+                    </property>
+                </dataset>
+            </property>
+            <property>
+                <name>executionTimeInMicroSeconds</name>
+                <value type="java.lang.Long">32094694</value>
+            </property>
+            <property>
+                <name>executionTimestamp</name>
+                <value type="java.util.Date">21/03/2017 09:48:23</value>
+            </property>
+            <property>
+                <name>processElementId</name>
+                <value>157B33AB7587F1F1-f6</value>
+            </property>
+            <property>
+                <name>processModelVersionVersionName</name>
+                <value>designer/ConnectivityDemos$1</value>
+            </property>
+            <property>
+                <name>requestMethod</name>
+                <value>GET</value>
+            </property>
+            <property>
+                <name>requestUrl</name>
+                <value>http://127.0.0.1:8081/ivy/api/designer/approve</value>
+            </property>
+            <property>
+                <name>responseStatusCode</name>
+                <value type="java.lang.Integer">200</value>
+            </property>
+            <property>
+                <name>responseStatusReasonPhrase</name>
+                <value>OK</value>
+            </property>
+          </dataset>
+        </property>
+      </dataset>
+    </property>
+  </dataset>
+</beanTestData>

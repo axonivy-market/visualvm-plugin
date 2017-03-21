@@ -153,6 +153,11 @@ src/test/java/ch/ivyteam/ivy/visualvm/test/datasource/externaldb/ExternalDbTrans
 src/test/java/ch/ivyteam/ivy/visualvm/test/datasource/externaldb/ExternalDbWsCommonPanelTest.java -text
 src/test/java/ch/ivyteam/ivy/visualvm/test/datasource/externaldb/SlowQueryBufferTest.java -text
 src/test/java/ch/ivyteam/ivy/visualvm/test/datasource/externaldb/SlowQueryTest.java -text
+src/test/java/ch/ivyteam/ivy/visualvm/test/datasource/externalrestws/CallsHistoryBufferTest.java -text svneol=unset#text/plain
+src/test/java/ch/ivyteam/ivy/visualvm/test/datasource/externalrestws/ErrorCallsBufferTest.java -text svneol=unset#text/plain
+src/test/java/ch/ivyteam/ivy/visualvm/test/datasource/externalrestws/ExternaRESTWSCallingTimeChartDataSourceTest.java -text
+src/test/java/ch/ivyteam/ivy/visualvm/test/datasource/externalrestws/ExternalRESTWSCallChartDataSourceTest.java -text
+src/test/java/ch/ivyteam/ivy/visualvm/test/datasource/externalrestws/SlowCallsBufferTest.java -text svneol=unset#text/plain
 src/test/java/ch/ivyteam/ivy/visualvm/test/datasource/externalws/ExternalWSCallChartDataSourceTest.java -text
 src/test/java/ch/ivyteam/ivy/visualvm/test/datasource/externalws/ExternalWSCallingTimeChartDataSourceTest.java -text
 src/test/java/ch/ivyteam/ivy/visualvm/test/datasource/license/ConcurrentUsersChartDataSourceTest.java -text
@@ -190,6 +195,11 @@ src/test/resources/ch/ivyteam/ivy/visualvm/test/datasource/externaldb/ExternalDb
 src/test/resources/ch/ivyteam/ivy/visualvm/test/datasource/externaldb/ExternalDbProcessingTimeChartDataSourceTest.xml -text
 src/test/resources/ch/ivyteam/ivy/visualvm/test/datasource/externaldb/ExternalDbTransChartDataSourceTest.xml -text
 src/test/resources/ch/ivyteam/ivy/visualvm/test/datasource/externaldb/SlowQueryTest.xml -text
+src/test/resources/ch/ivyteam/ivy/visualvm/test/datasource/externalrestws/CallsHistoryTest.xml -text
+src/test/resources/ch/ivyteam/ivy/visualvm/test/datasource/externalrestws/ErrorCallsTest.xml -text
+src/test/resources/ch/ivyteam/ivy/visualvm/test/datasource/externalrestws/ExternalRESTWSCallChartDataSourceTest.xml -text
+src/test/resources/ch/ivyteam/ivy/visualvm/test/datasource/externalrestws/ExternalRESTWSCallingTimeChartDataSourceTest.xml -text
+src/test/resources/ch/ivyteam/ivy/visualvm/test/datasource/externalrestws/SlowCallsTest.xml -text
 src/test/resources/ch/ivyteam/ivy/visualvm/test/datasource/externalws/ExternalWSCallChartDataSourceTest.xml -text
 src/test/resources/ch/ivyteam/ivy/visualvm/test/datasource/externalws/ExternalWSCallingTimeChartDataSourceTest.xml -text
 src/test/resources/ch/ivyteam/ivy/visualvm/test/datasource/license/ConcurrentUsersChartDataSourceTest.xml -text
