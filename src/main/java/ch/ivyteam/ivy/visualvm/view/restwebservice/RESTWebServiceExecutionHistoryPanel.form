@@ -115,6 +115,7 @@
               <Subbinding sourcePath="${processElementId}">
                 <BindingParameter name="NAME" value="Process Element Id"/>
                 <BindingParameter name="javax.swing.binding.ParameterKeys.COLUMN_CLASS" value="String.class"/>
+                <BindingParameter name="javax.swing.binding.ParameterKeys.EDITABLE" value="false"/>
               </Subbinding>
               <Subbinding sourcePath="${executionTime}">
                 <BindingParameter name="NAME" value="Execution Time (ms)"/>
@@ -124,6 +125,7 @@
               <Subbinding sourcePath="${requestMethod}">
                 <BindingParameter name="NAME" value="Method"/>
                 <BindingParameter name="javax.swing.binding.ParameterKeys.COLUMN_CLASS" value="String.class"/>
+                <BindingParameter name="javax.swing.binding.ParameterKeys.EDITABLE" value="false"/>
               </Subbinding>
               <Subbinding sourcePath="${requestUrl}">
                 <BindingParameter name="NAME" value="Request Url"/>

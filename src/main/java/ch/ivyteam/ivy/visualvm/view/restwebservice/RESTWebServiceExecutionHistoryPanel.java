@@ -75,6 +75,7 @@ public class RESTWebServiceExecutionHistoryPanel extends AbstractRESTWebServiceE
     columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${processElementId}"));
     columnBinding.setColumnName("Process Element Id");
     columnBinding.setColumnClass(String.class);
+    columnBinding.setEditable(false);
     columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${executionTime}"));
     columnBinding.setColumnName("Execution Time (ms)");
     columnBinding.setColumnClass(Long.class);
@@ -82,6 +83,7 @@ public class RESTWebServiceExecutionHistoryPanel extends AbstractRESTWebServiceE
     columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${requestMethod}"));
     columnBinding.setColumnName("Method");
     columnBinding.setColumnClass(String.class);
+    columnBinding.setEditable(false);
     columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${requestUrl}"));
     columnBinding.setColumnName("Request Url");
     columnBinding.setColumnClass(String.class);
