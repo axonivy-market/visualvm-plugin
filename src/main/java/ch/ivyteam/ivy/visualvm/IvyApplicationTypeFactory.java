@@ -114,16 +114,20 @@ public class IvyApplicationTypeFactory extends MainClassApplicationTypeFactory {
   
   private boolean isAxonIvyServer(Application app) {
     long start = System.currentTimeMillis();
-    do {
-      DataBeanProvider dataBeanProvider = getDataBeanProvider(app);
-      if (dataBeanProvider != null) {
-        if (isAxonIvyAppMBeanProvider(dataBeanProvider)) {
-          return true;
-        } else if (isXpertIvyAppMBeanProvider(dataBeanProvider)) {
-          return false;
+    try {
+      do {
+        DataBeanProvider dataBeanProvider = getDataBeanProvider(app);
+        if (dataBeanProvider != null) {
+          if (isAxonIvyAppMBeanProvider(dataBeanProvider)) {
+            return true;
+          } else if (isXpertIvyAppMBeanProvider(dataBeanProvider)) {
+            return false;
+          }
         }
-      }
-    } while (System.currentTimeMillis() - start < TIME_OUT);
+        Thread.sleep(200);
+      } while (System.currentTimeMillis() - start < TIME_OUT);
+    } catch (InterruptedException ex) {
+    }
     return false;
   }
 
