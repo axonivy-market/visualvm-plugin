@@ -4,10 +4,10 @@
 
   <groupId>ch.ivyteam.ivy</groupId>
   <artifactId>visualvm-plugin</artifactId>
-  <version>6.5.0-SNAPSHOT</version>
+  <version>7.0.0-SNAPSHOT</version>
   <packaging>nbm</packaging>
 
-  <name>Axon.ivy Engine Monitor_6.5</name>
+  <name>Axon.ivy Engine Monitor_7.0</name>
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <netbeans.run.params.ide/>
