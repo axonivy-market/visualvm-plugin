@@ -1,18 +1,20 @@
 package ch.ivyteam.ivy.visualvm.view.restwebservice;
 
-import java.util.Map;
-import java.util.Set;
-
+import ch.ivyteam.ivy.visualvm.ContentProvider;
 import com.sun.tools.visualvm.core.ui.components.DataViewComponent;
 import com.sun.tools.visualvm.core.ui.components.DataViewComponent.DetailsView;
 
 import ch.ivyteam.ivy.visualvm.chart.QueryResult;
 import ch.ivyteam.ivy.visualvm.model.IvyJmxConstant;
+import ch.ivyteam.ivy.visualvm.model.RESTWebServiceInfo;
 import ch.ivyteam.ivy.visualvm.service.restwebservice.RESTErrorExecutionBuffer;
+import ch.ivyteam.ivy.visualvm.service.restwebservice.RESTExecutionHistoryBuffer;
 import ch.ivyteam.ivy.visualvm.service.restwebservice.RESTSlowExecutiontBuffer;
 import ch.ivyteam.ivy.visualvm.util.DataUtils;
 import ch.ivyteam.ivy.visualvm.view.AbtractWebServicesView;
 import ch.ivyteam.ivy.visualvm.view.DataBeanProvider;
+import java.util.List;
+import javax.swing.JPanel;
 
 public class RESTWebServicesView extends AbtractWebServicesView {
 
@@ -27,18 +29,16 @@ public class RESTWebServicesView extends AbtractWebServicesView {
   private RESTWebServiceErrorExecutionPanel fErrorExecutionPanel;
   private RESTSlowExecutiontBuffer fSlowExecutionBuffer;
   private RESTErrorExecutionBuffer fErrorExecutionBuffer;
+  private RESTExecutionHistoryBuffer fExecutionHistoryBuffer;
 
   public RESTWebServicesView(DataBeanProvider dataBeanProvider) {
     super(dataBeanProvider);
+    fExecutionHistoryBuffer = new RESTExecutionHistoryBuffer(dataBeanProvider.getMBeanServerConnection());
     fSlowExecutionBuffer = new RESTSlowExecutiontBuffer(dataBeanProvider.getMBeanServerConnection());
     fErrorExecutionBuffer = new RESTErrorExecutionBuffer(dataBeanProvider.getMBeanServerConnection());
+    registerScheduledUpdate(fExecutionHistoryBuffer);
     registerScheduledUpdate(fSlowExecutionBuffer);
     registerScheduledUpdate(fErrorExecutionBuffer);
-  }
-
-  @Override
-  protected Map<String, Map<String, Set<String>>> getWebServicesConfigs() {
-    return DataUtils.getRESTWebServicesConfigs(getDataBeanProvider().getMBeanServerConnection());
   }
 
   @Override
@@ -47,16 +47,18 @@ public class RESTWebServicesView extends AbtractWebServicesView {
   }
 
   @Override
-  protected void addPanelsToView(DataViewComponent viewComponent) {
+  protected void createPanels(DataViewComponent viewComponent) {
+    JPanel panel = (JPanel) viewComponent.getComponent(0);
+    panel.remove(0);
     viewComponent.configureDetailsArea(new DataViewComponent.DetailsAreaConfiguration(null, false), DataViewComponent.TOP_LEFT);
 
     fExecutionHistoryPanel = new RESTWebServiceExecutionHistoryPanel(this);
     fSlowExecutionPanel = new RESTWebServiceSlowExecutionPanel(this);
     fErrorExecutionPanel = new RESTWebServiceErrorExecutionPanel(this);
-    DetailsView chartsDetailsTab = new DataViewComponent.DetailsView("Charts", null, 10, getUIChartsPanel(), null);
-    DetailsView callsHistoryTab = new DataViewComponent.DetailsView("Calls History", null, 10, fCallsHistoryPanel, null);
-    DetailsView slowestCallsTab = new DataViewComponent.DetailsView("Slowest Calls", null, 10, fSlowExecutionPanel, null);
-    DetailsView errorCallsTab = new DataViewComponent.DetailsView("Errors", null, 10, fErrorExecutionPanel, null);
+    chartsDetailsTab = new DataViewComponent.DetailsView(CHARTS, null, 10, getUIChartsPanel(), null);
+    DetailsView callsHistoryTab = new DataViewComponent.DetailsView(CALLS_HISTORY, null, 10, fExecutionHistoryPanel, null);
+    DetailsView slowestCallsTab = new DataViewComponent.DetailsView(SLOW_CALLS, null, 10, fSlowExecutionPanel, null);
+    DetailsView errorCallsTab = new DataViewComponent.DetailsView(ERRORS, null, 10, fErrorExecutionPanel, null);
 
     viewComponent.addDetailsView(chartsDetailsTab, DataViewComponent.TOP_LEFT);
     viewComponent.addDetailsView(callsHistoryTab, DataViewComponent.TOP_LEFT);
@@ -65,23 +67,32 @@ public class RESTWebServicesView extends AbtractWebServicesView {
   }
 
   @Override
+  protected void updateConfigTreeNodes() {
+    getUIChartsPanel().setTreeData(DataUtils.getRESTWebServicesConfigs(getDataBeanProvider().getMBeanServerConnection()));
+  }
+
+  @Override
   public void updateDisplay(QueryResult queryResult) {
     super.updateDisplay(queryResult);
-    if (!fSlowExecutionPanel.isLoaded() && !fSlowExecutionBuffer.getBuffer().isEmpty()) {
-      refreshSlowExecutionTable();
+    if (!fExecutionHistoryPanel.isLoaded() && !getExecutionHistoryInfoBuffer().isEmpty()) {
+      fExecutionHistoryPanel.refresh();
     }
-    
-    if (!fErrorExecutionPanel.isLoaded() && !fErrorExecutionBuffer.getBuffer().isEmpty()) {
-      refreshErrorExecutionTable();
+
+    if (!fSlowExecutionPanel.isLoaded() && !getSlowExecutionInfoBuffer().isEmpty()) {
+      fSlowExecutionPanel.refresh();
+    }
+
+    if (!fErrorExecutionPanel.isLoaded() && !getErrorExecutionInfoBuffer().isEmpty()) {
+      fErrorExecutionPanel.refresh();
     }
   }
 
-  public void refreshSlowExecutionTable() {
-    fSlowExecutionPanel.refresh(fSlowExecutionBuffer.getBuffer());
+  public List<RESTWebServiceInfo> getExecutionHistoryInfoBuffer() {
+    return fExecutionHistoryBuffer.getBuffer();
   }
-  
-  public void refreshErrorExecutionTable() {
-    fErrorExecutionPanel.refresh(fErrorExecutionBuffer.getBuffer());
+
+  public List<RESTWebServiceInfo> getErrorExecutionInfoBuffer() {
+    return fErrorExecutionBuffer.getBuffer();
   }
 
   public List<RESTWebServiceInfo> getSlowExecutionInfoBuffer() {

@@ -69,7 +69,7 @@ public class RESTWebServiceExecutionHistoryPanel extends AbstractRESTWebServiceE
     columnBinding.setColumnClass(java.util.Date.class);
     columnBinding.setEditable(false);
     columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${webServiceConfig}"));
-    columnBinding.setColumnName("Web Service Config");
+    columnBinding.setColumnName("REST Clients");
     columnBinding.setColumnClass(String.class);
     columnBinding.setEditable(false);
     columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${processElementId}"));

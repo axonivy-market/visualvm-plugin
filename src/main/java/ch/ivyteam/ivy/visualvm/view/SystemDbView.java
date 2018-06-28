@@ -1,5 +1,6 @@
 package ch.ivyteam.ivy.visualvm.view;
 
+import ch.ivyteam.ivy.visualvm.view.common.AbstractView;
 import ch.ivyteam.ivy.visualvm.ContentProvider;
 import ch.ivyteam.ivy.visualvm.chart.ChartsPanel;
 import ch.ivyteam.ivy.visualvm.chart.data.systemdb.ConnectionChartDataSource;

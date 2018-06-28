@@ -62,7 +62,7 @@ public class SlowCallsBufferTest extends AbstractTest{
     slowInfo1.setExecutionTime(17856586);
     slowInfo1.setRequestMethod("GET");
     slowInfo1.setRequestUrl("http://127.0.0.1:8081/ivy/api/designer/persons");
-    slowInfo1.setResponseStatus("OK");
+    slowInfo1.setResponseStatus("200 OK");
     
     final RESTWebServiceInfo slowInfo2 = new RESTWebServiceInfo();
     slowInfo2.setApplication(APPLICATION_NAME);
@@ -74,7 +74,7 @@ public class SlowCallsBufferTest extends AbstractTest{
     slowInfo2.setExecutionTime(10347299);
     slowInfo2.setRequestMethod("PUT");
     slowInfo2.setRequestUrl("http://127.0.0.1:8081/ivy/api/designer/approve");
-    slowInfo2.setResponseStatus("Created");
+    slowInfo2.setResponseStatus("201 Created");
     
     final RESTWebServiceInfo slowInfo3 = new RESTWebServiceInfo();
     slowInfo3.setApplication(APPLICATION_NAME);
@@ -86,7 +86,7 @@ public class SlowCallsBufferTest extends AbstractTest{
     slowInfo3.setExecutionTime(9358874);
     slowInfo3.setRequestMethod("GET");
     slowInfo3.setRequestUrl("http://127.0.0.1:8081/ivy/api/designer/persons");
-    slowInfo3.setResponseStatus("OK");
+    slowInfo3.setResponseStatus("200 OK");
     
     slowInfos1.add(slowInfo2);
     slowInfos1.add(slowInfo1);

@@ -1,11 +1,11 @@
-package ch.ivyteam.ivy.visualvm.view.externaldb;
+package ch.ivyteam.ivy.visualvm.view.common;
 
 import ch.ivyteam.ivy.visualvm.util.DataUtils;
 import java.awt.Component;
 import java.util.Date;
 import javax.swing.JTable;
 
-class DateTableCellRenderer extends EvenOddCellRenderer {
+public class DateTableCellRenderer extends EvenOddCellRenderer {
 
   public DateTableCellRenderer() {
   }

@@ -26,6 +26,7 @@ public abstract class AbstractRESTExecutionBuffer implements IUpdatableUIObject 
 
   private static final Logger LOGGER = Logger.getLogger(AbstractRESTExecutionBuffer.class.getName());
   private static final int DEFAULT_BUFFER_SIZE = 100;
+  private static final String SPACE = " ";
   private MBeanServerConnection fConnection;
   private List<ObjectName> fObjectNames = new CopyOnWriteArrayList<>();
   private List<RESTWebServiceInfo> fRestWSInfoBuffer = new CopyOnWriteArrayList<>();
@@ -101,7 +102,7 @@ public abstract class AbstractRESTExecutionBuffer implements IUpdatableUIObject 
     restWebServiceInfo.setPMVName(executionData.get(RESTWebService.PMV_VERSION_NAME).toString());
     restWebServiceInfo.setRequestMethod(executionData.get(RESTWebService.REQUEST_METHOD).toString());
     restWebServiceInfo.setRequestUrl(executionData.get(RESTWebService.REQUEST_URL).toString());
-    restWebServiceInfo.setResponseStatus(executionData.get(RESTWebService.RESPONSE_STATUS).toString());
+    restWebServiceInfo.setResponseStatus(executionData.get(RESTWebService.RESPONSE_STATUS_CODE) + SPACE + executionData.get(RESTWebService.RESPONSE_STATUS));
     Object error = executionData.get(RESTWebService.KEY_ERROR);
     if (error instanceof CompositeData) {
       CompositeData errorData = (CompositeData)error;

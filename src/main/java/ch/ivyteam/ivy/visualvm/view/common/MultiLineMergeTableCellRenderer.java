@@ -1,9 +1,9 @@
-package ch.ivyteam.ivy.visualvm.view.externaldb;
+package ch.ivyteam.ivy.visualvm.view.common;
 
 import java.awt.Component;
 import javax.swing.JTable;
 
-class MultiLineMergeTableCellRenderer extends EvenOddCellRenderer {
+public class MultiLineMergeTableCellRenderer extends EvenOddCellRenderer {
 
   @Override
   public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected,

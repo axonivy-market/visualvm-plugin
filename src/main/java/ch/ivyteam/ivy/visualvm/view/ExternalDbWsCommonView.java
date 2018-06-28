@@ -5,8 +5,10 @@
  */
 package ch.ivyteam.ivy.visualvm.view;
 
+import ch.ivyteam.ivy.visualvm.view.common.AbstractView;
 import ch.ivyteam.ivy.visualvm.chart.ChartsPanel;
 import ch.ivyteam.ivy.visualvm.chart.data.AbstractExternalDbAndWebServiceDataSource;
+import com.sun.tools.visualvm.core.ui.components.DataViewComponent;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
@@ -16,6 +18,7 @@ public abstract class ExternalDbWsCommonView extends AbstractView {
   private String fCurrentAppName, fCurrentEnvName, fCurrentConfigName;
   private final Map<String, ChartsPanel> fCreatedCharts;
   private ExternalDbWsCommonPanel fUIChartsPanel;
+  private boolean fUICompleted;
 
   public ExternalDbWsCommonView(DataBeanProvider dataBeanProvider) {
     super(dataBeanProvider);
@@ -49,6 +52,24 @@ public abstract class ExternalDbWsCommonView extends AbstractView {
       dataSource.init();
     }
   }
+
+  @Override
+  public DataViewComponent getViewComponent() {
+    DataViewComponent viewComponent = super.getViewComponent();
+    if (!fUICompleted) {
+      addPanelsToView(viewComponent);
+      fUICompleted = true;
+    }
+    return viewComponent;
+  }
+  
+  private void addPanelsToView(DataViewComponent viewComponent) {
+    createPanels(viewComponent);
+    updateConfigTreeNodes();
+  }
+  
+  protected abstract void createPanels(DataViewComponent viewComponent);
+  protected abstract void updateConfigTreeNodes();
 
   public void setUIChartsPanel(ExternalDbWsCommonPanel uiPanel) {
     this.fUIChartsPanel = uiPanel;

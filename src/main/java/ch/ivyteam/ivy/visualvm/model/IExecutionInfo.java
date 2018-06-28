@@ -7,6 +7,12 @@ public interface IExecutionInfo {
 
   String BACKSLASH = "\\";
 
+  String getApplication();
+
+  String getEnvironment();
+
+  String getConfigName();
+
   Date getTime();
 
   long getExecutionTime();

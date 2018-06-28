@@ -1,22 +1,22 @@
 package ch.ivyteam.ivy.visualvm.view.externaldb;
 
+import ch.ivyteam.ivy.visualvm.model.IExecutionInfo;
 import ch.ivyteam.ivy.visualvm.model.SQLInfo;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
+import ch.ivyteam.ivy.visualvm.view.common.NumberTableCellRenderer;
 import java.util.List;
+import javax.swing.JButton;
 import javax.swing.JTable;
 import javax.swing.table.TableColumnModel;
+import org.apache.commons.lang.StringUtils;
 import org.jdesktop.beansbinding.Binding;
 
 // CHECKSTYLE:OFF
 @SuppressWarnings("PMD")
 public class ExternalDbSlowQueriesPanel extends AbstractExternalDbQueriesPanel {
 
-  private static final int COL_TIME = 0;
   private static final int COL_EXEC_TIME = 3;
   private static final int COL_STATEMENT = 4;
+  private final NumberTableCellRenderer fNumberCellRenderer = new NumberTableCellRenderer();
 
   /**
    * This method is called from within the constructor to initialize the form.
@@ -135,22 +135,21 @@ public class ExternalDbSlowQueriesPanel extends AbstractExternalDbQueriesPanel {
     super(externalDbView);
     initComponents();
     initTableCellRenderer();
-    btnRefresh.addActionListener(new RefreshButtonActionListener());
-    tableSlowQueries.addMouseListener(new SlowQueriesTableMouseListener());
+    initListeners();
   }
 
   @Override
-  protected JTable getQueriesTable() {
+  protected JTable getTable() {
     return tableSlowQueries;
   }
 
   @Override
-  protected void clearDetailsArea() {
-    txtSQL.setText("");
+  protected JButton getRefreshButton() {
+    return btnRefresh;
   }
 
   @Override
-  protected List<SQLInfo> getSQLInfoList() {
+  protected List<? extends IExecutionInfo> getTableModelList() {
     return fSQLInfoList;
   }
 
@@ -160,35 +159,18 @@ public class ExternalDbSlowQueriesPanel extends AbstractExternalDbQueriesPanel {
   }
 
   @Override
-  protected void refreshQueriesTable(List<SQLInfo> sqlInfoList) {
+  protected void refreshTable() {
     Binding binding = bindingGroup.getBinding("bindingSlowQueriesTable");
     binding.unbind();
     fSQLInfoList.clear();
-    fSQLInfoList.addAll(sqlInfoList);
+    fSQLInfoList.addAll(getExternalDbView().getSlowSQLInfoBuffer());
     binding.bind();
     TableColumnModel colModel = tableSlowQueries.getColumnModel();
     colModel.getColumn(COL_TIME).setCellRenderer(getDateCellRenderer());
-    colModel.getColumn(COL_EXEC_TIME).setCellRenderer(getNumberCellRenderer());
+    colModel.getColumn(COL_EXEC_TIME).setCellRenderer(fNumberCellRenderer);
     colModel.getColumn(COL_STATEMENT).setCellRenderer(getMultiLineCellRenderer());
     tableSlowQueries.repaint();
-  }
-
-  private class RefreshButtonActionListener implements ActionListener {
-
-    @Override
-    public void actionPerformed(ActionEvent e) {
-      getExternalDbView().refreshSlowQueriesTab();
-    }
-
-  }
-
-  private class SlowQueriesTableMouseListener extends MouseAdapter {
-
-    @Override
-    public void mouseClicked(MouseEvent e) {
-      handleDoubleClick(e);
-    }
-
+    txtSQL.setText(StringUtils.EMPTY);
   }
 
 }

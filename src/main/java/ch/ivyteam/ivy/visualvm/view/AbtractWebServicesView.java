@@ -9,8 +9,6 @@ package ch.ivyteam.ivy.visualvm.view;
 import static ch.ivyteam.ivy.visualvm.view.ExternalDbWsCommonPanel.WS_ICON_PATH;
 import static ch.ivyteam.ivy.visualvm.view.ExternalDbWsCommonPanel.WS_RECORDING_ICON_PATH;
 
-import java.util.Map;
-import java.util.Set;
 
 import javax.swing.Icon;
 
@@ -21,7 +19,6 @@ import ch.ivyteam.ivy.visualvm.chart.ChartsPanel;
 import ch.ivyteam.ivy.visualvm.chart.data.webservice.WebServiceCallsChartDataSource;
 import ch.ivyteam.ivy.visualvm.chart.data.webservice.WebServiceProcessingTimeChartDataSource;
 
-import com.sun.tools.visualvm.core.ui.components.DataViewComponent;
 
 public abstract class AbtractWebServicesView extends ExternalDbWsCommonView {
 
@@ -55,19 +52,6 @@ public abstract class AbtractWebServicesView extends ExternalDbWsCommonView {
     registerScheduledUpdate(chartPanel);
     return chartPanel;
   }
-
-  @Override
-  public DataViewComponent getViewComponent() {
-    DataViewComponent viewComponent = super.getViewComponent();
-    addPanelsToView(viewComponent);
-    Map<String, Map<String, Set<String>>> appEnvRESTWs = getWebServicesConfigs();
-    getUIChartsPanel().setTreeData(appEnvRESTWs);
-    return viewComponent;
-  }
-
-  protected abstract void addPanelsToView(DataViewComponent viewComponent);
-
-  protected abstract Map<String, Map<String, Set<String>>> getWebServicesConfigs();
 
   protected abstract String getWebServiceNamePattern();
 

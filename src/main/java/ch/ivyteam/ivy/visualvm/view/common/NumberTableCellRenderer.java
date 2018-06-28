@@ -1,11 +1,11 @@
-package ch.ivyteam.ivy.visualvm.view.externaldb;
+package ch.ivyteam.ivy.visualvm.view.common;
 
 import java.awt.Component;
 import java.text.NumberFormat;
 import javax.swing.JLabel;
 import javax.swing.JTable;
 
-class NumberTableCellRenderer extends EvenOddCellRenderer {
+public class NumberTableCellRenderer extends EvenOddCellRenderer {
 
   private static final int SCALE = 1000;
 

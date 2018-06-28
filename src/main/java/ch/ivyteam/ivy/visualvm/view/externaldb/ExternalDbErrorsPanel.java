@@ -1,20 +1,21 @@
 package ch.ivyteam.ivy.visualvm.view.externaldb;
 
-import ch.ivyteam.ivy.visualvm.model.SQLInfo;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 import java.util.List;
+
+import javax.swing.JButton;
 import javax.swing.JTable;
 import javax.swing.table.TableColumnModel;
+
+import org.apache.commons.lang.StringUtils;
 import org.jdesktop.beansbinding.Binding;
+
+import ch.ivyteam.ivy.visualvm.model.IExecutionInfo;
+import ch.ivyteam.ivy.visualvm.model.SQLInfo;
 
 // CHECKSTYLE:OFF
 @SuppressWarnings("PMD")
 public class ExternalDbErrorsPanel extends AbstractExternalDbQueriesPanel {
 
-  private static final int COL_TIME = 0;
   private static final int COL_STATEMENT = 3;
 
   /**
@@ -132,23 +133,17 @@ public class ExternalDbErrorsPanel extends AbstractExternalDbQueriesPanel {
     super(view);
     initComponents();
     initTableCellRenderer();
-    btnRefresh.addActionListener(new RefreshButtonActionListener());
-    tableErrors.addMouseListener(new ErrorsTableMouseListener());
+    initListeners();
   }
 
   @Override
-  protected List<SQLInfo> getSQLInfoList() {
-    return fErrorInfoList;
-  }
-
-  @Override
-  protected JTable getQueriesTable() {
+  protected JTable getTable() {
     return tableErrors;
   }
 
   @Override
-  protected void clearDetailsArea() {
-    txtDetails.setText("");
+  protected JButton getRefreshButton() {
+    return btnRefresh;
   }
 
   @Override
@@ -157,33 +152,22 @@ public class ExternalDbErrorsPanel extends AbstractExternalDbQueriesPanel {
   }
 
   @Override
-  protected void refreshQueriesTable(List<SQLInfo> sqlInfoList) {
+  protected void refreshTable() {
     Binding bindingTableErrors = bindingGroup.getBinding("bindingTableErrors");
     bindingTableErrors.unbind();
     fErrorInfoList.clear();
-    fErrorInfoList.addAll(sqlInfoList);
+    fErrorInfoList.addAll(getExternalDbView().getErrorSQLInfoBuffer());
     bindingTableErrors.bind();
     TableColumnModel colModel = tableErrors.getColumnModel();
     colModel.getColumn(COL_TIME).setCellRenderer(getDateCellRenderer());
     colModel.getColumn(COL_STATEMENT).setCellRenderer(getMultiLineCellRenderer());
     tableErrors.repaint();
+    txtDetails.setText(StringUtils.EMPTY);
   }
 
-  private class RefreshButtonActionListener implements ActionListener {
-
-    @Override
-    public void actionPerformed(ActionEvent e) {
-      getExternalDbView().refreshErrorTab();
-    }
-
+  @Override
+  protected List<? extends IExecutionInfo> getTableModelList() {
+    return fErrorInfoList;
   }
 
-  private class ErrorsTableMouseListener extends MouseAdapter {
-
-    @Override
-    public void mouseClicked(MouseEvent e) {
-      handleDoubleClick(e);
-    }
-
-  }
 }

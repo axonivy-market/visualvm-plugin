@@ -46,6 +46,7 @@ public class SQLInfo implements IExecutionInfo {
     this.fStatement = statement;
   }
 
+  @Override
   public String getApplication() {
     return fApplication;
   }
@@ -54,6 +55,7 @@ public class SQLInfo implements IExecutionInfo {
     this.fApplication = application;
   }
 
+  @Override
   public String getEnvironment() {
     return fEnvironment;
   }
@@ -62,6 +64,7 @@ public class SQLInfo implements IExecutionInfo {
     this.fEnvironment = environment;
   }
 
+  @Override
   public String getConfigName() {
     return fConfigName;
   }

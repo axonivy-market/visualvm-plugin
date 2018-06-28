@@ -6,24 +6,24 @@
 
 package ch.ivyteam.ivy.visualvm.view.restwebservice;
 
+import ch.ivyteam.ivy.visualvm.model.IExecutionInfo;
 import ch.ivyteam.ivy.visualvm.model.RESTWebServiceInfo;
 import java.util.List;
+import javax.swing.JButton;
 import javax.swing.JTable;
+import javax.swing.table.TableColumnModel;
+import org.apache.commons.lang.StringUtils;
 import org.jdesktop.beansbinding.Binding;
 
-/**
- *
- * @author ntnam
- */
+// CHECKSTYLE:OFF
+@SuppressWarnings("PMD")
 public class RESTWebServiceErrorExecutionPanel extends AbstractRESTWebServiceExecutionPanel {
   
-
-  /**
-   * Creates new customizer RESTWebServiceErrorExecutionPanel
-   */
   public RESTWebServiceErrorExecutionPanel(RESTWebServicesView view) {
     super(view);
     initComponents();
+    initTableCellRenderer();
+    initListeners();
   }
   
 
@@ -66,13 +66,17 @@ public class RESTWebServiceErrorExecutionPanel extends AbstractRESTWebServiceExe
     jSplitPane1.setDividerLocation(200);
     jSplitPane1.setOrientation(javax.swing.JSplitPane.VERTICAL_SPLIT);
 
+    jScrollPane1.setBorder(null);
+
+    tableErrorExecution.setAutoCreateRowSorter(true);
+
     org.jdesktop.swingbinding.JTableBinding jTableBinding = org.jdesktop.swingbinding.SwingBindings.createJTableBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ, fErrorExecutionInfos, tableErrorExecution, "bindingErrorExecutionTable");
     org.jdesktop.swingbinding.JTableBinding.ColumnBinding columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${time}"));
     columnBinding.setColumnName("Time");
     columnBinding.setColumnClass(java.util.Date.class);
     columnBinding.setEditable(false);
     columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${webServiceConfig}"));
-    columnBinding.setColumnName("Web Service Config");
+    columnBinding.setColumnName("REST Clients");
     columnBinding.setColumnClass(String.class);
     columnBinding.setEditable(false);
     columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${processElementId}"));
@@ -80,15 +84,15 @@ public class RESTWebServiceErrorExecutionPanel extends AbstractRESTWebServiceExe
     columnBinding.setColumnClass(String.class);
     columnBinding.setEditable(false);
     columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${requestMethod}"));
-    columnBinding.setColumnName("Request Method");
-    columnBinding.setColumnClass(String.class);
-    columnBinding.setEditable(false);
-    columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${responseStatus}"));
-    columnBinding.setColumnName("Response Status");
+    columnBinding.setColumnName("Method");
     columnBinding.setColumnClass(String.class);
     columnBinding.setEditable(false);
     columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${requestUrl}"));
     columnBinding.setColumnName("Request Url");
+    columnBinding.setColumnClass(String.class);
+    columnBinding.setEditable(false);
+    columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${responseStatus}"));
+    columnBinding.setColumnName("Response Status");
     columnBinding.setColumnClass(String.class);
     columnBinding.setEditable(false);
     columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${errorMessage.message}"));
@@ -137,17 +141,36 @@ public class RESTWebServiceErrorExecutionPanel extends AbstractRESTWebServiceExe
   // End of variables declaration//GEN-END:variables
 
   @Override
-  protected JTable getExecutionsTable() {
+  protected JTable getTable() {
     return tableErrorExecution;
   }
 
   @Override
-  protected void refreshQueriesTable(List<RESTWebServiceInfo> webServiceInfoList) {
+  protected void refreshTable() {
     Binding binding = bindingGroup.getBinding("bindingErrorExecutionTable");
     binding.unbind();
     fErrorExecutionInfos.clear();
-    fErrorExecutionInfos.addAll(webServiceInfoList);
+    fErrorExecutionInfos.addAll(getRESTWebServicesView().getErrorExecutionInfoBuffer());
     binding.bind();
+    TableColumnModel columnModel = tableErrorExecution.getColumnModel();
+    columnModel.getColumn(COL_TIME).setCellRenderer(getDateCellRenderer());
     tableErrorExecution.repaint();
+    txtErrorDetail.setText(StringUtils.EMPTY);
   }
+
+  @Override
+  protected List<? extends IExecutionInfo> getTableModelList() {
+    return fErrorExecutionInfos;
+  }
+  
+  @Override
+  protected int getDefaultSortColumnIndex() {
+    return COL_TIME;
+  }
+
+  @Override
+  protected JButton getRefreshButton() {
+    return btnRefresh;
+  }
+  
 }

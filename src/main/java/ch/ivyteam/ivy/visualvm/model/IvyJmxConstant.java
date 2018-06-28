@@ -160,6 +160,7 @@ public final class IvyJmxConstant {
       public static final String REQUEST_METHOD = "requestMethod";
       public static final String REQUEST_URL = "requestUrl";
       public static final String RESPONSE_STATUS = "responseStatusReasonPhrase";
+      public static final String RESPONSE_STATUS_CODE = "responseStatusCode";
       public static final String KEY_ERROR = "error";
       public static final String KEY_APP = "application";
       public static final String KEY_ENVIRONMENT = "environment";

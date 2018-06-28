@@ -1,5 +1,6 @@
 package ch.ivyteam.ivy.visualvm.view;
 
+import ch.ivyteam.ivy.visualvm.view.common.AbstractView;
 import ch.ivyteam.ivy.visualvm.ContentProvider;
 import com.sun.tools.visualvm.core.ui.components.DataViewComponent;
 import javax.swing.JComponent;

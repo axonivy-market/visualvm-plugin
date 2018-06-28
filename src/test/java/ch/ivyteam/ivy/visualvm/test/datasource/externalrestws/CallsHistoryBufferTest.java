@@ -82,7 +82,7 @@ public class CallsHistoryBufferTest extends AbstractTest {
     executionInfo2.setExecutionTime(10347299);
     executionInfo2.setRequestMethod("PUT");
     executionInfo2.setRequestUrl(APPROVAL_SERVICE_URL);
-    executionInfo2.setResponseStatus("Created");
+    executionInfo2.setResponseStatus("201 Created");
 
     final RESTWebServiceInfo executionInfo3 = new RESTWebServiceInfo();
     executionInfo3.setApplication(APPLICATION_NAME);
@@ -110,7 +110,7 @@ public class CallsHistoryBufferTest extends AbstractTest {
     errorInfo1.setExecutionTime(35016698);
     errorInfo1.setRequestMethod(GET_METHOD);
     errorInfo1.setRequestUrl(APPROVAL_SERVICE_URL);
-    errorInfo1.setResponseStatus(StringUtils.EMPTY);
+    errorInfo1.setResponseStatus("-1 ");
     errorInfo1.setErrorMessage(errorMessage);
 
     final RESTWebServiceInfo errorInfo2 = new RESTWebServiceInfo();
@@ -145,7 +145,7 @@ public class CallsHistoryBufferTest extends AbstractTest {
     );
   }
   public static final String GET_METHOD = "GET";
-  public static final String OK_STATUS = "OK";
+  public static final String OK_STATUS = "200 OK";
 
   @Test
   public void testData() throws IOException, MalformedObjectNameException {

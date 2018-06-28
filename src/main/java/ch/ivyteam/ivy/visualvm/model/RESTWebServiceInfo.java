@@ -18,6 +18,7 @@ public class RESTWebServiceInfo implements IExecutionInfo {
   private String fRequestMethod;
   private String fPMVVersionName;
 
+  @Override
   public String getApplication() {
     return fApplication;
   }
@@ -26,6 +27,7 @@ public class RESTWebServiceInfo implements IExecutionInfo {
     fApplication = Application;
   }
 
+  @Override
   public String getEnvironment() {
     return fEnvironment;
   }
@@ -34,6 +36,7 @@ public class RESTWebServiceInfo implements IExecutionInfo {
     fEnvironment = Environment;
   }
 
+  @Override
   public String getConfigName() {
     return fConfigName;
   }
