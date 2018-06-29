@@ -1,10 +1,9 @@
 package ch.ivyteam.ivy.visualvm.test.data;
 
-import ch.ivyteam.ivy.visualvm.exception.IvyVisualVMRuntimeException;
-import ch.ivyteam.ivy.visualvm.test.data.model.BeanTestData;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
@@ -13,8 +12,12 @@ import javax.xml.transform.Source;
 import javax.xml.transform.sax.SAXSource;
 import javax.xml.validation.Schema;
 import javax.xml.validation.SchemaFactory;
+
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
+
+import ch.ivyteam.ivy.visualvm.exception.IvyVisualVMRuntimeException;
+import ch.ivyteam.ivy.visualvm.test.data.model.BeanTestData;
 
 public final class JAXBUtils {
 
@@ -41,7 +44,7 @@ public final class JAXBUtils {
   public static Schema getSchema() {
     SchemaFactory schemaFactory = SchemaFactory.newInstance(javax.xml.XMLConstants.W3C_XML_SCHEMA_NS_URI);
     try (InputStream inputStream = JAXBUtils.class.getClassLoader().getResourceAsStream(
-            "\\ch\\ivyteam\\ivy\\visualvm\\test\\data\\model\\BeanTestData.xsd");) {
+            "ch/ivyteam/ivy/visualvm/test/data/model/BeanTestData.xsd");) {
       Source soureSchema = new SAXSource(new InputSource(inputStream));
       return schemaFactory.newSchema(soureSchema);
     } catch (SAXException | IOException e) {
