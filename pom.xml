@@ -4,17 +4,18 @@
 
   <groupId>ch.ivyteam.ivy</groupId>
   <artifactId>visualvm-plugin</artifactId>
-  <version>6.5.0-SNAPSHOT</version>
+  <version>7.2.0-SNAPSHOT</version>
   <packaging>nbm</packaging>
 
-  <name>Axon.ivy Engine Monitor_6.5</name>
+  <name>Axon.ivy Engine Monitor_7.2</name>
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <netbeans.run.params.ide/>
     <netbeans.run.params>${netbeans.run.params.ide}</netbeans.run.params>
     <visualvm.installation>C:\teamup\svn\6.1\ivyvisualvm\visualvm_137</visualvm.installation>
         
-    <visualvm.version>RELEASE135</visualvm.version>
+    <visualvm.version>RELEASE139</visualvm.version>
+    <openide.version>RELEASE802</openide.version>
     <junit.version>4.11</junit.version>
     <mockito-all.version>1.9.5</mockito-all.version>
     <steelseries.version>3.9.31.1</steelseries.version>
@@ -26,22 +27,45 @@
     <repository>
       <id>visualvm</id>
       <name>VisualVM</name>
-      <url>http://localhost:8082/artifactory/list/visualvm-virtual/</url>
-      <!-- <url>http://bits.netbeans.org/nexus/content/repositories/visualvm/</url> -->
+      <url>http://bits.netbeans.org/nexus/content/repositories/visualvm/</url>
     </repository>
+	<repository>
+		<id>netbeans</id>
+		<name>repository hosting netbeans.org api artifacts</name>
+		<url>http://bits.netbeans.org/maven2/</url>
+		<releases>
+			<enabled>true</enabled>
+		</releases>
+		<snapshots>
+			<enabled>false</enabled>
+		</snapshots>
+	</repository>
   </repositories> 
+  
+  <profiles>
+  	<profile>
+  		<id>local</id>
+  		<repositories>
+			<repository>
+				<id>visualvm</id>
+				<name>VisualVM</name>
+				<url>http://localhost:8082/artifactory/list/visualvm-virtual/</url>
+			</repository>
+  		</repositories>
+  	</profile>
+  </profiles>
   
   <dependencies>
     <!--for visualvm-->
     <dependency>
       <groupId>com.sun.tools.visualvm.api</groupId>
       <artifactId>com-sun-tools-visualvm-application</artifactId>
-      <version>1.4</version>
+      <version>${visualvm.version}</version>
     </dependency>
     <dependency>
       <groupId>com.sun.tools.visualvm.api</groupId>
       <artifactId>com-sun-tools-visualvm-charts</artifactId>
-      <version>1.0</version>
+      <version>${visualvm.version}</version>
     </dependency>
     <dependency>
       <groupId>com.sun.tools.visualvm.api</groupId>
@@ -52,19 +76,19 @@
     <!--Below dependencies are included due to above dependencies but in
     runtime OSGi they are not accessible, so we explicitly declare them -->
     <dependency>
-      <groupId>com.sun.tools.visualvm.api</groupId>
+      <groupId>org.netbeans.api</groupId>
       <artifactId>org-openide-awt</artifactId>
-      <version>7.31.1</version>
+      <version>${openide.version}</version>
     </dependency>
     <dependency>
-      <groupId>com.sun.tools.visualvm.api</groupId>
+      <groupId>org.netbeans.api</groupId>
       <artifactId>org-openide-modules</artifactId>
-      <version>7.23.1</version>
+      <version>${openide.version}</version>
     </dependency>
     <dependency>
-      <groupId>com.sun.tools.visualvm.api</groupId>
+      <groupId>org.netbeans.api</groupId>
       <artifactId>org-openide-util</artifactId>
-      <version>8.15.1</version>
+      <version>${openide.version}</version>
     </dependency>
     <dependency>
       <groupId>com.sun.tools.visualvm.api</groupId>
@@ -189,7 +213,7 @@
       <plugin>
 	<groupId>org.jacoco</groupId>
 	<artifactId>jacoco-maven-plugin</artifactId>
-	<version>0.6.5.201403032054</version>
+	<version>0.8.1</version>
 	<executions>
 	  <execution>
 	    <goals>
