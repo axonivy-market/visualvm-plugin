@@ -140,8 +140,8 @@
 	<extensions>true</extensions>
 	<configuration>
 	  <netbeansInstallation>${visualvm.installation}</netbeansInstallation>
-	  <author>ivyTeam AG</author>
-	  <homePageUrl>http://www.axonivy.com</homePageUrl>
+	  <author>AXON Ivy AG</author>
+	  <homePageUrl>https://www.axonivy.com</homePageUrl>
 	  <licenseFile>${basedir}/target/license.txt</licenseFile>
 	  <licenseName>Axon.ivy Engine Monitor</licenseName>
 	  <requiresRestart>true</requiresRestart>
