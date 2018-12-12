@@ -7,9 +7,9 @@
            uri="antlib:org.apache.maven.artifact.ant"
            classpath="antlibs/maven-ant-tasks-2.1.3.jar" />
 		   
-  <property name="cert.location" value="D:/VN_TEAM_UP/share/cert/keystore.jks" />
+  <property name="cert.location" value="keystore.jks" />
   <property name="cert.type" value="jks" />
-  <property name="cert.password" value="PzS1r@c5jlM4Tw" />
+  <property name="cert.password" value="?" />
   <property name="cert.alias" value="AXON IVY AG" />
   <property name="cert.tsaurl" value="http://timestamp.digicert.com/" description="URL for a timestamp authority"/>
   
@@ -17,31 +17,33 @@
   <property name="deploy.username" value="build-teamUP" />
   <property name="deploy.password" value="buildivyup123" />
   
-  <target name="deploy" if="${is.deploy}">
-	<!-- Find the NBM file -->
-	<fileset id="fileset.des.nbm" dir="target/nbm">
-      <include name="*SNAPSHOT.nbm" />
-    </fileset>
-    <pathconvert property="file.plugin.nbm" refid="fileset.des.nbm" setonempty="false" />
-  
-	<!-- Sign the NBM file -->
-	<signjar
-		jar="${file.plugin.nbm}"
-		keystore="${cert.location}"
-		storetype="${cert.type}"
-		storepass="${cert.password}"
-		alias="${cert.alias}"
-		tsaurl="${cert.tsaurl}">
-	</signjar>
-	
-	<!-- Deploy to repository -->
-    <artifact:pom id="visualvm-plugin" file="pom.xml"/>
-    <artifact:deploy file="${file.plugin.nbm}">
-      <remoteRepository url="${deploy.url}">
-        <authentication username="${deploy.username}" password="${deploy.password}"/>
-      </remoteRepository>
-      <pom refid="visualvm-plugin"/>
-    </artifact:deploy>
+  <target name="deploy">
+    
+    <!-- Find the NBM file -->
+    <fileset id="fileset.des.nbm" dir="target/nbm">
+        <include name="*SNAPSHOT.nbm" />
+      </fileset>
+      <pathconvert property="file.plugin.nbm" refid="fileset.des.nbm" setonempty="false" />
+    
+    <!-- Sign the NBM file -->
+    <signjar
+      jar="${file.plugin.nbm}"
+      keystore="${cert.location}"
+      storetype="${cert.type}"
+      storepass="${cert.password}"
+      alias="${cert.alias}"
+      tsaurl="${cert.tsaurl}">
+    </signjar>
+    
+    <!-- Deploy to repository -->
+      <artifact:pom id="visualvm-plugin" file="pom.xml"/>
+      <artifact:deploy file="${file.plugin.nbm}">
+        <remoteRepository url="${deploy.url}">
+          <authentication username="${deploy.username}" password="${deploy.password}"/>
+        </remoteRepository>
+        <pom refid="visualvm-plugin"/>
+      </artifact:deploy>
+
   </target>
   
 </project>

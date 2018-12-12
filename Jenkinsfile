@@ -9,11 +9,16 @@ pipeline {
     buildDiscarder(logRotator(numToKeepStr: '30', artifactNumToKeepStr: '5'))
   }
   stages {
-    stage('build and deploy') {
-      steps {
+    stage('build and deploy') {      
+      steps {        
         script {
           maven cmd: 'clean verify -Dtest=!*GaugeData*'
-          sh 'ant -f deploy.xml -Dis.deploy=true'
+
+          withCredentials([
+            string(credentialsId: 'keystore-PASSWORD-visual-vm-plugin', variable: 'KEYSTORE_PASSWORD'),
+            file(credentialsId: 'keystore-visual-vm-plugin', variable: 'KEYSTORE_FILE')]) {
+            sh "ant -f deploy.xml -Dcert.location=${env.KEYSTORE_FILE} -Dcert.password=${env.KEYSTORE_PASSWORD}"
+          }
         }
       }
       post {
