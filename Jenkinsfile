@@ -4,6 +4,7 @@ pipeline {
   }
   triggers {
     cron '@midnight'
+    pollSCM '@midnight'
   }
   options {
     buildDiscarder(logRotator(numToKeepStr: '30', artifactNumToKeepStr: '5'))
@@ -25,9 +26,11 @@ pipeline {
 
     stage('deploy') {
       when {
-        branch '7.0'
         expression {
           currentBuild.result == null || currentBuild.result == 'SUCCESS' 
+        }
+        not {
+          triggeredBy 'TimerTrigger'
         }
       }
       steps {        
