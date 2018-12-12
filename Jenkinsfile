@@ -1,8 +1,6 @@
 pipeline {
   agent {
-    docker {
-      image 'maven:3.5.2-jdk-8'
-    }
+    dockerfile true
   }
   triggers {
     cron '@midnight'
@@ -15,6 +13,7 @@ pipeline {
       steps {
         script {
           maven cmd: 'clean verify -Dtest=!*GaugeData*'
+          sh 'ant -f deploy.xml -Dis.deploy=true'
         }
       }
       post {
