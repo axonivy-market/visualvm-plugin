@@ -13,7 +13,7 @@ pipeline {
     stage('build') {      
       steps {        
         script {
-          maven cmd: 'clean verify'
+          maven cmd: 'clean verify -Dtest=!*GaugeData*'
         }
       }
       post {
