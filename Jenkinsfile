@@ -14,12 +14,12 @@ pipeline {
     stage('build and deploy') {
       steps {
         script {
-          maven cmd: 'clean verify'
+          maven cmd: 'clean verify -Dtest=!*GaugeData*'
         }
       }
       post {
         success {
-          archiveArtifacts '/target/nbm/*.nbm'
+          archiveArtifacts 'target/nbm/*.nbm'
           junit 'target/surefire-reports/**/*.xml' 
         }
       }
