@@ -26,8 +26,7 @@
     <repository>
       <id>visualvm</id>
       <name>VisualVM</name>
-      <url>http://localhost:8082/artifactory/list/visualvm-virtual/</url>
-      <!-- <url>http://bits.netbeans.org/nexus/content/repositories/visualvm/</url> -->
+      <url>http://bits.netbeans.org/nexus/content/repositories/visualvm/</url>
     </repository>
   </repositories> 
   
