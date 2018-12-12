@@ -35,12 +35,12 @@
     <dependency>
       <groupId>com.sun.tools.visualvm.api</groupId>
       <artifactId>com-sun-tools-visualvm-application</artifactId>
-      <version>1.4</version>
+      <version>${visualvm.version}</version>
     </dependency>
     <dependency>
       <groupId>com.sun.tools.visualvm.api</groupId>
       <artifactId>com-sun-tools-visualvm-charts</artifactId>
-      <version>1.0</version>
+      <version>${visualvm.version}</version>
     </dependency>
     <dependency>
       <groupId>com.sun.tools.visualvm.api</groupId>
@@ -53,17 +53,17 @@
     <dependency>
       <groupId>com.sun.tools.visualvm.api</groupId>
       <artifactId>org-openide-awt</artifactId>
-      <version>7.31.1</version>
+      <version>${visualvm.version}</version>
     </dependency>
     <dependency>
       <groupId>com.sun.tools.visualvm.api</groupId>
       <artifactId>org-openide-modules</artifactId>
-      <version>7.23.1</version>
+      <version>${visualvm.version}</version>
     </dependency>
     <dependency>
       <groupId>com.sun.tools.visualvm.api</groupId>
       <artifactId>org-openide-util</artifactId>
-      <version>8.15.1</version>
+      <version>${visualvm.version}</version>
     </dependency>
     <dependency>
       <groupId>com.sun.tools.visualvm.api</groupId>
