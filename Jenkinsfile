@@ -14,7 +14,7 @@ pipeline {
       steps {        
         script {
           maven cmd: 'clean verify -Dtest=!*GaugeData*'
-          maven cmd: 'sonar:sonar -Psonar'
+          maven cmd: 'sonar:sonar -Dsonar.host.url=http://zugprosonar'
         }
       }
       post {
