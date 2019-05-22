@@ -7,7 +7,7 @@
   <version>7.2.0-SNAPSHOT</version>
   <packaging>nbm</packaging>
 
-  <name>Axon.ivy Engine Monitor_7.2</name>
+  <name>ivy-visualvm</name>
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <netbeans.run.params.ide/>
