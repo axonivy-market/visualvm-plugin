@@ -39,8 +39,9 @@ pipeline {
         script {
           withCredentials([
             string(credentialsId: 'keystore-password-visual-vm-plugin', variable: 'KEYSTORE_PASSWORD'),
-            file(credentialsId: 'keystore-visual-vm-plugin', variable: 'KEYSTORE_FILE')]) {
-            sh "ant -f deploy.xml -Dcert.location=${env.KEYSTORE_FILE} -Dcert.password=${env.KEYSTORE_PASSWORD}"
+            file(credentialsId: 'keystore-visual-vm-plugin', variable: 'KEYSTORE_FILE')]),
+            string(credentialsId: 'nexus.ivyteam.io', variable: 'DEPLOY_PASSWORD'){
+            sh "ant -f deploy.xml -Dcert.location=${env.KEYSTORE_FILE} -Dcert.password=${env.KEYSTORE_PASSWORD} -Ddeploy.password=${env.DEPLOY_PASSWORD}"
           }
         }
       }

@@ -13,9 +13,8 @@
   <property name="cert.alias" value="AXON IVY AG" />
   <property name="cert.tsaurl" value="http://timestamp.digicert.com/" description="URL for a timestamp authority"/>
   
-  <property name="deploy.url" value="http://192.168.3.122/nexus/content/repositories/build-vn-snapshots" />
-  <property name="deploy.username" value="build-teamUP" />
-  <property name="deploy.password" value="buildivyup123" />
+  <property name="deploy.url" value="https://nexus.ivyteam.io/repository/maven-snapshots/" />
+  <property name="deploy.username" value="deploy" />
   
   <target name="deploy">
     
