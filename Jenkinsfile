@@ -27,9 +27,6 @@ pipeline {
     stage('deploy') {
       when {
         branch 'master'
-        not {
-          triggeredBy 'TimerTrigger'
-        }
       }
       steps {
         script {
