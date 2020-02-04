@@ -26,7 +26,7 @@ pipeline {
 
     stage('deploy') {
       when {
-        branch 'master'
+        branch 'release/8.0'
       }
       steps {
         script {
