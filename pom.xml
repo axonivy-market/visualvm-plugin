@@ -29,6 +29,12 @@
 
   <repositories>
     <repository>
+      <id>visualvm</id>
+      <name>VisualVM</name>
+      <url>http://bits.netbeans.org/nexus/content/repositories/visualvm/</url>
+    </repository>
+
+    <repository>
       <id>netbeans</id>
       <name>repository hosting netbeans.org api artifacts</name>
       <url>http://bits.netbeans.org/maven2/</url>
