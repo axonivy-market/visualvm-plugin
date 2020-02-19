@@ -7,6 +7,7 @@
   <packaging>nbm</packaging>
 
   <name>ivy-visualvm</name>
+
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <netbeans.run.params.ide />
@@ -46,24 +47,17 @@
   </repositories>
 
   <distributionManagement>
+    <repository>
+      <id>repo.axonivy.com</id>
+      <url>http://repo.axonivy.com/artifactory/libs-release-local</url>
+    </repository>
     <snapshotRepository>
-      <id>nexus.ivyteam.io</id>
-      <url>https://nexus.ivyteam.io/repository/maven-snapshots-8/</url>
+      <id>repo.axonivy.com</id>
+      <url>http://repo.axonivy.com/artifactory/libs-snapshot-local</url>
     </snapshotRepository>
   </distributionManagement>
 
   <profiles>
-    <profile>
-      <id>local</id>
-      <repositories>
-        <repository>
-          <id>visualvm</id>
-          <name>VisualVM</name>
-          <url>http://localhost:8082/artifactory/list/visualvm-virtual/</url>
-        </repository>
-      </repositories>
-    </profile>
-
     <profile>
       <id>sign</id>
       <build>

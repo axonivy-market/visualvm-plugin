@@ -2,13 +2,15 @@ pipeline {
   agent {
     dockerfile true
   }
+
   triggers {
     cron '@midnight'
-    pollSCM '@midnight'
   }
+
   options {
     buildDiscarder(logRotator(numToKeepStr: '30', artifactNumToKeepStr: '5'))
   }
+
   stages {
     stage('build') {      
       steps {        
@@ -31,20 +33,6 @@ pipeline {
       steps {
         script {
           build('deploy -Dmaven.test.skip=true')
-        }
-      }
-    }
-
-    stage('sonar') {
-      when {
-        branch 'master'
-        expression {
-          currentBuild.result == 'SUCCESS' 
-        }
-      }    
-      steps {        
-        script {
-          maven cmd: 'sonar:sonar -Dsonar.host.url=https://sonar.ivyteam.io'
         }
       }
     }
