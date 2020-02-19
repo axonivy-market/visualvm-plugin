@@ -3,7 +3,7 @@
 
   <groupId>ch.ivyteam.visualvm</groupId>
   <artifactId>visualvm-plugin</artifactId>
-  <version>7.0.0</version>
+  <version>7.0.1-SNAPSHOT</version>
   <packaging>nbm</packaging>
 
   <name>ivy-visualvm</name>
