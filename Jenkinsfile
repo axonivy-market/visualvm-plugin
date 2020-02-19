@@ -2,23 +2,25 @@ pipeline {
   agent {
     dockerfile true
   }
+
   triggers {
     cron '@midnight'
-    pollSCM '@midnight'
   }
+
   options {
     buildDiscarder(logRotator(numToKeepStr: '30', artifactNumToKeepStr: '5'))
   }
+
   stages {
     stage('build') {      
       steps {        
         script {
-          maven cmd: 'clean verify -Dtest=!*GaugeData*'
+          build('verify -Dtest=!*GaugeData*')
         }
       }
       post {
         success {
-          archiveArtifacts 'target/nbm/*.nbm'
+          archiveArtifacts 'target/*.nbm'
           junit 'target/surefire-reports/**/*.xml' 
         }
       }
@@ -26,22 +28,23 @@ pipeline {
 
     stage('deploy') {
       when {
-        expression {
-          currentBuild.result == null || currentBuild.result == 'SUCCESS' 
-        }
-        not {
-          triggeredBy 'TimerTrigger'
-        }
+        branch 'release/7.0'
       }
-      steps {        
+      steps {
         script {
-          withCredentials([
-            string(credentialsId: 'keystore-password-visual-vm-plugin', variable: 'KEYSTORE_PASSWORD'),
-            file(credentialsId: 'keystore-visual-vm-plugin', variable: 'KEYSTORE_FILE')]) {
-            sh "ant -f deploy.xml -Dcert.location=${env.KEYSTORE_FILE} -Dcert.password=${env.KEYSTORE_PASSWORD}"
-          }
+          build('deploy -Dmaven.test.skip=true')
         }
       }
     }
+  }
+}
+
+def build(phase) {
+  withCredentials([
+    string(credentialsId: 'keystore-password-visual-vm-plugin', variable: 'KEYSTORE_PASSWORD'),
+    file(credentialsId: 'keystore-visual-vm-plugin', variable: 'KEYSTORE_FILE')]){
+    maven cmd: "clean ${phase} " +
+                "-P sign " +
+                "-Dcert.location=${env.KEYSTORE_FILE} -Dcert.password=${env.KEYSTORE_PASSWORD}"
   }
 }
