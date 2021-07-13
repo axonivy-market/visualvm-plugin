@@ -6,8 +6,6 @@
   <version>8.0.1-SNAPSHOT</version>
   <packaging>nbm</packaging>
 
-  <name>ivy-visualvm</name>
-
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <netbeans.run.params.ide />
@@ -28,33 +26,30 @@
   </properties>
 
   <repositories>
+    <!-- dead repo -->
+    <!--
     <repository>
       <id>visualvm</id>
-      <name>VisualVM</name>
-      <url>http://bits.netbeans.org/nexus/content/repositories/visualvm/</url>
+      <url>https://bits.netbeans.org/nexus/content/repositories/visualvm/</url>
     </repository>
+    -->
+
+    <repository>
+      <id>offline-repo</id>
+      <url>file://repo</url>
+    </repository>
+
     <repository>
       <id>netbeans</id>
-      <name>repository hosting netbeans.org api artifacts</name>
-      <url>http://bits.netbeans.org/maven2/</url>
-      <releases>
-        <enabled>true</enabled>
-      </releases>
-      <snapshots>
-        <enabled>false</enabled>
-      </snapshots>
+      <url>https://netbeans.apidesign.org/maven2/</url>
     </repository>
   </repositories>
 
   <distributionManagement>
     <repository>
-      <id>repo.axonivy.com</id>
-      <url>http://repo.axonivy.com/artifactory/libs-release-local</url>
+      <id>github</id>
+      <url>https://maven.pkg.github.com/axonivy-market/visualvm-plugin</url>
     </repository>
-    <snapshotRepository>
-      <id>repo.axonivy.com</id>
-      <url>http://repo.axonivy.com/artifactory/libs-snapshot-local</url>
-    </snapshotRepository>
   </distributionManagement>
 
   <profiles>

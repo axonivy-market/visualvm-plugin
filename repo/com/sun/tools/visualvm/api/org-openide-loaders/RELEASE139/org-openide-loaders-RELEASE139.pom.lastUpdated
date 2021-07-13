@@ -1,0 +1,7 @@
+#NOTE: This is a Maven Resolver internal implementation file, its format can be changed without prior notice.
+#Mon Jul 12 11:32:18 CEST 2021
+https\://repo1.maven.org/maven2/.error=
+https\://mvn-mirror.ivyteam.io/repository/github-packages/.error=
+https\://repo1.maven.org/maven2/.lastUpdated=1626082338050
+https\://mvn-mirror.ivyteam.io/repository/visualvm/.lastUpdated=1626082338421
+https\://mvn-mirror.ivyteam.io/repository/github-packages/.lastUpdated=1626082338083
