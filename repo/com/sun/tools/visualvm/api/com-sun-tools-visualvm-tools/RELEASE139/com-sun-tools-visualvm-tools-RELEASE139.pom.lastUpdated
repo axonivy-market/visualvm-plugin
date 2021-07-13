@@ -1,0 +1,15 @@
+#NOTE: This is a Maven Resolver internal implementation file, its format can be changed without prior notice.
+#Mon Jul 12 11:32:29 CEST 2021
+@default-netbeans-http\://bits.netbeans.org/maven2/.lastUpdated=1626082195818
+https\://repo1.maven.org/maven2/.error=
+http\://bits.netbeans.org/maven2/.error=Could not transfer artifact com.sun.tools.visualvm.api\:com-sun-tools-visualvm-tools\:pom\:RELEASE139 from/to netbeans (http\://bits.netbeans.org/maven2/)\: Authentication failed for http\://bits.netbeans.org/maven2/com/sun/tools/visualvm/api/com-sun-tools-visualvm-tools/RELEASE139/com-sun-tools-visualvm-tools-RELEASE139.pom 401 Repository decommissioned. Please refer to https\://netbeans.apache.org/about/oracle-transition.html for more information.
+@default-visualvm-http\://bits.netbeans.org/nexus/content/repositories/visualvm/.lastUpdated=1626082195454
+@default-visualvm-https\://bits.netbeans.org/nexus/content/repositories/visualvm/.lastUpdated=1626081270526
+https\://repo1.maven.org/maven2/.lastUpdated=1626081269807
+https\://netbeans.apidesign.org/maven2/.lastUpdated=1626081270647
+https\://mvn-mirror.ivyteam.io/repository/visualvm/.lastUpdated=1626082349890
+https\://mvn-mirror.ivyteam.io/repository/github-packages/.lastUpdated=1626081269985
+https\://mvn-mirror.ivyteam.io/repository/github-packages/.error=
+https\://bits.netbeans.org/nexus/content/repositories/visualvm/.error=Could not transfer artifact com.sun.tools.visualvm.api\:com-sun-tools-visualvm-tools\:pom\:RELEASE139 from/to visualvm (https\://bits.netbeans.org/nexus/content/repositories/visualvm/)\: Authentication failed for https\://bits.netbeans.org/nexus/content/repositories/visualvm/com/sun/tools/visualvm/api/com-sun-tools-visualvm-tools/RELEASE139/com-sun-tools-visualvm-tools-RELEASE139.pom 401 Repository decommissioned. Please refer to https\://netbeans.apache.org/about/oracle-transition.html for more information.
+http\://bits.netbeans.org/nexus/content/repositories/visualvm/.error=Could not transfer artifact com.sun.tools.visualvm.api\:com-sun-tools-visualvm-tools\:pom\:RELEASE139 from/to visualvm (http\://bits.netbeans.org/nexus/content/repositories/visualvm/)\: Authentication failed for http\://bits.netbeans.org/nexus/content/repositories/visualvm/com/sun/tools/visualvm/api/com-sun-tools-visualvm-tools/RELEASE139/com-sun-tools-visualvm-tools-RELEASE139.pom 401 Repository decommissioned. Please refer to https\://netbeans.apache.org/about/oracle-transition.html for more information.
+https\://netbeans.apidesign.org/maven2/.error=
