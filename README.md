@@ -21,11 +21,10 @@ about your running Axon Ivy Engine.
 
 ## Relase Management
 
-`master` branch will be built as `SNAPSHOT` artifact.
-
 If you want to create a new release then proceed as follows:
 
 1. Go to GitHub repository
 2. Go to Actions
 3. Go to Release-Build
-4. Run workflow and select branch: master
+4. Run workflow and select the release branch
+5. Merge the PR
