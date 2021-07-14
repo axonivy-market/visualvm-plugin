@@ -40,5 +40,5 @@ jobs:
     - name: pull-request
       uses: repo-sync/pull-request@v2
       with:
-        destination_branch: ${{ steps.branch-name.outputs.current_branch }}
+        destination_branch: master
         github_token: ${{ secrets.GITHUB_TOKEN }}
