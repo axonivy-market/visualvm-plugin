@@ -41,6 +41,6 @@ jobs:
       uses: repo-sync/pull-request@v2
       with:
         destination_branch: ${{ steps.branch-name.outputs.current_branch }}
-        source_branch: "release-$GITHUB_SHA"
+        source_branch: "release-${{ secrets.GITHUB_SHA }}"
         pr_title: "Release"
         github_token: ${{ secrets.GITHUB_TOKEN }}
