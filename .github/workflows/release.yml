@@ -19,6 +19,9 @@ jobs:
         java-version: 8
         server-id: github
 
+    - name: echo1
+      run: echo "running on : ${{ steps.branch-name.outputs.current_branch }}"
+
     - name: Configure Git user
       run: |
         git config user.email "actions@github.com"
@@ -37,8 +40,12 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       run: mvn release:prepare release:perform --batch-mode -P sign -Darguments="-Dcert.keystorepw=${{ secrets.PASSWORD }} -Dcert.location=${{ steps.load_keystore.outputs.filePath }}"
     
+    - name: echo2
+      run: echo "running on : ${{ steps.branch-name.outputs.current_branch }}"
+
     - name: pull-request
       uses: repo-sync/pull-request@v2
       with:
-        destination_branch: release/8.0
+        destination_branch: ${{ steps.branch-name.outputs.current_branch }}
+        pr_title: "Release"
         github_token: ${{ secrets.GITHUB_TOKEN }}
