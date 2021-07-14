@@ -9,6 +9,10 @@ jobs:
     steps:
     - uses: actions/checkout@v2
 
+    - name: Get branch name
+      id: branch-name
+      uses: tj-actions/branch-names@v4.5
+
     - name: Setup Java JDK
       uses: actions/setup-java@v1.4.3
       with:
@@ -19,6 +23,7 @@ jobs:
       run: |
         git config user.email "actions@github.com"
         git config user.name "GitHub Actions"
+        git checkout -b new-release
 
     - name: Load Keystore
       id: load_keystore
@@ -31,3 +36,11 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       run: mvn release:prepare release:perform --batch-mode -P sign -Darguments="-Dcert.keystorepw=${{ secrets.PASSWORD }} -Dcert.location=${{ steps.load_keystore.outputs.filePath }}"
+
+    - name: pull-request
+      uses: repo-sync/pull-request@v2
+      with:
+        destination_branch: ${{ steps.branch-name.outputs.current_branch }}
+        source_branch: new-release
+        pr_title: "Release"
+        github_token: ${{ secrets.GITHUB_TOKEN }}
