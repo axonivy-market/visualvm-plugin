@@ -25,7 +25,7 @@ jobs:
         encodedString: ${{ secrets.KEYSTORE }}
 
     - name: Build with Maven
-      run: mvn clean verify --batch-mode -P sign -Dcert.location=${{ steps.load_keystore.outputs.filePath }} -Dcert.password=${{ secrets.PASSWORD }}
+      run: mvn clean verify --batch-mode -P sign -Dcert.location=${{ steps.load_keystore.outputs.filePath }} -Dcert.keystorepw=${{ secrets.PASSWORD }}
 
     - name: Publish Unit Test Results
       uses: EnricoMi/publish-unit-test-result-action@v1
@@ -36,5 +36,5 @@ jobs:
     - name: Keep build artifact
       uses: actions/upload-artifact@v2
       with:
-        name: visualvm-plugin.nbm
+        name: visualvm-plugin
         path: target/nbm/*.nbm
