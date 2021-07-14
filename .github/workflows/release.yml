@@ -19,6 +19,7 @@ jobs:
       run: |
         git config user.email "actions@github.com"
         git config user.name "GitHub Actions"
+        git checkout -b release-${{ GITHUB_SHA }}
 
     - name: Load Keystore
       id: load_keystore
@@ -31,3 +32,6 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       run: mvn release:prepare release:perform --batch-mode -P sign -Darguments="-Dcert.keystorepw=${{ secrets.PASSWORD }} -Dcert.location=${{ steps.load_keystore.outputs.filePath }}"
+
+#    - name: Create Pull Request
+#      uses: peter-evans/create-pull-request@v3
