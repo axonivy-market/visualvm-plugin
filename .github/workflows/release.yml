@@ -9,6 +9,10 @@ jobs:
     steps:
     - uses: actions/checkout@v2
 
+    - name: Get branch name
+        id: branch-name
+        uses: tj-actions/branch-names@v4.5
+
     - name: Setup Java JDK
       uses: actions/setup-java@v1.4.3
       with:
@@ -32,6 +36,9 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       run: mvn release:prepare release:perform --batch-mode -P sign -Darguments="-Dcert.keystorepw=${{ secrets.PASSWORD }} -Dcert.location=${{ steps.load_keystore.outputs.filePath }}"
-
-    - name: Create Pull Request
-      uses: peter-evans/create-pull-request@v3
+    
+    - name: pull-request
+      uses: repo-sync/pull-request@v2
+      with:
+        destination_branch: ${{ steps.branch-name.outputs.current_branch }}
+        github_token: ${{ secrets.GITHUB_TOKEN }}
