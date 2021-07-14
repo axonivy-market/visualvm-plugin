@@ -30,4 +30,4 @@ jobs:
     - name: Build with Maven
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      run: mvn release:prepare release:perform --batch-mode -P sign -Dcert.location=${{ steps.load_keystore.outputs.filePath }} -Dcert.password=${{ secrets.PASSWORD }}
+      run: mvn release:prepare release:perform --batch-mode -P sign -Darguments="-Dcert.keystorepw=${{ secrets.PASSWORD }} -Dcert.location=${{ steps.load_keystore.outputs.filePath }}"
