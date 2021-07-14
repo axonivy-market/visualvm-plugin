@@ -40,5 +40,5 @@ jobs:
     - name: pull-request
       uses: repo-sync/pull-request@v2
       with:
-        destination_branch: master
+        destination_branch: release/8.0
         github_token: ${{ secrets.GITHUB_TOKEN }}
