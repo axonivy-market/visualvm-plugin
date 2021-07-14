@@ -33,5 +33,5 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       run: mvn release:prepare release:perform --batch-mode -P sign -Darguments="-Dcert.keystorepw=${{ secrets.PASSWORD }} -Dcert.location=${{ steps.load_keystore.outputs.filePath }}"
 
-#    - name: Create Pull Request
-#      uses: peter-evans/create-pull-request@v3
+    - name: Create Pull Request
+      uses: peter-evans/create-pull-request@v3
