@@ -1,6 +1,6 @@
 # VisualVM Plugin
 
-![CI Build](https://github.com/axonivy-market/visualvm-plugin/actions/workflows/ci.yml/badge.svg)
+[![CI Build](https://github.com/axonivy-market/visualvm-plugin/actions/workflows/ci.yml/badge.svg)](https://github.com/axonivy-market/visualvm-plugin/actions/workflows/ci.yml)
 
 The Axon Ivy VisualVM plugin enables real-time monitoring of an Axon Ivy Engine
 for:
