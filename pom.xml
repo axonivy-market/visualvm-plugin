@@ -1,31 +1,12 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
-
   <groupId>ch.ivyteam.visualvm</groupId>
-  <artifactId>visualvm-plugin</artifactId>
+  <artifactId>visualvm-plugin-modules</artifactId>
   <version>8.0.1-SNAPSHOT</version>
-  <packaging>nbm</packaging>
-
-  <properties>
-    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <netbeans.run.params.ide />
-    <netbeans.run.params>${netbeans.run.params.ide}</netbeans.run.params>
-    <visualvm.installation>C:\teamup\svn\6.1\ivyvisualvm\visualvm_137</visualvm.installation>
-
-    <visualvm.version>RELEASE139</visualvm.version>
-    <openide.version>RELEASE802</openide.version>
-    <junit.version>4.11</junit.version>
-    <mockito-all.version>1.9.5</mockito-all.version>
-    <steelseries.version>3.9.31.1</steelseries.version>
-    <trident.version>7.2.1</trident.version>
-    <commons-lang.version>2.6</commons-lang.version>
-
-    <cert.type>jks</cert.type>
-    <cert.alias>AXON IVY AG</cert.alias>
-    <cert.tsaurl>http://timestamp.digicert.com/</cert.tsaurl>
-  </properties>
+  <packaging>pom</packaging>
 
   <modules>
+    <module>visualvm-plugin</module>
     <module>visualvm-plugin-product</module>
   </modules>
 
@@ -34,222 +15,16 @@
     <tag>HEAD</tag>
   </scm>
 
-  <repositories>
-    <!-- dead repo -->
-    <!--
-    <repository>
-      <id>visualvm</id>
-      <url>https://bits.netbeans.org/nexus/content/repositories/visualvm/</url>
-    </repository>
-    -->
-
-    <repository>
-      <id>offline-repo</id>
-      <url>file://repo</url>
-    </repository>
-
-    <repository>
-      <id>netbeans</id>
-      <url>http://netbeans.apidesign.org/maven2/</url>
-    </repository>
-  </repositories>
-
-  <distributionManagement>
-    <repository>
-      <id>github</id>
-      <url>https://maven.pkg.github.com/axonivy-market/visualvm-plugin</url>
-    </repository>
-  </distributionManagement>
-
-  <profiles>
-    <profile>
-      <id>sign</id>
-      <build>
-        <plugins>
-          <plugin>
-            <groupId>org.apache.maven.plugins</groupId>
-            <artifactId>maven-jarsigner-plugin</artifactId>
-            <version>3.0.0</version>
-            <executions>
-              <execution>
-                <id>sign</id>
-                <goals>
-                  <goal>sign</goal>
-                </goals>
-              </execution>
-            </executions>
-            <configuration>
-              <archive>${basedir}/target/visualvm-plugin-${project.version}.nbm</archive>
-              <keystore>${cert.location}</keystore>
-              <storetype>${cert.type}</storetype>
-              <storepass>${cert.keystorepw}</storepass>
-              <alias>${cert.alias}</alias>
-              <tsa>${cert.tsaurl}</tsa>
-            </configuration>
-          </plugin>
-        </plugins>
-      </build>
-    </profile>
-  </profiles>
-
-  <dependencies>
-    <!--for visualvm-->
-    <dependency>
-      <groupId>com.sun.tools.visualvm.api</groupId>
-      <artifactId>com-sun-tools-visualvm-application</artifactId>
-      <version>${visualvm.version}</version>
-    </dependency>
-    <dependency>
-      <groupId>com.sun.tools.visualvm.api</groupId>
-      <artifactId>com-sun-tools-visualvm-charts</artifactId>
-      <version>${visualvm.version}</version>
-    </dependency>
-    <dependency>
-      <groupId>com.sun.tools.visualvm.api</groupId>
-      <artifactId>com-sun-tools-visualvm-jmx</artifactId>
-      <version>${visualvm.version}</version>
-    </dependency>
-
-    <!--Below dependencies are included due to above dependencies but in
-    runtime OSGi they are not accessible, so we explicitly declare them -->
-    <dependency>
-      <groupId>org.netbeans.api</groupId>
-      <artifactId>org-openide-awt</artifactId>
-      <version>${openide.version}</version>
-    </dependency>
-    <dependency>
-      <groupId>org.netbeans.api</groupId>
-      <artifactId>org-openide-modules</artifactId>
-      <version>${openide.version}</version>
-    </dependency>
-    <dependency>
-      <groupId>org.netbeans.api</groupId>
-      <artifactId>org-openide-util</artifactId>
-      <version>${openide.version}</version>
-    </dependency>
-    <dependency>
-      <groupId>com.sun.tools.visualvm.api</groupId>
-      <artifactId>com-sun-tools-visualvm-core</artifactId>
-      <version>${visualvm.version}</version>
-    </dependency>
-    <dependency>
-      <groupId>com.sun.tools.visualvm.api</groupId>
-      <artifactId>com-sun-tools-visualvm-tools</artifactId>
-      <version>${visualvm.version}</version>
-    </dependency>
-    <dependency>
-      <groupId>junit</groupId>
-      <artifactId>junit</artifactId>
-      <version>${junit.version}</version>
-      <scope>test</scope>
-    </dependency>
-
-    <dependency>
-      <groupId>org.mockito</groupId>
-      <artifactId>mockito-all</artifactId>
-      <version>${mockito-all.version}</version>
-      <scope>test</scope>
-    </dependency>
-    <dependency>
-      <groupId>org.bidib.jbidib.eu.hansolo</groupId>
-      <artifactId>SteelSeries</artifactId>
-      <version>${steelseries.version}</version>
-    </dependency>
-
-    <dependency>
-      <groupId>commons-lang</groupId>
-      <artifactId>commons-lang</artifactId>
-      <version>${commons-lang.version}</version>
-    </dependency>
-    <dependency>
-      <groupId>org.jdesktop</groupId>
-      <artifactId>beansbinding</artifactId>
-      <version>1.2.1</version>
-    </dependency>
-  </dependencies>
-
   <build>
-    <plugins>
-      <plugin>
-        <groupId>org.codehaus.mojo</groupId>
-        <artifactId>nbm-maven-plugin</artifactId>
-        <version>3.14</version>
-        <extensions>true</extensions>
-        <configuration>
-          <netbeansInstallation>${visualvm.installation}</netbeansInstallation>
-          <author>AXON Ivy AG</author>
-          <homePageUrl>https://www.axonivy.com</homePageUrl>
-          <licenseFile>${basedir}/target/license.txt</licenseFile>
-          <licenseName>Axon.ivy Engine Monitor</licenseName>
-          <requiresRestart>true</requiresRestart>
-        </configuration>
-      </plugin>
-
-      <plugin>
-        <!-- NetBeans 6.9+ requires JDK 6, starting NetBeans 7.4 source 1.7 will be required   -->
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-compiler-plugin</artifactId>
-        <version>2.5.1</version>
-        <configuration>
-          <source>1.7</source>
-          <target>1.7</target>
-        </configuration>
-      </plugin>
-
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-jar-plugin</artifactId>
-        <version>2.4</version>
-        <configuration>
-          <!-- to have the jar plugin pickup the nbm generated manifest -->
-          <useDefaultManifestFile>true</useDefaultManifestFile>
-        </configuration>
-      </plugin>
-
-      <plugin>
-        <groupId>com.keyboardsamurais.maven</groupId>
-        <artifactId>maven-timestamp-plugin</artifactId>
-        <version>1.0</version>
-        <configuration>
-          <propertyName>currentYear</propertyName>
-          <timestampPattern>yyyy</timestampPattern>
-        </configuration>
-        <executions>
-          <execution>
-            <goals>
-              <goal>create</goal>
-            </goals>
-          </execution>
-        </executions>
-      </plugin>
-
-      <plugin>
-        <groupId>com.google.code.maven-replacer-plugin</groupId>
-        <artifactId>replacer</artifactId>
-        <version>1.5.2</version>
-        <executions>
-          <execution>
-            <phase>prepare-package</phase>
-            <goals>
-              <goal>replace</goal>
-            </goals>
-          </execution>
-        </executions>
-        <configuration>
-          <file>${basedir}/license.txt</file>
-          <outputFile>${basedir}/target/license.txt</outputFile>
-          <replacements>
-            <replacement>
-              <token>CURRENT_YEAR</token>
-              <value>${currentYear}</value>
-            </replacement>
-          </replacements>
-        </configuration>
-      </plugin>
-    </plugins>
-
     <pluginManagement>
       <plugins>
+        <plugin>
+          <artifactId>maven-deploy-plugin</artifactId>
+          <version>3.0.0-M1</version>
+          <configuration>
+            <skip>true</skip>
+          </configuration>
+        </plugin>
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-release-plugin</artifactId>
@@ -261,4 +36,5 @@
       </plugins>
     </pluginManagement>
   </build>
+
 </project>
