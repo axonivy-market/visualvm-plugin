@@ -25,15 +25,6 @@
     <cert.tsaurl>http://timestamp.digicert.com/</cert.tsaurl>
   </properties>
 
-  <modules>
-    <module>visualvm-plugin-product</module>
-  </modules>
-
-  <scm>
-    <developerConnection>scm:git:https://github.com/axonivy-market/visualvm-plugin.git</developerConnection>
-    <tag>HEAD</tag>
-  </scm>
-
   <repositories>
     <!-- dead repo -->
     <!--
