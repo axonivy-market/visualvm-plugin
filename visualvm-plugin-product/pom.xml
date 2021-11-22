@@ -3,7 +3,7 @@
   <groupId>ch.ivyteam.visualvm</groupId>
   <artifactId>visualvm-plugin-product</artifactId>
   <version>8.0.1-SNAPSHOT</version>
-  <packaging>pomg</packaging>
+  <packaging>pom</packaging>
 
   <build>
     <plugins>
