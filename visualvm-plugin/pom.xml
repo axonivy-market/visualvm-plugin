@@ -14,7 +14,7 @@
 
     <visualvm.version>RELEASE139</visualvm.version>
     <openide.version>RELEASE802</openide.version>
-    <junit.version>4.11</junit.version>
+    <junit.version>4.13.1</junit.version>
     <mockito-all.version>1.9.5</mockito-all.version>
     <steelseries.version>3.9.31.1</steelseries.version>
     <trident.version>7.2.1</trident.version>
