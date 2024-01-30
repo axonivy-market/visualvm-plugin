@@ -2,6 +2,8 @@
 
 [![CI Build](https://github.com/axonivy-market/visualvm-plugin/actions/workflows/ci.yml/badge.svg)](https://github.com/axonivy-market/visualvm-plugin/actions/workflows/ci.yml)
 
+Important notice: This plugin only suits Axon Ivy's LTS Version 7 and 8. LTS Versions 10 and newer integrate this plugin directly into the Engine Cockpit.
+
 The Axon Ivy VisualVM plugin enables real-time monitoring of an Axon Ivy Engine
 for:
 
